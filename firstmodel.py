@@ -3,7 +3,7 @@ from fpdf import FPDF
 from datetime import datetime
 
 
-def generate_report_from_single_csv(csv_path, output_pdf_path="Patient_Report.pdf"):
+def generate_report_from_single_csv(csv_path, output_pdf_path="Patient_Report1.pdf"):
     """
     Reads a CSV containing EXACTLY ONE ROW representing one patient's report,
     and generates a formatted medical summary PDF.
