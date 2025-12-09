@@ -1,0 +1,1001 @@
+PatientID,Age,Gender,BloodGroup,SystolicBP,DiastolicBP,HeartRate,RespiratoryRate,BodyTemperature,SpO2,FastingSugar,RandomSugar,Glucose,Hemoglobin,WBC_Count,RBC_Count,Platelet_Count,BMI,CholesterolTotal,LDL,HDL,Triglycerides,Urea,Creatinine,FinalDiagnosis
+P001,54,Male,O+,148,92,88,18,37.2,94,118,210,140,13.6,12500,4.5,210000,28.4,230,135,42,180,22,1.4,Patient has hypertension and diabetes mellitus.
+P002,67,Female,A+,132,88,76,16,36.8,97,102,178,110,12.1,7800,4.3,190000,23.9,210,110,54,120,16,0.95,Patient is clinically stable with no significant abnormalities.
+P003,45,Male,B-,162,95,102,20,38.1,92,135,210,170,14.2,15200,4.8,240000,26.1,260,150,38,210,28,1.6,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+P004,29,Female,AB+,118,76,72,14,36.6,99,92,150,100,12.5,6500,4.4,180000,22.3,195,95,58,110,14,0.82,Patient is clinically stable with mild lipid elevations.
+P005,63,Male,O-,142,90,85,17,37.0,93,128,190,132,13.0,9800,4.6,210000,27.0,248,128,40,160,24,1.25,Patient has hypertension and hyperlipidemia.
+P006,52,Female,A-,110,72,68,15,36.7,98,88,142,95,11.9,5200,4.0,170000,21.7,190,90,60,95,12,0.88,Patient is healthy with normal vitals.
+P007,39,Male,B+,156,92,90,18,37.4,93,112,200,125,13.2,13200,4.5,200000,25.5,208,112,46,140,20,1.1,Patient has hypertension and mild anemia.
+P008,72,Female,AB-,136,84,74,16,36.9,96,115,170,128,12.5,9000,4.1,210000,26.8,220,102,52,130,18,0.97,Patient has hypertension with stable parameters.
+P009,60,Male,O+,170,110,95,22,38.3,89,140,230,190,14.0,14000,4.7,250000,29.9,270,155,40,210,30,1.6,"Patient has uncontrolled hypertension, infection, and kidney dysfunction."
+P010,33,Female,A+,124,82,70,15,36.5,98,98,165,105,12.7,6000,4.2,185000,23.0,205,98,56,115,13,0.84,Patient is clinically stable with mild lipid elevation.
+P011,48,Male,O-,138,86,82,17,37.1,95,105,180,118,13.4,10500,4.3,190000,24.7,212,105,48,125,21,0.95,Patient has hypertension and borderline hyperlipidemia.
+P012,56,Female,AB+,145,92,88,19,37.0,93,118,190,132,12.3,11600,4.2,205000,28.0,238,128,44,150,25,1.15,Patient has hypertension and hyperlipidemia.
+P013,41,Male,A-,106,70,65,14,36.4,99,78,150,90,13.8,5400,4.6,178000,22.1,178,88,62,90,14,0.82,Patient is healthy with normal vitals.
+P014,59,Female,B-,128,82,78,16,37.2,96,112,180,120,11.8,8600,4.0,190000,25.3,205,110,50,130,19,0.92,Patient shows mild lipid elevations; otherwise stable.
+P015,50,Male,O+,150,95,92,21,38.0,91,125,210,140,13.9,12800,4.5,220000,27.7,252,135,44,170,26,1.28,"Patient has hypertension, diabetes mellitus, and kidney dysfunction."
+P016,44,Female,AB-,120,78,72,14,36.7,99,94,160,100,12.9,6400,4.3,176000,23.4,190,92,58,100,15,0.78,Patient is clinically stable.
+P017,65,Male,A+,140,88,80,16,37.3,94,108,170,112,13.5,9900,4.2,198000,26.2,224,115,46,128,22,0.98,Patient has hypertension and borderline lipid abnormalities.
+P018,37,Female,O-,112,70,66,15,36.6,99,86,140,92,12.4,5400,4.1,170000,20.9,178,85,60,85,12,0.76,Patient is healthy.
+P019,58,Male,B+,136,84,82,17,37.1,95,110,170,120,13.1,11200,4.4,200000,25.8,216,108,48,125,21,0.93,Patient has hypertension with stable parameters.
+P020,70,Female,AB+,132,86,76,18,36.9,97,99,160,105,12.0,8600,4.0,185000,29.0,208,100,52,120,20,0.92,Patient is stable with mild cholesterol elevations.
+P001,52,Male,A+,148,92,88,18,37.2,94,132,210,150,13.4,12500,4.6,210000,28.3,230,135,42,190,28,1.25,Patient has hypertension and diabetes mellitus.
+P002,34,Female,O+,118,78,76,16,36.8,97,98,140,110,12.6,8500,4.9,190000,22.1,190,105,52,130,14,0.95,Patient is clinically stable with no significant abnormalities.
+P003,67,Male,B+,162,98,92,20,38.2,92,156,230,178,12.0,12600,4.4,230000,27.5,256,142,38,210,34,1.4,"Patient has uncontrolled hypertension, hyperlipidemia, and possible kidney dysfunction."
+P004,41,Female,AB-,122,82,70,15,36.6,98,88,132,105,13.8,7200,4.8,180000,21.9,170,95,58,110,12,0.9,Patient is clinically stable with no significant abnormalities.
+P005,29,Female,A-,110,70,72,14,36.7,99,105,150,120,11.9,6500,4.3,210000,23.4,190,100,52,120,13,0.92,Patient is clinically stable with no significant abnormalities.
+P006,59,Male,O-,140,88,84,19,37.0,93,118,190,140,13.1,9800,4.5,195000,26.7,210,120,44,160,22,1.15,Patient has hypertension and mild hyperlipidemia.
+P007,73,Male,B-,170,102,88,21,38.5,89,152,240,190,13.5,13200,4.2,220000,29.1,260,150,40,230,40,1.6,"Patient has uncontrolled hypertension, diabetes mellitus, infection, and kidney impairment."
+P008,45,Female,AB+,128,84,78,17,36.9,96,112,168,130,12.9,7600,4.7,205000,24.3,200,98,54,125,18,1.05,Patient is clinically stable with mild dyslipidemia.
+P009,62,Female,O+,135,88,85,18,37.1,95,125,210,160,12.4,10200,4.3,210000,25.8,222,128,46,170,26,1.12,Patient has hypertension and borderline diabetes with mild kidney stress.
+P010,50,Male,A+,145,95,90,20,37.4,93,138,210,155,14.2,11200,4.5,200000,27.0,240,130,40,180,24,1.18,"Patient has hypertension, hyperlipidemia, and possible early kidney strain."
+P011,38,Female,B+,118,76,72,16,36.5,98,92,140,105,12.3,7200,4.8,185000,20.8,165,88,60,90,11,0.88,Patient is clinically stable with no significant abnormalities.
+P012,66,Male,AB-,152,90,86,19,37.3,93,170,260,210,13.0,12400,4.1,205000,28.0,248,132,44,190,32,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney dysfunction."
+P013,27,Female,O-,112,72,68,14,36.4,99,88,120,105,11.5,6400,4.2,170000,21.5,160,85,55,100,12,0.85,Patient is clinically stable with no significant abnormalities.
+P014,54,Male,A-,130,84,79,18,37.0,94,110,160,120,13.8,9000,4.4,198000,26.2,212,110,50,140,20,1.0,Patient has mild hypertension and dyslipidemia.
+P015,48,Female,B-,138,86,82,17,36.9,96,115,175,130,12.7,9800,4.5,210000,25.0,205,115,46,150,22,1.08,Patient has hypertension and borderline dyslipidemia.
+P016,63,Male,AB+,156,94,88,20,37.6,91,144,210,170,13.6,11800,4.3,218000,27.8,238,128,44,180,26,1.2,Patient has uncontrolled hypertension and diabetes mellitus.
+P017,31,Female,O+,114,72,70,15,36.6,98,100,130,110,12.1,6800,4.6,190000,23.1,180,92,58,100,14,0.9,Patient is clinically stable with no significant abnormalities.
+P018,58,Male,A+,144,90,86,19,37.2,92,128,190,150,13.2,10800,4.4,205000,26.5,235,125,46,165,30,1.1,"Patient has hypertension, hyperlipidemia, and mild kidney strain."
+P019,22,Female,AB+,112,70,72,15,36.7,99,92,128,105,11.9,6400,4.5,178000,21.9,170,90,60,95,12,0.86,Patient is clinically stable with no significant abnormalities.
+P020,70,Male,O-,165,100,92,22,38.0,90,180,280,210,14.0,14600,4.2,225000,28.9,270,140,38,230,42,1.5,"Patient has uncontrolled hypertension, diabetes mellitus, infection, and kidney dysfunction."
+P001,54,Male,A+,145,92,88,18,37.2,94,118,210,150,13.6,9500,4.5,210000,27.3,230,132,46,190,26,1.2,Patient has hypertension and hyperlipidemia.
+P002,67,Female,O+,132,88,76,16,36.9,97,105,170,128,12.1,7800,4.3,198000,25.4,190,110,56,140,18,0.95,Patient is clinically stable with hypertension.
+P003,42,Male,B-,118,78,92,20,37.0,99,92,150,110,15.0,6800,4.7,260000,26.1,210,105,50,160,14,0.9,Patient is clinically stable with no significant abnormalities.
+P004,59,Female,AB+,152,96,101,22,38.2,92,140,210,180,11.8,12600,4.1,230000,29.7,260,145,40,210,28,1.4,"Patient has hypertension, hyperlipidemia, possible infection, and kidney dysfunction."
+P005,33,Male,O-,128,82,72,14,36.8,98,88,140,105,14.2,6000,4.6,240000,23.4,185,98,58,120,12,0.85,Patient is clinically stable with mild dyslipidemia.
+P006,72,Male,A-,168,102,88,18,37.8,89,130,190,160,11.5,15400,4.0,205000,26.9,245,125,44,205,32,1.5,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney dysfunction."
+P007,48,Female,B+,110,70,68,15,36.6,99,100,130,112,13.0,7200,4.5,225000,22.8,170,95,60,110,16,0.92,Patient is clinically stable with no significant abnormalities.
+P008,60,Male,AB-,140,90,85,19,36.7,93,112,190,140,12.4,9800,4.3,210000,28.2,235,125,42,170,22,1.1,Hypertension with hyperlipidemia; mild respiratory distress.
+P009,27,Female,A+,112,72,105,24,37.6,93,96,160,120,12.8,12000,4.8,190000,21.9,180,88,62,120,18,0.88,"Increased heart rate with fever; stable overall, no major abnormalities."
+P010,45,Male,O+,135,85,80,17,36.4,96,110,170,128,14.0,8800,4.6,230000,25.0,210,105,52,150,20,1.0,Hypertension without other significant abnormalities.
+P011,50,Female,B-,124,78,66,13,36.5,98,115,165,120,13.5,6900,4.4,245000,24.7,205,102,54,140,19,0.97,Clinical stability with mild dyslipidemia.
+P012,64,Male,AB+,156,94,90,18,37.4,92,135,210,170,11.6,11200,4.2,208000,28.9,250,138,38,190,27,1.3,"Uncontrolled hypertension, diabetes mellitus, and possible kidney dysfunction."
+P013,38,Male,O+,118,76,72,16,36.9,97,102,148,108,14.6,7600,4.9,260000,23.7,190,92,58,110,15,0.92,Clinical stability with normal labs.
+P014,55,Female,A-,142,92,86,21,37.9,90,125,210,155,12.0,12800,4.0,225000,27.0,240,130,42,190,25,1.25,"Hypertension, hyperlipidemia, and possible infection."
+P015,41,Male,B-,110,70,60,14,36.3,99,98,140,105,13.8,6400,4.5,235000,24.1,175,90,60,110,14,0.88,Clinically healthy with mild dyslipidemia.
+P016,68,Female,AB-,148,92,84,19,37.1,93,132,198,145,12.2,10200,4.2,215000,28.4,238,120,44,178,26,1.12,Hypertension and diabetes mellitus with mild kidney stress.
+P017,29,Male,O-,122,78,72,16,36.6,97,86,130,98,14.0,6400,4.7,260000,22.5,165,85,58,100,12,0.88,Healthy profile with mild dyslipidemia.
+P018,53,Female,A+,136,86,78,17,36.8,95,112,162,128,12.6,8600,4.3,202000,26.3,200,102,50,140,19,0.99,Hypertension with borderline hyperlipidemia; otherwise stable.
+P019,61,Male,B+,170,110,95,23,38.4,88,140,230,200,10.9,15200,3.9,180000,29.8,260,140,38,210,34,1.6,"Uncontrolled hypertension, diabetes mellitus, and kidney dysfunction."
+P020,36,Female,AB+,120,80,74,15,36.7,98,94,150,110,13.2,7200,4.6,240000,23.9,190,95,58,120,18,0.93,Clinically stable; no acute issues.
+P001,45,Male,A+,142,92,88,18,37.2,94,118,210,150,13.5,9800,4.5,210000,27.3,210,120,46,180,22,1.1,Patient has hypertension and borderline diabetes with no acute complications.
+P002,63,Female,O+,156,98,82,20,36.8,93,132,232,170,12.8,12200,4.2,195000,28.9,245,138,42,210,28,1.25,"Patient has hypertension, hyperlipidemia, and signs consistent with early diabetes; no acute infection."
+P003,29,Male,B+,128,84,72,16,36.6,97,102,170,128,14.2,7200,4.7,230000,23.1,190,110,50,120,14,0.95,Healthy young adult with normal vitals and labs.
+P004,52,Female,AB-,168,95,90,22,38.2,92,110,260,190,11.6,13200,4.0,205000,29.4,260,150,38,240,30,1.4,"Patient has uncontrolled hypertension, diabetes mellitus suspected, and kidney strain; infection suspected due to fever and leukocytosis."
+P005,37,Male,O-,135,88,78,17,36.9,96,88,150,120,14.0,7800,4.6,240000,26.0,205,100,48,160,18,1.0,Clinically stable with normal glucose metabolism and lipid profile.
+P006,71,Male,A-,172,110,95,24,39.0,89,140,240,210,12.1,15000,4.1,190000,28.5,270,155,40,230,34,1.6,"Elderly patient with severe hypertension, diabetes with hyperlipidemia, respiratory distress, and kidney stress."
+P007,50,Female,B-,142,88,76,18,37.0,95,112,190,140,13.8,9800,4.5,210000,25.7,230,125,52,170,22,1.05,Hypertension with mild hyperlipidemia; no diabetes indicated.
+P008,28,Male,AB+,118,76,70,15,36.5,98,94,140,112,13.0,6400,4.8,225000,22.2,180,90,48,110,16,0.9,Healthy fitness level with normal labs.
+P009,66,Female,A+,150,92,82,19,37.4,93,128,210,160,12.3,11400,4.3,198000,26.8,238,130,39,190,26,1.2,Hypertension with dyslipidemia and signs of early insulin resistance; stable infection ruled out.
+P010,55,Male,O+,140,90,85,21,36.7,96,100,180,130,13.7,10600,4.4,205000,27.0,220,115,44,150,24,1.05,Stable hypertension with normoglycemia and mild hyperlipidemia.
+P011,42,Female,B+,136,86,74,17,36.8,97,110,170,128,12.6,9000,4.3,220000,24.9,205,105,54,140,20,1.0,Hypertension with normal metabolic panel; no acute illness.
+P012,33,Male,O+,122,80,68,14,36.4,99,95,145,118,14.1,6500,4.6,230000,23.5,190,98,52,120,18,0.92,Healthy personality with normal vitals and labs.
+P013,58,Male,AB-,158,96,88,22,37.8,91,125,210,170,13.2,13250,4.2,190000,29.0,252,132,40,210,28,1.3,Hypertension with possible diabetes and kidney strain; fever suggests infection.
+P014,48,Female,A-,130,85,76,18,36.6,97,88,160,110,12.9,7600,4.4,215000,24.3,198,102,53,130,18,0.97,No significant abnormalities; healthy individual with normal metabolic profile.
+P015,60,Male,B+,170,105,92,23,38.5,88,145,260,210,11.9,14200,4.0,180000,28.7,265,145,39,220,32,1.5,Hypertension with diabetes mellitus and kidney impairment; respiratory distress likely due to hyperglycemia.
+P016,26,Female,O+,110,70,66,14,36.3,99,72,130,100,12.2,6000,4.5,225000,21.8,170,85,55,100,14,0.88,"Healthy, athletic young female with favorable values."
+P017,44,Male,AB+,145,92,84,19,37.1,93,108,190,140,13.4,10200,4.5,210000,26.1,215,115,46,170,24,1.08,Hypertension with mild dyslipidemia; no acute infection.
+P018,51,Female,A+,138,89,77,17,36.9,96,105,170,132,12.4,8600,4.3,205000,25.3,202,108,50,150,20,0.99,Hypertension with normal glucose and lipid status.
+P019,39,Male,B-,125,82,71,16,36.5,98,98,150,122,13.9,7500,4.6,235000,23.8,190,95,52,125,18,0.92,Healthy with normal vital signs and labs.
+P020,68,Male,O-,165,102,87,21,37.7,90,132,210,160,12.0,12500,4.1,190000,27.9,248,132,41,190,26,1.28,Hypertension with diabetes and signs of kidney impairment; respiratory distress present.
+P001,52,Male,A+,145,92,84,18,37.2,94,132,210,150,13.5,9800,4.6,210000,28.4,210,128,42,190,18,1.1,Patient has hypertension and hyperlipidemia.
+P002,67,Male,O+,132,86,78,16,36.9,97,110,170,105,12.5,8600,4.5,240000,29.1,190,105,55,120,12,0.9,Normotensive but with mild anemia.
+P003,41,Female,B+,118,78,72,17,36.7,98,98,160,105,11.8,7200,4.3,190000,22.5,170,90,56,110,14,0.82,Healthy with normal metabolic markers.
+P004,58,Female,AB-,150,95,88,20,38.2,93,140,230,170,12.2,12500,4.1,210000,31.0,260,150,38,210,22,1.4,Hypertension with diabetes mellitus and hyperlipidemia; mild kidney impairment.
+P005,33,Male,O-,125,82,76,15,37.0,96,88,140,110,14.0,7600,4.7,230000,26.8,190,112,50,135,16,0.95,Clinically stable with occasional mild hyperlipidemia.
+P006,72,Female,A-,156,94,90,22,37.8,92,150,210,170,10.5,12200,4.0,195000,29.9,235,128,42,190,26,1.25,Hypertension with anemia and signs of kidney function stress.
+P007,29,Male,B-,118,76,68,14,36.6,99,92,150,102,13.8,6400,4.8,220000,23.4,165,88,62,95,12,0.8,Healthy young adult with normal labs.
+P008,59,Female,AB+,140,88,82,18,37.1,95,115,190,130,12.0,9800,4.2,205000,27.2,205,118,44,160,19,1.0,Hypertension with borderline hyperglycemia.
+P009,46,Male,O+,138,85,80,19,37.0,96,105,180,120,13.2,10400,4.5,198000,25.6,190,110,46,140,18,0.98,Hypertension with mild dyslipidemia.
+P010,65,Male,A+,170,100,92,25,38.1,89,160,240,190,11.5,13500,4.0,260000,31.5,270,150,36,240,28,1.6,Uncontrolled hypertension with infection and kidney dysfunction.
+P011,38,Female,B-,122,80,70,16,36.9,97,100,165,110,12.7,7200,4.3,212000,24.3,180,95,54,100,15,0.9,Stable with normal metabolic markers.
+P012,54,Male,AB-,142,92,86,18,37.3,93,128,210,140,13.0,11200,4.4,205000,28.0,215,125,40,170,20,1.1,Hypertension with diabetes risk and mild kidney stress.
+P013,28,Female,O+,110,70,66,15,36.5,98,78,130,92,12.1,6500,4.6,210000,22.1,155,85,60,90,11,0.78,Healthy with excellent metabolic profile.
+P014,61,Male,A-,148,92,88,21,37.6,92,136,205,140,12.3,11800,4.2,198000,26.7,240,132,44,180,21,1.15,Hypertension with dyslipidemia; early kidney stress.
+P015,50,Female,B+,135,88,75,17,36.8,96,112,180,120,13.1,9000,4.4,221000,27.4,205,112,52,150,17,0.95,Hypertension with normal renal function.
+P016,44,Male,AB+,128,82,72,16,36.6,98,95,160,105,14.0,7600,4.5,214000,24.8,180,96,56,110,14,0.85,Healthy with slight lipid elevation.
+P017,70,Female,O+,162,98,92,23,38.0,90,170,260,210,11.0,14000,3.9,250000,32.0,280,145,38,210,30,1.5,Hypertension with diabetes and kidney dysfunction.
+P018,36,Male,A+,122,78,68,14,36.7,97,105,170,120,12.9,6900,4.5,225000,23.9,190,102,58,100,13,0.88,Healthy with favorable lipid profile.
+P019,53,Female,B+,140,90,80,18,37.2,94,125,200,135,12.4,10500,4.3,205000,26.1,220,118,46,160,19,1.05,Hypertension with dyslipidemia.
+P020,48,Male,O+,136,88,82,17,36.9,95,118,190,130,13.6,9900,4.7,219000,25.7,205,115,50,145,18,0.92,Hypertension with early signs of metabolic syndrome.
+P001,52,Male,O+,152,92,88,18,37.2,94,118,198,150,13.6,8200,4.6,220000,27.4,210,128,46,170,28,1.1,Patient has hypertension and is at risk for hyperlipidemia.
+P002,66,Female,A+,138,88,82,16,36.8,97,102,160,118,12.9,7200,4.2,190000,26.1,190,110,52,140,22,0.95,Clinically stable with mild hypertension and normal kidney function.
+P003,41,Male,B-,168,95,94,20,38.1,92,130,210,165,14.1,13000,4.8,210000,28.9,245,142,38,210,26,1.25,"Patient has uncontrolled hypertension, hyperlipidemia, and possible early kidney strain."
+P004,29,Female,AB+,112,74,72,15,36.6,99,95,140,105,11.8,6400,4.5,210000,23.2,185,105,58,120,12,0.88,Healthy overall with normal metabolic profile.
+P005,58,Male,A-,144,92,86,19,37.0,93,110,180,130,13.2,9800,4.3,205000,29.4,230,122,44,190,25,1.05,Hypertension with elevated cholesterol; borderline diabetic indicators.
+P006,72,Female,O-,158,99,90,22,37.8,89,135,210,155,12.2,12500,4.0,180000,26.7,260,150,40,205,30,1.15,Hypertension with respiratory distress risk and dyslipidemia.
+P007,34,Male,B+,122,78,76,14,36.5,98,88,130,105,14.5,6000,4.7,230000,24.3,170,95,60,110,16,0.92,Healthy with excellent metabolic and cardiovascular profile.
+P008,49,Female,O+,136,84,84,18,37.3,96,115,170,130,12.0,9400,4.4,200000,25.5,205,118,48,150,20,0.98,Hypertension with borderline diabetes risk; stable kidney function.
+P009,60,Male,AB-,150,92,88,19,37.0,91,125,190,140,13.8,11200,4.5,225000,28.0,240,130,42,180,28,1.18,Hypertension with dyslipidemia and early signs of respiratory stress.
+P010,28,Female,A+,108,70,68,14,36.4,99,92,120,100,12.5,5900,4.6,235000,22.7,165,90,62,100,14,0.85,Healthy young adult with normal metabolic and cardiovascular parameters.
+P011,73,Male,O-,170,105,102,24,38.3,88,145,230,170,13.4,14800,4.2,210000,30.1,255,140,40,210,32,1.32,Uncontrolled hypertension with significant infection risk and kidney strain.
+P012,45,Female,AB+,126,82,72,17,36.9,97,105,155,115,14.0,7600,4.5,210000,24.8,190,105,50,130,18,0.92,Healthy with slight risk factors but overall stable.
+P013,39,Male,A-,140,88,85,18,37.5,93,125,190,135,13.0,10000,4.3,190000,26.0,205,118,44,160,26,1.05,Hypertension with dyslipidemia; stable kidney function.
+P014,53,Female,B-,132,86,78,16,36.7,96,98,140,110,12.6,8200,4.4,205000,23.5,188,100,54,125,20,0.92,Clinically stable with mild hypertension and normal kidney function.
+P015,64,Male,O+,156,92,92,21,37.4,90,118,190,140,13.9,10800,4.2,200000,27.2,235,125,42,170,26,1.03,Hypertension with dyslipidemia and reduced oxygen saturation.
+P016,36,Female,AB-,118,76,70,15,36.6,98,90,125,98,12.0,6200,4.6,225000,21.9,160,85,58,95,12,0.84,Healthy young female with excellent metabolic profile.
+P017,55,Male,A+,144,90,86,18,37.1,94,112,165,128,13.1,9800,4.3,215000,25.8,210,115,46,150,24,0.97,Hypertension with mild hyperlipidemia; stable kidney function.
+P018,47,Female,B+,128,82,74,17,36.8,98,100,140,110,11.5,7000,4.2,195000,22.6,178,96,56,110,18,0.88,Healthy with slight anemia risk.
+P019,68,Male,AB+,162,98,96,23,37.9,92,140,210,150,13.0,11500,4.1,205000,28.5,248,132,42,190,34,1.2,Hypertension with diabetes risk and kidney strain.
+P020,40,Male,O-,130,84,80,17,36.9,95,108,160,120,13.3,8600,4.5,210000,26.3,192,102,48,125,22,0.98,Hypertension with stable metabolic parameters and good oxygenation.
+B6-P001,52,Male,A+,142,92,88,18,37.2,94,118,205,128,13.6,9800,4.7,210000,27.4,210,125,42,170,18,1.1,Patient has hypertension and diabetes mellitus.
+B6-P002,68,Male,O+,156,98,92,20,37.8,93,140,210,180,12.8,12500,4.5,190000,29.1,260,142,38,210,22,1.3,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+B6-P003,45,Female,B+,128,84,78,16,36.9,97,95,150,110,12.2,6800,4.6,210000,23.5,185,110,54,120,14,0.95,Patient is clinically stable with no significant abnormalities.
+B6-P004,58,Female,AB-,165,102,98,22,38.2,92,132,210,170,11.9,13200,4.4,198000,28.4,248,132,40,190,28,1.25,"Patient has uncontrolled hypertension, diabetes mellitus, and infection."
+B6-P005,34,Male,O-,118,76,72,15,36.7,98,88,132,100,14.1,6400,4.9,240000,22.8,170,95,52,110,12,0.88,Patient is clinically stable with no significant abnormalities.
+B6-P006,71,Female,A-,150,92,86,19,37.0,95,110,180,130,12.0,10200,4.3,200000,26.1,230,118,45,160,24,1.05,Patient has hypertension and hyperlipidemia.
+B6-P007,40,Male,B-,132,86,76,17,36.8,96,102,140,115,13.4,7800,4.8,230000,24.6,195,105,49,130,16,0.92,Patient is clinically stable with mild risk factors for cardiovascular disease.
+B6-P008,59,Female,AB+,144,90,85,18,37.5,93,118,210,132,11.7,9000,4.2,210000,27.9,238,128,44,170,20,1.15,Patient has hypertension and kidney involvement.
+B6-P009,29,Male,A+,112,74,68,14,36.6,99,90,130,95,14.8,6400,5.0,250000,22.1,165,90,60,90,11,0.84,Patient is clinically stable with excellent metabolic profile.
+B6-P010,62,Male,O+,158,96,90,21,37.3,91,128,210,145,13.0,11800,4.5,188000,28.7,270,135,39,185,26,1.22,Patient has uncontrolled hypertension and diabetes mellitus.
+B6-P011,50,Female,B+,126,82,74,16,36.8,97,110,170,120,12.5,7300,4.4,220000,25.3,205,102,46,125,18,0.98,Patient is clinically stable with mild dyslipidemia.
+B6-P012,53,Male,AB-,140,88,82,19,37.0,96,100,160,110,13.9,8900,4.6,205000,26.5,210,115,50,145,21,1.04,Patient has hypertension with borderline lipids.
+B6-P013,37,Female,O+,120,78,70,15,36.7,98,94,120,105,12.8,7000,4.5,215000,23.9,180,92,54,100,15,0.92,Patient is clinically stable with normal metabolic parameters.
+B6-P014,64,Male,A-,170,105,95,23,38.0,89,150,230,210,12.3,15000,4.1,195000,31.2,300,160,38,260,32,1.5,"Patient has uncontrolled hypertension, diabetes mellitus, infection, and kidney impairment."
+B6-P015,26,Male,AB+,114,72,66,14,36.5,99,85,130,98,15.0,5200,4.7,260000,21.9,155,85,65,85,12,0.88,Patient is clinically healthy.
+B6-P016,48,Female,B-,136,88,80,18,37.1,95,112,180,130,12.4,9900,4.3,210000,26.0,220,115,47,150,19,1.02,Patient has hypertension and mild dyslipidemia.
+B6-P017,63,Male,O+,148,92,88,19,37.4,92,125,190,140,13.1,10800,4.5,205000,27.5,235,125,41,165,22,1.08,Patient has hypertension and kidney dysfunction.
+B6-P018,55,Female,A+,142,90,84,18,37.0,94,108,170,125,11.8,9700,4.1,200000,25.9,208,110,44,142,21,1.01,Patient has hypertension with mild hyperlipidemia.
+B6-P019,42,Male,B+,130,85,76,17,36.9,97,98,140,110,13.7,7500,4.5,225000,24.8,190,100,52,115,16,0.96,Patient is clinically stable with mild metabolic risk factors.
+B6-P020,37,Female,AB-,124,82,72,15,36.6,98,92,130,102,12.9,7200,4.5,235000,23.2,182,98,56,105,14,0.93,Patient is clinically healthy with minor lipid abnormalities.
+B7-P001,45,Male,A+,152,92,88,18,37.2,94,118,210,140,13.5,8200,4.6,210000,26.7,210,120,46,190,18,1.1,Patient has hypertension and borderline diabetes with stable kidney function.
+B7-P002,62,Female,O+,138,86,78,16,36.8,97,102,168,110,12.2,7200,4.1,190000,23.4,185,105,52,140,14,0.95,Clinically stable older female with prediabetes and mild dyslipidemia; no acute infection.
+B7-P003,29,Male,B+,128,84,92,20,37.0,96,110,190,125,14.8,9800,4.7,230000,24.9,198,110,50,160,12,1.0,Young male with mild hypertension and elevated glucose; no signs of infection.
+B7-P004,54,Female,AB-,168,98,85,19,38.1,92,130,210,150,11.9,12600,4.0,180000,31.2,260,142,41,250,22,1.3,Hypertension with diabetes mellitus; mild anemia and kidney stress.
+B7-P005,37,Male,O-,142,92,76,17,36.9,98,94,180,112,13.2,5600,4.5,170000,25.1,190,100,55,120,15,0.92,Hypertension with normal glucose; routine monitoring recommended.
+B7-P006,71,Female,A-,150,95,88,21,37.4,93,140,230,210,12.5,13200,4.2,205000,28.5,248,135,44,210,26,1.25,Hypertension with diabetes; early signs of kidney stress and hyperlipidemia.
+B7-P007,52,Male,B-,136,88,70,15,36.6,99,88,160,102,14.0,6400,4.9,225000,23.9,170,92,58,110,11,0.88,Clinically stable; mild dyslipidemia with normal glucose.
+B7-P008,66,Female,AB+,144,90,82,18,37.0,95,112,190,130,12.0,9000,4.3,195000,26.3,205,115,48,165,18,1.05,Hypertension with borderline diabetes and mild dehydration.
+B7-P009,41,Male,A+,120,78,76,16,36.7,98,99,170,110,13.8,7200,4.6,210000,22.7,175,95,54,130,13,0.97,Healthy with monitored lipid profile; no significant risk factors.
+B7-P010,58,Male,O+,132,88,90,19,37.3,94,128,210,140,12.9,10800,4.4,200000,27.0,245,128,42,230,20,1.15,Hypertension with diabetes and dyslipidemia; mild kidney stress.
+B7-P011,33,Female,AB-,118,76,66,14,36.5,99,86,150,100,11.8,5200,4.8,160000,20.7,165,88,60,105,12,0.85,Healthy young female with good metabolic profile.
+B7-P012,59,Male,B+,156,92,84,18,37.6,91,156,240,170,13.1,12200,4.3,176000,28.1,232,125,40,205,24,1.2,"Hypertension with diabetes, dyslipidemia, and reduced oxygen saturation."
+B7-P013,48,Male,O-,140,90,72,17,36.8,96,108,190,115,14.2,8600,4.5,215000,25.6,198,102,56,132,16,0.98,Hypertension with controlled metabolism; stable.
+B7-P014,70,Female,A-,170,100,88,22,38.2,89,180,290,240,12.3,14600,4.1,190000,29.8,270,150,40,260,28,1.4,"Uncontrolled hypertension with diabetes mellitus, anemia, kidney stress, and respiratory distress."
+B7-P015,28,Male,AB+,122,80,68,15,36.4,99,92,165,105,13.5,7100,4.8,205000,22.4,178,90,58,120,14,0.92,Healthy young adult with favorable metabolic profile.
+B7-P016,63,Male,B-,144,92,85,18,37.1,93,132,210,150,12.7,10300,4.2,197000,26.0,210,115,45,180,21,1.05,Hypertension with borderline diabetes; mild kidney stress.
+B7-P017,54,Female,O+,132,84,77,16,36.9,97,100,170,115,13.0,7600,4.4,210000,24.3,190,98,54,135,17,0.99,Healthy with mildly elevated cholesterol.
+B7-P018,40,Male,A+,126,82,72,16,36.6,98,95,165,108,13.9,6500,4.7,230000,23.1,182,96,57,112,14,0.87,Healthy with excellent oxygenation and stable vitals.
+B7-P019,67,Male,AB-,158,98,86,20,37.5,90,142,230,160,11.6,12800,4.0,185000,27.5,240,130,42,210,24,1.18,Hypertension with diabetes and dyslipidemia; mild kidney stress and hypoxemia.
+B7-P020,53,Female,A-,138,88,74,17,36.8,96,112,190,125,12.4,8900,4.5,198000,25.8,205,110,49,150,18,1.02,Hypertension with stable metabolic profile; no acute infection.
+B8-P001,52,Male,A+,145,92,88,18,37.2,94,118,210,150,13.5,9800,4.6,210000,27.3,210,125,42,180,22,1.1,Patient has hypertension and borderline diabetes; clinically stable with no acute distress.
+B8-P002,67,Male,O+,132,86,78,16,36.8,97,92,180,120,14.2,7500,4.9,185000,23.5,190,110,52,140,16,0.95,Clinically stable with hypertension; normal kidney function.
+B8-P003,41,Female,B+,118,75,72,14,36.6,98,105,210,132,12.4,12000,4.3,210000,28.1,230,135,46,190,18,1.0,Diabetes mellitus risk; borderline high cholesterol.
+B8-P004,58,Female,AB-,152,94,85,20,38.2,92,132,260,190,11.9,12500,4.1,170000,29.8,255,140,38,210,28,1.4,"Uncontrolled hypertension, diabetes mellitus, and kidney dysfunction."
+B8-P005,35,Male,O-,128,82,76,15,37.0,96,88,170,110,14.0,9000,4.8,220000,22.4,190,105,60,120,14,0.9,Stable vitals with no acute illness; lipid profile mildly elevated.
+B8-P006,72,Female,A-,168,92,82,22,37.8,93,140,210,180,9.6,15000,3.9,150000,31.2,260,150,40,230,30,1.6,Hypertension with anemia and possible kidney dysfunction; infection cannot be ruled out.
+B8-P007,29,Male,AB+,112,74,70,16,36.7,99,95,160,105,13.0,8000,4.7,240000,22.0,170,90,60,100,12,0.85,Healthy young adult with normal vitals and lipid profile.
+B8-P008,63,Female,B-,140,88,86,18,37.5,95,115,190,140,12.1,9800,4.2,200000,26.5,230,125,44,160,20,1.1,Hypertension with borderline diabetes; normal kidney function.
+B8-P009,54,Male,A+,122,78,72,15,36.9,97,102,190,130,13.8,8600,4.5,210000,24.6,205,118,48,150,18,1.0,Hypertension and prediabetes risk; normal kidney function.
+B8-P010,48,Female,O+,135,85,80,17,36.8,96,110,200,135,12.9,10200,4.4,190000,25.9,210,122,46,170,21,1.0,Hypertension with elevated lipids; stable kidney function.
+B8-P011,65,Male,AB-,150,95,90,19,37.1,93,125,230,170,11.7,14000,4.0,165000,28.3,245,132,40,210,26,1.35,Hypertension with diabetes mellitus and possible kidney impairment.
+B8-P012,39,Female,B+,110,70,68,13,36.5,99,98,165,100,13.2,7000,4.8,230000,21.7,180,95,58,110,15,0.88,Healthy; normal vitals and labs.
+B8-P013,70,Male,O+,160,100,88,21,37.4,91,150,260,210,10.9,16000,3.7,160000,29.7,270,145,42,240,34,1.5,Severe hypertension with diabetes mellitus and kidney dysfunction.
+B8-P014,26,Female,A-,108,66,64,14,36.4,98,86,150,92,12.0,6800,4.6,235000,22.5,165,90,62,95,12,0.82,Healthy young adult; no significant abnormalities.
+B8-P015,60,Male,B-,138,84,77,16,37.0,95,112,190,128,13.1,9800,4.4,200000,26.8,215,118,44,155,19,0.95,Hypertension with borderline diabetes risk; lipid profile mildly elevated.
+B8-P016,44,Female,AB+,122,78,74,15,36.6,97,99,180,115,13.6,8600,4.6,225000,23.0,195,105,56,130,16,0.92,Healthy with mild lipid elevation.
+B8-P017,53,Male,A+,146,90,84,18,37.3,93,118,205,142,12.5,11200,4.3,205000,25.5,238,128,45,170,24,1.08,Hypertension with dyslipidemia; borderline kidney function.
+B8-P018,37,Female,O+,118,76,70,14,36.7,98,101,165,108,13.1,7500,4.5,235000,23.4,190,100,58,120,17,0.93,Healthy; no significant issues.
+B8-P019,66,Male,B+,154,92,89,19,37.2,92,130,220,165,11.8,12800,3.8,180000,27.1,245,130,42,200,28,1.25,Hypertension with diabetes mellitus and suspected kidney impairment.
+B8-P020,32,Female,AB-,114,72,66,13,36.5,99,92,160,98,12.7,7200,4.4,235000,21.9,178,92,60,105,14,0.88,Healthy; excellent vitals and labs.
+P001,52,Male,A+,145,92,88,18,37.2,94,118,210,140,13.6,7800,4.5,210000,27.4,230,135,42,190,22,1.1,Patient has hypertension and borderline diabetes.
+P002,61,Female,O+,132,85,72,16,36.8,97,96,150,110,12.5,7600,4.2,198000,23.1,190,110,54,110,18,0.95,Clinically stable with no significant abnormalities.
+P003,34,Male,B-,128,82,76,17,37.0,98,110,180,120,14.2,9600,4.8,205000,24.7,210,120,48,140,16,1.0,No acute abnormalities; age-related risk factors present.
+P004,70,Female,AB+,162,100,90,20,38.3,92,130,210,165,11.8,12500,4.0,190000,28.9,260,150,40,220,28,1.4,"Patient has hypertension, diabetes mellitus, and signs of early kidney involvement."
+P005,45,Male,O-,118,78,68,15,36.9,99,88,130,105,14.0,6400,4.6,225000,22.5,190,105,52,95,14,0.9,Healthy overall profile with no significant abnormalities.
+P006,58,Female,A-,140,88,84,19,37.6,93,112,196,132,12.9,11200,4.3,210000,26.1,205,125,46,150,26,1.15,Hypertension with elevated cholesterol; mild respiratory compromise.
+P007,29,Male,B+,125,80,70,14,36.7,98,102,170,115,13.8,5200,4.7,240000,22.0,185,102,58,105,12,0.8,Clinically healthy; occasional prediabetes risk factors.
+P008,66,Male,AB-,150,95,92,21,37.9,91,125,210,138,11.2,11800,4.1,185000,29.5,252,140,38,210,30,1.35,"Hypertension, high cholesterol, and signs of respiratory distress; possible early kidney involvement."
+P009,53,Female,O+,138,86,78,18,36.6,96,105,170,120,12.2,8600,4.4,200000,25.0,205,115,50,125,20,1.0,Stable hypertension with prediabetes risk factors.
+P010,39,Male,A+,118,76,66,16,36.5,99,92,140,105,13.5,6400,4.6,210000,23.6,195,100,56,110,13,0.92,Healthy profile with normal vitals.
+P011,72,Female,O+,170,110,88,22,38.0,89,140,230,160,10.5,13000,3.9,170000,28.2,275,150,34,240,32,1.6,Uncontrolled hypertension with infection features and kidney involvement.
+P012,46,Male,AB+,136,82,74,17,37.1,97,98,170,118,13.0,9000,4.5,230000,24.9,210,115,52,130,19,0.98,Hypertension with healthy metabolic markers.
+P013,28,Female,A-,112,70,65,15,36.4,99,85,125,98,12.8,5200,4.9,235000,21.4,180,95,60,90,11,0.75,Healthy young female with excellent metabolic profile.
+P014,64,Male,B-,144,92,82,19,37.4,93,108,190,125,11.9,10200,4.3,208000,26.5,220,128,44,160,26,1.18,Hypertension with mildly elevated cholesterol; kidney function warrants monitoring.
+P015,54,Female,AB-,130,85,76,18,36.7,96,112,180,128,12.3,7000,4.4,215000,24.3,205,112,49,125,22,1.02,Mild hypertension with borderline metabolic markers.
+P016,41,Male,O+,126,82,71,16,37.0,98,99,160,112,13.4,7500,4.5,235000,22.8,198,108,53,105,15,0.88,Healthy with slight diurnal variation in vitals.
+P017,67,Female,A+,156,98,86,20,37.8,90,118,210,138,11.5,12200,4.1,190000,27.9,240,132,42,190,28,1.25,Hypertension with possible early kidney involvement and dyslipidemia.
+P018,50,Male,B+,134,88,77,18,36.9,95,108,185,130,13.7,9800,4.6,210000,25.2,212,118,46,140,21,0.97,Hypertension with borderline metabolic syndrome.
+P019,37,Female,AB+,122,78,66,15,36.6,99,95,160,110,14.1,7000,4.7,220000,23.1,190,102,56,100,16,0.85,Healthy young female with good metabolic profile.
+P020,59,Male,A-,142,90,80,19,37.1,93,115,195,125,12.0,10800,4.2,205000,26.8,235,125,44,170,24,1.12,Hypertension with dyslipidemia and mild renal involvement.
+B10-P001,54,Male,A+,148,92,86,18,37.2,94,118,210,145,13.6,9800,4.7,210000,27.4,208,126,42,190,22,1.3,Patient has hypertension and dyslipidemia.
+B10-P002,67,Male,O+,162,96,78,20,37.8,92,132,214,157,12.9,11200,4.3,178000,26.1,242,142,44,210,28,1.5,Patient has uncontrolled hypertension and hyperlipidemia.
+B10-P003,45,Female,B+,128,84,92,16,36.8,97,92,150,110,12.1,7600,4.8,230000,23.9,190,105,54,120,16,0.95,Patient clinically stable with no significant abnormalities.
+B10-P004,31,Female,O-,118,78,70,17,36.6,98,88,140,105,11.4,6500,4.5,250000,22.7,168,90,58,110,14,0.8,Healthy and normotensive; lipid panel mildly elevated but within acceptable range.
+B10-P005,59,Male,AB+,155,88,85,19,38.1,93,110,190,132,14.2,12400,4.6,190000,28.3,230,128,40,180,26,1.1,Hypertension with probable infection; anemia not evident.
+B10-P006,52,Female,A-,142,90,88,21,37.0,95,105,205,135,11.9,9800,4.2,210000,26.5,212,118,46,160,20,1.05,Hypertension with elevated triglycerides; borderline anemia.
+B10-P007,38,Male,B-,110,72,72,15,36.5,99,82,125,98,13.0,7200,4.9,260000,21.8,165,92,52,95,12,0.82,Clinically healthy with normal vitals.
+B10-P008,70,Female,AB-,170,102,88,22,37.6,89,140,240,200,11.0,12600,4.0,170000,28.9,260,150,38,210,32,1.4,Uncontrolled hypertension with diabetes mellitus and potential kidney involvement.
+B10-P009,26,Male,O+,112,76,68,14,36.4,98,78,130,105,13.5,6800,4.6,240000,23.2,170,88,58,90,11,0.84,"Healthy, athletic young adult with normal labs."
+B10-P010,63,Male,A+,136,88,80,18,37.0,96,108,170,125,13.3,9000,4.4,200000,25.0,200,110,46,140,24,1.0,Hypertension with borderline diabetes.
+B10-P011,47,Female,B+,125,80,85,18,36.9,97,99,160,118,12.2,8600,4.3,205000,24.6,184,102,50,100,18,0.95,Stable vitals; mild dyslipidemia.
+B10-P012,58,Male,AB+,150,92,90,19,37.3,93,126,210,150,14.0,11000,4.4,195000,29.2,236,130,41,170,25,1.2,Hypertension with possible diabetes and dyslipidemia.
+B10-P013,33,Female,A-,122,78,76,16,36.7,99,85,140,105,12.5,7000,4.7,250000,22.4,176,95,60,88,13,0.8,Healthy female with normal labs.
+B10-P014,60,Male,O+,140,86,82,19,36.8,94,115,190,128,13.8,10100,4.5,210000,26.8,210,115,44,140,22,1.1,Hypertension with borderline diabetes and dyslipidemia.
+B10-P015,41,Male,B-,130,82,72,15,36.6,97,95,155,112,13.1,7500,4.6,225000,24.0,182,98,52,105,17,0.9,Normal vitals; mild lipid elevation.
+B10-P016,73,Female,AB+,168,98,86,21,37.9,91,132,230,182,10.8,12200,4.1,165000,28.5,252,140,38,190,30,1.3,Hypertension with diabetes and kidney involvement.
+B10-P017,29,Male,A+,118,76,70,14,36.4,99,82,130,98,13.6,6900,4.8,260000,22.0,170,90,58,85,11,0.8,"Healthy, active young adult."
+B10-P018,55,Female,O-,144,92,84,18,37.2,93,110,190,125,12.8,10200,4.3,190000,27.1,205,112,46,150,24,1.0,Hypertension with dyslipidemia.
+B10-P019,66,Male,AB-,155,95,88,20,37.0,92,118,205,140,13.4,10800,4.2,200000,26.9,218,125,44,165,26,1.1,Hypertension with possible diabetes and hyperlipidemia.
+B10-P020,49,Female,A-,130,85,75,17,36.9,96,97,160,110,12.6,9400,4.5,215000,25.3,190,105,52,115,18,0.92,Healthy with mild lipid abnormalities.
+B11-P001,52,Male,A+,142,88,78,18,37.1,94,118,210,140,13.5,9600,4.6,210000,26.4,210,128,44,170,22,1.1,Patient has hypertension with elevated fasting glucose and borderline cholesterol levels.
+B11-P002,67,Male,O+,156,92,82,20,37.5,93,142,245,168,12.2,12400,4.3,190000,28.9,235,142,40,210,28,1.3,Patient has hypertension and dyslipidemia with elevated blood sugar; possible diabetes mellitus.
+B11-P003,41,Female,B+,128,82,72,16,36.8,98,96,150,110,12.6,6800,4.8,260000,23.0,180,110,52,120,16,0.98,Patient is clinically stable with normal metabolic profile.
+B11-P004,59,Female,AB-,172,104,88,22,38.2,89,130,210,142,11.3,12600,4.2,180000,31.2,250,138,38,230,34,1.6,"Patient has uncontrolled hypertension, infection indicator (fever), and evidence of kidney dysfunction."
+B11-P005,34,Male,O-,118,78,68,14,36.6,97,88,140,102,14.2,5200,4.9,230000,24.5,170,95,58,110,14,0.92,Clinically stable with normal metabolic and renal parameters.
+B11-P006,73,Female,A-,150,90,76,18,37.0,92,110,190,125,11.8,8800,4.1,200000,27.4,205,120,42,160,24,1.2,Hypertension with borderline diabetes risk; possible early kidney involvement.
+B11-P007,29,Male,AB+,110,70,66,15,36.5,99,92,130,105,13.9,5400,4.7,250000,22.8,165,90,60,100,12,0.88,Healthy profile with no significant abnormalities.
+B11-P008,62,Male,A+,140,86,79,19,37.3,93,130,210,138,13.1,10200,4.4,210000,29.0,240,125,40,190,26,1.25,Hypertension with high cholesterol; possible metabolic syndrome.
+B11-P009,50,Female,B-,132,84,74,17,36.9,96,105,180,120,12.9,7600,4.5,220000,26.1,198,108,45,130,20,1.05,Hypertension with borderline metabolic parameters; clinically stable.
+B11-P010,45,Male,O+,118,76,70,16,36.7,97,102,160,110,14.0,5100,4.8,235000,23.9,190,100,52,115,18,0.95,Normal hemodynamic and metabolic profile; clinically healthy.
+B11-P011,66,Female,A-,164,98,85,21,38.0,91,150,230,170,10.9,13200,4.0,190000,30.5,260,150,38,210,32,1.8,"Uncontrolled hypertension, possible diabetes mellitus, and kidney impairment."
+B11-P012,38,Male,B+,122,78,72,15,36.6,98,88,140,105,13.7,5600,4.6,240000,24.6,178,95,56,100,14,0.92,No significant pathology; clinically stable.
+B11-P013,55,Female,AB+,148,92,80,18,37.2,93,115,190,125,11.6,9800,4.2,210000,27.7,212,122,46,165,22,1.15,Hypertension with dyslipidemia; prediabetic range fasting sugar.
+B11-P014,28,Male,O-,112,72,66,14,36.4,99,90,120,105,14.4,5200,4.9,260000,23.1,172,88,58,95,12,0.85,Healthy young adult.
+B11-P015,60,Male,A+,136,84,76,19,37.0,95,108,170,120,12.4,9000,4.3,200000,28.2,205,118,42,150,26,1.1,Hypertension with borderline metabolic indicators.
+B11-P016,47,Female,B-,126,82,74,17,37.4,96,110,180,122,12.0,7500,4.4,210000,25.6,199,108,46,140,20,1.0,Hypertension with mild dyslipidemia; clinically stable.
+B11-P017,63,Male,AB-,170,110,92,24,39.0,88,160,260,190,11.2,14000,3.9,170000,31.8,270,160,34,260,40,2.0,"Hypertension with severe hyperglycemia, infection markers, and kidney impairment."
+B11-P018,39,Female,A-,118,74,70,16,36.8,97,112,160,125,13.1,6200,4.5,225000,22.9,182,98,54,120,18,0.97,Clinically stable with mild metabolic syndrome features.
+B11-P019,54,Male,O+,144,90,82,19,37.2,92,128,210,140,12.7,10800,4.1,205000,26.7,215,125,41,180,24,1.15,Hypertension with dyslipidemia; kidney function mildly affected.
+B11-P020,44,Female,AB+,122,78,68,15,36.9,98,100,150,105,13.6,5600,4.7,230000,23.4,186,102,54,110,16,0.92,Healthy profile with slight elevation in HDL.
+B12-P001,52,Male,A+,142,92,88,18,37.2,94,118,210,150,13.5,9800,4.7,210000,27.5,235,124,46,180,28,1.1,Patient has hypertension and diabetes mellitus.
+B12-P002,67,Female,O+,128,82,72,16,36.8,97,92,180,110,12.0,7200,4.5,190000,23.8,190,105,60,110,18,0.95,Patient is clinically stable with mild hyperlipidemia.
+B12-P003,29,Male,B+,118,76,82,17,36.6,98,102,165,128,14.2,6400,4.8,210000,24.1,190,98,52,120,14,0.88,Patient is clinically stable with slight overweight status.
+B12-P004,74,Female,AB-,156,96,85,20,37.6,92,132,260,190,11.5,12600,4.3,230000,29.7,260,142,40,210,32,1.4,"Patient has hypertension, diabetes mellitus, and kidney dysfunction."
+B12-P005,41,Male,O-,132,85,76,15,36.9,96,88,140,105,13.9,7200,4.9,205000,25.4,205,112,58,140,16,0.92,Patient is clinically stable with prediabetes risk.
+B12-P006,58,Female,A-,148,90,90,19,37.1,93,110,210,132,12.4,11800,4.4,198000,28.0,228,130,44,170,22,1.15,Patient has hypertension and hyperlipidemia.
+B12-P007,63,Male,B-,136,88,72,16,36.7,98,95,160,112,15.0,6900,4.6,205000,26.2,210,100,54,130,20,0.97,Patient is clinically stable with mild metabolic concerns.
+B12-P008,22,Female,AB+,108,68,68,14,36.5,99,72,110,96,12.8,5500,4.7,225000,21.9,170,90,58,90,12,0.8,Patient is healthy with normal vitals.
+B12-P009,53,Male,O+,144,92,84,18,37.0,93,130,230,160,13.2,10200,4.5,210000,27.0,240,125,42,190,25,1.05,"Patient has hypertension, diabetes mellitus, hyperlipidemia, and mild kidney stress."
+B12-P010,35,Female,A+,122,78,70,15,36.8,98,99,170,110,11.9,7600,4.2,185000,23.0,198,105,56,120,17,0.92,Patient is clinically stable with borderline anemia.
+B12-P011,48,Male,AB-,150,95,88,22,37.4,90,140,260,190,14.6,13200,4.7,220000,29.5,255,135,38,210,30,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney impairment."
+B12-P012,60,Female,B+,130,84,76,17,36.9,95,105,180,120,12.2,8500,4.3,200000,26.9,210,110,50,150,20,1.0,Patient is clinically stable with mild metabolic syndrome.
+B12-P013,44,Male,O-,126,80,74,16,37.2,96,115,190,140,13.1,9000,4.4,210000,24.8,220,118,52,160,21,1.08,Patient has prediabetes risk with stable vitals.
+B12-P014,70,Male,A-,170,110,92,22,38.1,88,150,320,210,12.0,14500,4.1,240000,31.0,270,150,36,230,34,1.6,"Patient has severe hypertension, diabetes mellitus, hyperlipidemia, and kidney impairment."
+B12-P015,33,Female,B-,118,72,66,14,36.7,99,86,130,100,11.5,6400,4.3,195000,22.5,180,95,60,95,15,0.88,Patient is healthy with normal vitals.
+B12-P016,56,Male,O+,140,88,78,18,37.0,94,108,190,125,13.7,10100,4.5,205000,25.7,212,112,48,145,22,1.02,Patient has hypertension and borderline hyperlipidemia.
+B12-P017,49,Female,AB+,124,76,70,17,36.8,97,100,165,110,12.6,7200,4.2,190000,23.3,199,105,55,130,19,0.95,Patient is clinically stable with normal glucose and lipid indices.
+B12-P018,65,Male,A+,152,94,86,20,37.3,92,125,240,150,13.8,11200,4.4,210000,28.3,246,132,44,180,26,1.15,"Patient has hypertension, hyperlipidemia, and kidney stress."
+B12-P019,38,Male,O-,110,70,68,15,36.6,99,92,150,100,14.0,6400,4.6,190000,22.8,180,92,60,110,18,0.85,Healthy adult with normal vitals.
+B12-P020,54,Female,B+,138,84,80,17,37.1,93,112,200,130,13.0,9800,4.4,200000,26.1,210,115,52,150,21,0.98,Patient has hypertension with borderline diabetes risk.
+P001,45,Male,A+,152,92,88,18,37.2,94,118,210,150,13.5,10800,4.5,210000,27.4,210,125,42,190,28,1.1,Patient has hypertension and borderline diabetes with normal kidney function.
+P002,62,Male,O+,168,98,76,19,36.8,92,132,240,180,12.1,12500,4.3,190000,29.6,235,142,38,210,34,1.3,"Patient has uncontrolled hypertension, diabetes mellitus risk, and early kidney stress."
+P003,29,Female,B+,118,78,82,16,36.6,97,92,150,120,11.8,7600,4.6,240000,23.1,180,110,52,110,16,0.9,Healthy young female with normal vital signs and labs.
+P004,74,Male,AB-,178,102,90,20,38.2,89,110,210,140,12.0,12600,4.1,170000,26.5,260,150,34,230,42,1.4,"Elderly patient with hypertension, possible diabetes, hyperlipidemia, and early kidney stress."
+P005,53,Female,A-,142,88,84,17,36.9,96,128,190,140,13.2,9800,4.7,200000,28.0,190,115,46,150,22,1.0,Hypertension with dyslipidemia; stable kidney function; prediabetes risk.
+P006,37,Male,O-,125,82,72,14,36.7,98,88,132,110,14.0,6600,4.9,230000,24.1,165,98,54,90,14,0.8,Healthy with excellent vitals and lipid profile.
+P007,66,Female,AB+,160,94,80,18,37.1,93,110,190,130,12.5,10200,4.2,210000,29.8,205,125,40,180,28,1.0,Hypertension with borderline diabetes and dyslipidemia; mild kidney stress.
+P008,41,Male,B-,132,86,70,15,36.4,97,102,170,128,13.8,9000,4.6,250000,25.0,200,115,48,120,20,1.1,Stable vitals with prediabetic trend; normal kidney function.
+P009,55,Female,O+,146,90,78,19,37.7,93,136,210,180,11.9,11500,4.0,180000,27.9,240,135,40,170,26,1.2,Hypertension with diabetes mellitus tendency and dyslipidemia; early kidney involvement.
+P010,29,Male,A+,110,70,66,13,36.5,99,85,130,105,14.5,5200,4.8,260000,22.8,150,90,60,70,12,0.9,Healthy with excellent exercise tolerance and normal labs.
+P011,70,Male,AB-,170,100,92,21,38.0,90,150,260,210,12.2,14000,4.0,160000,28.9,210,128,36,200,38,1.6,"Hypertension with diabetes mellitus, hyperlipidemia, and kidney dysfunction."
+P012,33,Female,A-,118,76,72,14,36.8,98,95,140,110,12.9,7200,4.5,220000,23.5,190,105,50,130,18,1.0,Healthy with mild anemia; stable vitals.
+P013,58,Male,O+,145,88,86,17,37.3,95,115,180,140,13.0,9800,4.4,200000,26.2,210,122,44,160,24,1.1,Hypertension with dyslipidemia; stable kidney function.
+P014,47,Female,B+,136,82,74,16,36.9,96,105,170,125,12.3,8600,4.4,210000,25.4,185,100,52,140,20,1.0,Hypertension with normal kidney function and balanced lipid profile.
+P015,39,Male,AB+,128,82,68,15,36.6,97,98,150,112,14.2,7000,4.7,240000,23.9,170,95,58,105,18,0.95,Healthy with excellent lipid panel.
+P016,52,Female,O-,156,92,88,18,37.0,93,140,210,170,11.7,11200,4.2,195000,27.1,205,125,41,180,26,1.2,Hypertension with diabetes risk and mild kidney stress.
+P017,60,Male,A+,150,92,84,18,37.4,94,122,210,145,13.4,10100,4.3,205000,28.4,220,130,42,170,30,1.2,Hypertension with dyslipidemia; possible diabetes; early kidney stress.
+P018,28,Female,O+,112,72,64,13,36.4,99,86,130,106,12.0,6000,4.8,240000,21.5,160,90,55,80,14,0.8,Healthy reproductive-age female with optimal labs.
+P019,63,Female,B-,162,98,86,19,37.8,92,132,210,160,12.8,12200,4.1,190000,31.0,248,134,41,190,32,1.4,"Hypertension with diabetes risk, hyperlipidemia, and kidney stress."
+P020,34,Male,AB-,122,78,70,15,36.5,98,93,160,112,13.9,7300,4.7,225000,24.8,180,105,56,110,18,0.95,Healthy with normal metabolic profile.
+P001,54,Male,A+,145,92,88,18,37.2,94,112,178,150,13.8,9800,4.7,210000,26.4,210,128,46,180,22,1.1,Patient has hypertension and prediabetes.
+P002,62,Female,O+,132,86,78,16,36.8,97,96,160,118,12.5,8600,4.5,188000,23.1,190,110,54,140,18,0.95,Clinically stable with no significant abnormalities.
+P003,41,Male,B+,150,95,92,20,37.6,92,130,210,175,14.2,12500,4.6,240000,28.9,250,135,42,210,26,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and hyperlipidemia."
+P004,29,Female,AB-,118,76,72,14,36.6,99,88,140,110,11.9,7000,4.8,180000,21.7,170,95,58,110,15,0.9,Normal clinical status without significant abnormalities.
+P005,73,Male,O-,160,98,86,22,38.2,90,140,230,190,12.2,13500,4.3,92000,28.1,260,142,38,250,28,1.6,"Patient has hypertension, diabetes mellitus, and kidney dysfunction."
+P006,58,Female,A-,142,88,84,17,37.0,96,102,165,130,13.0,10200,4.5,200000,25.5,205,115,49,160,20,1.0,Hypertension with borderline high cholesterol.
+P007,35,Male,B-,125,82,70,15,36.9,98,92,140,105,14.0,7600,4.9,210000,23.0,185,105,52,120,16,0.97,Clinically stable; normal metabolic panel.
+P008,66,Female,AB+,135,90,82,18,37.4,93,110,170,132,12.1,9000,4.2,190000,27.3,210,120,44,155,22,1.1,Hypertension with mild anemia.
+P009,48,Male,O+,128,84,76,16,36.7,98,100,150,112,13.4,6400,4.4,205000,24.7,190,102,56,130,18,0.95,Healthy metabolic profile with controlled vitals.
+P010,55,Female,A+,152,93,90,19,37.8,91,118,190,145,12.8,11200,4.3,210000,26.9,230,128,42,180,24,1.2,Hypertension with hyperlipidemia.
+P011,40,Male,AB-,110,70,68,14,36.5,99,85,130,105,13.9,7200,4.6,205000,22.5,165,95,58,100,14,0.88,Healthy vitals with normal labs.
+P012,68,Male,B+,138,89,85,21,37.3,92,126,210,140,13.2,11800,4.4,170000,29.0,245,132,40,190,25,1.25,Hypertension and diabetes mellitus with mild hyperlipidemia.
+P013,52,Female,A-,124,82,75,17,36.8,97,98,160,120,12.7,9800,4.5,195000,25.0,205,108,50,150,19,1.0,Hypertension with stable metabolic profile.
+P014,37,Male,O-,118,72,66,15,36.6,99,92,145,112,14.1,7200,4.7,210000,23.3,178,98,56,110,17,0.92,Healthy vitals and labs.
+P015,59,Female,B-,146,92,88,19,37.1,93,114,178,133,12.3,10500,4.2,185000,26.2,215,120,44,170,21,1.05,Hypertension with mild kidney involvement.
+P016,47,Male,AB-,132,86,76,16,36.9,96,100,155,118,13.5,8600,4.4,190000,24.6,198,102,52,130,18,0.95,Mostly normal with slight metabolic concerns.
+P017,33,Female,A+,112,74,72,15,36.4,98,84,126,102,12.0,6800,4.6,198000,22.8,172,92,56,105,15,0.85,Healthy profile.
+P018,61,Male,B-,158,100,92,22,37.9,89,122,210,150,11.8,12500,4.0,160000,28.4,248,130,38,210,26,1.4,Hypertension with diabetes mellitus and kidney dysfunction.
+P019,45,Male,O+,129,85,80,18,37.0,95,105,165,125,13.0,9400,4.5,210000,25.2,205,112,48,145,21,1.02,Hypertension with borderline metabolic risk.
+P020,52,Female,AB+,140,88,82,17,36.7,97,108,170,124,13.6,9900,4.6,198000,24.9,199,106,51,125,18,0.98,Hypertension with stable metabolic status.
+B15-P001,62,Male,A+,152,92,88,18,37.2,94,118,210,165,12.8,8400,4.5,210000,28.4,230,142,46,178,28,1.15,Patient has hypertension and dyslipidemia with borderline diabetes.
+B15-P002,47,Female,O+,126,82,72,16,36.8,98,92,140,105,13.6,5200,4.3,195000,23.1,190,105,58,120,15,0.95, clinically stable with no significant abnormalities.
+B15-P003,31,Male,B+,138,88,82,20,37.0,96,128,210,140,13.2,12800,4.7,230000,26.2,205,128,44,190,22,1.08,Patient has hypertension and elevated cholesterol with prediabetic glucose.
+B15-P004,54,Female,AB-,170,100,92,22,38.3,92,150,260,210,11.5,15200,4.1,180000,29.9,260,160,38,210,34,1.4,"Uncontrolled hypertension with hyperlipidemia, diabetes mellitus, infection, and kidney involvement."
+B15-P005,68,Male,A-,145,92,85,18,36.9,97,110,180,130,12.0,7400,4.2,205000,26.8,210,115,50,160,26,1.12,Hypertension with mild dyslipidemia; clinically stable.
+B15-P006,29,Female,O-,118,76,68,14,36.6,99,88,130,95,13.9,5200,4.6,210000,22.4,180,92,60,110,12,0.88,Healthy profile with normotension and normal metabolic parameters.
+B15-P007,52,Male,AB+,160,92,90,19,37.8,93,140,230,170,13.0,12600,4.4,190000,27.5,245,132,42,205,28,1.25,Hypertension with dyslipidemia and diabetes mellitus.
+B15-P008,41,Female,B-,132,84,76,17,36.7,97,102,150,112,12.3,6400,4.5,205000,24.7,210,118,52,145,18,1.02,Hypertension with normal glucose tolerance and stable kidney function.
+B15-P009,37,Male,O+,124,82,70,15,36.5,98,98,140,110,13.8,5200,4.6,225000,23.9,190,100,56,120,14,0.92,Healthy with ideal blood pressure and normal metabolic profile.
+B15-P010,59,Female,A+,148,90,88,18,37.1,93,132,210,168,12.1,9800,4.3,200000,28.1,235,126,40,190,24,1.08,Hypertension with diabetes mellitus and dyslipidemia.
+B15-P011,23,Male,AB-,112,70,64,14,36.4,99,86,120,92,14.2,5200,4.8,225000,21.8,170,88,58,100,12,0.84,Healthy young adult with normal vitals and labs.
+B15-P012,66,Male,B-,162,98,94,21,37.5,90,155,260,200,11.2,16800,4.0,170000,30.2,252,138,40,230,32,1.42,"Uncontrolled hypertension with diabetes mellitus, infection, and kidney dysfunction."
+B15-P013,54,Female,A-,128,82,74,16,36.8,96,110,170,125,12.6,8000,4.5,210000,26.0,210,115,55,150,20,1.1,Hypertension with stable metabolic profile.
+B15-P014,44,Male,AB+,138,88,79,18,37.0,95,128,190,146,13.1,9000,4.5,198000,25.3,235,125,44,170,22,1.05,Hypertension with dyslipidemia and prediabetes.
+B15-P015,72,Male,O+,170,110,96,23,38.0,88,170,290,240,11.4,19000,3.9,160000,27.8,260,145,38,240,38,1.6,"Hypertension with diabetes mellitus, severe kidney involvement, and infection."
+B15-P016,34,Female,A+,126,80,66,15,36.5,99,102,140,110,13.4,5400,4.7,220000,22.9,180,95,60,115,16,0.9,Healthy with optimal vital signs.
+B15-P017,63,Male,B+,150,92,86,18,37.3,93,118,190,140,12.9,10200,4.3,200000,27.0,208,110,46,160,26,1.08,Hypertension with borderline diabetes and dyslipidemia.
+B15-P018,28,Female,AB-,110,72,66,14,36.6,99,88,125,100,12.8,5200,4.6,212000,21.5,165,85,54,105,13,0.85,Healthy young female.
+B15-P019,53,Male,O-,144,90,84,18,37.0,92,132,200,150,12.2,9000,4.1,210000,28.3,238,128,42,180,24,1.14,Hypertension with diabetes and dyslipidemia.
+B15-P020,40,Female,A-,120,78,70,15,36.7,97,105,150,115,13.5,7000,4.6,215000,23.5,200,105,52,130,18,0.99,Healthy with early mild metabolic changes.
+P001,52,Male,A+,145,92,88,18,37.2,94,130,210,140,13.5,9800,4.6,210000,28.4,210,125,42,180,28,1.1,Patient has hypertension and diabetes mellitus.
+P002,37,Female,O+,118,78,72,16,36.8,97,102,150,110,12.4,8200,4.7,195000,22.1,190,110,56,110,16,0.95,Clinically stable with no significant abnormalities.
+P003,69,Male,B+,160,95,92,20,37.6,92,145,240,170,12.8,12200,4.2,220000,26.2,245,138,40,210,32,1.35,"Patient has uncontrolled hypertension, high cholesterol, and kidney dysfunction."
+P004,45,Female,AB+,132,86,78,17,36.9,98,88,140,105,14.2,7600,4.5,210000,23.5,180,95,58,90,20,0.95,Clinically stable with normal glucose tolerances.
+P005,58,Male,O-,150,92,85,19,38.1,93,138,205,132,13.0,10800,4.4,200000,29.8,260,132,39,190,26,1.25,Hypertension with possible diabetes; infection suspected due to fever and elevated WBC.
+P006,33,Female,A-,112,70,68,14,36.6,99,95,130,105,11.8,6200,4.9,180000,21.3,165,95,62,75,14,0.88,Clinically stable; normal lipid and renal markers.
+P007,64,Male,B-,138,88,80,18,37.0,96,120,190,110,13.7,10050,4.3,205000,27.1,205,118,45,170,24,1.15,Hypertension with borderline dyslipidemia.
+P008,28,Female,AB-,108,64,70,14,36.7,98,88,125,98,12.1,5600,4.6,190000,21.9,170,90,54,72,15,0.82,Healthy vitals with normal metabolic profile.
+P009,72,Male,O+,170,100,95,22,38.4,89,160,260,190,13.2,13200,4.0,190000,28.7,260,150,38,230,34,1.6,"Uncontrolled hypertension, diabetes mellitus, and kidney dysfunction with respiratory distress."
+P010,50,Female,A+,125,82,76,15,37.1,96,110,170,125,13.9,9000,4.5,210000,24.0,190,105,52,120,22,1.0,Stable condition with early signs of metabolic syndrome.
+P011,41,Male,B+,126,79,74,16,36.8,98,98,140,105,14.0,7600,4.8,205000,23.4,185,100,60,95,18,0.92,Clinically stable; normal glucose and lipid profile.
+P012,63,Female,AB+,142,90,82,19,37.3,93,125,210,130,12.6,11200,4.1,198000,26.0,235,128,40,180,28,1.18,Hypertension with dyslipidemia; possible early renal involvement.
+P013,55,Male,O+,118,78,70,15,37.0,97,112,165,118,13.1,8500,4.5,199000,23.9,195,108,55,105,19,0.98,Stable cardiovascular and metabolic parameters.
+P014,48,Female,A-,134,86,79,17,36.9,95,135,195,142,12.9,9700,4.2,210000,25.6,202,115,46,130,22,1.05,Hypertension with elevated fasting glucose and mild kidney stress.
+P015,29,Male,B-,110,72,66,14,36.5,99,92,140,95,11.5,6800,4.6,188000,22.5,160,88,58,72,16,0.84,Healthy vitals; no significant abnormalities.
+P016,66,Male,AB-,158,96,90,21,37.8,91,142,220,160,13.4,12500,4.0,210000,27.9,250,132,40,190,30,1.32,"Uncontrolled hypertension, diabetes, and kidney dysfunction."
+P017,40,Female,O-,122,80,72,15,36.7,97,105,155,112,12.8,7800,4.4,210000,24.7,185,102,54,110,18,0.95,Stable metabolic profile.
+P018,54,Male,A+,144,92,84,18,37.4,93,128,210,140,13.6,10600,4.3,205000,26.3,220,120,44,165,26,1.12,Hypertension with dyslipidemia and possible renal involvement.
+P019,34,Female,AB+,118,76,70,15,36.6,98,100,135,105,12.2,6900,4.5,190000,20.9,170,90,58,85,17,0.89,Healthy; no significant abnormalities.
+P020,60,Male,O+,136,88,78,17,37.2,94,118,180,125,13.9,9800,4.4,200000,25.1,205,115,50,140,24,1.08,Hypertension with mild dyslipidemia; clinically stable.
+B17-P001,45,Male,A+,152,92,88,18,37.2,96,118,190,140,13.6,8600,4.6,210000,26.4,210,125,46,165,22,1.1,Patient has hypertension and borderline diabetes with stable vitals.
+B17-P002,62,Female,O+,142,88,78,16,36.9,94,130,210,145,12.3,12000,4.1,230000,28.9,245,138,44,210,28,1.3,Patient has hypertension and hyperlipidemia with mild kidney strain.
+B17-P003,37,Male,B+,128,84,92,20,37.5,97,102,168,120,15.1,9000,4.8,195000,24.2,190,110,52,140,16,0.95,Clinically stable with mild hypertension and normal kidney function.
+B17-P004,54,Female,AB+,168,96,85,22,38.2,92,140,230,170,11.9,13200,4.0,190000,29.7,260,150,38,198,32,1.6,"Patient has uncontrolled hypertension, diabetes mellitus, and signs of early kidney dysfunction."
+B17-P005,29,Male,O-,118,76,72,14,36.7,98,90,150,105,14.8,7500,4.9,240000,23.7,180,95,54,110,18,0.9,Healthy young adult with normal vitals and lipid profile.
+B17-P006,71,Male,A-,154,92,86,18,37.0,93,112,190,132,12.1,11000,4.0,210000,28.2,230,128,40,170,24,1.2,Hypertension with borderline diabetes; stable infection absent.
+B17-P007,53,Female,AB-,136,82,80,19,36.8,97,115,180,130,13.4,9800,4.5,205000,25.6,205,118,49,148,20,1.0,Hypertension with normal kidney function and lipid profile.
+B17-P008,46,Male,A+,130,84,90,17,37.3,95,125,210,140,13.9,10200,4.7,220000,26.9,220,125,42,160,26,1.1,Hypertension with prediabetes and lipid abnormalities.
+B17-P009,39,Female,B-,112,74,68,15,36.6,99,92,140,105,12.8,7600,4.3,188000,22.4,178,90,58,102,17,0.8,Healthy with normal vitals and lipid profile.
+B17-P010,66,Male,O+,150,92,82,21,37.6,93,140,230,160,13.2,11500,4.2,200000,27.1,248,132,44,180,25,1.3,Hypertension with diabetes risk and mild kidney stress.
+B17-P011,52,Female,A-,125,79,76,16,36.9,96,105,160,112,11.9,9000,4.4,202000,23.9,195,105,48,120,22,0.95,Stable condition with mild anemia and normal kidney function.
+B17-P012,58,Male,AB+,138,85,84,18,36.7,94,118,170,128,14.2,10000,4.5,215000,25.3,210,115,47,130,19,1.0,Hypertension with obesity and stable metabolic parameters.
+B17-P013,34,Female,O+,120,78,72,17,36.5,98,99,150,110,12.6,7600,4.7,199000,22.8,190,100,55,105,15,0.9,Healthy with optimal vitals and normal labs.
+B17-P014,60,Male,B+,144,90,88,19,37.1,92,132,210,150,13.0,10800,4.2,205000,26.7,235,128,41,170,21,1.2,Hypertension with mild kidney strain and dyslipidemia.
+B17-P015,41,Male,AB-,132,82,75,16,36.8,97,108,165,114,13.8,9400,4.6,210000,24.5,198,102,50,120,20,1.0,Stable hypertension with healthy metabolic profile.
+B17-P016,49,Female,A+,156,92,82,18,37.4,93,135,220,155,12.4,11200,4.3,208000,27.3,242,132,44,178,26,1.25,Hypertension with diabetes risk and mild renal involvement.
+B17-P017,27,Male,O+,110,70,66,15,36.4,99,85,130,96,14.3,6400,4.8,210000,21.9,165,88,56,92,14,0.8,Healthy with excellent metabolic profile.
+B17-P018,68,Female,B-,170,100,90,24,38.0,89,150,240,180,11.5,14000,3.9,190000,29.1,250,140,42,190,34,1.5,Hypertension with diabetes mellitus and kidney impairment.
+B17-P019,55,Male,A-,140,88,76,17,36.9,95,118,180,128,13.2,9800,4.4,208000,26.1,205,112,46,130,21,1.05,Hypertension with normal kidney function and mild dyslipidemia.
+B17-P020,33,Female,AB+,125,80,70,14,36.6,98,97,140,110,12.2,8000,4.5,198000,23.2,182,95,54,100,18,0.92,Healthy with normal vitals and lipid profile.
+B18-P001,52,Male,A+,142,92,88,18,37.2,94,118,210,165,13.5,9800,4.6,210000,26.4,210,128,46,180,18,1.1,Patient has hypertension and prediabetes with stable infection ruled out.
+B18-P002,38,Female,O+,118,78,72,16,36.8,97,92,140,110,12.4,5200,4.2,180000,22.7,190,110,54,120,14,0.9,Clinically stable; no acute abnormalities. Hyperlipidemia mild with normal kidney function.
+B18-P003,66,Male,B+,155,95,92,20,37.5,92,132,210,140,12.9,12200,4.0,195000,29.1,230,135,41,210,26,1.3,Patient has hypertension and diabetes mellitus with early signs of kidney stress; possible infection considered.
+B18-P004,29,Female,AB-,112,70,68,14,36.6,99,88,130,105,11.6,5200,4.5,165000,21.4,170,95,58,110,12,0.8,Healthy overall; normal metabolic panel with no acute issues.
+B18-P005,44,Male,A-,131,84,76,18,37.0,96,110,170,125,14.2,8000,4.8,205000,25.0,205,120,44,150,16,1.0,Hypertension with borderline hyperlipidemia; otherwise clinically stable.
+B18-P006,73,Female,O-,162,98,90,22,38.2,89,144,230,170,11.9,14000,3.8,165000,28.3,260,150,40,210,34,1.4,Uncontrolled hypertension with diabetes mellitus and signs of respiratory distress; possible infection.
+B18-P007,57,Male,B-,138,88,85,19,36.9,93,118,190,140,13.8,9800,4.4,190000,27.2,215,125,42,160,22,1.2,"Hypertension, dyslipidemia; no acute infection evident."
+B18-P008,33,Female,AB+,124,76,70,15,36.7,98,99,150,110,12.1,6300,4.3,172000,23.8,185,100,56,106,15,0.92,Overall stable; mild hyperlipidemia with normoglycemia.
+B18-P009,62,Male,O+,146,90,88,17,37.3,93,135,210,150,13.2,11500,4.1,188000,26.9,235,132,46,190,24,1.15,Hypertension with diabetes; mild anemia.
+B18-P010,48,Female,A+,128,82,78,16,36.8,98,102,160,118,12.9,7600,4.5,200000,24.6,198,105,52,120,18,0.95,Stable hypertension with normal metabolic labs.
+B18-P011,54,Male,AB-,140,88,82,18,37.0,95,125,190,132,13.6,8600,4.2,210000,25.7,205,118,45,140,20,1.05,Hypertension with elevated fasting sugar; mild hyperlipidemia.
+B18-P012,39,Female,B+,115,75,70,14,36.5,99,88,140,102,11.8,5800,4.3,178000,21.9,165,90,58,95,13,0.85,Healthy; normal vitals and labs.
+B18-P013,70,Male,A-,152,94,86,21,37.6,90,142,260,170,13.0,12800,4.0,172000,28.8,245,142,38,205,28,1.28,Hypertension with diabetes and signs of respiratory distress; possible infection.
+B18-P014,27,Female,O-,118,76,68,15,36.4,99,92,150,105,12.6,6400,4.2,186000,20.8,170,95,56,110,14,0.88,Healthy; no significant abnormalities.
+B18-P015,59,Male,AB+,141,89,84,19,37.1,92,128,210,145,13.4,10600,4.1,190000,27.3,220,126,44,170,22,1.08,Hypertension with dyslipidemia; stable otherwise.
+B18-P016,45,Female,A+,129,83,79,17,36.9,97,100,160,112,12.3,7200,4.4,182000,23.9,190,102,53,118,16,0.92,Metabolic panel within normal limits; borderline hyperlipidemia.
+B18-P017,66,Female,B-,149,92,86,18,37.4,91,138,210,152,12.2,11200,3.9,186000,29.5,238,132,40,180,25,1.25,Hypertension with diabetes; mild kidney stress.
+B18-P018,41,Male,O+,125,82,77,16,36.6,98,96,150,105,13.0,6900,4.5,184000,22.1,180,98,56,105,17,0.89,Healthy; no significant abnormalities.
+B18-P019,53,Male,A-,136,86,80,17,37.2,94,122,190,132,13.1,9000,4.2,199000,26.1,205,118,46,150,21,1.0,Hypertension with dyslipidemia; stable.
+B18-P020,60,Female,AB-,144,92,88,19,37.3,93,130,210,140,12.7,9800,4.0,186000,27.0,214,124,44,162,24,1.12,Hypertension with diabetes and mild kidney stress.
+B19-P001,54,Male,A+,152,92,88,18,37.1,94,118,190,135,13.2,9800,4.6,210000,27.5,212,126,48,176,22,1.1,Patient has hypertension and hyperlipidemia with normal kidney function.
+B19-P002,62,Male,O+,168,92,82,20,36.8,93,142,210,160,13.5,11200,4.3,185000,29.8,245,142,44,210,28,1.2,Patient has uncontrolled hypertension and hyperlipidemia; mild dehydration noted.
+B19-P003,47,Female,B+,125,78,72,16,36.6,97,98,150,120,12.4,7600,4.55,205000,24.3,178,110,52,128,16,0.9,Clinically stable with normoglycemia and normolipidemia; no acute issues.
+B19-P004,71,Male,AB-,150,95,90,22,37.5,92,110,180,140,12.0,12600,4.1,170000,28.1,260,135,40,190,32,1.4,Hypertension with possible renal impairment and hyperlipidemia; early signs of infection suspected due to elevated WBC.
+B19-P005,39,Female,A-,118,76,68,14,36.4,99,88,140,105,11.8,7200,4.6,220000,22.7,165,95,58,110,18,0.7,Healthy profile with normal blood work and vital signs.
+B19-P006,55,Female,O-,142,88,86,19,38.2,93,130,210,155,12.2,9800,4.2,198000,26.3,230,120,46,170,25,1.0,Hypertension with fever; possible infection; mild anemia.
+B19-P007,68,Male,B-,165,95,92,21,39.0,91,160,250,200,13.0,14000,4.0,160000,29.9,255,138,42,220,34,1.6,Uncontrolled hypertension with diabetes mellitus and possible kidney dysfunction and infection.
+B19-P008,29,Female,AB+,110,72,70,15,36.7,98,92,130,105,12.9,6200,4.8,240000,21.5,148,88,60,95,14,0.8,Healthy with normal labs and vitals; no acute issues.
+B19-P009,61,Male,A+,140,90,78,18,37.0,96,115,170,130,13.7,10500,4.5,190000,28.0,210,115,50,150,24,1.1,Hypertension with normal kidney function and borderline cholesterol.
+B19-P010,49,Female,O+,128,82,72,17,36.9,97,102,170,120,12.0,8600,4.7,210000,23.8,190,105,56,120,21,0.9,Clinically stable; mild hyperlipidemia and normal glucose.
+B19-P011,73,Male,AB+,172,98,85,23,37.8,89,140,210,170,12.3,12800,4.2,182000,27.0,270,150,40,210,30,1.3,Hypertension with potential kidney impairment and dyslipidemia; respiratory distress risk due to low SpO2.
+B19-P012,41,Female,B-,118,76,70,16,36.5,98,105,160,120,13.4,7600,4.5,200000,22.9,180,100,57,110,19,0.85,Healthy; no significant abnormalities.
+B19-P013,58,Male,A-,146,92,84,19,37.3,93,125,190,140,13.1,10200,4.3,199000,26.7,220,118,49,160,26,1.0,Hypertension with borderline diabetes; stable renal function.
+B19-P014,33,Female,O-,112,74,66,14,36.6,99,90,130,100,12.6,7100,4.8,230000,21.8,170,90,58,95,17,0.8,Healthy; excellent metabolic profile.
+B19-P015,76,Female,AB-,158,96,88,20,37.4,90,135,210,150,12.1,11800,4.0,176000,28.5,235,125,44,180,29,1.2,Hypertension with diabetes risk and mild anemia; respiratory distress risk.
+B19-P016,45,Male,A+,132,86,76,18,36.8,96,110,165,130,14.0,8900,4.7,205000,25.4,205,112,54,140,22,0.95,Hypertension with normal glucose and lipids; stable.
+B19-P017,52,Female,B+,138,84,79,17,36.7,95,125,190,140,12.7,9400,4.4,210000,24.6,210,115,50,150,24,0.92,Hypertension with borderline diabetes and mild lipid abnormalities.
+B19-P018,60,Male,O+,170,98,92,23,38.0,90,155,240,190,13.8,15000,4.3,170000,28.9,260,145,40,210,34,1.5,Hypertension with diabetes mellitus and kidney dysfunction; infection suspected.
+B19-P019,38,Male,A-,122,78,70,15,36.6,98,100,150,110,13.2,7500,4.5,230000,23.1,190,105,57,115,19,0.88,Healthy; no notable abnormalities.
+B19-P020,66,Female,B-,148,90,80,18,37.2,94,118,180,140,12.5,9800,4.3,195000,27.3,215,120,46,160,26,1.0,Hypertension with dyslipidemia; stable renal function.
+P001,45,Male,A+,152,92,88,18,37.2,94,118,210,180,13.5,9800,4.6,210000,27.8,210,130,42,180,28,1.1,Patient has hypertension and diabetes mellitus.
+P002,62,Female,O+,138,88,72,16,36.8,97,108,160,130,12.2,6900,4.1,190000,23.5,195,110,52,140,16,0.95,Clinically stable with mild hypertension.
+P003,29,Male,B+,128,82,82,20,36.6,98,92,140,120,14.1,7200,4.7,230000,24.1,165,95,48,120,14,0.9,Patient is clinically stable.
+P004,54,Female,AB-,164,98,90,22,37.9,92,130,210,170,11.8,12500,3.9,165000,29.2,260,142,38,210,34,1.3,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney impairment."
+P005,71,Male,A-,146,92,78,17,36.9,96,110,150,140,13.9,9800,4.0,205000,26.7,205,125,40,160,22,1.0,Hypertension with borderline diabetes; clinically stable.
+P006,38,Female,O-,120,78,76,15,36.5,99,95,130,110,12.7,7600,4.5,240000,22.4,180,105,55,110,12,0.85,Normal clinically with good metabolic profile.
+P007,52,Male,B-,170,110,92,24,38.2,89,150,240,210,12.0,14000,4.2,180000,28.9,245,135,36,230,38,1.4,"Uncontrolled hypertension, diabetes mellitus, infection, and kidney impairment."
+P008,33,Female,AB+,118,76,70,14,36.4,98,88,125,100,13.1,5600,4.6,225000,21.8,160,98,58,95,16,0.8,Healthy with mild lipid elevations.
+P009,66,Male,O+,142,90,84,18,37.0,93,110,190,150,13.3,9100,4.3,200000,25.0,230,125,44,170,26,1.0,Hypertension with dyslipidemia.
+P010,27,Female,A+,112,72,68,16,36.7,99,78,120,95,11.5,5400,4.8,260000,20.5,150,90,60,70,10,0.78,Young female with ideal parameters; healthy.
+P011,58,Male,AB-,156,94,86,19,37.4,93,125,190,160,12.4,10200,4.2,210000,27.2,235,128,40,180,30,1.1,Hypertension with dyslipidemia; possible early kidney strain.
+P012,44,Female,A-,126,84,75,17,36.8,96,102,140,120,12.9,7600,4.4,220000,23.0,190,105,52,130,18,0.92,Mild hypertension with stable metabolic profile.
+P013,49,Male,O-,136,88,81,18,37.1,95,115,170,140,13.0,8800,4.3,200000,26.0,205,115,46,150,28,1.0,Hypertension with borderline diabetes.
+P014,61,Female,B+,150,92,85,20,37.5,92,140,210,180,12.0,12000,3.9,190000,28.0,250,135,40,200,32,1.2,"Hypertension, diabetes, and mild kidney stress."
+P015,36,Male,AB+,122,80,72,15,36.6,97,100,140,110,14.2,6000,4.5,235000,23.7,175,95,58,100,14,0.82,Healthy with excellent metabolic profile.
+P016,53,Female,O+,135,86,79,17,37.0,94,128,190,150,12.5,9800,4.1,200000,25.5,210,120,44,160,26,0.98,Hypertension with dyslipidemia.
+P017,68,Male,B-,158,98,88,21,37.7,90,132,210,170,11.6,11200,3.8,170000,26.8,248,132,36,190,40,1.3,"Hypertension, kidney dysfunction, and dyslipidemia."
+P018,26,Female,A+,110,70,66,14,36.5,99,85,120,100,12.0,5200,4.5,270000,21.2,155,88,62,85,12,0.76,Healthy with favorable lipid panel.
+P019,59,Female,AB-,144,90,82,18,37.3,93,118,190,140,12.8,10500,4.0,205000,27.0,220,125,42,170,28,1.05,Hypertension with dyslipidemia.
+P020,41,Male,O-,132,88,77,16,36.9,95,112,160,130,13.4,8600,4.4,215000,24.9,200,108,46,150,22,0.9,Hypertension with stable metabolic profile.
+B21-P001,54,Male,A+,148,92,88,18,37.2,94,128,210,142,13.6,11400,4.5,210000,28.7,235,132,46,176,32,1.4,Patient has hypertension and diabetes mellitus with mild anemia and kidney dysfunction.
+B21-P002,33,Female,O+,118,78,72,16,36.8,97,92,150,101,12.3,7400,4.2,198000,22.4,185,105,52,110,14,0.9,Clinically stable with no significant abnormalities.
+B21-P003,68,Male,B+,162,98,92,20,38.1,92,142,230,165,12.0,12500,4.6,260000,27.5,260,150,38,210,28,1.6,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+B21-P004,47,Female,AB-,132,86,76,17,36.9,98,110,170,125,11.8,8600,4.8,220000,24.9,210,118,56,95,18,0.95,Stable condition with mild dyslipidemia and borderline low hemoglobin.
+B21-P005,59,Male,O-,140,92,85,19,37.0,93,118,190,135,14.0,9800,4.3,185000,29.1,198,120,48,130,22,1.2,Hypertension with borderline diabetes and mild dehydration.
+B21-P006,41,Female,A-,110,70,68,15,36.6,99,95,140,100,13.2,5200,4.6,210000,21.8,170,92,58,88,12,0.85,Healthy checkup with no significant abnormalities.
+B21-P007,72,Male,AB+,170,110,98,22,38.3,89,156,260,210,11.5,13600,4.1,200000,26.4,280,165,40,240,26,1.8,"Uncontrolled hypertension, diabetes mellitus, hyperlipidemia, and kidney dysfunction."
+B21-P008,26,Female,B-,112,74,70,14,36.7,98,88,130,105,12.9,5200,4.5,225000,22.0,160,88,60,78,11,0.8,Healthy with optimal vitals; no major concerns.
+B21-P009,65,Female,A+,150,92,90,18,37.4,93,130,210,140,12.0,10200,4.2,190000,28.2,210,125,42,120,24,1.1,Hypertension with possible early kidney involvement and dyslipidemia.
+B21-P010,37,Male,O+,126,80,77,17,36.8,96,100,160,118,14.2,7600,4.7,235000,23.5,192,110,50,95,16,0.95,Clinically stable; mild hyperlipidemia without other major issues.
+B21-P011,52,Female,AB-,144,88,84,19,37.3,95,122,198,145,12.6,10500,4.3,205000,25.7,230,128,44,150,20,1.0,Hypertension with dyslipidemia; stable otherwise.
+B21-P012,29,Male,A-,118,76,66,16,36.6,99,102,160,110,13.4,6500,4.4,190000,21.1,178,100,56,82,13,0.9,Normal vitals; no significant pathology.
+B21-P013,60,Male,B+,156,96,88,21,37.8,92,135,215,152,11.7,12200,4.0,210000,27.0,242,135,40,170,26,1.25,"Hypertension, hyperlipidemia, possible early kidney dysfunction, and anemia."
+B21-P014,45,Female,O-,128,82,74,16,36.9,97,108,165,116,12.1,6000,4.5,220000,23.3,190,105,54,90,18,0.92,Healthy with mild transient hyperlipidemia.
+B21-P015,63,Male,O+,144,90,86,18,37.1,94,132,205,138,13.0,9700,4.1,205000,26.9,220,122,46,140,21,1.15,Hypertension with dyslipidemia; stable otherwise.
+B21-P016,38,Female,AB+,112,72,69,15,36.5,98,95,140,105,12.4,5400,4.6,208000,22.6,176,92,58,78,12,0.88,Healthy with excellent oxygenation and normal labs.
+B21-P017,54,Male,A+,138,86,82,19,37.0,96,125,190,132,14.5,10800,4.5,215000,25.4,210,126,50,125,19,1.05,Hypertension with borderline diabetes and mild dyslipidemia.
+B21-P018,29,Male,B+,114,74,71,16,36.7,99,90,135,98,13.9,5200,4.7,230000,23.1,168,90,60,72,14,0.86,Healthy; normal vitals and labs.
+B21-P019,66,Female,AB-,152,94,90,21,37.6,91,140,220,160,11.9,11300,4.2,198000,28.9,238,132,42,160,23,1.3,"Hypertension, diabetes mellitus, and kidney dysfunction."
+B21-P020,52,Male,A-,136,88,79,17,36.8,95,112,170,125,13.1,8600,4.4,210000,24.7,196,108,54,105,17,0.97,Hypertension with mild dyslipidemia; otherwise stable.
+B22-P001,45,Male,A+,142,92,88,18,37.2,94,118,190,140,13.4,9800,4.5,210000,27.8,210,125,46,170,18,1.1,Patient has hypertension with elevated fasting sugar suggesting borderline diabetes; clinically stable.
+B22-P002,62,Female,O+,158,96,92,20,37.5,93,110,210,170,12.1,12400,4.1,185000,29.3,235,142,48,210,28,1.4,Patient has hypertension and hyperlipidemia; diabetes mellitus not overt but requires monitoring; mild kidney impairment.
+B22-P003,29,Male,B+,118,78,76,16,36.8,98,92,150,110,14.8,6500,4.6,195000,23.4,190,105,52,120,14,0.95,Clinically stable; healthy young adult with no significant abnormalities.
+B22-P004,53,Female,AB+,170,102,98,22,38.1,91,138,210,170,11.2,13200,4.0,210000,31.0,260,150,40,260,24,1.6,Hypertension with infection; anemia; kidney dysfunction indicated by elevated creatinine.
+B22-P005,37,Male,O-,126,82,80,17,36.9,97,88,140,112,15.2,7800,4.7,230000,24.7,190,98,56,110,17,0.98,Clinically stable; mild hyperlipidemia with normal glucose.
+B22-P006,71,Female,A-,150,94,86,19,37.3,93,132,210,150,12.0,11500,3.9,200000,28.4,245,132,46,190,22,1.3,Hypertension with dyslipidemia; early signs of kidney dysfunction.
+B22-P007,52,Male,AB-,144,90,84,18,36.7,96,102,210,130,13.9,9000,4.4,220000,26.1,205,110,50,150,26,1.25,Hypertension; dyslipidemia; glucose elevated but not meeting diabetes criteria.
+B22-P008,33,Female,B-,112,76,72,15,36.6,99,95,140,105,12.8,7000,4.5,210000,22.8,170,90,58,95,16,0.88,Healthy young female with stable vitals and normal labs.
+B22-P009,68,Male,O+,156,92,90,21,37.4,92,128,210,160,13.0,10800,4.2,190000,29.9,260,138,42,210,24,1.35,Hypertension with possible kidney dysfunction and dyslipidemia; infection not evident.
+B22-P010,41,Female,A+,132,88,85,18,37.0,96,108,170,130,14.1,9300,4.6,205000,25.0,200,115,52,130,20,1.02,Hypertension; stable metabolic panel; no major concerns.
+B22-P011,58,Male,B+,148,92,88,19,36.9,94,112,190,132,13.5,12200,4.0,210000,27.2,228,125,44,180,26,1.32,Hypertension with elevated triglycerides and mild kidney stress; prediabetes features.
+B22-P012,24,Male,AB+,110,70,68,14,36.5,97,84,130,105,15.0,6400,4.8,235000,22.1,165,95,58,90,14,0.92,Healthy; no significant abnormalities.
+B22-P013,55,Female,A-,136,88,82,17,37.1,95,125,210,140,11.9,10100,3.8,198000,28.7,220,128,46,180,19,1.2,Hypertension with borderline diabetes; anemia.
+B22-P014,47,Male,O+,130,84,75,16,36.6,98,100,170,112,14.2,7600,4.7,220000,25.3,198,102,54,120,18,0.95,Mild hypertension; otherwise stable.
+B22-P015,66,Female,B-,164,100,92,23,37.8,89,140,240,190,10.9,12800,3.7,170000,30.2,270,150,38,260,30,1.5,Severe hypertension with diabetes and kidney impairment; anemia.
+B22-P016,39,Male,AB+,120,78,70,15,36.8,99,88,145,102,13.7,8400,4.6,215000,23.9,185,98,56,110,16,0.96,Healthy; normal vitals and labs.
+B22-P017,54,Female,A+,146,92,86,19,37.0,92,118,200,140,12.5,11200,3.9,205000,26.7,210,122,44,160,22,1.25,Hypertension with dyslipidemia; possible early kidney strain.
+B22-P018,60,Male,O-,156,98,90,21,37.2,93,135,210,160,13.2,12500,4.0,190000,28.5,238,130,42,170,28,1.35,Hypertension; diabetes features; kidney stress.
+B22-P019,28,Female,AB-,114,72,66,14,36.4,98,92,150,105,13.0,7200,4.5,225000,21.6,180,92,60,95,15,0.85,Healthy young woman.
+B22-P020,48,Male,B+,138,86,82,17,37.3,95,110,190,125,14.0,9800,4.2,205000,26.0,205,112,48,140,21,1.15,Hypertension with borderline diabetes; otherwise stable.
+B23-P001,52,Male,A+,142,92,88,18,37.2,94,118,210,160,13.6,12500,4.33,210000,27.3,210,128,46,180,18,1.2,Patient has hypertension and diabetes mellitus with borderline kidney function.
+B23-P002,38,Female,O-,118,78,72,16,36.8,98,92,140,110,12.5,6400,4.5,190000,22.7,170,95,52,110,12,0.95,Clinically stable with no significant abnormalities.
+B23-P003,66,Male,B+,156,98,92,20,37.9,93,128,230,190,12.8,13200,4.1,240000,29.4,260,142,38,210,22,1.35,"Patient has uncontrolled hypertension, diabetes mellitus, hyperlipidemia, and signs of kidney involvement."
+B23-P004,45,Female,AB-,128,84,80,17,36.6,97,105,165,125,13.2,9000,4.6,210000,23.9,190,110,58,130,16,1.0,Hypertension without other major abnormalities.
+B23-P005,29,Male,A-,110,70,68,14,36.5,99,88,130,105,13.0,5200,4.8,180000,21.4,165,85,60,90,11,0.9,Normal vitals with no significant abnormalities.
+B23-P006,57,Female,B-,150,92,85,19,37.0,92,132,210,170,11.9,11500,4.2,200000,28.1,230,125,44,170,20,1.15,Hypertension with diabetes mellitus and early signs of kidney stress.
+B23-P007,73,Male,O+,165,100,90,22,38.1,89,140,260,210,14.2,12500,4.0,230000,26.7,240,132,40,190,28,1.4,"Uncontrolled hypertension, high blood sugar, dyslipidemia, and kidney function concerns."
+B23-P008,41,Female,AB+,122,80,76,15,36.7,99,96,150,115,12.2,7000,4.7,195000,24.3,180,90,54,100,14,0.92,Stable vitals with mild hyperlipidemia.
+B23-P009,60,Male,A+,134,86,82,18,36.9,96,112,190,140,13.9,9800,4.5,205000,25.6,205,118,46,140,18,1.0,Hypertension with prediabetes features; hyperlipidemia.
+B23-P010,34,Female,O+,118,76,70,15,36.4,97,100,140,110,11.8,8200,4.3,205000,22.1,175,105,56,105,12,0.88,Isolated overweight status with stable vitals.
+B23-P011,50,Male,B+,144,90,86,17,37.3,93,118,210,150,14.1,11200,4.6,220000,28.5,240,130,42,160,21,1.18,Hypertension with dyslipidemia; possible early kidney stress.
+B23-P012,69,Female,AB-,152,94,88,21,37.5,91,126,220,165,12.0,12800,4.0,210000,27.0,245,135,40,180,24,1.25,"Hypertension, diabetes mellitus indicators, kidney function concerns, and hyperlipidemia."
+B23-P013,28,Female,A+,112,72,66,14,36.3,99,86,120,100,12.7,5600,4.4,190000,20.5,165,85,62,90,11,0.85,Healthy young female with normal parameters.
+B23-P014,63,Male,O-,170,105,95,23,38.2,88,140,260,210,13.4,14000,4.2,230000,29.9,255,142,44,185,26,1.36,Uncontrolled hypertension with diabetes mellitus and kidney dysfunction.
+B23-P015,40,Male,B-,126,82,78,16,36.8,97,102,160,118,13.1,7800,4.4,198000,23.5,185,98,54,115,15,0.96,Hypertension without other significant abnormalities.
+B23-P016,55,Female,AB+,140,88,84,18,37.0,95,125,210,150,12.3,10200,4.3,205000,26.2,205,118,48,150,19,1.05,Hypertension with dyslipidemia; stable kidney function.
+B23-P017,47,Male,O+,132,88,83,17,36.9,96,110,170,130,13.7,9000,4.5,210000,25.0,190,108,50,125,17,1.0,Hypertension with dyslipidemia; clinically stable.
+B23-P018,33,Female,A-,120,76,72,15,36.6,98,93,140,112,12.0,7100,4.4,182000,21.8,178,92,58,105,13,0.9,Healthy with minor metabolic screening abnormalities.
+B23-P019,65,Male,B+,148,92,86,19,37.3,92,124,210,160,13.2,11800,4.2,210000,27.8,236,128,44,170,22,1.18,Hypertension with diabetes mellitus and hyperlipidemia.
+B23-P020,52,Female,AB-,138,86,79,16,36.7,97,112,180,132,11.9,8600,4.1,199000,24.7,190,100,56,120,18,0.97,Hypertension with mild hyperlipidemia; stable kidney function.
+B24-P001,52,Male,A+,152,92,88,18,37.2,94,118,210,165,13.5,9800,4.6,210000,27.4,210,128,45,180,18,1.1,Patient has hypertension and borderline high cholesterol with normal kidney function.
+B24-P002,44,Female,O+,128,82,74,16,36.9,97,92,150,110,12.8,7200,4.7,190000,23.1,190,110,58,120,14,0.95,Clinically stable with no significant abnormalities.
+B24-P003,63,Male,B+,165,98,92,20,37.8,92,140,210,160,12.2,11200,4.2,230000,29.5,258,142,40,210,22,1.4,"Patient has uncontrolled hypertension, high cholesterol, and kidney dysfunction."
+B24-P004,29,Female,AB-,118,78,68,14,36.7,99,102,165,115,11.5,6500,4.9,180000,21.0,172,98,60,110,12,0.85,Healthy overall with slightly elevated liver enzymes not captured here.
+B24-P005,51,Male,O-,142,90,85,17,37.0,93,128,210,140,13.9,10500,4.5,200000,26.2,230,125,44,170,20,1.2,Hypertension with elevated triglycerides; kidney function near normal.
+B24-P006,37,Female,A-,110,72,72,15,36.6,98,88,140,105,13.0,6400,4.8,210000,22.5,168,92,54,100,13,0.92,No significant health issues; clinically stable.
+B24-P007,69,Male,AB+,158,92,86,19,37.3,89,132,230,170,11.9,12200,4.0,190000,28.9,260,138,38,190,26,1.3,Hypertension with possible infection and early kidney impairment.
+B24-P008,58,Female,B-,136,88,79,18,36.8,96,110,170,120,14.1,9800,4.3,230000,24.1,210,115,52,140,16,1.0,Hypertension with normal kidney function and good lipid profile.
+B24-P009,42,Male,O+,125,84,77,17,37.1,95,100,160,112,12.5,7300,4.5,205000,23.8,198,105,56,115,15,0.88,Clinically stable with mild cholesterol elevation.
+B24-P010,34,Female,A+,132,86,70,16,36.9,97,95,150,108,12.2,8600,4.4,195000,22.9,182,99,59,105,14,0.9,Stable status; slightly elevated fasting sugar.
+B24-P011,59,Male,AB-,170,100,90,21,38.2,93,150,260,190,13.2,12500,4.1,225000,31.0,270,150,42,230,28,1.5,"Uncontrolled hypertension, diabetes mellitus, and kidney impairment."
+B24-P012,26,Female,B+,112,70,66,15,36.5,99,82,130,98,11.8,5400,4.7,175000,20.5,160,85,60,90,12,0.82,Healthy young adult with no significant abnormalities.
+B24-P013,48,Male,O-,144,88,82,17,37.0,94,118,190,140,13.7,10050,4.3,210000,26.4,222,120,46,160,19,1.05,Hypertension with borderline high cholesterol; otherwise stable.
+B24-P014,73,Female,A-,158,96,88,22,37.6,91,138,240,176,12.0,11800,4.1,208000,28.0,250,135,40,210,24,1.25,"Hypertension, dyslipidemia, and reduced oxygen saturation suggesting respiratory distress."
+B24-P015,40,Male,AB+,120,78,75,14,36.8,98,105,155,112,13.3,7500,4.6,190000,24.0,190,100,55,110,17,0.95,Normal findings with good glycemic and lipid profile.
+B24-P016,55,Female,O+,149,92,84,19,37.4,93,135,210,150,12.7,10800,4.2,220000,28.7,240,128,44,170,22,1.1,Hypertension with hyperlipidemia; mild kidney stress.
+B24-P017,33,Male,A+,118,76,66,14,36.6,99,95,150,105,14.0,6400,4.5,180000,21.8,170,92,58,110,13,0.88,Healthy with excellent cardio-metabolic profile.
+B24-P018,61,Female,B-,146,94,79,18,37.2,92,125,205,140,12.5,9700,4.4,208000,25.9,210,112,46,130,18,1.0,Hypertension with mild renal strain; normoglycemia not clearly present.
+B24-P019,46,Male,AB-,135,85,78,16,36.9,96,112,170,120,13.6,8600,4.6,200000,26.7,200,105,50,130,16,0.98,Stable hypertension and normoglycemia with mild lipid elevation.
+B24-P020,28,Female,O+,121,79,69,15,36.7,98,98,140,106,11.9,6200,4.6,185000,20.7,165,88,60,90,11,0.86,Healthy young adult profile.
+P001,34,Male,O+,122,78,72,16,36.8,98,92,150,110,14.5,6500,4.6,230000,23.5,190,105,48,110,14,0.9,Patient is clinically stable with no significant abnormalities.
+P002,58,Female,A+,148,92,78,18,37.2,94,132,210,140,12.8,9800,4.2,210000,28.1,215,128,44,180,22,1.1,Patient has hypertension and diabetes mellitus.
+P003,41,Male,B+,118,76,66,15,36.6,99,88,140,105,15.2,5200,4.8,250000,22.0,170,98,54,95,12,0.8,Patient is clinically stable with no significant abnormalities.
+P004,67,Female,AB-,162,98,88,20,38.1,92,110,210,190,11.5,12000,4.0,200000,30.5,260,150,40,210,28,1.4,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+P005,29,Male,O-,110,70,68,14,36.7,99,90,130,105,13.2,7200,4.7,240000,22.8,180,100,50,100,16,0.9,Patient is clinically stable with no significant abnormalities.
+P006,72,Male,A-,170,100,90,22,39.0,89,140,260,210,11.0,13000,4.1,190000,25.4,250,130,38,230,30,1.6,"Patient has uncontrolled hypertension, diabetes mellitus, infection, and kidney dysfunction."
+P007,53,Female,B-,132,86,74,17,37.0,97,102,180,120,13.5,9500,4.5,225000,26.2,205,112,46,150,20,1.0,Patient is clinically stable with mild hyperlipidemia.
+P008,46,Male,AB+,125,82,70,16,36.9,96,98,160,115,14.0,7800,4.9,260000,24.1,190,105,52,120,18,1.0,Patient is clinically stable with no significant abnormalities.
+P009,60,Female,O+,140,88,76,19,37.3,93,125,210,150,12.2,11500,4.3,210000,27.0,230,130,42,170,24,1.2,Patient has hypertension and diabetes mellitus.
+P010,38,Male,A+,118,74,64,13,36.5,99,85,130,95,13.8,6300,4.8,240000,21.9,165,92,56,90,14,0.85,Patient is clinically stable with no significant abnormalities.
+P011,55,Female,B+,136,84,72,17,37.0,95,108,170,122,12.5,8600,4.4,200000,28.3,205,115,44,140,22,1.1,Patient has hypertension and hyperlipidemia.
+P012,33,Male,AB-,112,70,66,15,36.6,98,92,140,105,13.0,7600,4.5,240000,23.4,180,100,48,110,16,0.95,Patient is clinically stable with no significant abnormalities.
+P013,44,Female,O-,126,82,68,16,37.1,96,99,160,112,12.9,8900,4.6,220000,25.6,190,108,46,125,20,0.92,Patient is clinically stable with mild hyperlipidemia.
+P014,50,Male,A-,142,90,79,18,37.4,93,116,190,140,13.6,10100,4.3,210000,26.5,205,120,42,160,26,1.2,"Patient has hypertension, hyperlipidemia, and possible kidney involvement."
+P015,27,Female,B+,108,72,62,14,36.4,99,88,130,95,12.0,7000,4.6,230000,21.5,170,90,55,85,15,0.8,Patient is clinically stable with no significant abnormalities.
+P016,63,Male,O+,156,92,85,21,37.8,91,125,210,160,11.8,12200,4.2,205000,29.0,240,135,40,190,28,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney involvement."
+P017,40,Female,AB+,120,78,70,16,36.7,97,102,170,115,14.1,8000,4.7,235000,22.7,185,102,50,120,18,0.88,Patient is clinically stable with no significant abnormalities.
+P018,52,Male,A+,128,82,72,17,37.2,96,110,180,125,13.9,9000,4.5,235000,27.2,210,115,44,140,20,1.0,Patient has mild hypertension and elevated cholesterol.
+P019,36,Female,O+,114,72,66,15,36.5,98,95,150,105,13.3,7500,4.6,240000,23.1,180,95,52,100,14,0.9,Patient is clinically stable with no significant abnormalities.
+P020,68,Male,B+,170,100,92,23,38.4,90,150,280,200,10.5,14000,3.9,180000,31.0,260,145,38,210,32,1.5,"Patient has uncontrolled hypertension, infection, diabetes mellitus, and kidney dysfunction."
+P001,45,Male,A+,150,95,88,18,37.2,94,118,210,150,13.5,12000,4.6,210000,27.8,230,135,42,190,26,1.1,Patient has hypertension and hyperlipidemia.
+P002,62,Female,O+,138,88,72,16,36.8,97,92,160,110,12.4,9800,4.3,190000,25.1,190,110,58,140,18,0.95,Clinically stable with mild hyperlipidemia.
+P003,29,Male,B+,120,78,86,20,37.0,99,102,210,120,14.8,7000,4.9,260000,23.5,180,100,52,120,12,0.9,Healthy with transient hyperglycemia.
+P004,54,Female,AB-,162,100,92,22,38.2,93,128,230,170,11.9,14500,4.2,170000,32.2,250,140,40,210,28,1.4,"Patient has uncontrolled hypertension, diabetes, and kidney strain."
+P005,37,Male,O-,110,70,68,15,36.7,98,88,140,105,13.2,6400,4.7,230000,24.6,190,105,56,120,16,0.85,Clinically stable; mild lipid elevation.
+P006,70,Female,A-,145,92,78,17,37.5,92,110,190,130,12.0,11500,4.1,200000,28.9,210,120,46,160,22,1.05,Hypertension with reduced oxygen saturation suggesting respiratory stress.
+P007,50,Male,AB+,135,85,80,19,36.9,96,95,180,115,13.8,8400,4.5,220000,26.0,205,118,54,150,20,1.0,Borderline hypertension with stable metabolic profile.
+P008,41,Female,B-,128,82,74,18,36.6,98,105,165,112,12.8,9900,4.4,210000,23.8,210,122,50,140,19,0.92,Stable with mild metabolic concerns; no acute illness.
+P009,66,Male,O+,152,94,90,21,37.3,93,140,260,180,11.5,13200,4.0,190000,29.5,240,128,38,210,26,1.25,Hypertension with diabetes mellitus and hyperlipidemia.
+P010,28,Female,A+,112,74,66,14,36.5,99,78,132,90,13.0,5200,4.8,250000,22.4,178,92,60,110,14,0.88,Healthy young adult.
+P011,55,Male,AB-,140,86,77,17,37.0,95,118,190,125,12.2,10200,4.3,205000,25.9,205,115,48,155,21,1.1,Hypertension with insulin resistance tendencies.
+P012,63,Female,A-,136,90,84,18,36.8,96,130,210,142,11.8,12050,4.2,198000,27.1,218,125,44,160,24,1.15,Hypertension with dyslipidemia and possible early kidney stress.
+P013,39,Male,B-,118,76,70,16,37.1,98,100,170,110,13.6,8600,4.6,215000,23.2,195,105,56,125,18,0.97,Clinically stable with borderline lipid values.
+P014,73,Male,O+,170,110,98,24,38.0,89,150,260,210,10.9,15000,3.9,160000,31.5,260,150,34,230,30,1.6,"Uncontrolled hypertension, hyperglycemia, possible kidney impairment, and infection risk."
+P015,33,Female,AB+,122,78,72,17,36.9,97,96,150,105,12.5,7200,4.5,225000,23.9,200,110,52,130,17,0.92,Healthy with minor metabolic concerns.
+P016,58,Male,A+,144,92,85,19,37.4,94,112,190,128,13.1,11200,4.4,210000,26.5,212,118,46,170,22,1.05,Hypertension with elevated cholesterol.
+P017,47,Female,O+,130,82,76,18,36.8,96,108,180,125,12.9,9400,4.5,230000,24.1,205,115,50,145,20,0.98,Stable metabolic profile with mild lipid elevation.
+P018,60,Male,B+,158,98,88,21,37.2,92,122,210,140,11.7,12600,4.2,190000,28.0,238,132,40,190,25,1.2,Hypertension with possible early kidney strain and diabetes.
+P019,52,Female,AB-,132,86,79,18,36.7,97,99,170,108,12.1,9000,4.3,208000,25.2,196,108,54,132,21,0.99,Stable with normal glucose and lipid levels.
+P020,68,Male,A-,144,88,82,19,37.1,95,108,190,115,12.6,10200,4.3,202000,26.8,208,122,48,150,24,1.05,Hypertension with early metabolic concerns; stable.
+B27-P001,52,Male,O+,142,88,86,18,37.2,94,118,210,158,13.6,12500,4.5,210000,28.4,230,130,42,190,28,1.1,Patient has hypertension and diabetes mellitus.
+B27-P002,37,Female,A+,128,82,72,16,36.8,97,92,150,110,12.5,7600,4.2,180000,22.9,190,105,58,120,16,0.95,Clinically stable with no significant abnormalities.
+B27-P003,68,Male,B+,156,92,88,20,37.6,92,132,210,170,12.9,12500,4.1,195000,26.2,252,142,40,210,32,1.3,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+B27-P004,29,Female,O-,118,76,68,15,36.6,99,88,140,105,11.2,6300,4.6,170000,21.7,170,90,62,95,14,0.82,Clinically stable with no significant abnormalities.
+B27-P005,45,Male,AB+,130,84,90,22,37.0,93,110,180,140,14.1,9800,4.3,205000,27.1,210,118,46,160,22,1.05,Patient is mildly hypertensive with insulin resistance pattern.
+B27-P006,63,Female,A-,148,90,82,19,37.3,96,126,210,150,11.9,12000,3.9,190000,29.5,260,135,44,180,26,1.25,High blood pressure with diabetes mellitus and early signs of kidney dysfunction.
+B27-P007,54,Male,B-,136,88,78,17,36.9,98,95,160,120,13.8,8200,4.4,190000,25.3,210,115,52,110,18,0.95,Clinically stable; mild dyslipidemia with normal glycemic status.
+B27-P008,72,Female,AB-,162,98,92,21,38.1,89,140,260,190,12.2,14200,3.8,210000,28.7,270,150,41,230,34,1.8,"Uncontrolled hypertension, diabetes mellitus, and kidney dysfunction with respiratory distress."
+B27-P009,33,Male,O+,122,78,70,14,36.7,98,102,170,130,13.0,7200,4.5,200000,23.5,190,100,55,105,20,0.9,Clinically stable with mild lipid abnormalities.
+B27-P010,59,Female,A+,144,86,84,18,37.4,95,118,200,150,12.8,10600,4.0,180000,26.0,240,128,46,180,26,1.15,Hypertension with dyslipidemia.
+B27-P011,28,Male,B+,112,74,66,15,36.5,99,85,130,100,14.2,5900,4.7,210000,22.1,165,90,58,88,12,0.8,Healthy vitals with no significant issues.
+B27-P012,61,Male,AB+,150,92,88,19,36.9,93,135,210,155,13.5,10800,4.2,182000,27.4,245,132,44,170,24,1.1,Hypertension with diabetes mellitus and hyperlipidemia.
+B27-P013,40,Female,O-,126,80,74,16,36.6,97,99,160,120,12.0,7000,4.4,170000,23.9,210,110,60,105,18,0.9,Mild hypertension with normal glycemic status.
+B27-P014,48,Male,A-,138,85,79,17,37.2,96,125,210,140,13.3,9900,4.1,184000,24.7,238,125,48,160,22,1.0,Hypertension with elevated fasting glucose.
+B27-P015,66,Female,B-,160,98,95,23,38.0,91,140,260,180,11.5,15000,3.7,198000,29.1,275,145,40,220,30,1.4,"Uncontrolled hypertension, diabetes mellitus, anemia, and kidney dysfunction with respiratory distress."
+B27-P016,32,Male,AB-,124,78,72,14,36.4,98,88,140,110,13.9,7200,4.6,210000,23.0,180,98,54,100,15,0.88,Healthy vitals with mild lipid abnormalities.
+B27-P017,55,Female,O+,144,88,82,18,37.1,95,112,190,140,12.1,10050,4.2,185000,26.8,232,122,46,150,21,1.05,Hypertension with borderline dyslipidemia.
+B27-P018,70,Male,A+,170,100,92,24,38.2,88,150,280,210,12.4,16500,3.6,205000,28.9,290,160,42,240,40,1.6,"Hypertension with diabetes mellitus, kidney dysfunction, and respiratory distress."
+B27-P019,41,Female,B+,132,84,76,17,36.9,97,108,170,125,12.7,8600,4.3,195000,25.0,205,115,54,115,19,0.92,Hypertension with normal glycemic status.
+B27-P020,58,Male,AB+,146,90,85,19,37.3,94,128,210,145,13.2,11200,4.0,188000,27.6,246,132,47,170,26,1.12,Hypertension with dyslipidemia and mild renal strain.
+B28-P001,45,Male,A+,142,92,88,20,37.2,94,118,210,160,13.5,9800,4.6,210000,27.3,210,125,46,180,22,1.1,Patient has hypertension and dyslipidemia.
+B28-P002,62,Female,O+,128,82,78,18,36.8,97,102,180,140,12.4,7200,4.1,260000,28.9,232,138,52,210,28,1.0,Patient is clinically stable with obesity and mild hyperlipidemia.
+B28-P003,29,Male,B+,118,76,72,16,36.6,98,88,150,112,14.9,6000,4.8,240000,23.1,190,92,58,110,16,0.9,Healthy young adult with normal vitals.
+B28-P004,54,Female,AB-,150,95,92,22,37.5,92,130,210,170,11.8,13000,3.9,180000,31.4,260,150,40,240,34,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney involvement."
+B28-P005,71,Male,O-,170,100,95,24,38.1,89,140,240,195,13.1,15000,3.4,170000,26.0,275,142,38,260,40,1.5,Patient has hypertension with possible kidney dysfunction and hyperlipidemia.
+B28-P006,38,Female,A-,132,88,80,17,37.0,96,96,170,128,13.0,9000,4.5,230000,25.4,205,110,54,140,22,1.0,Metabolic syndrome risk with mild hypertension.
+B28-P007,50,Male,AB+,145,92,84,19,36.9,93,110,190,150,14.2,9800,4.3,200000,29.2,235,128,46,170,26,1.1,Hypertension with dyslipidemia; clinically stable.
+B28-P008,27,Female,B-,112,70,68,14,36.4,99,76,140,105,12.5,5200,4.7,250000,21.8,165,85,60,90,14,0.8,Healthy with athletic profile.
+B28-P009,66,Male,O+,136,88,76,18,37.0,95,115,170,135,11.9,11500,3.9,190000,28.0,248,132,42,190,30,1.2,Elderly patient with hypertension and borderline diabetes.
+B28-P010,41,Female,AB-,125,79,70,16,36.7,98,88,180,122,12.8,7600,4.2,210000,22.7,198,100,56,130,18,0.95,Stable health with normal vitals and lipids.
+B28-P011,58,Male,A+,156,98,90,21,37.3,91,128,210,162,13.3,12500,3.8,195000,30.2,252,140,44,230,32,1.2,Hypertension with possible kidney involvement and dyslipidemia.
+B28-P012,33,Male,O-,120,78,72,15,36.5,97,98,160,118,13.8,7600,4.4,230000,24.3,205,105,52,120,20,1.0,Healthy with optimal lipids and blood pressure.
+B28-P013,72,Female,A-,168,102,88,23,38.0,89,135,240,190,10.9,14000,3.6,165000,27.8,270,150,38,260,38,1.4,Hypertension with diabetes and kidney dysfunction; infection suspected.
+B28-P014,52,Female,B+,130,85,82,17,37.1,96,110,190,140,12.2,9800,4.0,220000,26.5,210,115,50,150,26,1.0,Hypertension with dyslipidemia; clinically stable.
+B28-P015,60,Male,AB+,144,90,86,19,37.4,93,125,210,155,14.0,10200,4.1,205000,29.0,238,130,45,190,28,1.1,Hypertension with mild diabetes and dyslipidemia.
+B28-P016,28,Female,O+,110,72,66,14,36.6,99,84,140,110,11.8,5200,4.5,240000,20.5,180,90,60,95,12,0.8,Healthy with athletic profile.
+B28-P017,47,Male,A-,136,86,78,18,37.2,95,108,180,133,13.6,9000,4.3,210000,24.9,210,115,54,140,24,0.95,Mild hypertension with normal metabolic panel.
+B28-P018,35,Female,B-,125,82,74,17,36.8,97,92,162,118,12.9,8600,4.4,225000,23.7,198,102,56,128,20,0.92,Healthy with occasional elevated blood pressure.
+B28-P019,63,Male,AB-,158,96,92,22,37.6,90,132,220,170,13.2,12200,3.7,180000,30.5,260,142,40,250,34,1.3,Hypertension with diabetes and possible kidney involvement.
+B28-P020,19,Male,O+,108,70,66,15,36.5,98,70,130,95,12.0,5400,4.6,235000,21.2,170,85,58,92,14,0.8,Healthy adolescent with optimal health.
+B29-P001,52,Male,A+,150,95,88,18,37.2,94,118,190,140,13.5,9800,4.5,210000,26.8,210,125,42,160,22,1.1,Patient has hypertension with elevated blood pressure and normal glucose levels; clinically stable.
+B29-P002,34,Female,O+,118,78,72,16,36.8,98,92,128,110,12.6,7200,4.3,190000,22.4,185,98,56,120,14,0.9,Clinically stable with normal metabolic and hematologic parameters.
+B29-P003,61,Male,B+,165,100,95,20,38.2,92,135,210,170,14.2,12600,4.8,235000,28.9,245,142,38,210,28,1.4,Uncontrolled hypertension with diabetes mellitus and kidney function impairment.
+B29-P004,27,Female,AB-,112,72,68,14,36.6,99,88,110,98,11.8,6400,4.2,198000,20.7,170,90,58,95,12,0.8,Healthy metabolic profile with mild anemia; clinically stable.
+B29-P005,48,Male,O-,142,88,82,17,37.0,96,110,140,120,13.9,10200,4.6,230000,25.3,205,115,44,140,18,1.0,Hypertension with borderline dyslipidemia; clinically stable.
+B29-P006,72,Male,A-,158,92,90,22,37.5,93,128,190,132,12.4,12650,4.1,210000,26.1,215,130,40,180,26,1.3,Hypertension with mild anemia and early kidney function compromise.
+B29-P007,39,Female,B-,128,82,76,15,36.9,97,102,140,112,12.2,8600,4.5,205000,23.8,190,105,52,110,16,1.0,Normotensive with mild dyslipidemia; clinically stable.
+B29-P008,55,Male,O+,170,102,88,21,38.6,89,160,240,200,13.0,12500,4.4,220000,29.4,260,150,39,240,24,1.5,Hypertension with diabetes mellitus and kidney dysfunction; respiratory distress signs.
+B29-P009,65,Female,AB+,140,85,84,18,37.1,95,118,160,132,12.8,9800,4.3,205000,27.2,199,112,50,125,20,1.1,Hypertension with normal glucose; mild hyperlipidemia.
+B29-P010,42,Male,A+,126,82,70,16,36.7,97,95,130,112,13.2,7600,4.5,198000,24.6,185,100,58,105,15,0.95,Clinically healthy metabolic profile; no significant abnormalities.
+B29-P011,58,Female,B+,154,92,86,19,37.8,93,116,178,140,12.9,11200,4.4,210000,26.5,230,125,42,170,22,1.2,Hypertension with dyslipidemia; borderline kidney function.
+B29-P012,33,Male,AB-,118,76,68,14,36.5,99,101,125,110,12.0,6300,4.1,188000,21.9,178,92,60,90,13,0.82,Healthy with normal blood pressure and metabolic parameters.
+B29-P013,46,Female,O+,136,88,84,17,37.3,95,108,150,126,11.7,9000,4.2,202000,25.0,205,115,46,130,19,1.0,Hypertension with borderline diabetes risk; stable.
+B29-P014,29,Male,A-,122,78,66,15,36.6,98,92,118,100,11.9,7000,4.0,195000,23.4,172,88,52,98,14,0.9,Healthy young adult with normal vitals and labs.
+B29-P015,54,Male,B-,148,92,92,21,37.4,92,124,190,136,13.6,11500,4.7,225000,27.8,238,128,40,170,24,1.25,Hypertension with dyslipidemia; possible early kidney involvement.
+B29-P016,40,Female,AB+,110,70,72,15,36.8,99,96,130,105,12.4,7200,4.3,196000,22.7,186,102,54,112,16,0.92,Healthy with slight nutritional anemia.
+B29-P017,66,Male,O-,162,98,88,19,37.7,90,142,210,156,14.0,11800,4.4,225000,28.2,252,136,38,190,26,1.35,Hypertension with diabetes mellitus and kidney involvement; respiratory distress.
+B29-P018,53,Female,A+,134,86,79,18,37.0,96,112,155,120,13.1,10050,4.5,210000,24.9,210,115,44,125,21,1.0,Hypertension with borderline metabolic profile; stable.
+B29-P019,31,Male,O+,118,76,66,14,36.6,99,88,110,95,12.1,6400,4.4,190000,22.3,170,88,58,88,13,0.8,Healthy young adult.
+B29-P020,49,Female,AB-,145,89,84,17,37.3,94,122,180,130,12.5,9800,4.2,205000,27.1,222,122,46,150,20,1.1,Hypertension with dyslipidemia; stable.
+P001,52,Male,A+,145,92,88,18,37.2,96,118,210,150,13.5,9000,4.5,210000,27.3,210,125,44,180,22,1.1,Patient has hypertension and dyslipidemia with normal kidney function.
+P002,61,Female,O+,132,84,76,16,36.8,98,104,170,120,12.6,7400,4.2,190000,23.1,190,110,52,120,16,0.95,Clinically stable with no acute abnormalities; mild dyslipidemia.
+P003,45,Male,B+,158,98,92,20,38.2,92,150,230,180,14.1,12800,4.6,230000,29.5,245,132,40,210,28,1.3,"Patient has uncontrolled hypertension, diabetes mellitus, and borderline kidney dysfunction."
+P004,34,Female,AB-,118,78,70,14,36.6,99,92,150,102,12.8,6800,4.1,210000,22.0,170,95,58,100,14,0.88,Healthy vitals with normal lipid panel; no acute illness.
+P005,72,Male,A-,170,105,85,22,37.9,90,165,260,210,11.2,12500,4.0,180000,26.4,260,150,38,240,26,1.6,Uncontrolled hypertension with diabetes mellitus and kidney dysfunction.
+P006,29,Female,O-,110,72,72,15,36.5,97,88,140,105,12.2,6400,4.3,200000,21.7,165,90,60,92,12,0.82,Clinically healthy; no significant abnormalities.
+P007,53,Male,B-,142,92,86,19,37.0,94,110,190,130,13.9,9000,4.6,215000,28.1,205,118,46,160,20,1.0,Hypertension with borderline hyperlipidemia; kidney function preserved.
+P008,66,Female,AB+,125,82,78,18,36.9,97,98,160,120,12.4,7200,4.3,205000,26.0,190,105,54,130,18,0.92,Stable vitals; mild dyslipidemia.
+P009,41,Male,A+,138,88,80,17,37.1,95,130,210,140,13.0,10200,4.5,220000,24.7,210,122,42,170,22,1.1,Hypertension with elevated glucose; early signs of dyslipidemia.
+P010,58,Female,O+,150,95,90,21,37.4,93,115,200,135,11.9,11200,4.2,198000,30.2,235,128,44,210,24,1.2,Hypertension with diabetes mellitus and dyslipidemia.
+P011,37,Male,B+,122,80,72,14,36.7,98,98,160,110,14.2,5200,4.5,205000,23.0,180,100,58,110,15,0.9,Normal vitals with healthy lipid panel.
+P012,70,Male,AB-,160,100,88,22,38.0,89,170,290,210,10.9,13500,3.8,160000,28.5,270,140,36,260,32,1.5,Hypertension with diabetes mellitus and kidney dysfunction; possible infection.
+P013,55,Female,A+,128,82,76,16,36.6,97,110,180,135,13.6,7800,4.4,210000,25.4,205,112,50,140,18,0.95,Hypertension with mild dyslipidemia; clinically stable.
+P014,48,Male,O-,136,86,84,18,37.3,96,122,190,140,13.0,9800,4.5,205000,26.8,200,115,46,150,20,1.0,Hypertension with prediabetes indicators; lipid levels borderline.
+P015,63,Female,B-,148,92,82,19,37.8,94,108,170,125,11.5,8600,4.0,190000,29.0,205,120,42,160,26,1.1,Hypertension with dyslipidemia; mild kidney stress.
+P016,28,Male,AB+,106,70,68,14,36.4,99,88,140,110,13.2,6100,4.3,210000,22.5,165,90,55,92,13,0.88,Healthy young adult with excellent vitals.
+P017,59,Male,A-,144,90,78,17,37.0,95,118,200,132,12.7,9300,4.1,200000,27.9,212,118,44,155,21,1.02,Hypertension with elevated triglycerides; stable kidney function.
+P018,40,Female,B-,130,84,78,16,36.7,97,105,160,125,13.1,7600,4.4,205000,24.9,190,105,52,120,19,0.97,Hypertension with normal glucose and healthy lipid profile.
+P019,66,Male,O+,132,84,80,18,37.1,96,95,160,110,14.0,8800,4.5,210000,25.5,198,104,46,140,21,0.98,Stable vital signs with mild dyslipidemia.
+P020,50,Female,AB-,156,98,92,21,37.6,93,135,210,150,12.0,11800,4.0,190000,28.7,240,128,40,190,25,1.25,Hypertension with diabetes mellitus and significant dyslipidemia; mild kidney stress.
+P001,45,Male,A+,142,92,88,18,37.2,94,118,210,150,13.6,9800,4.6,210000,26.5,210,125,42,180,22,1.1,Patient has hypertension and diabetes mellitus.
+P002,62,Female,O+,128,82,72,16,36.8,97,105,165,112,12.1,7500,4.3,190000,23.0,190,110,55,120,16,0.95, clinically stable with no significant abnormalities.
+P003,29,Male,B-,150,95,92,20,38.2,92,132,210,180,13.0,11200,4.2,240000,28.0,232,140,38,210,26,1.2,"Patient has uncontrolled hypertension, diabetes mellitus, and hyperlipidemia."
+P004,54,Female,AB+,118,78,68,14,36.6,98,90,140,110,12.8,6400,4.4,180000,22.8,178,105,60,110,14,0.85,Patient is clinically stable with no significant abnormalities.
+P005,70,Male,A-,168,98,86,22,37.9,89,140,260,190,11.5,13000,4.0,170000,27.5,260,150,40,230,28,1.6,"Patient has hypertension, diabetes mellitus, and kidney dysfunction."
+P006,38,Female,O-,122,78,75,15,36.9,96,102,160,130,12.0,7200,4.5,195000,24.2,205,115,52,140,18,0.9,Patient is clinically stable with no significant abnormalities.
+P007,51,Male,AB-,136,88,85,18,37.0,93,110,180,125,13.2,9500,4.3,200000,25.8,225,128,47,160,20,1.05,Patient has hypertension and borderline hyperlipidemia; clinically stable.
+P008,27,Female,A+,112,70,66,14,36.5,99,88,130,105,12.4,5600,4.7,210000,21.9,160,95,58,90,12,0.8,Patient is clinically stable with no significant abnormalities.
+P009,64,Male,B+,144,94,78,17,37.4,93,125,190,150,14.0,10200,4.1,220000,29.1,240,135,42,170,24,1.3,"Hypertension, diabetes mellitus, and hyperlipidemia with mild kidney impairment."
+P010,35,Female,O+,110,72,70,16,36.7,98,95,140,105,11.9,6800,4.6,185000,22.4,190,105,57,100,15,0.88,Patient is clinically stable with no significant abnormalities.
+P011,58,Male,AB+,132,86,80,19,37.1,95,112,170,130,13.5,8800,4.5,210000,26.0,205,118,46,150,20,1.0,Hypertension with stable metabolic profile.
+P012,46,Female,B-,125,78,74,15,36.8,97,100,160,118,12.6,7600,4.4,198000,24.5,198,112,54,130,17,0.92,Clinically stable; no major abnormalities.
+P013,53,Male,O-,156,98,90,21,37.8,91,128,210,168,13.9,12000,4.2,205000,27.3,250,140,44,190,26,1.25,"Uncontrolled hypertension, diabetes mellitus, and hyperlipidemia."
+P014,40,Female,A-,118,76,70,15,36.6,99,92,150,110,12.2,6400,4.5,188000,23.1,185,102,56,110,14,0.88,No significant abnormalities; patient clinically stable.
+P015,68,Male,AB-,140,90,82,19,37.0,93,118,190,140,13.0,9000,4.2,205000,28.7,210,120,45,160,22,1.1,Hypertension with hyperlipidemia; stable otherwise.
+P016,22,Male,O+,106,68,65,14,36.4,98,78,120,92,12.5,5200,4.8,190000,22.0,165,90,60,70,12,0.82,Healthy with normal vitals and labs.
+P017,59,Female,B+,134,84,76,17,37.3,96,108,170,125,12.9,8600,4.3,205000,25.9,210,118,48,140,19,0.98,"Hypertension, hyperlipidemia, and stable kidney function."
+P018,33,Male,A+,122,80,68,16,36.8,97,98,150,110,13.1,7200,4.5,195000,23.4,190,105,52,120,16,0.9,Clinically stable; no significant abnormalities.
+P019,61,Male,B-,144,90,84,18,37.5,92,122,210,160,13.7,10800,4.3,215000,27.1,235,128,44,180,24,1.15,"Hypertension, diabetes mellitus, and hyperlipidemia."
+P020,47,Female,AB+,118,76,72,15,36.7,98,100,160,120,12.0,7400,4.4,192000,24.9,198,110,54,130,18,0.95,Stable clinical status with no significant abnormalities.
+P001,45,Male,A+,145,92,88,18,37.2,94,110,180,140,14.5,8200,4.8,210000,26.5,210,120,44,180,18,1.1,Patient has hypertension and elevated blood sugar; clinically stable with no acute complications.
+P002,62,Female,O+,160,98,78,20,37.0,92,130,210,160,12.8,12000,4.3,190000,28.2,230,135,48,210,22,1.2,Patient has uncontrolled hypertension and diabetes mellitus; mild anemia.
+P003,29,Male,B+,118,76,72,16,36.8,98,98,150,105,15.2,6500,4.7,240000,23.4,190,100,52,110,12,0.95,Clinically stable with normal vitals; no acute pathology.
+P004,54,Female,AB-,132,88,84,22,38.1,93,115,190,130,11.9,9800,4.2,180000,29.8,260,140,42,205,24,1.3,Hypertension with possible hyperlipidemia; mild anemia; respiratory distress risk due to fever.
+P005,70,Male,O-,150,92,90,24,36.9,89,145,240,180,13.5,12500,4.5,200000,27.1,275,150,40,230,28,1.6,"Hypertension, diabetes mellitus, potential kidney dysfunction, and respiratory distress."
+P006,38,Female,A-,110,72,76,14,36.6,97,88,140,102,13.0,5200,4.9,230000,21.8,170,90,58,95,14,0.9,Normal vitals with no significant abnormalities.
+P007,53,Male,B-,142,86,82,19,37.5,93,125,210,135,12.7,9000,4.4,170000,31.0,245,128,46,190,21,1.25,Hypertension with borderline hyperlipidemia; mild dehydration may be present.
+P008,26,Female,AB+,105,68,70,15,36.7,99,90,130,110,15.0,6000,4.8,250000,22.4,165,85,60,85,13,0.85,Healthy young patient with normal vitals and labs.
+P009,67,Male,A+,155,95,86,21,37.8,90,140,230,170,11.5,11200,4.1,185000,28.9,260,132,44,210,26,1.4,Uncontrolled hypertension; diabetes with possible kidney involvement; respiratory distress.
+P010,41,Female,O+,130,85,79,18,36.9,96,112,170,125,12.2,8500,4.6,200000,24.7,205,115,50,140,19,1.0,Hypertension with stable metabolic profile.
+P011,58,Male,B+,138,88,82,17,37.3,93,118,190,132,13.8,9500,4.5,210000,25.3,235,125,46,175,20,1.05,Hypertension with hyperlipidemia; stable.
+P012,33,Female,A+,122,78,74,16,36.8,98,102,160,114,12.5,7000,4.5,190000,23.1,190,95,54,100,15,0.92,Normal health with mild lipid profile elevation.
+P013,49,Male,O-,146,90,88,19,37.4,91,128,200,142,14.0,10400,4.3,195000,27.5,240,130,42,190,21,1.18,Hypertension with hyperlipidemia; potential early kidney stress.
+P014,60,Female,B-,170,105,92,23,39.0,88,150,260,190,11.0,13000,4.0,160000,29.0,270,145,38,230,30,1.5,Hypertension with significant hyperglycemia; possible infection; kidney dysfunction.
+P015,22,Male,AB+,112,70,68,14,36.6,99,89,135,105,14.8,5200,4.9,260000,21.2,180,88,62,85,12,0.87,Healthy young adult with excellent metabolic profile.
+P016,68,Male,AB-,142,92,86,21,37.2,94,126,210,140,12.9,9800,4.4,175000,26.7,235,120,44,168,23,1.2,Hypertension with borderline diabetes; mild dehydration; early kidney strain.
+P017,37,Female,A-,128,82,77,17,36.9,97,105,165,118,12.3,7600,4.6,205000,23.9,198,102,56,110,16,0.98,Hypertension with stable metabolic profile.
+P018,55,Male,O+,136,84,80,18,37.0,95,120,185,130,14.1,8800,4.5,210000,25.0,210,110,46,150,19,1.04,Hypertension with elevated lipids; clinically stable.
+P019,48,Female,A+,124,80,75,16,36.7,96,112,170,120,13.6,7600,4.6,198000,24.3,205,98,52,118,17,0.96,Healthy with mild lipid elevation.
+P020,61,Male,B+,158,94,90,22,37.6,92,132,205,150,12.5,10800,4.2,186000,26.2,245,125,44,198,25,1.3,Hypertension with diabetes and possible early kidney dysfunction; fever may indicate infection.
+P001,52,Male,A+,142,92,88,18,37.1,94,118,210,170,13.5,12000,4.8,210000,27.3,210,125,45,180,22,1.3,Patient has hypertension and hyperlipidemia.
+P002,34,Female,O+,128,82,76,16,36.8,97,102,190,140,12.4,9000,4.6,190000,23.1,190,110,52,120,14,0.95,Clinically stable with no significant abnormalities.
+P003,68,Male,B+,156,98,92,20,37.6,93,135,210,160,12.2,14200,4.2,230000,28.4,245,142,40,210,28,1.6,"Patient has uncontrolled hypertension, diabetes mellitus, hyperlipidemia, and kidney impairment."
+P004,45,Female,AB-,118,76,70,14,36.6,99,96,170,110,11.8,7200,4.9,195000,22.7,180,95,58,110,16,0.8,Normal parameters with mild anemia.
+P005,59,Male,O-,130,84,78,18,37.0,96,110,190,150,13.0,9800,4.5,210000,26.0,210,118,46,140,20,1.1,Hypertension with borderline high cholesterol.
+P006,23,Female,A-,112,74,68,15,36.7,98,88,160,105,12.9,5600,4.6,180000,21.4,165,95,60,90,12,0.8,Healthy young female with normal labs.
+P007,72,Male,AB+,170,110,98,22,38.2,90,150,280,210,11.5,18200,4.0,260000,29.8,260,150,38,320,32,1.8,"Uncontrolled hypertension, infection, kidney impairment, and diabetes mellitus."
+P008,41,Female,A+,122,78,72,17,36.9,98,105,175,120,12.0,8000,4.7,200000,24.6,190,105,54,130,18,0.9,Normotensive with mild dyslipidemia.
+P009,66,Male,B-,150,92,86,19,37.4,92,140,210,165,13.2,12500,4.3,205000,27.1,235,130,42,170,24,1.25,Hypertension with insulin resistance and early kidney stress.
+P010,38,Female,O+,136,88,80,16,37.0,95,90,160,115,12.2,8600,4.5,190000,23.9,185,98,56,110,19,0.85,Stable patient with mild lipid abnormalities.
+P011,55,Male,AB-,144,92,84,21,37.3,93,122,210,145,13.8,11500,4.4,220000,25.5,205,112,46,150,26,1.0,Hypertension with borderline diabetes and hyperlipidemia.
+P012,29,Female,B+,118,74,66,14,36.5,99,92,165,110,11.9,6400,4.8,190000,22.1,180,92,58,100,13,0.7,Healthy with normal vitals and labs.
+P013,63,Male,O-,132,84,78,18,37.2,94,128,200,150,14.0,10400,4.6,205000,26.2,220,125,44,160,23,1.1,Hypertension with dyslipidemia.
+P014,50,Female,A-,110,70,72,15,36.8,97,98,165,115,12.5,7000,4.7,185000,23.0,178,90,54,105,16,0.88,Healthy with mild anemia.
+P015,79,Male,AB-,180,112,102,24,39.0,88,160,280,240,12.1,19000,4.0,270000,29.9,280,160,38,270,38,1.9,"Uncontrolled hypertension, diabetes mellitus, infection, kidney impairment, and severe hypoxemia."
+P016,33,Male,O+,125,80,72,15,36.7,99,96,170,115,13.1,7400,4.6,185000,24.1,190,100,52,120,14,0.82,Healthy with mild lipid elevation.
+P017,47,Female,B-,138,86,82,19,36.9,96,110,190,140,12.7,10200,4.5,210000,25.8,210,115,44,150,21,1.0,Hypertension with hyperlipidemia.
+P018,60,Male,AB+,146,94,90,21,37.5,92,130,210,155,13.4,12800,4.3,220000,26.4,240,132,40,190,25,1.3,"Hypertension, diabetes, and kidney impairment."
+P019,40,Female,A+,120,78,74,16,36.6,98,105,180,125,12.3,8500,4.6,195000,23.5,188,98,56,115,17,0.88,Healthy with mild lipid elevation.
+P020,54,Male,B+,158,98,88,20,37.8,93,132,210,168,13.6,13200,4.4,215000,27.9,240,136,42,190,27,1.25,Hypertension with diabetes and hyperlipidemia.
+B34-P001,52,Male,A+,142,92,88,18,37.2,96,118,210,140,13.5,8200,4.6,210000,26.8,210,128,42,180,22,1.1,Patient has hypertension and borderline diabetes mellitus.
+B34-P002,38,Female,O+,118,76,72,16,36.8,98,92,150,105,12.8,6300,4.7,180000,23.1,180,110,52,120,14,0.95,Clinically stable with no significant abnormalities.
+B34-P003,65,Male,B+,160,98,92,20,37.8,93,132,210,170,13.0,13200,4.4,260000,29.5,245,142,38,210,28,1.4,"Patient has uncontrolled hypertension, hyperlipidemia, and possible kidney impairment."
+B34-P004,27,Female,AB-,112,70,68,14,36.6,99,88,128,102,12.5,5400,4.9,190000,22.3,168,95,60,95,12,0.82,Clinically healthy with normal metabolic parameters.
+B34-P005,49,Male,O-,128,84,85,18,37.0,94,110,190,128,13.8,9700,4.5,200000,25.4,205,120,45,160,19,1.0,Hypertension with elevated triglycerides; otherwise stable.
+B34-P006,73,Male,A-,150,92,78,22,38.2,90,140,230,170,12.2,12800,4.2,220000,28.9,260,150,40,230,25,1.3,Uncontrolled hypertension with diabetes and possible kidney impairment.
+B34-P007,33,Male,B-,122,78,70,15,36.9,97,98,160,110,14.0,5600,4.8,210000,24.7,190,105,48,110,16,0.98,Healthy metabolic profile with mild lipid elevation.
+B34-P008,58,Female,AB+,136,86,79,17,37.1,95,130,210,145,11.9,10200,4.3,190000,27.0,235,132,44,190,21,1.05,Hypertension with dyslipidemia; mild renal strain indicated.
+B34-P009,44,Female,A+,135,85,82,19,36.7,97,105,170,125,12.2,7800,4.5,205000,26.2,205,115,50,140,18,1.1,Hypertension with normal glucose tolerance and lipid profile.
+B34-P010,61,Male,O+,156,98,86,21,37.6,92,150,260,190,13.4,15050,4.2,230000,30.1,270,145,38,210,26,1.25,"Uncontrolled hypertension, diabetes mellitus type 2, hyperlipidemia, possible kidney involvement."
+B34-P011,22,Female,B+,110,72,65,14,36.5,99,88,130,105,12.8,5200,4.8,195000,21.4,165,90,55,90,13,0.88,Healthy young adult with normal vitals and labs.
+B34-P012,70,Female,AB-,144,92,80,19,37.3,93,128,210,140,11.6,11200,4.3,210000,29.0,240,130,42,180,24,1.2,Hypertension with borderline diabetes and dyslipidemia.
+B34-P013,46,Male,A-,128,82,76,17,36.8,96,112,180,130,13.1,9000,4.6,205000,25.9,212,118,46,150,20,1.0,Hypertension with normal glucose tolerance and lipid profile.
+B34-P014,55,Female,O+,132,88,84,18,37.0,95,122,190,138,12.0,9400,4.4,210000,28.3,218,125,44,160,22,1.15,Hypertension with dyslipidemia; stable anemia.
+B34-P015,29,Male,B-,118,74,72,16,36.6,98,100,140,110,13.0,6000,4.7,180000,23.9,178,100,52,110,15,0.92,Healthy with normal metabolic parameters.
+B34-P016,66,Male,AB+,158,96,90,22,37.9,89,140,220,155,12.6,12500,4.1,240000,28.7,252,140,40,210,27,1.3,Uncontrolled hypertension with diabetes and possible kidney dysfunction; respiratory distress.
+B34-P017,40,Female,O-,124,78,74,15,36.7,97,98,160,112,12.3,6400,4.6,205000,22.8,190,100,54,120,16,0.89,Healthy with minor lipid elevation.
+B34-P018,54,Male,A+,136,88,79,19,37.2,92,126,210,142,13.7,9800,4.4,210000,27.6,235,128,46,170,23,1.08,Hypertension with elevated fasting sugar and dyslipidemia.
+B34-P019,35,Female,AB-,120,78,70,16,36.6,99,95,150,105,11.8,6800,4.5,190000,21.7,170,95,58,100,14,0.85,Healthy young female with excellent metabolic profile.
+B34-P020,60,Male,A-,148,92,88,20,37.3,93,132,210,150,13.2,11000,4.3,205000,26.5,238,132,42,180,25,1.2,Hypertension with dyslipidemia; possible early kidney strain.
+B35-P001,52,Male,A+,152,92,88,20,37.2,94,118,210,168,13.6,9800,4.45,210000,28.4,230,132,48,178,22,1.05,Patient has hypertension and borderline diabetes with normal kidney function.
+B35-P002,67,Female,O+,138,86,72,18,36.8,97,92,160,110,12.4,7200,4.1,175000,25.7,190,105,53,110,16,0.95,Clinically stable; no significant abnormalities.
+B35-P003,41,Male,B+,165,98,92,22,37.8,92,128,210,150,13.0,12200,4.2,190000,26.1,260,142,46,210,28,1.15,Uncontrolled hypertension with infection risk and early kidney strain.
+B35-P004,59,Female,AB-,144,90,80,16,36.6,98,108,190,130,11.9,8200,3.9,198000,24.5,210,115,57,140,18,0.92,Hypertension with borderline diabetes; overall stable.
+B35-P005,33,Male,O-,122,78,70,17,36.9,99,98,150,112,14.2,6400,4.6,210000,23.8,185,98,52,95,14,0.88,"Normotensive, normal metabolic profile."
+B35-P006,72,Female,A-,150,92,76,19,37.0,93,140,210,165,12.1,12250,4.0,204000,26.9,245,125,40,180,24,1.25,Hypertension with diabetes and mild kidney stress.
+B35-P007,26,Male,B-,112,70,68,15,37.0,99,88,140,100,13.9,5400,4.8,235000,22.5,168,90,58,70,12,0.82,Healthy young adult with normal vitals.
+B35-P008,58,Female,AB+,138,84,78,21,38.2,90,130,210,140,11.5,9800,3.95,170000,28.0,272,150,42,190,26,1.3,Hypertension with infection susceptibility and kidney involvement.
+B35-P009,45,Male,O+,130,85,85,18,37.5,96,110,190,125,14.0,8600,4.4,195000,27.0,205,110,50,120,20,1.0,Hypertension with prediabetes; stable.
+B35-P010,60,Male,A+,170,102,98,24,39.0,89,180,270,210,12.8,14200,3.8,188000,29.2,260,140,44,210,32,1.6,"Uncontrolled hypertension with diabetes mellitus, febrile state, and kidney impairment."
+B35-P011,39,Female,B+,128,84,72,19,36.7,98,105,170,125,12.3,7000,4.0,180000,23.9,190,100,52,110,15,0.92,Stable hypertension with normal metabolic markers.
+B35-P012,49,Male,AB-,145,90,82,21,37.3,93,122,198,142,13.5,10500,4.2,210000,27.4,240,122,46,150,22,1.1,Hypertension with elevated triglycerides.
+B35-P013,29,Female,A-,118,76,66,16,36.8,99,95,140,105,12.0,5600,4.5,220000,22.7,175,86,54,90,11,0.85,Healthy with optimal vitals.
+B35-P014,64,Male,O+,156,92,88,20,37.1,95,150,230,180,13.2,9900,4.3,205000,26.7,255,130,44,170,25,1.15,Hypertension with diabetes; stable kidney function.
+B35-P015,55,Female,B-,142,88,75,18,37.4,96,115,185,125,11.8,8600,4.0,188000,25.3,210,115,49,129,20,1.0,Hypertension with dyslipidemia; otherwise stable.
+B35-P016,42,Male,AB+,132,84,76,17,36.6,97,100,160,112,14.4,7200,4.7,225000,23.1,195,102,56,105,18,0.9,Healthy with mild lipid concerns.
+B35-P017,70,Male,A+,170,110,102,26,38.0,88,200,290,260,12.7,12500,3.8,170000,28.9,280,150,38,210,34,1.5,Hypertension with diabetes and kidney impairment; respiratory distress.
+B35-P018,36,Female,O+,125,82,68,17,36.5,98,102,160,112,12.9,6800,4.3,190000,22.8,188,95,58,100,14,0.87,Healthy young adult with slightly elevated cholesterol.
+B35-P019,54,Male,B+,148,90,86,19,37.1,92,135,210,150,13.3,11200,4.1,205000,26.3,245,128,44,165,26,1.15,Hypertension with diabetes and dyslipidemia.
+B35-P020,48,Female,AB-,136,82,74,18,36.9,97,108,170,120,13.0,7500,4.2,190000,24.7,205,108,50,115,18,0.95,Stable cardiovascular profile; mild dyslipidemia.
+B36-P001,54,Male,A+,148,92,88,18,37.2,94,132,210,180,12.8,11200,4.4,210000,27.5,230,140,42,210,28,1.3,Patient has hypertension and diabetes mellitus.
+B36-P002,62,Female,O+,132,86,76,16,36.8,97,98,165,120,13.4,8600,4.6,260000,23.9,190,110,52,120,16,0.95,Patient is clinically stable with no significant abnormalities.
+B36-P003,47,Male,B+,156,98,92,20,38.2,92,150,230,190,14.1,14500,4.2,180000,28.1,260,135,38,260,34,1.6,"Patient has uncontrolled hypertension, hyperlipidemia, and kidney dysfunction."
+B36-P004,29,Female,AB-,118,78,72,14,36.7,99,88,140,110,11.9,7200,4.9,210000,21.8,180,95,56,110,14,0.8,Patient is clinically stable with no significant abnormalities.
+B36-P005,66,Male,O-,142,92,85,18,37.0,93,118,190,150,12.5,12500,4.0,200000,26.4,210,125,40,170,22,1.25,Patient has hypertension and mild kidney concern.
+B36-P006,52,Female,A-,128,84,79,17,36.9,96,105,210,150,13.0,9800,4.5,240000,24.7,210,118,49,180,18,1.0,Patient is clinically stable with mild hyperlipidemia.
+B36-P007,37,Male,B-,122,78,70,15,36.6,98,92,150,110,12.0,9000,4.3,190000,23.1,170,90,54,120,12,0.85,Patient is clinically stable with no significant abnormalities.
+B36-P008,71,Female,AB+,170,100,95,22,37.6,89,140,240,220,11.5,16000,3.9,170000,29.3,260,150,36,210,28,1.8,"Patient has uncontrolled hypertension, infection, and kidney impairment."
+B36-P009,45,Male,O+,136,88,82,16,37.0,95,110,170,140,13.3,10200,4.6,230000,25.6,205,120,47,160,20,1.1,Patient is clinically stable with mild hyperlipidemia.
+B36-P010,59,Female,A+,144,90,86,19,37.1,93,126,210,170,12.7,11500,4.1,200000,27.0,240,132,42,190,26,1.25,Patient has hypertension and hyperlipidemia.
+B36-P011,33,Male,AB-,110,72,68,14,36.5,98,95,140,105,11.7,7600,4.8,250000,22.4,165,88,58,100,13,0.75,Patient is clinically stable with no significant abnormalities.
+B36-P012,68,Male,A-,152,95,90,21,38.0,91,112,205,160,13.2,12500,4.0,210000,26.0,220,128,41,170,24,1.4,"Patient has hypertension, mild kidney dysfunction, and hyperlipidemia."
+B36-P013,42,Female,B+,118,78,74,16,36.8,97,104,160,120,12.9,8800,4.4,220000,23.8,195,105,56,125,19,0.92,Patient is clinically stable with mild hyperlipidemia.
+B36-P014,54,Male,O+,138,88,84,18,37.3,94,118,190,150,13.6,10600,4.5,210000,25.9,205,125,46,150,22,1.2,Patient has hypertension and mild hyperlipidemia.
+B36-P015,39,Female,AB+,125,82,72,15,36.6,99,100,160,120,12.2,8000,4.7,230000,21.9,180,95,60,110,15,0.88,Patient is clinically stable with no significant abnormalities.
+B36-P016,60,Male,A+,170,104,98,23,38.2,90,132,260,210,12.0,18000,3.8,180000,28.5,255,142,38,230,30,1.7,"Patient has uncontrolled hypertension, severe infection, and kidney dysfunction."
+B36-P017,28,Female,O-,112,70,66,13,36.4,99,88,130,105,12.5,7200,4.8,260000,22.5,162,88,56,95,11,0.72,Patient is clinically stable with no significant abnormalities.
+B36-P018,48,Male,B-,144,92,88,17,37.5,92,128,210,170,13.8,13000,4.2,205000,27.2,235,128,45,190,26,1.3,Patient has hypertension and hyperlipidemia.
+B36-P019,53,Male,A-,130,85,78,16,36.9,96,102,170,125,13.1,9400,4.4,220000,24.0,198,108,50,130,18,0.95,Patient is clinically stable with mild hyperlipidemia.
+B36-P020,61,Female,AB-,158,100,90,21,37.8,93,140,230,190,12.6,14000,4.1,190000,28.9,250,135,40,180,24,1.25,"Patient has hypertension, hyperlipidemia, and kidney dysfunction."
+P001,52,Male,A+,145,92,88,18,37.2,94,118,210,142,13.6,9800,4.5,210000,26.9,230,125,48,188,22,1.1,Patient has hypertension and borderline dyslipidemia.
+P002,67,Male,O+,160,98,94,20,38.1,90,132,210,165,12.5,12600,4.2,195000,28.4,260,142,42,210,28,1.3,"Patient has uncontrolled hypertension, possible diabetes mellitus, and kidney stress."
+P003,41,Female,B+,128,82,78,16,36.8,98,105,168,118,11.9,7500,4.6,238000,23.1,210,110,54,120,16,0.95,Clinically stable with no significant abnormalities.
+P004,58,Female,AB-,150,92,86,22,37.6,93,90,170,110,12.1,9800,4.1,190000,29.2,255,128,46,210,24,1.2,Hypertension with elevated cholesterol; clinically stable.
+P005,33,Male,O-,112,74,72,14,36.6,99,92,150,96,14.2,6400,4.9,220000,22.4,190,95,52,120,18,0.8,"Healthy, normal vitals and labs."
+P006,72,Female,A-,170,102,98,24,39.0,88,140,260,210,11.3,14600,3.8,180000,31.0,270,150,40,260,34,1.6,"Uncontrolled hypertension, diabetes mellitus likely, and kidney dysfunction."
+P007,59,Male,B-,142,88,82,18,37.0,96,110,180,132,12.7,8200,4.3,210000,25.5,205,115,50,140,20,0.95,Hypertension with borderline lipids; clinically stable.
+P008,46,Female,AB+,124,78,70,15,36.9,97,98,160,100,13.0,7000,4.5,190000,24.0,195,100,55,110,22,0.9,Normal vitals; no significant issues.
+P009,60,Male,A+,135,85,76,18,37.3,92,125,210,150,13.5,11200,4.4,200000,27.2,240,132,44,180,26,1.0,Hypertension with elevated triglycerides; infection ruled out.
+P010,29,Female,O+,110,70,68,14,36.5,99,85,140,92,12.2,5200,4.3,210000,22.0,180,90,60,95,16,0.8,Healthy adolescent; no abnormalities.
+P011,54,Male,B+,148,90,85,19,37.8,93,118,190,130,14.0,9800,4.6,205000,28.0,225,118,46,160,21,1.1,Hypertension with mildly elevated cholesterol.
+P012,65,Female,AB-,155,95,92,21,37.0,89,135,220,148,12.0,12400,3.9,175000,27.8,258,135,42,190,25,1.3,"Hypertension, diabetes mellitus, and possible kidney involvement."
+P013,40,Male,A-,118,76,72,16,36.7,97,102,165,110,14.6,7600,4.8,230000,23.7,205,105,58,125,18,0.9,Normal vitals; borderline lipids.
+P014,51,Female,O-,162,100,90,22,38.2,92,128,210,152,11.7,12800,3.7,165000,28.9,265,140,44,230,30,1.4,Hypertension with diabetes and kidney strain.
+P015,37,Male,B-,132,84,74,17,36.8,96,100,170,110,13.2,8600,4.2,198000,24.3,210,115,52,130,19,0.85,Hypertension with stable labs.
+P016,68,Female,O+,138,86,80,18,37.4,94,115,185,128,12.5,10200,4.0,210000,26.2,235,122,44,170,24,1.0,Hypertension with borderline diabetes risk.
+P017,29,Female,AB+,108,72,66,13,36.4,99,88,140,92,11.8,5600,4.5,210000,21.8,170,85,60,85,15,0.8,Healthy young female.
+P018,57,Male,A+,146,92,86,19,37.2,93,125,205,140,13.9,11200,4.4,205000,27.5,248,130,45,170,27,1.2,Hypertension with hyperlipidemia.
+P019,44,Male,B+,120,78,70,16,36.7,97,98,160,102,13.0,7400,4.5,215000,23.9,200,105,54,120,20,0.95,Normal vitals; healthy profile.
+P020,63,Female,AB-,158,96,88,21,37.5,91,132,210,144,12.3,9800,3.9,178000,29.0,260,135,46,190,28,1.25,Hypertension with possible diabetes and kidney strain.
+B38-P001,42,Male,A+,145,92,88,18,37.2,94,118,210,160,13.8,8600,4.6,210000,26.3,210,130,48,180,22,1.1,Patient has hypertension and borderline diabetes with normal kidney function.
+B38-P002,58,Female,O+,132,86,76,16,36.8,97,98,170,120,12.1,7200,4.3,195000,23.1,185,108,52,120,16,0.9,Clinically stable with controlled blood pressure and no acute infection.
+B38-P003,67,Male,B+,158,94,92,20,37.5,92,132,210,178,12.0,12600,4.2,260000,28.7,245,142,41,210,28,1.3,High blood pressure with possible diabetes; mild kidney impairment.
+B38-P004,35,Female,AB-,118,78,72,15,36.6,99,88,160,110,13.2,6400,4.5,210000,22.5,170,95,56,110,14,0.85,Clinically stable; normal metabolic profile.
+B38-P005,50,Male,O-,142,88,85,19,37.0,93,110,190,150,14.0,9800,4.7,230000,27.0,205,125,45,160,20,1.0,Hypertension with elevated triglycerides; kidney function preserved.
+B38-P006,29,Female,A-,110,70,68,14,36.4,98,92,140,105,11.8,7200,4.6,195000,21.9,160,92,58,90,12,0.82,Healthy young adult with stable vitals.
+B38-P007,63,Male,B-,170,102,98,22,38.2,89,138,240,210,13.5,12600,4.0,250000,29.8,260,150,38,260,30,1.4,Uncontrolled hypertension with diabetes and suspected kidney dysfunction.
+B38-P008,44,Female,AB+,125,82,80,17,36.9,96,105,180,125,12.7,8600,4.4,200000,24.0,190,115,50,140,18,0.95,Stable condition with mild dyslipidemia and preserved kidney function.
+B38-P009,73,Male,O+,152,90,86,21,37.3,93,128,210,170,13.0,11200,4.1,240000,26.9,235,128,44,190,24,1.15,Hypertension with elevated glucose and mild kidney stress.
+B38-P010,52,Female,A+,138,84,74,18,36.7,97,100,165,122,12.5,7500,4.5,210000,25.2,178,102,54,115,15,0.88,Stable; borderline fasting sugar but overall healthy.
+B38-P011,39,Male,AB-,128,82,77,16,36.8,98,95,165,112,13.9,6900,4.7,205000,23.6,185,110,58,100,13,0.92,Healthy profile with normal lipid and glucose status.
+B38-P012,60,Female,B+,146,92,90,19,37.1,93,122,210,150,11.9,10200,4.3,220000,28.4,210,137,42,170,21,1.08,Hypertension with dyslipidemia and mild anemia.
+B38-P013,48,Male,A-,120,78,70,16,36.5,99,102,180,115,14.2,6400,4.8,198000,23.0,175,95,57,105,14,0.88,Healthy with optimal vitals.
+B38-P014,61,Female,O+,154,90,88,21,37.4,92,130,230,190,12.3,11800,4.1,260000,27.6,238,132,46,200,26,1.25,Hypertension and diabetes with mild kidney impairment.
+B38-P015,23,Male,B-,112,72,66,14,36.6,99,88,150,100,12.0,6500,4.6,208000,21.4,165,90,60,95,12,0.82,Healthy adolescent; excellent vitals.
+B38-P016,54,Female,AB+,140,86,84,18,37.0,95,110,190,135,12.8,9000,4.4,205000,26.1,200,120,49,130,19,1.0,Hypertension with mild dyslipidemia; stable kidney function.
+B38-P017,45,Male,O+,128,82,79,17,36.7,96,98,165,118,13.4,7200,4.5,210000,24.7,182,105,55,115,15,0.92,Healthy with mild lipid elevation.
+B38-P018,66,Female,A+,164,100,95,23,38.1,90,138,260,220,11.5,14000,3.9,245000,29.0,270,150,40,240,28,1.4,Hypertension with diabetes and kidney stress.
+B38-P019,38,Male,AB-,122,78,70,16,36.4,97,104,170,112,13.6,7000,4.6,205000,22.9,178,98,56,110,13,0.86,Healthy; minor lipid elevation.
+B38-P020,56,Male,A-,148,90,82,19,37.2,93,125,210,160,13.1,9600,4.2,225000,26.5,232,128,44,180,22,1.05,Hypertension with dyslipidemia; stable kidney function.
+B39-P001,52,Male,A+,142,92,88,18,37.2,96,118,210,150,13.8,9800,4.6,210000,26.5,210,125,45,180,28,1.1,Patient has hypertension and borderline diabetes with normal renal function.
+B39-P002,34,Female,O+,118,78,72,16,36.8,98,92,140,110,12.6,7200,4.4,190000,22.1,185,110,48,110,16,0.9,Clinically stable with normal metabolic profile.
+B39-P003,61,Male,B+,156,98,92,20,37.8,92,132,210,170,14.2,12600,4.7,230000,28.9,260,142,40,210,34,1.4,Patient has hypertension with hyperlipidemia and kidney dysfunction.
+B39-P004,44,Female,AB-,128,84,76,14,36.6,99,105,170,125,13.0,7600,4.5,205000,24.3,198,102,58,120,18,0.95,Stable cardiovascular and metabolic profile.
+B39-P005,71,Male,O-,164,102,88,22,38.1,89,140,260,190,12.2,14400,4.1,180000,31.2,245,135,38,230,40,1.5,Hypertension with diabetes mellitus and kidney dysfunction.
+B39-P006,29,Female,A-,112,70,68,15,36.7,97,88,130,100,11.8,6500,4.3,230000,21.4,170,90,55,95,12,0.8,Healthy metabolic profile with normal vital signs.
+B39-P007,58,Male,B-,150,92,85,19,37.0,94,110,190,128,14.5,11800,4.8,225000,27.0,205,118,42,160,22,1.15,Hypertension with borderline diabetes; stable kidney function.
+B39-P008,39,Female,AB+,122,76,70,17,36.9,99,98,150,115,12.9,7800,4.3,210000,23.8,178,100,56,105,20,0.92,Normotensive with normal metabolic labs.
+B39-P009,65,Female,O+,140,88,80,18,37.5,93,118,210,138,13.1,11000,4.5,200000,25.7,240,132,46,190,26,1.0,Hypertension with elevated cholesterol; no significant kidney dysfunction.
+B39-P010,48,Male,A+,132,86,76,16,36.7,97,102,160,118,13.6,8600,4.6,220000,24.9,190,105,52,115,19,0.97,Stable condition with mild dyslipidemia.
+B39-P011,53,Male,AB-,170,110,98,24,39.0,86,150,280,210,14.0,16000,4.4,260000,29.2,270,150,42,250,50,1.8,"Hypertension with diabetes mellitus, severe infection, and kidney impairment."
+B39-P012,22,Female,B+,108,68,64,14,36.5,99,86,120,102,12.2,5200,4.2,195000,20.5,160,88,58,90,14,0.82,Healthy young adult with normal labs.
+B39-P013,70,Male,O+,146,90,82,21,37.3,92,128,210,140,13.9,10200,4.4,210000,27.8,208,115,44,170,25,1.08,Hypertension with elevated blood lipids; borderline kidney function.
+B39-P014,41,Female,A-,120,78,74,15,36.6,98,99,145,112,12.4,6900,4.5,205000,23.7,182,95,54,100,17,0.88,"Normotensive, normal metabolic profile."
+B39-P015,66,Female,AB+,158,96,90,19,37.9,91,124,210,140,14.0,12100,4.3,215000,28.3,252,132,46,190,28,1.25,Hypertension with dyslipidemia and mild kidney dysfunction.
+B39-P016,28,Male,B-,110,72,66,15,36.5,97,92,130,105,13.1,7200,4.5,200000,22.8,176,98,56,100,18,0.93,Healthy young adult with mild dyslipidemia.
+B39-P017,59,Male,A+,136,88,84,18,37.4,95,112,180,136,13.7,9800,4.6,215000,26.1,205,115,44,170,24,1.05,Hypertension with mild hyperlipidemia.
+B39-P018,47,Female,O-,124,80,72,16,36.8,97,106,165,118,12.7,7200,4.4,208000,23.9,190,102,50,110,16,0.91,Normotensive with healthy metabolic labs.
+B39-P019,54,Male,AB-,170,112,100,25,38.4,85,160,320,240,14.6,18200,4.2,270000,29.8,290,150,38,260,54,1.9,"Severe hypertension with diabetes mellitus, infection, and kidney impairment."
+B39-P020,36,Female,A-,126,82,74,17,36.9,97,99,155,114,12.5,8000,4.3,210000,23.5,184,96,52,105,22,0.94,Healthy with minor lipid abnormalities.
+B40-P001,52,Male,A+,152,92,88,18,37.2,94,118,210,150,13.5,9800,4.5,210000,27.6,210,125,46,180,28,1.2,Patient has hypertension and borderline hyperlipidemia.
+B40-P002,64,Male,O+,138,88,76,16,36.8,97,95,170,110,12.9,7200,4.6,190000,25.1,190,110,52,140,16,0.95,Clinically stable; no acute abnormalities.
+B40-P003,41,Female,B+,128,84,92,20,37.0,96,105,190,130,11.8,12000,4.3,210000,23.4,210,130,48,160,22,1.15,Patient shows elevated BP with mild anemia and dyslipidemia.
+B40-P004,29,Female,O-,118,78,68,14,36.7,98,88,150,105,11.2,6400,4.7,180000,22.0,170,95,54,110,14,0.9,Healthy with normal vitals; no acute issues.
+B40-P005,58,Male,AB+,164,98,102,22,38.2,92,140,260,210,13.0,14000,4.2,230000,29.7,260,150,38,210,34,1.6,"Hypertension with diabetes mellitus type 2, hyperlipidemia, possible kidney involvement."
+B40-P006,73,Female,A-,142,90,80,18,37.1,93,110,180,140,12.5,8600,4.5,200000,26.9,210,120,50,140,28,1.25,Hypertension with metabolic concerns; stable infection ruled out.
+B40-P007,35,Male,B-,125,82,72,15,36.6,99,78,130,95,14.0,5400,4.9,230000,22.8,165,90,60,85,12,0.85,"Healthy; normal BP, lipids, and glucose."
+B40-P008,49,Female,AB-,150,92,86,19,37.8,93,130,210,170,12.2,12500,4.3,190000,28.1,245,135,42,190,24,1.3,Hypertension with dyslipidemia; possible early kidney stress.
+B40-P009,60,Male,O+,132,86,78,17,36.9,95,105,165,120,14.1,9800,4.8,220000,24.6,205,112,58,130,20,1.05,Stable vital signs with mild dyslipidemia.
+B40-P010,37,Female,A+,110,72,70,16,36.5,99,92,140,100,12.0,5200,4.6,175000,21.9,160,85,61,90,13,0.8,Healthy; excellent metabolic profile.
+B40-P011,55,Male,A-,146,92,84,18,37.3,94,125,190,160,13.3,11200,4.4,210000,26.2,235,128,44,170,26,1.1,Hypertension with insulin resistance and dyslipidemia.
+B40-P012,46,Female,B+,120,78,72,15,36.8,97,100,170,115,12.6,7600,4.7,195000,23.7,180,105,54,120,18,0.92,Healthy with borderline lipid levels.
+B40-P013,68,Male,AB+,170,110,90,24,39.0,88,150,260,200,13.8,15600,4.1,190000,28.9,280,160,38,230,40,1.7,"Uncontrolled hypertension, infection suspicion, and kidney stress."
+B40-P014,23,Female,O+,112,70,66,14,36.4,98,84,125,92,12.5,5200,4.8,190000,20.8,150,80,60,70,11,0.78,Young healthy female.
+B40-P015,53,Male,A-,144,90,85,19,37.4,93,118,190,140,13.6,10200,4.3,205000,27.0,225,118,46,165,22,1.05,Hypertension with dyslipidemia.
+B40-P016,40,Male,AB-,136,84,74,17,36.9,96,98,160,112,14.5,6900,4.9,220000,25.0,190,105,58,120,17,0.97,Healthy with mild metabolic concerns.
+B40-P017,62,Female,B-,156,94,88,21,37.9,94,132,210,170,11.9,12800,4.2,195000,28.4,240,130,42,190,30,1.25,Hypertension with diabetes risk and hyperlipidemia.
+B40-P018,33,Male,O-,122,80,70,16,36.6,97,90,150,105,13.0,5400,4.5,170000,23.2,165,92,56,95,15,0.88,Healthy; normal parameters.
+B40-P019,70,Male,A+,168,98,92,22,38.0,90,138,220,180,13.1,13200,4.0,205000,26.5,255,140,40,210,34,1.4,Hypertension with hyperlipidemia and possible kidney stress.
+B40-P020,48,Female,AB-,130,84,75,16,36.7,98,102,170,110,12.9,8000,4.6,200000,24.7,195,108,55,125,18,0.98,Healthy with occasional mild lipid elevation.
+B41-P001,62,Male,A+,156,92,88,18,37.2,94,118,210,150,12.5,9600,4.3,210000,28.4,210,125,48,170,26,1.1,Patient has hypertension and borderline diabetes mellitus with obesity.
+B41-P002,45,Female,O+,128,84,78,16,36.8,97,92,140,110,13.9,6400,4.6,260000,23.1,180,100,58,120,15,0.95,Patient clinically stable with normal glucose metabolism and lipid profile.
+B41-P003,71,Male,B+,170,98,92,20,38.2,90,134,210,180,11.0,12600,4.2,195000,26.2,250,140,40,210,28,1.35,"Patient has uncontrolled hypertension, hyperlipidemia, possible diabetes, and early kidney involvement."
+B41-P004,36,Female,AB+,118,76,72,14,36.6,98,88,120,98,13.5,5200,4.8,240000,22.0,165,90,60,95,12,0.8,Healthy with normal metabolic and cardiovascular parameters.
+B41-P005,58,Male,O-,142,92,85,18,37.0,93,110,190,140,14.0,9800,4.5,230000,27.3,230,132,44,160,22,1.05,Hypertension with dyslipidemia and impaired glucose tolerance.
+B41-P006,29,Female,A-,110,70,72,15,36.7,99,78,112,90,13.0,5600,4.7,250000,21.7,160,85,65,80,13,0.8,"Young female, asymptomatic with normal metabolic profile."
+B41-P007,65,Male,AB-,155,95,94,22,37.9,92,132,210,170,12.8,11800,4.1,210000,29.5,260,135,42,200,26,1.3,Hypertension with diabetes mellitus and possible infection; check inflammatory markers.
+B41-P008,52,Female,B-,135,88,80,17,36.9,96,102,150,120,12.2,9000,4.4,220000,26.0,205,115,52,140,18,0.95,Hypertension with borderline diabetes and dyslipidemia; clinically stable.
+B41-P009,40,Male,O+,125,82,76,16,36.5,98,95,130,105,14.5,7200,4.9,245000,23.4,190,100,60,110,16,0.9,Clinically stable with normal metabolic and cardiovascular parameters.
+B41-P010,77,Female,A+,168,96,88,19,37.1,89,140,210,160,11.5,11200,3.9,200000,28.9,240,128,46,170,32,1.25,"Hypertension with diabetes mellitus, kidney function concern; hypoxemia present."
+B41-P011,34,Male,AB+,118,76,70,14,36.6,99,104,140,120,13.8,7200,4.6,250000,22.5,182,98,56,100,14,0.88,Healthy with mild metabolic risk factors; lifestyle advice recommended.
+B41-P012,66,Female,B+,149,92,86,18,37.3,93,120,190,140,12.9,10200,4.3,215000,27.0,235,125,44,180,24,1.1,Hypertension with dyslipidemia and prediabetes; kidney function preserved.
+B41-P013,54,Male,O-,132,86,79,17,36.8,97,98,140,115,14.2,8000,4.5,260000,25.0,210,112,50,128,19,0.92,Stable cardiovascular profile with normal glucose and lipid parameters.
+B41-P014,48,Female,A+,140,90,82,18,37.0,92,112,168,130,13.3,9900,4.4,225000,26.6,218,118,46,150,21,1.0,Hypertension with dyslipidemia; potential insulin resistance.
+B41-P015,59,Male,AB-,158,100,90,21,38.0,91,125,210,170,12.0,11800,3.8,190000,30.2,255,135,42,190,28,1.28,"Hypertension with diabetes mellitus, dyslipidemia, and early kidney involvement."
+B41-P016,41,Male,B-,122,78,72,15,36.5,98,105,150,110,14.7,6800,4.7,245000,24.0,195,96,54,110,17,0.9,Healthy adult with normal metabolic and cardiovascular parameters.
+B41-P017,68,Female,A-,145,92,84,19,37.4,93,128,210,150,11.8,11200,3.9,205000,28.0,238,122,44,170,25,1.15,Hypertension with diabetes and dyslipidemia; anemia of chronic disease possible.
+B41-P018,33,Male,O+,118,76,68,14,36.4,99,88,125,105,13.2,7000,4.7,248000,23.5,178,92,58,92,15,0.82,Healthy with excellent metabolic profile.
+B41-P019,61,Male,B+,160,100,88,21,37.8,92,136,198,162,12.4,10500,4.0,210000,27.5,242,130,46,180,23,1.2,Hypertension with diabetes and hyperlipidemia; mild renal function impact.
+B41-P020,50,Female,AB+,130,85,79,16,36.9,97,98,140,112,13.6,8300,4.5,235000,22.9,198,105,57,125,18,0.92,Healthy with slight metabolic risk; recommend monitoring.
+P001,45,Male,O+,150,95,88,18,37.2,94,118,210,155,13.6,9800,4.7,210000,28.4,210,132,48,180,18,1.1,Patient has hypertension with elevated blood pressure and hyperlipidemia; stable infection not evident.
+P002,62,Female,A-,142,92,78,16,36.8,97,105,180,120,12.0,7600,4.3,190000,26.1,190,110,52,140,22,0.95,Patient has hypertension with stable metabolic profile; no acute infection.
+P003,29,Male,B+,118,78,72,17,36.6,98,92,160,115,14.2,5200,4.9,250000,23.6,178,92,58,110,14,0.8,Healthy young adult with normal vitals and lipid panel; clinically stable.
+P004,54,Female,AB+,168,100,92,20,38.2,92,132,210,158,11.5,12600,4.2,180000,31.2,230,138,44,210,28,1.4,"Patient has uncontrolled hypertension, hyperlipidemia, possible early infection; kidney function borderline."
+P005,37,Male,O-,132,88,85,19,37.0,95,110,190,132,13.0,9800,4.5,205000,25.9,205,120,46,160,17,0.95,Hypertension with borderline metabolic values; otherwise stable.
+P006,70,Male,A+,155,92,76,15,36.9,93,140,260,190,11.8,11800,4.1,170000,27.3,260,150,42,230,32,1.6,Hypertension with diabetes mellitus and kidney dysfunction suspected; requires urgent evaluation.
+P007,53,Female,B-,145,90,82,18,37.5,96,128,210,150,12.5,10200,4.4,198000,29.0,225,125,50,170,20,1.0,Hypertension with hyperlipidemia; no severe infection; stable overall.
+P008,41,Male,AB-,122,82,68,14,36.7,99,98,170,110,13.8,6400,4.8,230000,24.8,180,95,60,120,16,0.9,Clinically stable with normal vitals and lipid panel.
+P009,66,Female,O+,158,90,86,22,38.0,89,150,210,170,10.9,12650,4.0,160000,28.5,242,135,44,190,26,1.3,Hypertension with possible kidney impairment and infection indicated by fever and leukocytosis.
+P010,58,Male,A-,136,86,79,17,37.0,96,112,185,130,14.0,8900,4.6,220000,26.4,210,112,54,145,18,0.95,Hypertension with favorable metabolic parameters; stable condition.
+P011,33,Female,AB+,118,72,70,15,36.5,98,102,160,110,12.8,7200,4.3,205000,21.9,170,90,58,100,15,0.8,Healthy; normal vitals and labs.
+P012,48,Male,B+,144,94,84,19,37.3,93,118,190,140,13.2,10500,4.2,210000,27.1,205,125,46,165,24,1.1,Hypertension with dyslipidemia; possible early kidney stress.
+P013,25,Male,O+,110,70,65,16,36.4,99,88,150,95,14.5,5400,4.8,220000,22.3,165,85,60,95,12,0.88,Healthy; sports-active young adult.
+P014,72,Female,A+,170,110,90,23,39.0,90,158,290,210,9.8,14000,3.8,150000,31.5,270,150,40,240,34,1.7,"Hypertension with diabetes mellitus, probable infection, and kidney dysfunction."
+P015,52,Male,AB-,128,84,76,18,37.1,97,105,180,125,13.6,9000,4.5,215000,25.5,190,105,52,130,20,0.98,Hypertension with stable metabolic parameters; no acute issues.
+P016,39,Female,A+,125,82,73,17,36.8,98,100,170,115,12.2,7500,4.6,225000,23.7,195,100,55,125,18,0.86,Healthy with mild hyperlipidemia.
+P017,60,Male,B-,146,90,82,20,37.4,94,112,190,140,13.4,9800,4.1,210000,28.9,212,118,46,160,26,1.05,Hypertension with borderline diabetes; lipids mildly elevated.
+P018,34,Female,O-,118,78,71,16,36.6,97,102,165,110,12.9,7000,4.5,215000,22.9,182,92,58,105,14,0.83,Healthy; normal vitals; lipid profile mildly elevated.
+P019,68,Male,AB+,152,94,88,21,37.8,92,130,210,160,11.6,11200,4.0,182000,29.8,238,128,46,190,28,1.25,Hypertension with suspected diabetes and kidney stress.
+P020,50,Female,B+,135,88,79,17,36.9,96,108,185,122,13.1,9300,4.4,205000,26.0,198,105,54,150,19,0.92,Hypertension with stable metabolic profile; no acute illness.
+P001,65,Male,A+,152,92,88,18,37.2,96,118,210,150,13.2,9800,4.5,210000,27.8,210,130,48,180,28,1.1,Patient has hypertension and hyperlipidemia.
+P002,52,Female,O+,128,82,72,16,36.8,98,92,160,110,12.4,8600,4.1,200000,23.4,190,110,58,110,14,0.95,Clinically stable with no significant abnormalities.
+P003,70,Male,B+,170,95,92,20,37.5,92,140,230,190,12.2,12500,4.0,180000,29.5,260,150,42,210,34,1.4,"Patient has uncontrolled hypertension, hyperlipidemia, diabetes mellitus, and kidney dysfunction."
+P004,34,Female,AB-,118,76,68,14,36.6,99,88,125,102,12.9,7000,4.5,240000,22.1,180,95,62,90,12,0.9,Clinically stable with normal metabolic parameters.
+P005,58,Male,O-,140,88,85,18,37.0,94,110,190,130,14.0,11200,4.3,190000,26.0,205,125,46,160,22,1.0,Hypertension with borderline diabetes and hyperlipidemia.
+P006,46,Female,A-,126,84,76,15,36.9,97,105,165,120,11.8,5200,4.0,210000,24.7,165,95,60,85,18,0.92,Normotensive profile with mild anemia.
+P007,63,Male,B-,145,92,90,22,38.2,88,132,205,160,13.6,11800,4.2,170000,28.3,250,135,40,190,26,1.25,Hypertension with diabetes mellitus and respiratory distress.
+P008,29,Female,AB+,112,74,66,12,36.4,99,78,110,95,13.0,6400,4.5,230000,21.7,170,88,64,70,11,0.85,Healthy profile with no significant issues.
+P009,54,Male,O+,132,82,78,16,37.1,95,98,160,120,12.5,9000,4.2,205000,25.0,190,105,52,120,20,1.05,Stable hypertension with mild dyslipidemia.
+P010,41,Female,A+,118,76,70,17,36.7,97,112,170,125,12.1,8600,4.3,215000,23.3,185,102,54,125,16,0.98,Normotensive with mild metabolic syndrome features.
+P011,68,Male,AB-,158,98,88,19,37.3,93,125,210,160,12.9,11300,4.1,195000,28.9,245,140,44,170,30,1.3,Uncontrolled hypertension with hyperlipidemia and possible early kidney strain.
+P012,37,Female,B+,122,78,74,14,36.5,98,100,150,110,12.7,7500,4.4,230000,22.8,178,92,58,95,14,0.9,Clinically stable with normal metabolic parameters.
+P013,55,Male,A-,144,90,86,18,37.8,90,118,190,140,13.3,9900,4.0,205000,27.1,220,125,46,150,24,1.05,Hypertension with possible early kidney stress.
+P014,60,Female,O+,136,86,80,17,36.9,96,105,180,125,11.9,7800,4.1,200000,26.5,200,115,50,130,18,1.0,Hypertension with normal kidney function and mild anemia.
+P015,48,Male,AB+,150,92,92,21,37.6,94,130,210,155,14.2,11200,4.2,190000,29.0,240,135,40,170,28,1.2,"Hypertension, diabetes mellitus, and hyperlipidemia."
+P016,33,Female,A+,110,72,66,14,36.6,99,90,140,100,12.3,6400,4.3,225000,21.9,165,85,62,80,13,0.85,Healthy profile with normal parameters.
+P017,72,Male,B-,162,100,95,23,38.0,89,138,220,170,11.5,12200,3.9,180000,28.7,258,142,42,190,32,1.32,Uncontrolled hypertension with infection and kidney strain.
+P018,40,Male,O-,125,82,72,16,36.8,97,102,158,118,13.1,8600,4.4,210000,24.5,190,105,56,115,18,0.99,Stable hypertension with good metabolic profile.
+P019,53,Female,AB-,138,88,82,18,37.0,93,115,190,135,12.6,10100,4.2,198000,25.8,210,118,48,140,20,1.08,Hypertension with dyslipidemia.
+P020,66,Male,A-,158,99,90,19,37.4,91,124,210,142,13.8,11400,4.3,185000,27.9,235,128,46,160,26,1.15,Hypertension with dyslipidemia and possible early kidney stress.
+P001,52,Male,A+,152,92,88,18,37.2,94,118,210,160,13.5,9800,4.6,210000,28.4,210,125,48,180,22,1.25,Patient has hypertension and hyperlipidemia.
+P002,67,Female,O+,138,88,82,16,36.8,96,102,180,120,12.8,9000,4.2,190000,26.1,190,110,52,140,18,1.1,Clinically stable with mild hyperlipidemia.
+P003,29,Male,B+,118,78,72,20,36.6,98,95,170,105,14.2,6500,4.7,240000,23.0,170,90,50,120,14,0.95,No significant abnormalities; clinically stable.
+P004,55,Female,AB-,164,96,92,22,37.9,92,132,210,170,11.9,12000,3.9,180000,29.7,245,140,44,210,28,1.4,"Patient has uncontrolled hypertension, diabetes mellitus, and kidney dysfunction."
+P005,41,Male,O-,128,84,76,17,36.7,97,88,150,98,13.8,7800,4.5,210000,24.3,185,102,54,110,16,1.0,No acute issues; clinically stable.
+P006,63,Male,A-,145,92,90,19,37.0,93,110,190,135,12.5,11500,4.1,200000,27.8,225,130,46,160,20,1.15,Hypertension with dyslipidemia.
+P007,34,Female,AB+,112,70,68,16,36.4,99,92,160,105,12.2,6400,4.5,230000,22.5,165,95,58,100,13,0.9,Healthy overall with mild anemia risk.
+P008,58,Female,A+,132,86,80,18,37.1,95,125,210,150,11.4,9800,4.0,170000,28.1,205,118,40,190,26,1.3,Hypertension with onset diabetes mellitus and mild kidney stress.
+P009,72,Male,B-,150,92,85,21,37.6,89,140,240,190,10.9,12500,3.8,165000,26.9,260,150,42,210,32,1.6,"Hypertension, diabetes mellitus, and kidney dysfunction with respiratory distress."
+P010,46,Male,AB-,122,78,70,15,36.5,98,100,170,112,14.0,7000,4.6,220000,23.9,180,105,55,120,18,1.0,Stable cardiovascular and metabolic profile.
+P011,50,Female,A-,136,86,78,19,37.3,93,115,190,140,12.6,10200,4.2,195000,25.6,200,115,46,150,24,1.1,Hypertension with early dyslipidemia.
+P012,38,Male,O+,110,72,65,14,36.6,97,92,150,102,13.2,6400,4.5,210000,22.4,170,95,56,110,15,0.95,Healthy with mild lipid profile elevation.
+P013,60,Female,B+,142,90,84,18,37.4,92,128,210,142,12.1,11200,4.0,190000,27.2,235,130,44,170,26,1.2,Hypertension with dyslipidemia; borderline kidney stress.
+P014,29,Female,AB+,118,76,72,16,36.7,99,88,140,98,11.8,6100,4.3,225000,21.9,160,85,60,95,12,0.88,Healthy young patient.
+P015,54,Male,A+,170,102,95,23,38.2,90,150,260,210,13.0,14000,3.7,170000,28.9,250,135,40,230,34,1.5,"Uncontrolled hypertension, diabetes mellitus, hyperlipidemia, and kidney dysfunction."
+P016,42,Female,O+,125,82,76,17,36.9,96,105,165,110,13.4,8200,4.4,200000,24.7,190,100,52,125,20,1.0,Stable metabolic and cardiovascular status.
+P017,65,Male,B+,135,85,78,18,36.8,94,118,180,132,12.9,9400,4.3,198000,26.2,210,115,46,140,22,1.08,Hypertension with early metabolic syndrome.
+P018,33,Female,A-,114,74,70,15,36.4,99,90,140,98,12.0,6500,4.5,235000,23.1,165,90,58,105,14,0.92,Healthy with excellent oxygenation.
+P019,48,Male,O-,140,88,82,19,37.0,93,112,190,130,13.6,10600,4.2,205000,25.4,205,118,49,155,24,1.12,Hypertension with dyslipidemia.
+P020,59,Female,B-,156,98,88,21,37.8,91,124,210,140,11.5,11800,3.9,178000,27.9,240,132,42,200,28,1.3,"Hypertension, diabetes mellitus, hyperlipidemia, and kidney stress."
+P001,54,Male,A+,145,92,88,18,37.2,94,132,210,160,13.6,9800,4.5,210000,28.4,210,120,48,180,28,1.1,Patient has hypertension and borderline diabetes mellitus with normochromic anemia.
+P002,67,Male,O+,152,95,92,20,36.9,93,118,190,126,12.9,12000,4.3,195000,27.1,238,128,44,210,32,1.25,Patient has uncontrolled hypertension with hyperlipidemia; mild anemia.
+P003,41,Female,B+,128,86,78,16,36.8,97,102,150,118,11.9,7600,4.0,240000,22.7,180,95,58,110,22,0.95,Patient clinically stable with mild anemia and elevated cholesterol but no acute illness.
+P004,59,Female,AB-,162,100,98,22,38.1,90,140,210,168,12.1,12800,4.2,205000,31.2,252,142,44,230,38,1.4,"Patient has hypertension, diabetes mellitus risk, and early kidney involvement with respiratory distress."
+P005,33,Male,O-,118,78,72,15,36.6,98,92,132,110,14.2,7200,4.6,250000,23.4,170,85,60,90,16,0.92,Healthy young adult with normal vitals and lipid profile.
+P006,72,Female,A-,148,92,86,19,37.0,93,112,170,132,11.5,10500,4.1,180000,29.0,210,110,42,160,24,1.15,Hypertension with borderline diabetes; mild anemia.
+P007,26,Male,B-,122,78,70,14,36.5,99,88,140,105,15.0,7200,4.8,230000,22.1,165,90,54,86,14,0.88,Healthy young adult with excellent metabolic and hematologic profile.
+P008,58,Female,AB+,170,104,95,24,39.0,88,150,260,190,10.8,14200,3.9,170000,32.5,260,150,40,240,40,1.6,Severe hypertension with hyperglycemia; respiratory distress; kidney involvement and anemia.
+P009,49,Male,O+,135,88,82,18,37.3,96,110,170,130,13.4,9800,4.4,210000,26.0,205,112,46,150,26,1.0,Hypertension without major metabolic disturbance.
+P010,63,Female,A+,141,92,88,19,37.1,92,135,210,145,12.7,11200,4.2,200000,27.6,235,125,45,190,28,1.25,Hypertension with dyslipidemia; mild anemia.
+P011,38,Male,AB-,125,82,76,16,36.7,97,98,140,110,13.0,7000,4.5,220000,23.9,190,90,52,100,20,0.95,Healthy with slightly low HDL; no acute illness.
+P012,55,Female,B-,156,98,90,21,37.8,91,128,190,150,12.2,11500,4.0,190000,28.8,222,130,44,180,34,1.28,Hypertension with diabetes risk and kidney involvement.
+P013,45,Male,O-,130,85,84,17,36.9,96,105,160,125,14.1,8600,4.4,215000,25.2,198,102,56,120,22,0.97,Healthy with mild elevated cholesterol.
+P014,60,Female,A-,144,90,85,18,37.0,93,118,170,132,11.7,10200,4.1,205000,26.9,210,108,46,142,30,1.08,Hypertension with mildly high cholesterol; early anemia.
+P015,29,Male,B+,118,76,68,14,36.4,99,85,130,105,14.5,6800,4.7,225000,21.9,165,88,62,78,18,0.85,Healthy young adult with excellent metabolic profile.
+P016,68,Male,AB+,170,110,100,23,38.5,86,160,260,210,10.6,16000,3.8,170000,29.5,270,140,38,260,42,1.9,Hypertension with diabetes mellitus and kidney dysfunction; respiratory distress.
+P017,52,Female,O+,135,88,84,18,37.2,95,112,170,125,12.0,9900,4.3,200000,24.6,199,105,50,140,25,1.02,Hypertension without major complications.
+P018,38,Male,A+,125,80,72,15,36.6,98,100,150,115,13.6,8300,4.6,235000,23.2,185,92,58,92,21,0.9,Healthy with favorable lipid profile.
+P019,51,Male,AB-,146,94,89,19,37.4,92,125,210,140,12.5,11200,4.2,190000,27.0,240,125,44,190,34,1.32,Hypertension with diabetes risk and hyperlipidemia.
+P020,47,Female,O-,132,86,80,17,36.8,96,108,170,120,13.2,9400,4.5,210000,25.0,202,110,49,128,26,0.98,Hypertension without significant comorbidity.
+P001,52,Male,A+,145,92,88,18,37.2,94,132,210,170,13.5,9800,4.3,230000,28.4,210,125,46,190,22,1.1,Patient has hypertension and borderline diabetes with stable kidney function.
+P002,67,Female,O+,132,86,76,16,36.8,97,105,180,120,12.1,7600,4.8,190000,26.2,182,110,52,130,18,0.9,Clinical stability with mild hypertension and normal kidney function.
+P003,41,Male,B+,158,98,92,20,38.1,92,140,230,190,13.9,12600,4.2,260000,29.9,235,142,40,210,28,1.4,Uncontrolled hypertension with diabetes mellitus and early signs of kidney dysfunction.
+P004,29,Female,AB-,118,78,72,14,36.6,99,92,150,110,12.5,6400,4.9,210000,23.1,165,95,58,110,14,0.85,Healthy young adult with normal vitals and lipid profile.
+P005,58,Male,O-,142,90,85,17,37.5,93,118,210,145,14.6,11300,4.6,220000,27.4,258,138,38,240,26,1.2,Hypertension with dyslipidemia and borderline diabetes.
+P006,73,Female,A-,150,95,84,18,37.0,89,138,210,165,11.9,12200,4.0,205000,26.8,220,128,45,170,24,1.3,Hypertension with suspected diabetic features and early renal involvement.
+P007,33,Male,B-,110,72,68,15,36.7,98,88,140,105,13.0,5400,4.7,198000,22.5,150,90,60,100,13,0.82,Healthy with normal vitals and lipid profile.
+P008,62,Male,AB+,170,102,98,22,38.2,88,160,260,210,14.0,12500,4.5,240000,31.6,280,150,35,260,32,1.5,Severe hypertension with diabetes mellitus and kidney dysfunction; respiratory distress.
+P009,48,Female,O+,136,88,79,16,36.9,96,102,200,125,12.8,9000,4.4,205000,25.0,190,102,50,140,20,0.95,Hypertension with well-controlled sugar and normal kidney function.
+P010,54,Male,A+,128,84,82,18,37.0,95,110,170,130,13.6,9800,4.5,215000,26.0,205,118,46,160,21,1.0,Hypertension with stable metabolic profile.
+P011,39,Female,AB-,120,78,70,14,36.8,98,95,150,110,12.2,5200,4.7,210000,24.3,160,85,55,90,12,0.78,Healthy with optimal vitals and lipid profile.
+P012,70,Male,B+,146,92,90,19,37.3,93,128,210,150,13.2,10500,4.3,225000,28.0,236,132,42,200,28,1.25,Hypertension with dyslipidemia and diabetes risk.
+P013,45,Male,O-,118,76,72,16,36.6,97,100,160,115,13.8,8600,4.6,210000,23.9,180,105,52,120,18,0.92,Healthy adult with normal metabolic and cardiovascular parameters.
+P014,66,Female,A+,155,95,88,21,37.6,90,118,230,160,12.0,11800,4.1,190000,27.1,246,128,44,210,25,1.3,Hypertension with dyslipidemia and early kidney strain.
+P015,55,Male,AB+,134,88,77,17,36.9,96,112,180,128,13.1,9400,4.5,208000,25.8,198,104,48,150,19,0.98,Hypertension with stable metabolic parameters.
+P016,28,Female,O+,112,70,66,15,36.5,99,86,140,102,11.8,5200,4.8,215000,21.8,140,82,60,85,11,0.74,Healthy with excellent metabolic and cardiovascular parameters.
+P017,60,Male,B-,162,100,92,23,38.0,91,150,260,195,13.5,13200,4.4,240000,29.2,260,140,42,230,30,1.4,Hypertension with diabetes mellitus and kidney impairment; respiratory distress.
+P018,38,Female,A-,122,78,74,15,36.7,97,98,160,110,12.7,7000,4.6,200000,23.5,170,92,58,105,16,0.82,Healthy with slight overweight but normal parameters.
+P019,49,Male,AB-,140,88,80,17,37.1,94,120,190,135,13.9,10200,4.3,215000,26.7,205,115,44,170,22,1.05,Hypertension with prediabetic sugar levels and lipid abnormality.
+P020,61,Female,O-,125,82,86,18,37.0,95,106,170,120,12.9,9700,4.5,206000,24.9,190,100,50,130,21,0.9,Hypertension with stable metabolic profile and healthy kidney function.
+B47-P001,34,Male,A+,128,82,78,18,36.8,97,92,140,110,14.2,6200,4.6,210000,23.4,190,105,46,120,16,0.9,Patient is clinically stable with no significant abnormalities.
+B47-P002,58,Female,O+,152,94,88,20,37.2,94,108,210,150,11.8,13200,3.9,190000,28.1,210,128,42,190,28,1.1,"Patient has uncontrolled hypertension, diabetes mellitus risk, and hyperlipidemia."
+B47-P003,45,Male,B+,118,78,72,16,36.6,98,95,130,105,13.5,7600,4.3,240000,24.3,175,90,50,110,14,0.85,Patient is clinically stable with no significant abnormalities.
+B47-P004,62,Female,AB-,168,102,92,22,38.1,92,135,230,170,12.1,14200,3.8,170000,26.7,250,140,38,210,34,1.4,"High blood pressure with diabetes risk, respiratory distress, and kidney impairment."
+B47-P005,29,Male,O-,112,72,68,14,36.5,99,88,120,98,15.1,5200,4.8,260000,21.3,165,92,54,95,12,0.82,Patient is clinically stable with no significant abnormalities.
+B47-P006,73,Female,A-,144,88,84,18,37.0,96,110,180,125,12.5,9800,4.0,198000,26.0,205,115,44,150,22,1.0,Hypertension with stable metabolic profile.
+B47-P007,52,Male,AB+,136,84,76,17,36.9,98,102,160,120,13.9,7500,4.5,220000,25.1,198,98,52,130,20,0.95,Clinically stable; mild hyperlipidemia.
+B47-P008,41,Female,B-,120,78,70,15,36.7,99,96,140,105,13.2,5400,4.4,240000,22.8,178,92,56,110,15,0.88,Normal clinical examination; healthy profile.
+B47-P009,67,Male,O+,150,92,86,19,37.3,93,118,210,140,11.6,12600,3.7,185000,27.4,230,125,40,170,26,1.15,Hypertension and hyperlipidemia; possible early kidney involvement.
+B47-P010,36,Male,A+,124,80,72,16,36.6,97,92,130,105,14.0,6400,4.7,230000,23.0,182,96,48,115,18,0.9,Stable cardiovascular and metabolic parameters.
+B47-P011,54,Female,AB+,138,86,79,18,36.8,95,105,170,125,12.6,8800,4.1,205000,28.3,210,110,46,140,24,1.05,Hypertension with elevated triglycerides; clinically stable otherwise.
+B47-P012,47,Male,B+,110,70,66,14,36.4,99,78,120,90,15.3,5200,4.9,260000,22.5,162,85,56,100,14,0.8,Healthy profile; no significant abnormalities.
+B47-P013,60,Female,O+,170,100,90,21,37.8,90,140,260,190,10.9,16000,3.6,160000,29.1,260,150,38,230,40,1.6,"Hypertension, diabetes mellitus, possible infection, and kidney dysfunction."
+B47-P014,28,Male,AB-,118,74,64,13,36.3,98,85,110,94,13.0,5200,4.5,210000,22.0,170,88,54,90,12,0.8,Clinically stable; healthy metabolic profile.
+B47-P015,68,Male,A-,144,90,82,18,37.1,93,122,190,138,12.0,9000,4.0,190000,27.5,208,102,44,165,25,1.0,Hypertension with metabolic concerns; stable.
+B47-P016,39,Female,O-,126,82,74,17,36.9,97,97,150,112,13.8,6400,4.4,225000,23.7,190,100,52,125,18,0.92,Stable cardiovascular and metabolic parameters.
+B47-P017,53,Male,B-,134,82,76,18,36.7,96,110,170,130,13.6,7800,4.2,200000,26.2,205,112,46,140,20,0.98,Hypertension with borderline metabolic findings; stable.
+B47-P018,33,Female,A+,115,75,69,15,36.6,98,90,115,98,14.7,5800,4.6,235000,21.9,178,92,54,108,13,0.81,Healthy profile with excellent metabolic indicators.
+B47-P019,61,Male,O+,158,92,85,19,37.0,93,128,210,140,11.9,11800,3.9,176000,26.9,240,128,40,190,30,1.25,"Hypertension, dyslipidemia, and possible early kidney stress."
+B47-P020,48,Female,AB+,122,78,71,16,36.5,97,101,160,118,13.4,6000,4.5,210000,24.4,192,98,50,125,19,0.89,Stable with mild hyperlipidemia.
+B48-P001,52,Male,A+,152,92,88,18,37.2,94,138,210,165,13.5,12600,4.6,210000,28.4,232,142,46,190,22,1.2,Patient has hypertension and dyslipidemia with borderline diabetes; clinically stable.
+B48-P002,41,Female,O+,128,82,72,16,36.8,97,95,140,110,13.0,7600,4.3,195000,22.7,185,110,60,120,12,0.95,Clinically stable with normal metabolic markers.
+B48-P003,67,Male,B-,168,98,92,22,38.3,90,160,230,190,12.8,12500,4.1,180000,26.9,260,150,42,210,28,1.6,"Patient has hypertension, diabetes mellitus, and early kidney dysfunction."
+B48-P004,29,Female,AB+,118,76,68,14,36.6,99,88,130,105,12.5,6500,4.7,210000,21.4,178,95,58,110,11,0.8,Normal metabolic panel with good oxygenation.
+B48-P005,58,Male,O-,140,90,85,20,37.0,93,120,180,150,14.0,9800,4.5,170000,27.1,210,125,44,170,26,1.1,Hypertension with dyslipidemia; normoglycemia.
+B48-P006,36,Female,A-,110,70,66,15,36.7,98,92,128,100,11.9,5200,4.2,220000,23.0,165,90,62,90,14,0.9,Healthy profile with normal readings.
+B48-P007,72,Male,B+,156,94,88,18,37.6,92,110,170,135,13.2,11500,4.0,190000,25.8,205,118,50,140,24,1.0,Hypertension with possible age-related health concerns.
+B48-P008,49,Female,AB-,132,84,74,17,36.9,96,105,160,130,12.8,8600,4.4,205000,24.2,190,105,55,115,16,0.95,Stable condition with mild metabolic abnormalities.
+B48-P009,63,Male,O+,145,88,78,19,37.1,95,130,210,160,14.5,10200,4.8,200000,29.3,245,132,48,180,25,1.28,Hypertension with elevated cholesterol; potential diabetes risk.
+B48-P010,55,Female,A+,118,78,70,16,36.5,98,102,150,118,12.2,7200,4.3,210000,22.9,178,92,58,100,18,0.92,Normal blood pressure with stable metabolic profile.
+B48-P011,44,Male,B-,125,83,76,17,37.0,96,115,170,130,13.0,9000,4.5,210000,26.0,202,115,46,140,20,1.05,Borderline metabolic profile with controlled BP.
+B48-P012,38,Female,AB+,136,86,82,18,36.8,95,108,164,120,12.6,9800,4.4,200000,25.1,190,108,52,130,17,0.97,Hypertension with stable kidney function.
+B48-P013,60,Male,O-,170,100,92,21,38.2,89,170,260,210,14.2,12000,4.2,175000,28.5,255,140,42,200,30,1.4,"Uncontrolled hypertension, diabetes mellitus, and kidney involvement."
+B48-P014,33,Male,A-,122,78,68,15,36.7,99,92,140,110,13.8,6400,4.6,220000,23.5,176,88,54,110,15,0.85,Healthy young adult with optimal readings.
+B48-P015,70,Female,B+,150,92,84,22,37.4,93,125,190,140,11.8,10500,3.9,165000,27.3,218,126,40,155,26,1.1,Hypertension with mild anemia and lipid abnormalities.
+B48-P016,50,Female,O+,128,84,70,16,36.6,97,105,150,115,12.4,7800,4.1,205000,24.8,185,98,56,120,18,0.88,Stable female with normal metabolic status.
+B48-P017,63,Male,AB-,148,92,86,19,37.3,92,118,170,130,13.6,11200,4.2,198000,27.9,210,125,44,140,22,1.15,Hypertension with dyslipidemia; stable kidney function.
+B48-P018,27,Male,A+,112,72,64,14,36.5,99,88,125,100,13.1,5400,4.6,215000,22.3,165,85,60,85,13,0.82,Healthy and athletic profile.
+B48-P019,54,Male,B-,134,86,79,17,37.0,95,108,160,120,14.0,9400,4.4,208000,26.2,198,112,52,125,19,0.98,Hypertension with mild dyslipidemia.
+B48-P020,46,Female,AB+,126,82,74,16,36.9,97,100,150,110,12.9,8600,4.3,212000,23.7,186,100,54,115,17,0.9,Healthy with minor lipid risk factors.
+P001,34,Male,A+,128,82,72,16,36.8,97,92,142,110,14.1,7500,4.6,210000,23.5,190,95,46,120,14,0.95,Patient is clinically stable with no significant abnormalities.
+P002,58,Female,O+,152,92,78,18,37.2,93,118,210,145,12.4,12200,4.2,180000,26.8,210,118,48,180,22,1.1,Patient has hypertension and diabetes mellitus; monitoring required.
+P003,44,Male,B+,118,76,68,14,36.6,99,88,128,102,15.3,6800,4.7,230000,22.1,178,90,55,110,12,0.85,Patient is clinically stable with no significant abnormalities.
+P004,69,Female,AB-,168,96,84,20,38.0,90,132,190,150,11.9,12500,4.0,195000,28.9,230,125,42,210,28,1.4,"Patient has uncontrolled hypertension, mild anemia, and kidney dysfunction."
+P005,37,Male,O-,142,88,76,17,37.1,96,105,180,120,13.6,9800,4.5,205000,24.9,205,110,50,150,18,1.0,Hypertension with borderline diabetes; clinically stable.
+P006,52,Female,A-,136,84,74,15,36.9,98,95,130,110,12.8,7200,4.4,200000,23.8,190,92,55,140,16,0.92,Patient is clinically stable with no significant abnormalities.
+P007,60,Male,AB+,150,90,80,19,37.3,95,130,210,165,13.2,13000,4.3,190000,27.2,245,132,40,190,24,1.25,"Hypertension, hyperlipidemia, and possible diabetes; requires management."
+P008,29,Female,B-,112,70,66,14,36.7,99,85,120,98,12.2,6400,4.8,210000,21.7,170,85,60,100,11,0.8,Patient is clinically stable with no significant abnormalities.
+P009,45,Male,O+,136,88,82,16,37.0,94,118,210,140,14.0,11400,4.5,205000,25.4,205,102,44,160,20,1.0,Hypertension with elevated triglycerides; infection ruled out.
+P010,63,Female,A+,146,92,76,18,36.9,92,108,170,125,11.5,9800,4.1,198000,29.1,215,112,46,170,25,1.3,Hypertension with mild kidney dysfunction; diabetes not confirmed.
+P011,51,Male,AB-,120,78,70,15,36.5,98,92,130,105,13.9,6800,4.5,210000,24.3,185,88,52,120,14,0.88,Clinically stable; no significant abnormalities.
+P012,72,Male,B-,170,100,88,22,38.2,89,140,230,190,10.8,15000,3.8,180000,26.5,260,140,38,210,34,1.6,Uncontrolled hypertension with diabetes and kidney dysfunction.
+P013,38,Female,O-,122,80,72,16,36.7,97,98,140,112,12.0,6600,4.6,220000,22.8,178,92,56,115,18,0.92,No significant abnormalities; clinically stable.
+P014,55,Male,A+,158,94,86,19,37.5,93,110,190,140,13.1,11200,4.2,185000,28.0,225,115,44,185,22,1.05,Hypertension with hyperlipidemia; infection absent.
+P015,26,Female,AB+,110,72,66,14,36.6,99,72,110,90,11.9,6100,4.5,205000,20.5,165,80,60,90,12,0.84,Healthy- clinically stable; no significant abnormalities.
+P016,48,Male,O+,144,86,76,17,37.0,96,100,160,120,14.2,8600,4.3,210000,25.0,200,105,46,140,18,0.97,Hypertension without diabetes; stable.
+P017,64,Female,B+,136,82,74,16,37.1,97,102,150,120,12.5,9000,4.4,196000,27.5,198,100,52,130,21,1.0,Stable; mild hyperlipidemia.
+P018,41,Male,A-,124,78,70,15,36.8,98,94,128,105,13.3,7300,4.5,212000,23.2,186,88,54,122,15,0.9,Clinically stable; no significant abnormalities.
+P019,53,Male,AB-,162,98,82,21,38.0,91,125,210,170,12.7,12500,4.0,190000,26.0,240,130,42,205,26,1.3,Hypertension with diabetes and kidney dysfunction.
+P020,33,Female,O+,118,76,68,15,36.5,99,86,130,93,11.6,6500,4.7,205000,21.9,170,78,58,95,13,0.85,Healthy- no significant abnormalities.
