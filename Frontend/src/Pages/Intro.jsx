@@ -1,11 +1,9 @@
 import { NavLink } from "react-router";
 import "../Style/intro.css";
-import Navbar from "../Components/Navbar";
 
 const Intro = () => {
     return (
         <div className="page">
-            <Navbar />
             <header className="header">
                 <div className="brand">
                     <h2>Smart Dashboard</h2>
