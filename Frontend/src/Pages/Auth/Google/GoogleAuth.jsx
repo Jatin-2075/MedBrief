@@ -1,21 +1,37 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "./Firebase";
-import '../../../Style/signup.css'
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const GoogleLogin = () => {
-    const handleLogin = async () => {
+
+function GoogleAuth() {
+    const navigate = useNavigate();
+
+    const handleLogin = async (clientId) => {
+
+        const id_token = clientId.credential;
+
         try {
-            const result = await signInWithPopup(auth, googleProvider);
-            console.log("User:", result.user);
-        } 
-        catch (err) {
-            console.error("Login error:", err.message);
+            const res = await axios.post("http://localhost:8000/api/auth/google/", {
+                token: id_token,
+            });
+
+            localStorage.setItem("token", res.data.access);
+            console.log("Logged in:", res.data);
+            navigate("/Dashboard")
+
+        } catch (err) {
+            console.error("Google Login Error:", err);
         }
     };
 
     return (
-        <button className="BTnofgoogle" onClick={handleLogin}>Google</button>
+        <div>
+            <GoogleLogin
+                onSuccess={handleLogin}
+                onError={() => console.log("Google Login Failed")}
+            />
+        </div>
     );
-};
+}
 
-export default GoogleLogin;
+export default GoogleAuth;
