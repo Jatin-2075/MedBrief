@@ -1,0 +1,2 @@
+PatientID,Age,Gender,BloodGroup,SystolicBP,DiastolicBP,HeartRate,RespiratoryRate,BodyTemperature,SpO2,FastingSugar,RandomSugar,Glucose,Hemoglobin,WBC_Count,RBC_Count,Platelet_Count,BMI,CholesterolTotal,LDL,HDL,Triglycerides,Urea,Creatinine,PredictedLabel
+P001,45,Male,A,128,82,72,16,36.7,98,95,130,,,,,,24.8,,,,,,,Hyperlipidemia

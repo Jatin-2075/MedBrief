@@ -1,2 +1,0 @@
-PatientID,Age,Gender,BloodGroup,SystolicBP,DiastolicBP,HeartRate,RespiratoryRate,BodyTemperature,SpO2,FastingSugar,RandomSugar,Glucose,Hemoglobin,WBC_Count,RBC_Count,Platelet_Count,BMI,CholesterolTotal,LDL,HDL,Triglycerides,Urea,Creatinine,FinalDiagnosis
-P001,34,Male,O+,118,78,72,16,36.7,98,92,110,5.2,14.1,6400,4.6,210000,23.4,178,92,46,110,16,0.9,"Healthy patient with stable vitals and normal findings."

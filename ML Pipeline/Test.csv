@@ -1,0 +1,2 @@
+PatientID,Age,Gender,BloodGroup,SystolicBP,DiastolicBP,HeartRate,RespiratoryRate,BodyTemperature,SpO2,FastingSugar,RandomSugar,Glucose,Hemoglobin,WBC_Count,RBC_Count,Platelet_Count,BMI,CholesterolTotal,LDL,HDL,Triglycerides,Urea,Creatinine
+4106,45.0,1,0,128.0,82.0,72.0,16.0,36.7,98.0,95.0,130.0,120.0,12.9,9000.0,4.4,210000.0,24.8,205.0,115.0,48.0,140.0,22.0,1.0
