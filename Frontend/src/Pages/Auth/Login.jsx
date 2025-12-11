@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../../Style/login.css";
+import GoogleAuth from "./Google/GoogleAuth";
 
 const Login = () => {
     return (
@@ -18,6 +19,10 @@ const Login = () => {
                 </div>
 
                 <button className="login-btn">Login</button>
+
+                <div style={{ marginTop: "20px", textAlign: "center" }}>
+                    <GoogleAuth />
+                </div>
 
                 <p className="login-footer">
                     Don’t have an account?{" "}

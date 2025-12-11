@@ -1,4 +1,4 @@
-import GoogleLogin from "./Google/GoogleAuth";
+import GoogleAuth from "./Google/GoogleAuth";
 import "../../Style/signup.css";
 import { NavLink } from "react-router";
 
@@ -29,7 +29,7 @@ const Signup = () => {
                 <div className="signup-actions">
                     <button className="btn-primary">Sign up</button>
                     <div className="divider">or</div>
-                    <GoogleLogin />
+                    <GoogleAuth />
                 </div>
                 <div className="auth-switch">
                     <p>Already have an account?</p>
