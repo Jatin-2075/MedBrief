@@ -1,46 +1,50 @@
-from .models import Profile
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.contrib.auth import authenticate, login, logout
+from rest_framework_simplejwt.tokens import RefreshToken
+from google.oauth2 import id_token
+from google.auth.transport import requests
+from rest_framework.permissions import IsAuthenticated
 
-def Signup(request):
-    if request.method == 'POST':
-        Email = request.POST.get("Email")
-        Password = request.POST.get("Password")
+@api_view(["POST"])
+def google_login(request):
+    token = request.data.get("token")
 
-        if User.objects.filter(username=Email).exists():
-            return JsonResponse({'success' : False, 'msg' : 'Email already present'})
+    try:
+        idinfo = id_token.verify_oauth2_token(
+            token,
+            requests.Request(),
+            "581363368131-t1pt9mkp31imk8uhvtg3gdr1vn03kavp.apps.googleusercontent.com"
+        )
 
-        my_user = User.objects.create_user(username=Email ,email=Email, password=Password)
-        Profile.objects.create(user=my_user)
+        email = idinfo["email"]
+        name = idinfo.get("name", "")
+        picture = idinfo.get("picture", "")
 
-        return JsonResponse({'success' : True, 'msg' : 'Account Created'})
+        user, created = User.objects.get_or_create(
+            username=email,
+            defaults={"first_name": name, "email": email}
+        )
 
-    return JsonResponse({ 'success' : False ,'msg' : 'Error try again'})
+        refresh = RefreshToken.for_user(user)
 
+        return Response({
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "name": name,
+            "email": email,
+            "picture": picture
+        })
 
-def Login(request):
-    if request.method == 'POST':
-        Email = request.POST.get('Email')
-        Password = request.POST.get('Password')
-
-        user = authenticate(username = Email, password = Password)
-
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'success' : True, 'msg' : 'Login'})
-        else:
-            return JsonResponse({'success' : False, 'msg' : 'Error try Again'})
-
-    return JsonResponse({'success' : False, 'msg' : 'Error try Again'})
-
+    except Exception as e:
+        return Response({"error": "Invalid Google token"}, status=400)
 
 
-
-def Logout(request):
-    if request.method == 'POST':
-        logout(request)
-
-        return JsonResponse({'success' : True, 'msg' : 'Logout complete'})
-
-    return JsonResponse({'success' : False, 'msg': 'Logout inComplete'})
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_data(request):
+    user = request.user
+    return Response({
+        "name": user.first_name,
+        "email": user.email
+    })
