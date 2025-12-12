@@ -1,0 +1,14 @@
+body{
+    background-color:white ;
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.title_container{
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: Left;
+    font-size: 1.8rem;
+}

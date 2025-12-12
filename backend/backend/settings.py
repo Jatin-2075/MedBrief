@@ -3,16 +3,14 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-your-secret-key"
+SECRET_KEY = "django-insecure-)vw85mpusa_3#k)#n@qk4t$-zkdu-!&$(i8o-k-74hx70t958y"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
-# ---------------------------------------------------
-# INSTALLED APPS
-# ---------------------------------------------------
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -21,81 +19,36 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # API + Auth
-    "rest_framework",
-    "corsheaders",
-    "rest_framework_simplejwt",
+    #app 
+    "APIAUTH",
 
-    # your app
-    "authentication",
+    # jo lib and frameworks h alag alag 
+    "corsheaders",
+    "rest_framework",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "rest_framework.authtoken",
 ]
 
 
-# ---------------------------------------------------
-# MIDDLEWARE
-# ---------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
-    # CORS must be before CommonMiddleware
-    "corsheaders.middleware.CorsMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 
-# ---------------------------------------------------
-# CORS (React)
-# ---------------------------------------------------
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_HEADERS = [
-    "authorization",
-    "content-type",
-]
-
-CORS_EXPOSE_HEADERS = [
-    "Authorization",
-]
-
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-]
-
-
-# ---------------------------------------------------
-# REST + JWT
-# ---------------------------------------------------
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-}
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
-}
-
-
-# ---------------------------------------------------
-# URLS + WSGI
-# ---------------------------------------------------
 ROOT_URLCONF = "backend.urls"
-WSGI_APPLICATION = "backend.wsgi.application"
 
 
-# ---------------------------------------------------
-# TEMPLATES (required by Django even if unused)
-# ---------------------------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -112,9 +65,10 @@ TEMPLATES = [
 ]
 
 
-# ---------------------------------------------------
-# DATABASE
-# ---------------------------------------------------
+WSGI_APPLICATION = "backend.wsgi.application"
+
+
+# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -123,9 +77,69 @@ DATABASES = {
 }
 
 
-# ---------------------------------------------------
-# STATIC FILES
-# ---------------------------------------------------
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ]
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=6),
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+
+# Authentication backend
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+
 STATIC_URL = "static/"
 
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Redirect after login
+LOGIN_REDIRECT_URL = "/callback/"
+
+
+# Providers google yaha h 
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": "581363368131-t1pt9mkp31imk8uhvtg3gdr1vn03kavp.apps.googleusercontent.com",
+            "secret": "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",
+            "key": ""
+        },
+        "SCOPE": ["email", "profile"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "OAUTH_PKCE_ENABLED": True,
+        "FETCH_USERINFO": True,
+    }
+}
+
+
+SOCIALACCOUNT_STORE_TOKENS = True
+SITE_ID = 1
