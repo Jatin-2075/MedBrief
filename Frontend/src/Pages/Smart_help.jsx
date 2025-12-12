@@ -6,7 +6,7 @@ const Smart_help = () => {
     return (
         <div>
             <Navbar />
-            Smart Help
+            
         </div>
     )
 

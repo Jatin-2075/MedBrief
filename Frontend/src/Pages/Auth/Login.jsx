@@ -1,6 +1,8 @@
 import { useState } from "react";
 import api from "../../Auth/api";
 import { useAuth } from "../../Auth/AuthContext";
+import { NavLink } from "react-router";
+import "../Style/login.css";
 
 function Login() {
     const { login } = useAuth();
@@ -14,11 +16,36 @@ function Login() {
     };
 
     return (
-        <div>
+        <div className="login-container">
+
             <h2>Login</h2>
-            <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} /><br />
-            <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} /><br />
-            <button onClick={submit}>Login</button>
+
+            <div className="login-field">
+                <label>Email</label>
+                <input
+                    placeholder="Enter your username"
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+
+            <div className="login-field">
+                <label>Password</label>
+                <input
+                    type="password"
+                    placeholder="Enter password"
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+
+            <button className="login-btn" onClick={submit}>
+                Login
+            </button>
+
+            <div className="login-footer">
+                <p>New User?</p>
+                <NavLink to="/Signup">Signup</NavLink>
+            </div>
+
         </div>
     );
 }
