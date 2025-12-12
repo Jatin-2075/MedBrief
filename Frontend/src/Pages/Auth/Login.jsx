@@ -1,38 +1,26 @@
-import { NavLink } from "react-router-dom";
-import "../../Style/login.css";
-import GoogleAuth from "./Google/GoogleAuth";
+import { useState } from "react";
+import api from "./api";
+import { useAuth } from "../../Auth/AuthContext";
 
-const Login = () => {
+function Login() {
+    const { login } = useAuth();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const submit = async () => {
+        const res = await api.post("/api/token/", { username, password });
+        login(res.data.access);
+        window.location.href = "/dashboard";
+    };
+
     return (
-        <div className="login-page">
-            <div className="login-card">
-                <h1 className="login-title">Health Helper</h1>
-
-                <div className="login-field">
-                    <label>Email</label>
-                    <input type="email" placeholder="Email id" maxLength={40} />
-                </div>
-
-                <div className="login-field">
-                    <label>Password</label>
-                    <input type="password" placeholder="Password" maxLength={15} minLength={8} />
-                </div>
-
-                <button className="login-btn">Login</button>
-
-                <div style={{ marginTop: "20px", textAlign: "center" }}>
-                    <GoogleAuth />
-                </div>
-
-                <p className="login-footer">
-                    Don’t have an account?{" "}
-                    <NavLink to="/Signup" className="signup-link">
-                        Signup
-                    </NavLink>
-                </p>
-            </div>
+        <div>
+            <h2>Login</h2>
+            <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} /><br />
+            <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} /><br />
+            <button onClick={submit}>Login</button>
         </div>
     );
-};
+}
 
 export default Login;

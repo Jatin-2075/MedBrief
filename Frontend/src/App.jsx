@@ -10,6 +10,11 @@ import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import Help from "./Pages/Help";
 
+import GoogleCallback from "./Auth/GoogleCallback";
+import GoogleLoginBtn from "./Auth/GoogleLoginBtn";
+
+
+
 const router = createBrowserRouter([
     { path: "/", element: <Intro/> },
     { path: "/Home", element: <Home /> },
@@ -20,7 +25,8 @@ const router = createBrowserRouter([
     { path: "/Help", element: <Help/> },
 
     { path: "/Login", element: <Login/> },
-    { path: "/Signup", element: <Signup/> }
+    { path: "/Signup", element: <Signup/> },
+    { path: "/login/callback", element: <GoogleCallback/> }
 ]);
 
 function App() {

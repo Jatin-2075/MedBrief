@@ -1,46 +1,27 @@
-import GoogleAuth from "./Google/GoogleAuth";
-import "../../Style/signup.css";
-import { NavLink } from "react-router";
+import { useState } from "react";
+import api from "../../Auth/api";
 
-const Signup = () => {
-    return (
-        <div className="signup-page">
-            <div className="signup-card">
-                <div className="signup-header">
-                    <h1>Health Helper</h1>
-                    <p>Create your account</p>
-                </div>
+function Signup() {
+  const [email, setEmail] = useState("");
+  const [username, setUser] = useState("");
+  const [password, setPass] = useState("");
 
-                <div className="signup-field">
-                    <label>Email</label>
-                    <input type="email" placeholder="Email" maxLength={40} />
-                </div>
+  const submit = async () => {
+    await api.post("/api/user/register", { email, username, password });
+    alert("Registered!");
+  };
 
-                <div className="signup-field">
-                    <label>Password</label>
-                    <input type="password" placeholder="Password" maxLength={15} minLength={8} />
-                </div>
+  return (
+    <div>
+      <h2>Register</h2>
 
-                <div className="signup-field">
-                    <label>Confirm Password</label>
-                    <input type="password" placeholder="Confirm password" />
-                </div>
+      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} /><br />
+      <input placeholder="Username" onChange={(e) => setUser(e.target.value)} /><br />
+      <input placeholder="Password" type="password" onChange={(e) => setPass(e.target.value)} /><br />
 
-                <div className="signup-actions">
-                    <button className="btn-primary">Sign up</button>
-                    <div className="divider">or</div>
-                    <GoogleAuth />
-                </div>
-                <div className="auth-switch">
-                    <p>Already have an account?</p>
-                    <NavLink to="/Login" className="auth-link">
-                        Login
-                    </NavLink>
-                </div>
-
-            </div>
-        </div>
-    );
-};
+      <button onClick={submit}>Register</button>
+    </div>
+  );
+}
 
 export default Signup;
