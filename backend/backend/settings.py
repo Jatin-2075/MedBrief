@@ -129,8 +129,8 @@ LOGIN_REDIRECT_URL = "/callback/"
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "581363368131-t1pt9mkp31imk8uhvtg3gdr1vn03kavp.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": "jaldi",
+            "secret": "jatin noob nhi hai bot hai",
             "key": ""
         },
         "SCOPE": ["email", "profile"],
