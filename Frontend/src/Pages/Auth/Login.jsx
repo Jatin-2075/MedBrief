@@ -2,7 +2,7 @@ import { useState } from "react";
 import api from "../../Auth/api";
 import { useAuth } from "../../Auth/AuthContext";
 import { NavLink } from "react-router";
-import "../Style/login.css";
+import "../../Style/login.css";
 
 function Login() {
     const { login } = useAuth();

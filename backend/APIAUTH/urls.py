@@ -3,7 +3,9 @@ from .views import (
     UserCreate,
     google_login_callback,
     validate_google_token,
-    UserDetailView
+    UserDetailView,
+    summarize_report,
+    report_history,
 )
 
 urlpatterns = [
@@ -11,4 +13,8 @@ urlpatterns = [
     path('google/', validate_google_token),
     path('callback/', google_login_callback),
     path('user/', UserDetailView.as_view()),
+
+    # 🔥 ML endpoints
+    path('summarize_report/', summarize_report),
+    path('report_history/', report_history),
 ]

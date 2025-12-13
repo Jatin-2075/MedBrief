@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../../Auth/api";
 import { NavLink } from "react-router";
-import "../Style/signup.css";
+import "../../Style/signup.css";
 
 function Signup() {
     const [email, setEmail] = useState("");
