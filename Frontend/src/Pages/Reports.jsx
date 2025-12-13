@@ -19,7 +19,7 @@ export default function Reports() {
 
   return (
     <div className="reports_page">
-      <Navbar />
+      
       {/* LEFT PANEL */}
       <aside className="reports_sidebar">
         <h2>Your Medical Reports</h2>

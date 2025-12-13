@@ -5,7 +5,7 @@ const Smart_help = () => {
 
     return (
         <div>
-            <Navbar />
+            
             
         </div>
     )

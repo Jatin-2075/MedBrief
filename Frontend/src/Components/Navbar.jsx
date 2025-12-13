@@ -12,6 +12,9 @@ const Navbar = () => {
       </div>
 
       <nav className={`nav-center ${open ? "open" : ""}`}>
+        <NavLink to="/Home" className="nav-item">
+          Home
+        </NavLink>
         <NavLink to="/Dashboard" className="nav-item">
           Dashboard
         </NavLink>
@@ -23,6 +26,9 @@ const Navbar = () => {
         </NavLink>
         <NavLink to="/SmartHelper" className="nav-item">
           Smart Helper
+        </NavLink>
+        <NavLink to="/Help" className="nav-item">
+          Help
         </NavLink>
       </nav>
 

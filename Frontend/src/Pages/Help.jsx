@@ -8,8 +8,6 @@ const Help = () => {
     return (
         <div className="help-container">
 
-            <Navbar/>
-
             <header className="help-header">
                 <h1>Need Help?</h1>
                 <p>Your guide to using SmartZen smoothly.</p>
@@ -63,7 +61,6 @@ const Help = () => {
                 <p>WhatsApp: <strong>+91 90000 00000</strong></p>
             </section>
 
-            <Footer />
 
         </div>
     )
