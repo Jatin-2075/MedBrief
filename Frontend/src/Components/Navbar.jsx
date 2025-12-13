@@ -1,19 +1,23 @@
 import { NavLink } from "react-router-dom";
-import '../Style/navbar.css'
+import "../Style/navbar.css";
 import useWindowWidth from "../Hooks/Width";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
-
-    const [Toggle, SetToggle] = useState(true);
-    const [NavToggle, SetNavToggle] = useState(false);
+    const [toggle, setToggle] = useState(true);
+    const [navToggle, setNavToggle] = useState(false);
 
     const width = useWindowWidth();
-    console.log(width);
 
-    if (width > 768) {
-        SetToggle(true)
-    }
+    // ✅ FIX 1: state update moved to useEffect
+    useEffect(() => {
+        if (width > 768) {
+            setToggle(true);
+            setNavToggle(false);
+        } else {
+            setToggle(false);
+        }
+    }, [width]);
 
     return (
         <aside className="sidebar">
@@ -21,15 +25,20 @@ const Navbar = () => {
                 <span>SmartZen</span>
             </div>
 
-            {Toggle && <div>
-                {!NavToggle && <div>
-                    <button type="button" onClick={!SetNavToggle} >☰</button>
-                </div>}
+            {toggle ? (
+                <>
+                    {!navToggle && (
+                        <button type="button" onClick={() => setNavToggle(true)}>
+                            ☰
+                        </button>
+                    )}
 
-                { NavToggle && <div>
-                        <button type="button" onClick={!SetNavToggle} >✖</button>
+                    {navToggle && (
+                        <>
+                            <button type="button" onClick={() => setNavToggle(false)}>
+                                ✖
+                            </button>
 
-                        <div>
                             <nav className="menu">
                                 <NavLink to="/Home" className="item">Home</NavLink>
                                 <NavLink to="/Dashboard" className="item">Dashboard</NavLink>
@@ -38,22 +47,19 @@ const Navbar = () => {
                                 <NavLink to="/SmartHelper" className="item">Smart Helper</NavLink>
                                 <NavLink to="/Help" className="item">Help</NavLink>
                             </nav>
-                        </div>
-                    </div>
-                }
-            </div>}
-
-            {!Toggle && <div>
-                    <nav className="menu">
-                        <NavLink to="/Home" className="item">Home</NavLink>
-                        <NavLink to="/Dashboard" className="item">Dashboard</NavLink>
-                        <NavLink to="/Upload" className="item">Uploads</NavLink>
-                        <NavLink to="/Reports" className="item">Medical Reports</NavLink>
-                        <NavLink to="/SmartHelper" className="item">Smart Helper</NavLink>
-                        <NavLink to="/Help" className="item">Help</NavLink>
-                    </nav>
-                </div>
-            }
+                        </>
+                    )}
+                </>
+            ) : (
+                <nav className="menu">
+                    <NavLink to="/Home" className="item">Home</NavLink>
+                    <NavLink to="/Dashboard" className="item">Dashboard</NavLink>
+                    <NavLink to="/Upload" className="item">Uploads</NavLink>
+                    <NavLink to="/Reports" className="item">Medical Reports</NavLink>
+                    <NavLink to="/SmartHelper" className="item">Smart Helper</NavLink>
+                    <NavLink to="/Help" className="item">Help</NavLink>
+                </nav>
+            )}
         </aside>
     );
 };
