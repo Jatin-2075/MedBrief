@@ -5,23 +5,31 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const HandleSubmit = async () => {
-    const form = new FormData();
-    form.append("username", username);
-    form.append("password", password);
+    if (!username || !password) {
+      alert("All fields required");
+      return;
+    }
 
-    const res = await fetch("http://127.0.0.1:8000/login/", {
-      method: "POST",
-      body: form,
-      credentials: "include",
-    });
+    try {
+      const form = new FormData();
+      form.append("username", username);
+      form.append("password", password);
 
-    const data = await res.json();
+      const res = await fetch("http://127.0.0.1:8000/login/", {
+        method: "POST",
+        body: form,
+        credentials: "include",
+      });
 
-    if (data.success) {
-      alert("Logged in");
-      window.location.href = "/dashboard";
-    } else {
-      alert(data.msg);
+      const data = await res.json();
+
+      if (data.success) {
+        window.location.href = "/Dashboard";
+      } else {
+        alert(data.msg);
+      }
+    } catch (err) {
+      alert("Server error");
     }
   };
 

@@ -7,23 +7,38 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const HandleSubmit = async () => {
+    if (!username || !email || !password) {
+      alert("All fields required");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    const form = new FormData();
-    form.append("username", username);
-    form.append("email", email);
-    form.append("password", password);
+    try {
+      const form = new FormData();
+      form.append("username", username);
+      form.append("email", email);
+      form.append("password", password);
 
-    const res = await fetch("http://127.0.0.1:8000/signup/", {
-      method: "POST",
-      body: form,
-    });
+      const res = await fetch("http://127.0.0.1:8000/signup/", {
+        method: "POST",
+        body: form,
+      });
 
-    const data = await res.json();
-    alert(data.msg);
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Account created");
+        window.location.href = "/Login"; 
+      } else {
+        alert(data.msg);
+      }
+    } catch (err) {
+      alert("Server error");
+    }
   };
 
   return (
@@ -41,7 +56,10 @@ const Signup = () => {
       <input type="password" onChange={(e) => setPassword(e.target.value)} />
 
       <label>Confirm Password</label>
-      <input type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
+      <input
+        type="password"
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
 
       <button onClick={HandleSubmit}>Submit</button>
     </div>
