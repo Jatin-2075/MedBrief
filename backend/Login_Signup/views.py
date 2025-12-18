@@ -9,7 +9,7 @@ import hashlib
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from .models import PasswordResetOTP
-
+from .models import Profile,Profile_done_not
 
 @csrf_exempt
 def Signup(request):
@@ -187,12 +187,8 @@ def reset_password(request):
 @login_required
 @csrf_exempt
 def Profile_creation(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'msg' : 'unauthorized request if logged in try contacting developers ', 'suscess' : False}, status=401)
-
     if request.method == 'POST':
-
-        profile , create= Profile.objects.get_or_create(user=request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
 
         profile.name = request.POST.get("name")
         profile.age = request.POST.get("age")
@@ -204,10 +200,9 @@ def Profile_creation(request):
 
         profile.save()
 
-        return JsonResponse({'msg' : 'profile created', 'success': True})
+        return JsonResponse({'msg': 'Profile created', 'success': True})
 
-    return ({'msg' : 'something went wrong', 'success' : False})
-
+    return JsonResponse({'msg': 'Invalid request', 'success': False})
 
 @login_required
 def Send_Profile(request):
@@ -226,7 +221,24 @@ def Send_Profile(request):
         "height": profile.height,
         "bloodgroup": profile.bloodgroup,
         "allergies": profile.allergies,
-        "success": True
+        "success": True,
     })
 
-         
+@login_required
+def Profile_done(request):
+    if request.method != 'POST':
+        return ({"msg": "Something went Wrong, ", "success": True})
+
+    status_done, create= Profile_done_not.objects.get_or_create()
+    status_done.status = request.POST.get("status")
+
+    return JsonResponse({'msg':"Skipped", 'success': True})
+
+
+@login_required
+def Sent_status(request):
+    return JsonResponse({
+        "status":Profile_done_not.user.status,
+        "success": True,
+        'msg': "please create your profile later",
+    })
