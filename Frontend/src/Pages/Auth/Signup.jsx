@@ -9,6 +9,8 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+
+
   const handleSubmit = async () => {
     if (!username || !email || !password || !confirmPassword) {
       alert("All fields are required");
@@ -37,7 +39,32 @@ const Signup = () => {
 
       if (data.success) {
         alert("Account created successfully");
-        window.location.href = "/Login";
+  const loginform = new FormData()
+
+        loginform.append("password", password)
+        loginform.append("username", username)
+
+
+        const dosomething = async () => {
+          const res = await fetch("http://127.0.0.1:8000/login/",{
+            method: "POST",
+            body: loginform,
+            credentials: "include",
+          })
+          const loginresponse = await res.json()
+
+          console.log(loginresponse)
+          if(loginresponse.success){
+            alert("create a profile")
+          }
+          else{
+            alert("some error occured from backend")
+            window.location.href= "/Create_Profile";
+          }
+
+        }
+        await dosomething()
+
       } else {
         alert(data.msg || "Signup failed");
       }

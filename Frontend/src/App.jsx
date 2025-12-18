@@ -11,6 +11,7 @@ import Intro from "./Pages/Intro";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import Help from "./Pages/Help";
+import CreateProfile from "./Services/Profile/Profile_Create";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   { path: "/", element: <Intro /> },
   { path: "/Login", element: <Login /> },
   { path: "/Signup", element: <Signup /> },
+  { path: "/Create_Profile", element: <CreateProfile/> },
 ]);
 
 function App() {

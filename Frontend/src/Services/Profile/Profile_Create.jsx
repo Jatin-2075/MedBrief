@@ -59,6 +59,16 @@ const CreateProfile = () => {
 
     }
 
+    const skipclick = async () => {
+        const res = await fetch("http://localhost:8000/Update_status/")
+        const data = await res.json()
+
+        console.log(data)
+
+        if(data.success){
+            navigate("Dashboard/")
+        }
+    }
 
 
     return (
@@ -159,6 +169,7 @@ const CreateProfile = () => {
                 </div>
 
                 <button type="submit">Save Profile</button>
+                <button type="button" onClick={skipclick}>skip for now</button>
             </form>
         </div>
     );
