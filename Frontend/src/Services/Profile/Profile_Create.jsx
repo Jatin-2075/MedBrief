@@ -12,15 +12,15 @@ const CreateProfile = () => {
         bloodGroup: "",
         allergies: "",
     });
-    
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const {name, value, files} = e.target;
+        const { name, value, files } = e.target;
 
         setProfile((prev) => ({
             ...prev,
-            [name] : files ? files[0] : value,
+            [name]: files ? files[0] : value,
         }))
     };
 
@@ -40,17 +40,17 @@ const CreateProfile = () => {
 
             });
 
-            if(!res.ok){
+            if (!res.ok) {
                 alert("Server Error Sorry")
             }
             const data = await res.json()
             console.log(data);
 
-            if(data.success){
+            if (data.success) {
                 alert(data.msg)
                 navigate("/Dashboard")
             }
-            else{
+            else {
                 alert(data.msg)
             }
         } catch (err) {
@@ -58,6 +58,25 @@ const CreateProfile = () => {
         };
 
     }
+
+    const skiphandle = async () => {
+        const response = await fetch("http://localhost:8000/Status/", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                status: false
+            })
+        });
+
+        const data = await response.json();
+        alert(data.msg);
+
+        navigate("/Dashboard");
+    };
+
 
 
 
@@ -159,6 +178,7 @@ const CreateProfile = () => {
                 </div>
 
                 <button type="submit">Save Profile</button>
+                <button type="button" onClick={skiphandle}>Skip</button>
             </form>
         </div>
     );

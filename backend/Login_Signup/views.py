@@ -1,4 +1,4 @@
-from .models import Profile
+from .models import Profile, Status
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
@@ -9,6 +9,8 @@ import hashlib
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from .models import PasswordResetOTP
+import json
+
 
 
 @csrf_exempt
@@ -230,3 +232,29 @@ def Send_Profile(request):
     })
 
          
+@csrf_exempt
+@login_required
+def status_view(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+        except Exception as e:
+            return JsonResponse(
+                {"success": False, "msg": "Invalid JSON"},
+                status=400
+            )
+
+        status_obj, _ = Status.objects.get_or_create(user=request.user)
+        status_obj.status = data.get("status", False)
+        status_obj.save()
+
+        return JsonResponse({
+            "success": True,
+            "msg": "Status updated",
+            "status": status_obj.status
+        })
+    status_obj, _ = Status.objects.get_or_create(user=request.user)
+    return JsonResponse({
+        "success": True,
+        "status": status_obj.status
+    })
