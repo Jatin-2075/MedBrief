@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../Style/signup.css";
 import { API_BASE_URL } from "../../config/api";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -16,25 +17,25 @@ const Signup = () => {
 
     const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]{2,19}$/;
     if (!usernameRegex.test(trimmedUsername)) {
-      alert(
-        "Username must be 3–20 characters long, start with a letter, and contain only letters, numbers, or underscores."
+      toast.error(
+        "Username must be 3-20 characters long, start with a letter, and contain only letters, numbers, or underscores."
       );
       return;
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(trimmedEmail)) {
-      alert("Please enter a valid email address (e.g., example@gmail.com).");
+      toast.error("Please enter a valid email address (e.g., example@gmail.com).");
       return;
     }
 
     if (password.length < 8) {
-      alert("Password must be at least 8 characters long for security reasons.");
+      toast.error("Password must be at least 8 characters long for security reasons.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("The passwords you entered do not match. Please try again.");
+      toast.error("The passwords you entered do not match. Please try again.");
       return;
     }
 
@@ -54,13 +55,13 @@ const Signup = () => {
       const data = await res.json();
 
       if (data.success) {
-        alert("Your account has been created successfully. You may now log in.");
+        toast.error("Your account has been created successfully. You may now log in.");
         window.location.href = "/Login";
       } else {
-        alert(data.msg || "Signup failed. Please try again.");
+        toast.error(data.msg || "Signup failed. Please try again.");
       }
     } catch {
-      alert("A server error occurred. Please try again later.");
+      toast.error("A server error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }

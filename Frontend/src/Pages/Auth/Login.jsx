@@ -2,6 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../Style/Login.css";
 import { API_BASE_URL } from "../../config/api";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Login = () => {
   // ===============================
@@ -23,11 +25,32 @@ const Login = () => {
   const navigate = useNavigate();
 
   // ===============================
+  // OTP TIMER STATES
+  // ===============================
+  const [timer, setTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  useEffect(() => {
+    if (step === 2 && timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+
+    if (timer === 0) {
+      setCanResend(true);
+    }
+  }, [timer, step]);
+
+
+  // ===============================
   // LOGIN HANDLER
   // ===============================
   const handleSubmit = async () => {
     if (!username || !password) {
-      alert("Please enter both username and password.");
+      toast.error("Please enter both username and password.");
       return;
     }
 
@@ -49,10 +72,10 @@ const Login = () => {
       if (data.success) {
         navigate("/Dashboard", { replace: true });
       } else {
-        alert(data.msg || "Invalid login credentials.");
+        toast.error(data.msg || "Invalid login credentials.");
       }
     } catch {
-      alert("A server error occurred. Please try again.");
+      toast.error("A server error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -63,7 +86,7 @@ const Login = () => {
   // ===============================
   const sendOtp = async () => {
     if (!email) {
-      alert("Please enter your registered email address.");
+      toast.error("Please enter your registered email address.");
       return;
     }
 
@@ -81,29 +104,33 @@ const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        alert("An OTP has been sent to your email.");
+        toast.success("An OTP has been sent to your email.");
         setStep(2);
-      } else {
-        alert(data.msg || "Unable to send OTP.");
+        setTimer(60);
+        setCanResend(false);
+      }
+      else {
+        toast.error(data.msg || "Unable to send OTP.");
       }
     } catch {
-      alert("Server error. Please try again later.");
+      toast.error("Server error. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   // ===============================
   // RESET PASSWORD
   // ===============================
   const resetPassword = async () => {
     if (!otp || !newPassword) {
-      alert("All fields are required.");
+      toast.error("All fields are required.");
       return;
     }
 
     if (newPassword.length < 8) {
-      alert("Password must be at least 8 characters long.");
+      toast.error("Password must be at least 8 characters long.");
       return;
     }
 
@@ -123,7 +150,7 @@ const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        alert("Your password has been reset successfully.");
+        toast.error("Your password has been reset successfully.");
 
         // Reset UI
         setShowForgot(false);
@@ -132,10 +159,10 @@ const Login = () => {
         setOtp("");
         setNewPassword("");
       } else {
-        alert(data.msg || "Invalid OTP.");
+        toast.error(data.msg || "Invalid OTP.");
       }
     } catch {
-      alert("Server error. Please try again.");
+      toast.error("Server error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -256,6 +283,26 @@ const Login = () => {
                 >
                   {loading ? "Resetting..." : "Reset Password"}
                 </button>
+                <div style={{ textAlign: "center", marginTop: "10px" }}>
+                  {canResend ? (
+                    <span
+                      style={{
+                        color: "#2a7be4",
+                        cursor: "pointer",
+                        fontSize: "14px",
+                        fontWeight: 600,
+                      }}
+                      onClick={sendOtp}
+                    >
+                      Resend OTP
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: "14px", color: "#666" }}>
+                      Resend OTP in {timer}s
+                    </span>
+                  )}
+                </div>
+
               </>
             )}
 
@@ -265,6 +312,8 @@ const Login = () => {
                 onClick={() => {
                   setShowForgot(false);
                   setStep(1);
+                  setTimer(60);
+                  setCanResend(false);
                 }}
               >
                 Back to login
