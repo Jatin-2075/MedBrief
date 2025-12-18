@@ -7,5 +7,5 @@ urlpatterns = [
     path("logout/", views.Logout, name="logout"),
 
     path("Create_Profile/", views.Profile_creation, name="Create_Profile"),
-    path("Show_Profile/", views.Show_Profile, name="Show_Profile")
+    path("Send_Profile/", views.Send_Profile, name="Send_Profile")
 ]
