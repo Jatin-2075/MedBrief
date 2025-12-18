@@ -9,7 +9,6 @@ const Smart_help = () => {
   const [activeId, setActiveId] = useState(1);
   const [query, setQuery] = useState("");
 
-  // ✅ CREATE NEW CHAT (RESTORED)
   const createNewChat = () => {
     const newChat = {
       id: Date.now(),
@@ -22,24 +21,36 @@ const Smart_help = () => {
     setQuery("");
   };
 
-  // ✅ REMOVE CHAT (ON HOVER)
   const removeChat = (id) => {
     setConversations((prev) => {
       const updated = prev.filter((c) => c.id !== id);
-
       if (id === activeId && updated.length > 0) {
         setActiveId(updated[0].id);
       }
-
       return updated;
     });
   };
 
+  // ✅ SEND MESSAGE
+  const sendMessage = () => {
+    if (!query.trim()) return;
+
+    console.log("Message sent:", query);
+    setQuery("");
+  };
+
+  // ✅ KEYBOARD HANDLER (ENTER vs SHIFT+ENTER)
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <div className="ai-layout">
-      {/* ================= SIDEBAR ================= */}
+      {/* SIDEBAR */}
       <aside className="ai-sidebar">
-        {/* ✅ NEW CHAT BUTTON (VISIBLE ALWAYS) */}
         <button className="new-chat-btn" onClick={createNewChat}>
           + New Chat
         </button>
@@ -54,8 +65,6 @@ const Smart_help = () => {
               onClick={() => setActiveId(conv.id)}
             >
               <span className="chat-title">{conv.title}</span>
-
-              {/* ❌ REMOVE BUTTON (ON HOVER ONLY) */}
               <span
                 className="chat-remove"
                 onClick={(e) => {
@@ -70,22 +79,28 @@ const Smart_help = () => {
         </div>
       </aside>
 
-      {/* ================= MAIN ================= */}
+      {/* MAIN */}
       <main className="ai-main">
         <h1 className="smart-help-title">Smart Help</h1>
         <p className="smart-help-subtitle">
           Ask SmartZen AI anything about health, reports, or lifestyle
         </p>
 
+        {/* ✅ MULTILINE INPUT */}
         <div className="smart-help-search">
-          <input
-            type="text"
+          <textarea
             placeholder="Ask SmartZen AI…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            rows={1}
           />
-          <button>Ask</button>
+          <button onClick={sendMessage}>Ask</button>
         </div>
+
+        <p className="input-hint">
+          Press <b>Enter</b> to send • <b>Shift + Enter</b> for new line
+        </p>
       </main>
     </div>
   );
