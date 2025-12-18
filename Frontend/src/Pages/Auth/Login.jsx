@@ -70,7 +70,7 @@ const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        navigate("/Dashboard", { replace: true });
+        navigate("/Profile_create", { replace: true });
       } else {
         toast.error(data.msg || "Invalid login credentials.");
       }

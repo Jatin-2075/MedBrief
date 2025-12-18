@@ -16,4 +16,5 @@ urlpatterns = [
 
     path("Create_Profile/", views.Profile_creation, name="Create_Profile"),
     path("Send_Profile/", views.Send_Profile, name="Send_Profile")
+    path("Status/", views.Status, name="Status")
 ]
