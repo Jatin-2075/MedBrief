@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 @csrf_exempt
 def Signup(request):
@@ -92,20 +94,23 @@ def Profile_creation(request):
 
 
 @login_required
-@csrf_exempt
 def Send_Profile(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'msg' : 'Unauthorized Login', 'success' : False})
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        return JsonResponse({'msg': 'Profile not found', 'success': False}, status=404)
 
     return JsonResponse({
-        "username":request.user.username,
-        "name":request.user.name,
-        "email":request.user.email,
-        "age":request.user.age,
-        "gender":request.user.gender,
-        "weight":request.user.weight,
-        "height":request.user.height,
-        "bloodgroup":request.user.bloodgroup,
-        "allergies":request.user.allergies,
+        "username": request.user.username,
+        "email": request.user.email,
+        "name": profile.name,
+        "age": profile.age,
+        "gender": profile.gender,
+        "weight": profile.weight,
+        "height": profile.height,
+        "bloodgroup": profile.bloodgroup,
+        "allergies": profile.allergies,
+        "success": True
     })
+
          
