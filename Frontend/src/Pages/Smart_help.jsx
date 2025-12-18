@@ -1,14 +1,24 @@
-import React, { useState } from "react";
 import "../Style/SmartHelp.css";
+import React, { useState, useEffect, useRef } from "react";
 
 const Smart_help = () => {
   const [conversations, setConversations] = useState([
     { id: 1, title: "New Chat", messages: [] },
   ]);
-
   const [activeId, setActiveId] = useState(1);
   const [query, setQuery] = useState("");
 
+  const chatEndRef = useRef(null);
+
+  // ===============================
+  // ACTIVE CONVERSATION (SAFE)
+  // ===============================
+  const activeConversation =
+    conversations.find((c) => c.id === activeId) || conversations[0];
+
+  // ===============================
+  // CREATE NEW CHAT
+  // ===============================
   const createNewChat = () => {
     const newChat = {
       id: Date.now(),
@@ -21,6 +31,9 @@ const Smart_help = () => {
     setQuery("");
   };
 
+  // ===============================
+  // REMOVE CHAT
+  // ===============================
   const removeChat = (id) => {
     setConversations((prev) => {
       const updated = prev.filter((c) => c.id !== id);
@@ -31,15 +44,29 @@ const Smart_help = () => {
     });
   };
 
-  // ✅ SEND MESSAGE
+  // ===============================
+  // SEND MESSAGE
+  // ===============================
   const sendMessage = () => {
     if (!query.trim()) return;
 
-    console.log("Message sent:", query);
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === activeId
+          ? {
+              ...conv,
+              messages: [...conv.messages, { role: "user", text: query }],
+            }
+          : conv
+      )
+    );
+
     setQuery("");
   };
 
-  // ✅ KEYBOARD HANDLER (ENTER vs SHIFT+ENTER)
+  // ===============================
+  // ENTER vs SHIFT+ENTER
+  // ===============================
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -47,9 +74,16 @@ const Smart_help = () => {
     }
   };
 
+  // ===============================
+  // AUTO SCROLL
+  // ===============================
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [activeConversation.messages]);
+
   return (
     <div className="ai-layout">
-      {/* SIDEBAR */}
+      {/* ================= SIDEBAR ================= */}
       <aside className="ai-sidebar">
         <button className="new-chat-btn" onClick={createNewChat}>
           + New Chat
@@ -59,9 +93,7 @@ const Smart_help = () => {
           {conversations.map((conv) => (
             <div
               key={conv.id}
-              className={`chat-item ${
-                conv.id === activeId ? "active" : ""
-              }`}
+              className={`chat-item ${conv.id === activeId ? "active" : ""}`}
               onClick={() => setActiveId(conv.id)}
             >
               <span className="chat-title">{conv.title}</span>
@@ -79,21 +111,45 @@ const Smart_help = () => {
         </div>
       </aside>
 
-      {/* MAIN */}
+      {/* ================= MAIN ================= */}
       <main className="ai-main">
         <h1 className="smart-help-title">Smart Help</h1>
         <p className="smart-help-subtitle">
           Ask SmartZen AI anything about health, reports, or lifestyle
         </p>
 
-        {/* ✅ MULTILINE INPUT */}
+        {/* ================= CHAT WINDOW ================= */}
+        <div
+          className={`chat-window ${
+            activeConversation.messages.length === 0 ? "empty" : ""
+          }`}
+        >
+          {activeConversation.messages.length === 0 ? (
+            <div className="empty-chat">
+              Start a conversation by typing below 👇
+            </div>
+          ) : (
+            activeConversation.messages.map((msg, index) => (
+              <div key={index} className={`chat-bubble ${msg.role}`}>
+                {msg.text}
+              </div>
+            ))
+          )}
+          <div ref={chatEndRef} />
+        </div>
+
+        {/* ================= INPUT ================= */}
         <div className="smart-help-search">
           <textarea
+            className="chat-textarea"
             placeholder="Ask SmartZen AI…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              e.target.style.height = "auto";
+              e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
             onKeyDown={handleKeyDown}
-            rows={1}
           />
           <button onClick={sendMessage}>Ask</button>
         </div>

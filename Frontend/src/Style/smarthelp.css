@@ -1,19 +1,30 @@
 /* ===============================
-   LAYOUT
+   ROOT LAYOUT
 ================================ */
 .ai-layout {
   display: flex;
   height: 100vh;
   background: #f5f7fb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
 }
-/* SIDEBAR */
+
+/* ===============================
+   SIDEBAR
+================================ */
 .ai-sidebar {
   width: 260px;
+  height: 100vh;              /* full viewport */
+  position: fixed;            /* 🔑 FIXED */
+  top: 0;
+  left: 0;
+
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
   padding: 16px;
+  z-index: 100;
 }
 
 /* NEW CHAT BUTTON */
@@ -21,11 +32,15 @@
   background: #2563eb;
   color: #ffffff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 12px;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 16px;
+}
+
+.new-chat-btn:hover {
+  background: #1e4fd8;
 }
 
 /* CHAT HISTORY */
@@ -40,10 +55,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 6px;
+  color: #374151;
 }
 
 .chat-item:hover {
@@ -55,7 +71,7 @@
   font-weight: 600;
 }
 
-/* TITLE */
+/* CHAT TITLE */
 .chat-title {
   white-space: nowrap;
   overflow: hidden;
@@ -78,92 +94,133 @@
 .chat-remove:hover {
   color: #ef4444;
 }
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .ai-sidebar {
-    display: none;
-  }
-}
-
-/* MULTILINE INPUT */
-.smart-help-search textarea {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 14px 16px;
-  font-size: 15px;
-  resize: none;
-  max-height: 140px;
-  line-height: 1.5;
-  border-radius: 20px;
-  overflow-y: auto;
-}
-
-/* INPUT HINT */
-.input-hint {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-
 /* ===============================
    MAIN AREA
 ================================ */
 .ai-main {
+  margin-left: 260px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  padding: 24px;
 }
 
+/* HEADER */
 .smart-help-title {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
   color: #2563eb;
-  margin-bottom: 8px;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
 .smart-help-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: #555;
-  margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 /* ===============================
-   SEARCH BAR
+   CHAT AREA (KEY FIX)
+================================ */
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* CHAT WINDOW */
+.chat-window {
+  flex: 1;                    /* 🔑 THIS IS THE FIX */
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+/* EMPTY STATE */
+.chat-window.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-chat {
+  color: #6b7280;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* MESSAGE BUBBLES */
+.chat-bubble {
+  max-width: 75%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.chat-bubble.user {
+  background: #2563eb;
+  color: #ffffff;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.ai {
+  background: #e5e7eb;
+  color: #111827;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+/* ===============================
+   INPUT AREA
 ================================ */
 .smart-help-search {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 14px 16px;
   background: #ffffff;
-  border-radius: 999px;
-  padding: 8px 12px;
-  width: 100%;
-  max-width: 600px;
+  border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.smart-help-search input {
+.chat-textarea {
   flex: 1;
   border: none;
   outline: none;
-  padding: 14px 16px;
-  font-size: 15px;
+  resize: none;
+  font-size: 16px;
+  line-height: 1.6;
+  max-height: 200px;
+  overflow-y: auto;
+  background: transparent;
 }
 
 .smart-help-search button {
-  background: #2563eb;
-  color: white;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 8px;
   border: none;
-  border-radius: 999px;
-  padding: 12px 22px;
+  background: #2563eb;
+  color: #ffffff;
   font-weight: 600;
   cursor: pointer;
 }
+
+.input-hint {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
 
 /* ===============================
    MOBILE
@@ -171,5 +228,13 @@
 @media (max-width: 768px) {
   .ai-sidebar {
     display: none;
+  }
+
+  .smart-help-title {
+    font-size: 26px;
+  }
+
+  .smart-help-search {
+    border-radius: 8px;
   }
 }
