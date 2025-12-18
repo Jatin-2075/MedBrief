@@ -122,3 +122,66 @@
     transform: translateY(0);
   }
 }
+
+/* ------------------------------
+   Mobile & Tablet Responsiveness
+--------------------------------*/
+
+/* Tablets & large phones */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 28px 22px;
+    border-radius: 12px;
+  }
+
+  .login-container h2 {
+    font-size: 26px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .login-page {
+    padding: 16px;
+  }
+
+  .login-container {
+    width: 100%;
+    padding: 22px 18px;
+    box-shadow: 0 8px 20px rgba(42, 123, 228, 0.12);
+  }
+
+  .login-container h2 {
+    font-size: 24px;
+  }
+
+  .login-field label {
+    font-size: 13px;
+  }
+
+  .login-field input {
+    font-size: 14px;
+    padding: 11px 12px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .login-footer {
+    font-size: 13px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .login-container h2 {
+    font-size: 22px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+  }
+}
+

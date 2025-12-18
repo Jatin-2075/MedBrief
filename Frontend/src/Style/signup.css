@@ -1,10 +1,21 @@
 /* ===============================
+   SIGNUP PAGE WRAPPER
+================================ */
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eef4ff, #f9fbff);
+  padding: 16px;
+}
+
+/* ===============================
    SIGNUP CONTAINER
 ================================ */
 .signup-container {
-  width: 92%;
+  width: 100%;
   max-width: 420px;
-  margin: 70px auto;
   padding: 36px 32px;
   background: linear-gradient(180deg, #ffffff, #f7f9fc);
   border-radius: 16px;
@@ -14,7 +25,9 @@
   animation: fadeUp 0.5s ease;
 }
 
-/* subtle entrance animation */
+/* ===============================
+   ANIMATION
+================================ */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -32,7 +45,7 @@
 .signup-container h2 {
   text-align: center;
   margin-bottom: 26px;
-  color: #2563eb; /* calmer medical blue */
+  color: #2563eb;
   font-size: 30px;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -93,20 +106,23 @@
   margin-top: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow:
-    0 8px 18px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
 }
 
 .signup-btn:hover {
   transform: translateY(-1px);
-  box-shadow:
-    0 12px 26px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.45);
 }
 
 .signup-btn:active {
   transform: translateY(0);
-  box-shadow:
-    0 6px 14px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+}
+
+.signup-btn:disabled {
+  background: #93b4f5;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* ===============================
@@ -123,24 +139,36 @@
   color: #2563eb;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .signup-login-text a:hover {
-  color: #1e40af;
   text-decoration: underline;
 }
 
 /* ===============================
-   MOBILE OPTIMIZATION
+   RESPONSIVE DESIGN
 ================================ */
 @media (max-width: 480px) {
   .signup-container {
     padding: 28px 22px;
-    margin: 40px auto;
   }
 
   .signup-container h2 {
     font-size: 26px;
+  }
+}
+
+@media (max-width: 360px) {
+  .signup-container {
+    padding: 22px 18px;
+  }
+
+  .signup-container h2 {
+    font-size: 24px;
+  }
+
+  .signup-btn {
+    font-size: 15px;
+    padding: 13px;
   }
 }
