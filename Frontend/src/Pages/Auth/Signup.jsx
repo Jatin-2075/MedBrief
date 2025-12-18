@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../Style/signup.css";
+import { API_BASE_URL } from "../../config/api";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -10,10 +11,8 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-  
     const trimmedUsername = username.trim();
     const trimmedEmail = email.trim();
-
 
     const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]{2,19}$/;
     if (!usernameRegex.test(trimmedUsername)) {
@@ -47,7 +46,7 @@ const Signup = () => {
       form.append("email", trimmedEmail);
       form.append("password", password);
 
-      const res = await fetch("http://127.0.0.1:8000/signup/", {
+      const res = await fetch(`${API_BASE_URL}/signup/`, {
         method: "POST",
         body: form,
       });
@@ -60,17 +59,16 @@ const Signup = () => {
       } else {
         alert(data.msg || "Signup failed. Please try again.");
       }
-    } catch (err) {
+    } catch {
       alert("A server error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <div className="signup-page">
-        <div className="signup-container">
+      <div className="signup-container">
         <h2>SmartZen</h2>
 
         <div className="signup-field">
@@ -122,13 +120,11 @@ const Signup = () => {
         </button>
 
         <p className="signup-login-text">
-          Already have an account?{" "}
-          <NavLink to="/Login">Login</NavLink>
+          Already have an account? <NavLink to="/Login">Login</NavLink>
         </p>
       </div>
     </div>
   );
-
 };
 
 export default Signup;

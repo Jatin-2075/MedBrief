@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../Style/Login.css";
+import { API_BASE_URL } from "../../config/api";
 
 const Login = () => {
   // ===============================
@@ -37,7 +38,7 @@ const Login = () => {
       form.append("username", username);
       form.append("password", password);
 
-      const res = await fetch("http://127.0.0.1:8000/login/", {
+      const res = await fetch(`${API_BASE_URL}/login/`, {
         method: "POST",
         body: form,
         credentials: "include",
@@ -72,7 +73,7 @@ const Login = () => {
       const form = new FormData();
       form.append("email", email);
 
-      const res = await fetch("http://127.0.0.1:8000/forgot-password/", {
+      const res = await fetch(`${API_BASE_URL}/forgot-password/`, {
         method: "POST",
         body: form,
       });
@@ -114,7 +115,7 @@ const Login = () => {
       form.append("otp", otp);
       form.append("new_password", newPassword);
 
-      const res = await fetch("http://127.0.0.1:8000/reset-password/", {
+      const res = await fetch(`${API_BASE_URL}/reset-password/`, {
         method: "POST",
         body: form,
       });
@@ -123,6 +124,8 @@ const Login = () => {
 
       if (data.success) {
         alert("Your password has been reset successfully.");
+
+        // Reset UI
         setShowForgot(false);
         setStep(1);
         setEmail("");
