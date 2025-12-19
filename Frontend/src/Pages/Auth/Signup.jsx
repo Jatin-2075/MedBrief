@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "../../Style/signup.css";
 import { API_BASE_URL } from "../../config/api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -10,6 +11,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleSubmit = async () => {
     const trimmedUsername = username.trim();
@@ -42,24 +45,27 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const form = new FormData();
-      form.append("username", trimmedUsername);
-      form.append("email", trimmedEmail);
-      form.append("password", password);
-
       const res = await fetch(`${API_BASE_URL}/signup/`, {
         method: "POST",
-        body: form,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: trimmedUsername,
+          email: trimmedEmail,
+          password: password,
+        }),
       });
 
       const data = await res.json();
 
       if (data.success) {
-        toast.error("Your account has been created successfully. You may now log in.");
-        window.location.href = "/Login";
+        toast.success("Account created! Redirecting...");
+        setTimeout(() => navigate("/Login"), 2000);
       } else {
         toast.error(data.msg || "Signup failed. Please try again.");
       }
+
     } catch {
       toast.error("A server error occurred. Please try again later.");
     } finally {

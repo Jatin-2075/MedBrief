@@ -10,11 +10,10 @@ urlpatterns = [
     path("login/", views.Login, name="login"),
     path("forgot-password/", forgot_password),
     path("reset-password/", reset_password),
-    path("logout/", views.Logout, name="logout"),
     
 
 
     path("Create_Profile/", views.Profile_creation, name="Create_Profile"),
     path("Send_Profile/", views.Send_Profile, name="Send_Profile"),
-    path("Status/", views.Status_view, name="Status"),
+    path("Status_view/", views.Status_view, name="Status"),
 ]
