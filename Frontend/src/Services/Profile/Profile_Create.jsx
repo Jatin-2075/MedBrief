@@ -18,7 +18,7 @@ const CreateProfile = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const token = localStorage.getItem("access");
+    const token = localStorage.getItem("access_token");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -77,7 +77,7 @@ const CreateProfile = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`${API_BASE_URL}/Status_view/`, {
+            const res = await fetch(`${API_BASE_URL}/profile/status/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,18 +86,21 @@ const CreateProfile = () => {
                 body: JSON.stringify({ profile_completed: false }),
             });
 
+            console.log("STATUS:", res.status);
+
             const data = await res.json();
 
             if (!res.ok) throw new Error(data.msg);
 
             toast.info("Profile skipped");
-            navigate("/Dashboard", { replace: true });
+            navigate("/Home", { replace: true });
         } catch (err) {
             toast.error(err.message || "Skip failed");
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="profile-container">

@@ -66,6 +66,7 @@ const Login = () => {
                 }),
             });
 
+
             const data = await res.json();
 
             if (data.success) {
@@ -76,6 +77,7 @@ const Login = () => {
                 // Store user info
                 localStorage.setItem("user", JSON.stringify(data.user));
 
+                
                 toast.success("Login successful!");
 
                 // Navigate based on profile completion status

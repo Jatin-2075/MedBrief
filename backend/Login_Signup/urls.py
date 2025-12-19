@@ -1,19 +1,20 @@
 from django.urls import path
 from . import views
-from .views import forgot_password
-from .views import reset_password
-
-
 
 urlpatterns = [
+    # -------- AUTH --------
     path("signup/", views.Signup, name="signup"),
     path("login/", views.Login, name="login"),
-    path("forgot-password/", forgot_password),
-    path("reset-password/", reset_password),
-    
+    path("forgot-password/", views.forgot_password, name="forgot_password"),
+    path("reset-password/", views.reset_password, name="reset_password"),
 
+    # -------- PROFILE --------
+    path("profile/create/", views.Profile_creation, name="profile_create"),
+    path("profile/get/", views.Send_Profile, name="profile_get"),
+    path("profile/status/", views.Status_view, name="profile_status"),
 
-    path("Create_Profile/", views.Profile_creation, name="Create_Profile"),
-    path("Send_Profile/", views.Send_Profile, name="Send_Profile"),
-    path("Status_view/", views.Status_view, name="Status"),
+    # -------- CHAT --------
+    path("chats/", views.get_chats, name="get_chats"),
+    path("chats/<int:chat_id>/messages/", views.get_messages, name="get_messages"),
+
 ]
