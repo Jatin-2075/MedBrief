@@ -14,8 +14,8 @@
 ================================ */
 .ai-sidebar {
   width: 260px;
-  height: 100vh;              /* full viewport */
-  position: fixed;            /* 🔑 FIXED */
+  height: 100vh;              
+  position: fixed;            
   top: 0;
   left: 0;
 
