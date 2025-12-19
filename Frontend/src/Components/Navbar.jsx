@@ -14,7 +14,6 @@ const Navbar = () => {
 
       <nav className={`nav-center ${open ? "open" : ""}`}>
         <NavLink to="/Home" className="nav-item">Home</NavLink>
-        <NavLink to="/Dashboard" className="nav-item">Dashboard</NavLink>
         <NavLink to="/Upload" className="nav-item">Upload</NavLink>
         <NavLink to="/Reports" className="nav-item">Reports</NavLink>
         <NavLink to="/SmartHelper" className="nav-item">Smart Helper</NavLink>

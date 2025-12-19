@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from "./Components/Layout";
 
 import Home from "./Pages/Home";
-import Dashboard from "./Pages/Dashboard";
 import Reports from "./Pages/Reports";
 import Smart_help from "./Pages/Smart_help";
 import Upload from "./Pages/Upload";
@@ -20,7 +19,6 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/Home", element: <Home /> },
-      { path: "/Dashboard", element: <Dashboard /> },
       { path: "/Reports", element: <Reports /> },
       { path: "/SmartHelper", element: <Smart_help /> },
       { path: "/Upload", element: <Upload /> },

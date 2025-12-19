@@ -185,16 +185,11 @@ def reset_password(request):
         status=200
     )
 
-
 @login_required
 @csrf_exempt
 def Profile_creation(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'msg' : 'unauthorized request if logged in try contacting developers ', 'suscess' : False}, status=401)
-
     if request.method == 'POST':
-
-        profile , create= Profile.objects.get_or_create(user=request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
 
         profile.name = request.POST.get("name")
         profile.age = request.POST.get("age")
@@ -206,9 +201,13 @@ def Profile_creation(request):
 
         profile.save()
 
+        status_obj, _ = Status.objects.get_or_create(user=request.user)
+        status_obj.status = True
+        status_obj.save()
+
         return JsonResponse({'msg' : 'profile created', 'success': True})
 
-    return ({'msg' : 'something went wrong', 'success' : False})
+    return JsonResponse({'msg' : 'Method not allowed', 'success' : False}, status=405)
 
 
 @login_required
@@ -234,27 +233,16 @@ def Send_Profile(request):
          
 @csrf_exempt
 @login_required
-def status_view(request):
+def Status_view(request):
+    status_obj, _ = Status.objects.get_or_create(user=request.user)
+    
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-        except Exception as e:
-            return JsonResponse(
-                {"success": False, "msg": "Invalid JSON"},
-                status=400
-            )
+            status_obj.status = data.get("status", False)
+            status_obj.save()
+            return JsonResponse({"success": True, "msg": "Status updated", "status": status_obj.status})
+        except Exception:
+            return JsonResponse({'msg' : 'Invalid Data', 'success' : False}, status=400)
 
-        status_obj, _ = Status.objects.get_or_create(user=request.user)
-        status_obj.status = data.get("status", False)
-        status_obj.save()
-
-        return JsonResponse({
-            "success": True,
-            "msg": "Status updated",
-            "status": status_obj.status
-        })
-    status_obj, _ = Status.objects.get_or_create(user=request.user)
-    return JsonResponse({
-        "success": True,
-        "status": status_obj.status
-    })
+    return JsonResponse({"success": True, "status": status_obj.status})
