@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../Style/intro.css";
+import { toast } from "react-toastify";
 
 const Intro = () => {
     return (

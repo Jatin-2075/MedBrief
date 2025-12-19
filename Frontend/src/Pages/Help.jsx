@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
 import '../Style/help.css'
+
+import { toast } from "react-toastify";
 
 const Help = () => {
 

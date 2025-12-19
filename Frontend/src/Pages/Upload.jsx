@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import cloudIcon from "../images/cloud_icon_1.png";
 import FileIcon from "../images/file_icon.jpg";
 import "../Style/Upload.css";
+import { toast } from "react-toastify";
 
 export default function Upload() {
   const [fileName, setFileName] = useState(null);

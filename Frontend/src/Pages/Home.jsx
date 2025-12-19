@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../Style/home.css";
+import { toast } from "react-toastify";
 
 const Home = () => {
     const [userData, setUserData] = useState({ name: "User", healthScore: 85 });

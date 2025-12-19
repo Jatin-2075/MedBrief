@@ -1,5 +1,4 @@
 import "../Style/SmartHelp.css";
-import React, { useState, useEffect, useRef } from "react";
 
 const Smart_help = () => {
   const [conversations, setConversations] = useState([
