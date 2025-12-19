@@ -58,25 +58,29 @@ const CreateProfile = () => {
         };
 
     }
-
     const skiphandle = async () => {
-        const response = await fetch("http://localhost:8000/Status/", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                status: false
-            })
-        });
+        try {
+            const response = await fetch("http://localhost:8000/Status/", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    status: true
+                })
+            });
 
-        const data = await response.json();
-        alert(data.msg);
-
-        navigate("/Dashboard");
+            const data = await response.json();
+            if (data.success) {
+                navigate("/Dashboard");
+            } else {
+                console.error("Skip failed:", data.msg);
+            }
+        } catch (err) {
+            console.error("Network error during skip:", err);
+        }
     };
-
 
 
 

@@ -7,13 +7,21 @@ const Profile_Status = () => {
 
     useEffect(() => {
         const checkStatus = async () => {
-            const res = await fetch("http://localhost:8000/Status/", {
-                credentials: "include",
-            });
-            const data = await res.json();
-            setCompleted(data.status);
+            try {
+                const res = await fetch("http://localhost:8000/Status/", {
+                    credentials: "include",
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setCompleted(data.status);
+                } else {
+                    setCompleted(false);
+                }
+            } catch (error) {
+                console.error("Failed to fetch status:", error);
+                setCompleted(false);
+            }
         };
-
         checkStatus();
     }, []);
 

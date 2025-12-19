@@ -6,26 +6,24 @@ from django.utils.timezone import now
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Create_profile(models.Model):
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    name = models.CharField(max_length=50)
-    age = models.PositiveIntegerField()
-    gender = models.CharField(max_length=50)
-    weight = models.FloatField()
-    height = models.FloatField()
-    bloodgroup = models.CharField(max_length=100)
-    allergies = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.user.username
     
+    name = models.CharField(max_length=50, null=True, blank=True)
+    age = models.PositiveIntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=50, null=True, blank=True)
+    weight = models.FloatField(null=True, blank=True)
+    height = models.FloatField(null=True, blank=True)
+    bloodgroup = models.CharField(max_length=100, null=True, blank=True)
+    allergies = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+class Status(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.status}"
 
 
 class PasswordResetOTP(models.Model):
