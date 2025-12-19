@@ -3,6 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.core.files import File
 
+from django.contrib.auth.decorators import login_required
 from .models import MedicalReport
 from ML_Pipeline.pipeline import run_pipeline
 
@@ -12,8 +13,7 @@ from ML_Pipeline.pipeline import run_pipeline
 # =========================================================
 
 @api_view(["POST"])
-@permission_classes([AllowAny])          # 🔥 open for testing
-@authentication_classes([])              # 🔥 no JWT/session
+@login_required
 def summarize_report(request):
     """
     Accepts a PDF/DOCX file,
@@ -77,8 +77,7 @@ def summarize_report(request):
 
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
-@authentication_classes([])
+@login_required
 def report_history(request):
     """
     Returns all processed reports (testing mode)

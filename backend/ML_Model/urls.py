@@ -6,7 +6,6 @@ from .views import (
 )
 
 urlpatterns = [
-    # 🔥 ML endpoints
     path('summarize_report/', summarize_report),
     path('report_history/', report_history),
 ]
