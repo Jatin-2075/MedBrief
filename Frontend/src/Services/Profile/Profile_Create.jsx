@@ -18,8 +18,6 @@ const CreateProfile = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const token = localStorage.getItem("access_token");
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProfile((prev) => ({ ...prev, [name]: value }));
@@ -28,7 +26,9 @@ const CreateProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!token) {
+        const accessToken = localStorage.getItem("access_token");
+
+        if (!accessToken) {
             toast.error("Session expired. Please login again.");
             navigate("/Login");
             return;
@@ -37,11 +37,11 @@ const CreateProfile = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`${API_BASE_URL}/Profile_creation/`, {
+            const res = await fetch(`${API_BASE_URL}/profile/create/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     name: profile.name.trim(),
@@ -54,13 +54,23 @@ const CreateProfile = () => {
                 }),
             });
 
-            const data = await res.json();
+            console.log("Response status:", res.status);
 
-            if (!res.ok) throw new Error(data.msg);
+            const data = await res.json();
+            console.log("Response data:", data);
+
+            if (!res.ok) {
+                throw new Error(data.msg || "Failed to create profile");
+            }
 
             toast.success("Profile created successfully");
-            navigate("/Dashboard", { replace: true });
+            
+            // Update local storage to reflect profile is completed
+            localStorage.setItem("profile_completed", "true");
+            
+            navigate("/Home", { replace: true });
         } catch (err) {
+            console.error("Profile creation error:", err);
             toast.error(err.message || "Server error");
         } finally {
             setLoading(false);
@@ -68,7 +78,9 @@ const CreateProfile = () => {
     };
 
     const skiphandle = async () => {
-        if (!token) {
+        const accessToken = localStorage.getItem("access_token");
+
+        if (!accessToken) {
             toast.error("Session expired. Please login again.");
             navigate("/Login");
             return;
@@ -81,26 +93,33 @@ const CreateProfile = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ profile_completed: false }),
             });
 
-            console.log("STATUS:", res.status);
+            console.log("Skip STATUS:", res.status);
 
             const data = await res.json();
+            console.log("Skip data:", data);
 
-            if (!res.ok) throw new Error(data.msg);
+            if (!res.ok) {
+                throw new Error(data.msg || "Failed to skip profile");
+            }
 
             toast.info("Profile skipped");
+            
+            // Update local storage
+            localStorage.setItem("profile_completed", "false");
+            
             navigate("/Home", { replace: true });
         } catch (err) {
+            console.error("Skip error:", err);
             toast.error(err.message || "Skip failed");
         } finally {
             setLoading(false);
         }
     };
-
 
     return (
         <div className="profile-container">
