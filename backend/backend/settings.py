@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
 
     'Login_Signup',
-    "ML_Model",
     "reports",
 
     "corsheaders",
