@@ -1,4 +1,4 @@
-/* Container */
+/* ===== Container ===== */
 .top-navbar {
   height: 60px;
   background: #ffffff;
@@ -12,22 +12,23 @@
   z-index: 1000;
 }
 
-/* Left */
+/* ===== Left ===== */
 .logo {
   font-size: 20px;
   font-weight: 700;
   color: #2563eb;
-  transition: color 0.3s ease;
+  cursor: pointer;
+  transition: color 0.25s ease;
 }
 
 .logo:hover {
   color: #0ea5e9;
-  
 }
 
-/* Center nav */
+/* ===== Center nav ===== */
 .nav-center {
   display: flex;
+  align-items: center;
   gap: 28px;
 }
 
@@ -36,6 +37,12 @@
   font-weight: 500;
   color: #868686;
   position: relative;
+  padding: 6px 2px;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #2563eb;
 }
 
 .nav-item.active {
@@ -50,9 +57,10 @@
   position: absolute;
   bottom: -6px;
   left: 0;
+  border-radius: 2px;
 }
 
-/* Right */
+/* ===== Right ===== */
 .nav-right {
   display: flex;
   align-items: center;
@@ -64,6 +72,13 @@
   border: none;
   font-size: 18px;
   cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: #f3f4f6;
 }
 
 .avatar {
@@ -73,36 +88,79 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
+  cursor: pointer;
 }
 
-/* Hamburger */
+/* ===== Hamburger ===== */
 .hamburger {
   display: none;
   background: none;
   border: none;
   font-size: 22px;
   cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
 }
 
-/* Mobile */
+/* ===== Tablet ===== */
+@media (max-width: 900px) {
+  .nav-center {
+    gap: 20px;
+  }
+}
+
+/* ===== Mobile ===== */
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
   .nav-center {
     position: absolute;
-    top: 64px;
+    top: 60px;
     left: 0;
     right: 0;
-    background: white;
+    background: #ffffff;
     flex-direction: column;
-    padding: 16px 0;
-    display: none;
+    padding: 8px 0;
     border-bottom: 1px solid #e5e7eb;
+
+    /* smooth open/close */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
   }
 
   .nav-center.open {
-    display: flex;
+    max-height: 300px;
   }
 
-  .hamburger {
-    display: block;
+  .nav-item {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
+  .nav-item.active::after {
+    display: none;
+  }
+
+  .nav-item.active {
+    background: #eff6ff;
+    font-weight: 600;
+  }
+}
+
+/* ===== Small phones ===== */
+@media (max-width: 420px) {
+  .top-navbar {
+    padding: 0 16px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .icon-btn {
+    font-size: 16px;
   }
 }

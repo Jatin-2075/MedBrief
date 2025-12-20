@@ -183,4 +183,4 @@ LOGIN_URL = "/login/"
 
 import os
 
-API_NINJAS_KEY = os.getenv("API_NINJAS_KEY")
+API_NINJAS_KEY = config("API_NINJAS_KEY", default="")

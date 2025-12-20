@@ -14,9 +14,11 @@ from django.utils.timezone import now
 import random
 import hashlib
 import json
+import logging 
 
 from .Services import func_workout, diet_by_bmi
 
+logger = logging.getLogger(__name__)
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
