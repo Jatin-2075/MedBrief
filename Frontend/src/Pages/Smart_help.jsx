@@ -68,107 +68,109 @@ const Smart_help = () => {
     return (
         <div className="ai-layout simple-mode">
             <main className="ai-main">
-                <h1>Smart Help</h1>
-                <p>Health • Lifestyle • Guidance</p>
+                <h1 className="ai-title">Smart Help</h1>
+                <p className="ai-subtitle">Health • Lifestyle • Guidance</p>
 
                 <div className="options">
-                    <button className={selected === "workout" ? "active" : ""} onClick={() => setSelected("workout")}>Workout</button>
+                    <button
+                        className={`option-btn ${selected === "workout" ? "active" : ""}`}
+                        onClick={() => setSelected("workout")}
+                    >
+                        Workout
+                    </button>
 
-                    <button className={selected === "diet" ? "active" : ""} onClick={() => setSelected("diet")}>Diet</button>
-
-                    <button className={selected === "help" ? "active" : ""} onClick={() => setSelected("help")}>Help</button>
+                    <button
+                        className={`option-btn ${selected === "diet" ? "active" : ""}`}
+                        onClick={() => setSelected("diet")}
+                    >
+                        Diet
+                    </button>
                 </div>
 
-
-
-                <div>
-                    {selected == 'workout' && <div>
-                        <div>
+                {/* ===== Workout Form ===== */}
+                {selected === "workout" && (
+                    <div className="form-card">
+                        <div className="form-group">
                             <label>Level</label>
                             <select value={WorkoutLevel} onChange={(e) => SetWorkoutLevel(e.target.value)}>
                                 <option value="beginner">Beginner</option>
                                 <option value="intermediate">Intermediate</option>
                                 <option value="hard">Hard</option>
                             </select>
-
                         </div>
-                        <div>
+
+                        <div className="form-group">
                             <label>Type</label>
                             <select value={WorkoutType} onChange={(e) => SetWorkoutType(e.target.value)}>
-                                <option value="strength">strength</option>
-                                <option value="cardio">cardio</option>
-                                <option value="plyometrics">plyometrics</option>
-                                <option value="powerlifting">powerlifting</option>
-                                <option value="olympic_weightlifting">olympic_weightlifting</option>
-                                <option value="strongman">strongman</option>
-                                <option value="calisthenics">calisthenics</option>
+                                <option value="strength">Strength</option>
+                                <option value="cardio">Cardio</option>
+                                <option value="plyometrics">Plyometrics</option>
+                                <option value="powerlifting">Powerlifting</option>
+                                <option value="olympic_weightlifting">Olympic Weightlifting</option>
+                                <option value="strongman">Strongman</option>
+                                <option value="calisthenics">Calisthenics</option>
                             </select>
-
-
-
                         </div>
-                    </div>}
+                    </div>
+                )}
 
-                    {selected === "diet" && (
-                        <div>
+                {/* ===== Diet Form ===== */}
+                {selected === "diet" && (
+                    <div className="form-card">
+                        <div className="form-group">
                             <label>BMI</label>
-                            <input type="number" step="0.1" value={BMI} onChange={(e) => setBMI(e.target.value)} placeholder="Enter BMI" />
+                            <input
+                                type="number"
+                                step="0.1"
+                                value={BMI}
+                                onChange={(e) => setBMI(e.target.value)}
+                                placeholder="Enter BMI"
+                            />
                         </div>
-                    )}
+                    </div>
+                )}
 
+                <button className="submit-btn" onClick={HandleSubmit}>
+                    Submit
+                </button>
 
-                    <button onClick={HandleSubmit}>Submit</button>
+                {/* ===== Workout Results ===== */}
+                {WorkoutData?.data && Array.isArray(WorkoutData.data) && (
+                    <div className="result-section">
+                        <h2>Workout Suggestions</h2>
 
-                    {WorkoutData?.data && Array.isArray(WorkoutData.data) && (
-                        <div style={{ marginTop: "20px" }}>
-                            <h2>Workout Suggestions</h2>
+                        {WorkoutData.data.slice(0, 5).map((item, index) => (
+                            <div className="result-card" key={index}>
+                                <h3>{item.name}</h3>
+                                <p><b>Type:</b> {item.type}</p>
+                                <p><b>Muscle:</b> {item.muscle}</p>
+                                <p><b>Difficulty:</b> {item.difficulty}</p>
+                                <p className="instructions">{item.instructions}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
-                            {WorkoutData.data.slice(0, 5).map((item, index) => (
-                                <div key={index}>
-                                    <h3>{item.name}</h3>
+                {/* ===== Diet Results ===== */}
+                {DietData && (
+                    <div className="result-section">
+                        <h2>{DietData.goal}</h2>
+                        <p><b>BMI:</b> {DietData.bmi}</p>
 
-                                    <p><b>Type:</b> {item.type}</p>
-                                    <p><b>Muscle:</b> {item.muscle}</p>
-                                    <p><b>Difficulty:</b> {item.difficulty}</p>
-
-                                    <p><b>Instructions:</b></p>
-                                    <p>{item.instructions}</p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-
-                    {DietData && (
-                        <div style={{ marginTop: "20px" }}>
-                            <h2>{DietData.goal}</h2>
-                            <p><b>BMI:</b> {DietData.bmi}</p>
-
-                            {DietData.foods.slice(0, 5).map((food, index) => (
-                                <div
-                                    key={index}
-                                    style={{
-                                        border: "1px solid #ddd",
-                                        padding: "12px",
-                                        marginBottom: "10px",
-                                        borderRadius: "6px",
-                                        background: "#fafafa"
-                                    }}
-                                >
-                                    <h4>{food.name}</h4>
-                                    <p>Calories: {food.calories}</p>
-                                    <p>Protein: {food.protein_g} g</p>
-                                    <p>Carbs: {food.carbohydrates_total_g} g</p>
-                                    <p>Fat: {food.fat_total_g} g</p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-
-                </div>
+                        {DietData.foods.slice(0, 5).map((food, index) => (
+                            <div className="diet-card" key={index}>
+                                <h4>{food.name}</h4>
+                                <p>Calories: {food.calories}</p>
+                                <p>Protein: {food.protein_g} g</p>
+                                <p>Carbs: {food.carbohydrates_total_g} g</p>
+                                <p>Fat: {food.fat_total_g} g</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </main>
         </div>
+
     );
 };
 
