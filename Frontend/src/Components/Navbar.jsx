@@ -44,14 +44,6 @@ const Navbar = () => {
       <div className="nav-right">
         <Profile_Status />
 
-        <button className="icon-btn" aria-label="Settings">
-          ⚙
-        </button>
-
-        <div className="avatar" title="Profile">
-          👤
-        </div>
-
         <button
           className="hamburger"
           aria-label="Toggle navigation"

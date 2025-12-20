@@ -1,30 +1,21 @@
-/* ===== Container ===== */
+/* ===== Page Wrapper ===== */
 .profile-view-container {
-  min-height: 100vh;
-  background: #f8fbff;
-  display: flex;
-  justify-content: center;
-  padding: 30px 12px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-}
-
-/* ===== Wrapper ===== */
-.profile-view-container > div,
-.profile-edit-form {
-  width: 100%;
   max-width: 900px;
+  margin: 32px auto;
   background: #ffffff;
-  border: 1px solid #eef2f6;
   border-radius: 16px;
   padding: 28px;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 /* ===== Header ===== */
 .profile-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  align-items: flex-start;
+  margin-bottom: 28px;
 }
 
 .profile-header h2 {
@@ -33,41 +24,36 @@
   color: #1e293b;
 }
 
+.profile-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
 /* ===== Buttons ===== */
 .edit-btn,
 .back-btn {
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
   background: #ffffff;
+  border: 1px solid #e5e7eb;
   color: #2563eb;
   font-weight: 600;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .edit-btn:hover,
 .back-btn:hover {
   background: #eff6ff;
+  border-color: #2563eb;
 }
 
-/* ===== Sections ===== */
-.profile-section,
-.form-section {
-  margin-bottom: 28px;
-}
-
-.profile-section h3,
-.form-section h3 {
-  font-size: 18px;
-  margin-bottom: 16px;
-  color: #1e293b;
-}
-
-/* ===== Grid ===== */
+/* ===== Profile Grid (View Mode) ===== */
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 16px;
 }
 
 .profile-field {
@@ -82,90 +68,126 @@
 }
 
 .profile-field label {
+  display: block;
   font-size: 12px;
   color: #64748b;
+  margin-bottom: 4px;
 }
 
 .profile-field p {
-  margin-top: 4px;
+  font-size: 15px;
   font-weight: 600;
   color: #1e293b;
 }
 
-/* ===== Form ===== */
+/* ===== Actions ===== */
+.profile-actions {
+  grid-column: span 3;
+  margin-top: 12px;
+}
+
+/* ===== Edit Form ===== */
 .profile-edit-form {
   margin-top: 10px;
 }
 
+.form-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
 .form-field {
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-field.full-width {
   grid-column: span 2;
 }
 
-label {
-  display: block;
+.form-field label {
   font-size: 13px;
+  font-weight: 500;
   color: #475569;
   margin-bottom: 6px;
 }
 
+/* ===== Inputs ===== */
 input,
 select,
 textarea {
-  width: 100%;
-  padding: 10px 12px;
+  padding: 11px 12px;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
-  outline: none;
   font-size: 14px;
+  color: #1e293b;
+  background: #ffffff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
+  outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* ===== Actions ===== */
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== Form Buttons ===== */
 .form-actions {
   display: flex;
   gap: 12px;
-  margin-top: 20px;
 }
 
 .save-btn {
   flex: 1;
   padding: 12px;
+  border-radius: 12px;
   background: #2563eb;
   color: #ffffff;
-  border: none;
-  border-radius: 12px;
   font-weight: 600;
+  border: none;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .save-btn:hover {
   background: #1d4ed8;
 }
 
+.save-btn:active {
+  transform: scale(0.98);
+}
+
 .cancel-btn {
   flex: 1;
   padding: 12px;
-  background: #ffffff;
-  color: #475569;
-  border: 1px solid #e5e7eb;
   border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #475569;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
-/* ===== Loading / Error ===== */
-.loading,
-.error {
+.cancel-btn:hover {
+  background: #f8fafc;
+}
+
+/* ===== Loading State ===== */
+.loading {
+  text-align: center;
+  padding: 60px 0;
+  font-size: 16px;
   font-weight: 600;
-  color: #475569;
+  color: #64748b;
 }
 
 /* ===== Responsive ===== */
@@ -174,7 +196,8 @@ textarea:focus {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .profile-field.full-width {
+  .profile-field.full-width,
+  .profile-actions {
     grid-column: span 2;
   }
 }
@@ -184,7 +207,16 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .profile-field.full-width {
+  .profile-field.full-width,
+  .profile-actions {
+    grid-column: span 1;
+  }
+
+  .form-section {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field.full-width {
     grid-column: span 1;
   }
 

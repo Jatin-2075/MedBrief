@@ -147,7 +147,7 @@ const ProfileView = () => {
           <Field label="Allergies" value={profile.allergies || "None"} full />
 
           <button className="back-btn" onClick={() => navigate("/Home")}>
-            Back to Home
+            Back to Dashboard
           </button>
         </div>
       ) : (
