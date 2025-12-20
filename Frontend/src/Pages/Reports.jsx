@@ -1,121 +1,97 @@
-import React, { useState, useEffect } from "react";
-import "../Style/Reports.css";
-import Navbar from "../Components/Navbar";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import "../Style/reports.css";
 
-export default function Reports() {
+const Reports = () => {
   const [reports, setReports] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("reports")) || [];
-    setReports(stored);
-    setSelected(stored[0] || null);
+    fetch("http://127.0.0.1:8000/api/reports/history/")
+      .then((res) => res.json())
+      .then((data) => {
+        setReports(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load reports");
+        setLoading(false);
+      });
   }, []);
 
-  const handleDownload = () => {
-    if (!selected?.pdfUrl) return;
-    window.open(`http://127.0.0.1:8000${selected.pdfUrl}`, "_blank");
-  };
-
   return (
-    <div className="reports_page">
-      
-      {/* LEFT PANEL */}
-      <aside className="reports_sidebar">
-        <h2>Your Medical Reports</h2>
+    <div className="page">
+      <div className="history-container">
+        <h1>Reports History</h1>
+        <p className="subtitle">
+          View and download your previously analyzed medical reports.
+        </p>
 
-        <input
-          className="search_input"
-          placeholder="Search by report name, doctor..."
-        />
+        {loading && <p>Loading reports...</p>}
+        {error && <p className="error">{error}</p>}
 
-        <div className="reports_list">
-          {reports.map((r) => (
-            <div
-              key={r.id}
-              className={`report_item ${
-                selected?.id === r.id ? "active" : ""
-              }`}
-              onClick={() => setSelected(r)}
-            >
-              <div className="report_icon">📄</div>
-              <div className="report_meta">
-                <p className="report_name">{r.name}</p>
-                <p className="report_specialty">{r.specialty}</p>
+        {!loading && reports.length === 0 && (
+          <div className="empty-state">
+            No reports uploaded yet.
+          </div>
+        )}
+
+        <div className="reports-list">
+          {reports.map((report) => (
+            <div className="report-card" key={report.id}>
+              <div className="report-info">
+                <h3>{report.filename}</h3>
+                <span className="date">{report.uploaded_at}</span>
+                <p className="summary">
+                  {report.final_conclusion || "No summary available"}
+                </p>
               </div>
-              <span className="report_date">{r.date}</span>
+
+              <div className="report-actions">
+                <span
+                  className={`status ${
+                    report.status === "Normal"
+                      ? "normal"
+                      : "attention"
+                  }`}
+                >
+                  {report.status}
+                </span>
+
+                <a
+                  href={`http://127.0.0.1:8000/api/reports/download/${report.id}/`}
+                  className="btn primary"
+                >
+                  Download
+                </a>
+
+                <button
+                  className="btn secondary"
+                  onClick={() => {
+                    const url = `http://127.0.0.1:8000/api/reports/download/${report.id}/`;
+
+                    if (navigator.share) {
+                      navigator.share({
+                        title: "Medical Report Summary",
+                        text: "Here is my medical report summary.",
+                        url: url,
+                      });
+                    } else {
+                      navigator.clipboard.writeText(url);
+                      alert("Download link copied to clipboard");
+                    }
+                  }}
+                >
+                  Share
+                </button>
+
+              </div>
             </div>
           ))}
         </div>
-      </aside>
-
-      {/* RIGHT PANEL */}
-      {selected && (
-        <main className="report_detail">
-          <div className="report_header">
-            <div>
-              <h3>{selected.type}</h3>
-              <p>Date: {selected.date}</p>
-            </div>
-
-            <div className="actions">
-              <button>Share</button>
-              <button>Print</button>
-              <button className="primary" onClick={handleDownload}>
-                Download
-              </button>
-            </div>
-          </div>
-
-          <div className="report_card">
-            {/* 🔮 Prediction */}
-            {selected.prediction && (
-              <>
-                <h4>Predicted Diagnosis</h4>
-                <p className="prediction_badge">
-                  {selected.prediction}
-                </p>
-              </>
-            )}
-
-            {/* 🧾 Summary */}
-            <h4>Summary</h4>
-            <p>{selected.summary}</p>
-
-            {/* ❤️ Key Vitals */}
-            {selected.vitals && (
-              <>
-                <h4>Key Vitals</h4>
-                <ul>
-                  {selected.vitals.bp && (
-                    <li>Blood Pressure: {selected.vitals.bp}</li>
-                  )}
-                  {selected.vitals.heartRate && (
-                    <li>Heart Rate: {selected.vitals.heartRate}</li>
-                  )}
-                  {selected.vitals.spo2 && (
-                    <li>SpO₂: {selected.vitals.spo2}</li>
-                  )}
-                  {selected.vitals.glucose && (
-                    <li>Blood Glucose: {selected.vitals.glucose}</li>
-                  )}
-                  {selected.vitals.bmi && (
-                    <li>BMI: {selected.vitals.bmi}</li>
-                  )}
-                </ul>
-              </>
-            )}
-
-            <p className="end_note">-- End of Summary --</p>
-          </div>
-
-          <p className="file_info">
-            Report Type: {selected.type} <br />
-            File Size: {selected.size}
-          </p>
-        </main>
-      )}
+      </div>
     </div>
   );
-}
+};
+
+export default Reports;

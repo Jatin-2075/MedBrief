@@ -16,6 +16,7 @@ urlpatterns = [
 
     # Your apps
     path("", include("Login_Signup.urls")),
+    path("", include("reports.urls")),
 ]
 
 # Only if you serve media in dev

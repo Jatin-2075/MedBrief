@@ -22,8 +22,8 @@ const Home = () => {
 
   return (
     <div className="dashboard-page">
-      <div className="dashboard-content home-container">
-        <h1 className="page-title">Health Overview</h1>
+      <div className="dashboard-content">
+        <h1>Health Overview</h1>
         <p className="subtitle">
           Snapshot from your latest medical reports
         </p>
@@ -31,7 +31,7 @@ const Home = () => {
         {/* ACTION BLOCKS */}
         <div className="quick-actions">
           <div
-            className="action-card primary"
+            className="action-card"
             onClick={() => navigate("/report-summary")}
           >
             <h3>Upload Report</h3>
@@ -52,54 +52,61 @@ const Home = () => {
           <div className="vital-card">
             <h4>Blood Pressure</h4>
             <p className="value">{latestVitals.bp}</p>
-            <p className="normal-text">Normal: {normalRanges.bp}</p>
+            <p className="normal">
+              Normal: {normalRanges.bp}
+            </p>
             <span className="status attention">High</span>
           </div>
 
           <div className="vital-card">
             <h4>Blood Sugar</h4>
             <p className="value">{latestVitals.sugar} mg/dL</p>
-            <p className="normal-text">Normal: {normalRanges.sugar}</p>
+            <p className="normal">
+              Normal: {normalRanges.sugar}
+            </p>
             <span className="status attention">High</span>
           </div>
 
           <div className="vital-card">
             <h4>SpO₂</h4>
             <p className="value">{latestVitals.spo2}%</p>
-            <p className="normal-text">Normal: {normalRanges.spo2}</p>
+            <p className="normal">
+              Normal: {normalRanges.spo2}
+            </p>
             <span className="status normal">Normal</span>
           </div>
 
           <div className="vital-card">
             <h4>Heart Rate</h4>
             <p className="value">{latestVitals.heartRate} bpm</p>
-            <p className="normal-text">Normal: {normalRanges.heartRate}</p>
+            <p className="normal">
+              Normal: {normalRanges.heartRate}
+            </p>
             <span className="status normal">Normal</span>
           </div>
         </div>
 
         {/* TREND */}
-        <div className="trend-card">
+        <div className="trend-card compact">
           <h3>Blood Sugar Trend</h3>
           <p className="trend-subtitle">
             Based on your last {sugarTrend.length} reports
           </p>
 
-          <div className="bar-graph">
+          <div className="bar-graph compact-graph">
             {sugarTrend.map((value, index) => (
               <div key={index} className="bar">
                 <div
                   className="bar-fill"
                   style={{ height: `${value / 2}%` }}
                 />
-                <span className="bar-value">{value}</span>
+                <span>{value}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     'Login_Signup',
     "ML_Model",
+    "reports",
 
     "corsheaders",
     "rest_framework",
