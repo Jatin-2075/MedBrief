@@ -181,3 +181,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/login/"
 
 
+import os
+
+API_NINJAS_KEY = os.getenv("API_NINJAS_KEY")

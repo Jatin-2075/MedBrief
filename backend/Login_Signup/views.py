@@ -15,6 +15,8 @@ import random
 import hashlib
 import json
 
+from .Service import Func_workout
+
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -241,50 +243,62 @@ def Status_view(request):
     })
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def get_chats(request):
-    sessions = ChatSession.objects.filter(
-        user=request.user
-    ).order_by("-created_at")[:20]
+def Smart_Help(request):
 
-    data = [
-        {
-            "id": s.id,
-            "title": s.title,
-            "created_at": s.created_at.isoformat()
-        }
-        for s in sessions
-    ]
+    know = request.data.get("know")
+    workout_level = request.data.get("Workoutlevel")
+    workout_type = request.data.get("WorkoutType")
 
-    return JsonResponse({"success": True, "chats": data})
+    if know == "workout":
+        res = func_workout(workout_level, workout_type)
+        return JsonResponse({
+            "msg": "Workout",
+            "success": True,
+            "data": res
+        })
+
+    return JsonResponse({ "success": False, "msg": "Invalid option"})
 
 
-@api_view(["GET"])
+
+
+@api_view(["GET","POST"])
 @permission_classes([IsAuthenticated])
-def get_messages(request, chat_id):
-    try:
-        session = ChatSession.objects.get(
-            id=chat_id,
-            user=request.user
-        )
-    except ChatSession.DoesNotExist:
-        return JsonResponse(
-            {"success": False, "msg": "Chat not found"},
-            status=404
-        )
+def Smart_Help(request):
+    know = request.data.get("know")
 
-    messages = ChatMessage.objects.filter(
-        session=session
-    ).order_by("created_at")
+    if know == "workout":
+        level = request.data.get("Workoutlevel")
+        workout_type = request.data.get("WorkoutType")
 
-    data = [
-        {
-            "role": m.role,
-            "text": m.text,
-            "created_at": m.created_at.isoformat()
-        }
-        for m in messages
-    ]
+        data = func_workout(level, workout_type)
 
-    return JsonResponse({"success": True, "messages": data})
+        return JsonResponse({
+            "success": True,
+            "type": "workout",
+            "data": data
+        })
+
+    if know == "diet":
+        bmi = request.data.get("bmi")
+
+        if not bmi:
+            return JsonResponse({
+                "success": False,
+                "msg": "BMI required"
+            })
+
+        data = diet_by_bmi(float(bmi))
+
+        return JsonResponse({
+            "success": True,
+            "type": "diet",
+            "data": data
+        })
+
+    return JsonResponse({
+        "success": False,
+        "msg": "Invalid option"
+    })
