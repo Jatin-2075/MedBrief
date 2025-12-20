@@ -7,12 +7,12 @@ import Layout from "./Components/Layout";
 import Home from "./Pages/Home";
 import Reports from "./Pages/Reports";
 import Smart_help from "./Pages/Smart_help";
-import Upload from "./Pages/Upload";
 import Intro from "./Pages/Intro";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import Help from "./Pages/Help";
 import CreateProfile from "./Services/Profile/Profile_Create";
+import ReportSummary from "./Pages/ReportSummary";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
       { path: "/Home", element: <Home /> },
       { path: "/Reports", element: <Reports /> },
       { path: "/SmartHelper", element: <Smart_help /> },
-      { path: "/Upload", element: <Upload /> },
       { path: "/Help", element: <Help /> },
+      { path: "/Upload", element: <ReportSummary/> },
     ],
   },
 

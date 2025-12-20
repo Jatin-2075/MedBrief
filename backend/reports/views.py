@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.utils import timezone
 
 from django.conf import settings
 from django.http import FileResponse, Http404
@@ -161,10 +162,6 @@ class DownloadReportPDF(APIView):
             filename=f"Medical_Report_Summary_{report_id}.pdf",
         )
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MedicalReport
 
 
 class ReportHistoryView(APIView):
@@ -174,21 +171,28 @@ class ReportHistoryView(APIView):
 
         data = []
         for report in reports:
+            local_time = timezone.localtime(report.uploaded_at)
+
             data.append({
                 "id": report.id,
                 "filename": report.original_filename,
-                "uploaded_at": report.uploaded_at.strftime(
+                "uploaded_at": local_time.strftime(
                     "%d %b %Y, %I:%M %p"
                 ),
                 "final_conclusion": report.final_conclusion,
-                "status": (
-                    "Attention"
-                    if report.key_observations
-                    else "Normal"
-                ),
+                "status": self._derive_status(report),
             })
 
-        return Response(data, status=200)
+        return Response(data)
+
+    def _derive_status(self, report):
+        if not report.comparison_table:
+            return "Unknown"
+
+        for item in report.comparison_table:
+            if item.get("status") in ["High", "Low", "Abnormal"]:
+                return "Attention"
+        return "Normal"
 
 
 

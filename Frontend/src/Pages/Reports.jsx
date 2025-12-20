@@ -49,11 +49,10 @@ const Reports = () => {
 
               <div className="report-actions">
                 <span
-                  className={`status ${
-                    report.status === "Normal"
+                  className={`status ${report.status === "Normal"
                       ? "normal"
                       : "attention"
-                  }`}
+                    }`}
                 >
                   {report.status}
                 </span>
