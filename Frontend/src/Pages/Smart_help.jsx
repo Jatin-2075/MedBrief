@@ -6,7 +6,6 @@ import { API_BASE_URL } from "../config/api";
 const Smart_help = () => {
     const [selected, setSelected] = useState("");
     const [WorkoutLevel, SetWorkoutLevel] = useState("beginner")
-    const [WorkoutType, SetWorkoutType] = useState("strength")
 
 
     const [BMI, setBMI] = useState("");
@@ -30,7 +29,6 @@ const Smart_help = () => {
                 body: JSON.stringify({
                     know: selected,
                     Workoutlevel: WorkoutLevel,
-                    WorkoutType: WorkoutType,
                     bmi: BMI,
                 })
             });
@@ -99,18 +97,6 @@ const Smart_help = () => {
                             </select>
                         </div>
 
-                        <div className="form-group">
-                            <label>Type</label>
-                            <select value={WorkoutType} onChange={(e) => SetWorkoutType(e.target.value)}>
-                                <option value="strength">Strength</option>
-                                <option value="cardio">Cardio</option>
-                                <option value="plyometrics">Plyometrics</option>
-                                <option value="powerlifting">Powerlifting</option>
-                                <option value="olympic_weightlifting">Olympic Weightlifting</option>
-                                <option value="strongman">Strongman</option>
-                                <option value="calisthenics">Calisthenics</option>
-                            </select>
-                        </div>
                     </div>
                 )}
 

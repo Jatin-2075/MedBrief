@@ -149,6 +149,9 @@ const ProfileView = () => {
           <button className="back-btn" onClick={() => navigate("/Home")}>
             Back to Home
           </button>
+          <button className="back-btn" onClick={() => navigate("/")}>
+            Logout
+          </button>
         </div>
       ) : (
         <form onSubmit={handleSave} className="profile-edit-form">
