@@ -20,7 +20,6 @@ def func_workout(level, workout_type):
         return {"success": False, "msg": "API key not configured"}
     
     headers = {"X-Api-Key": settings.API_NINJAS_KEY}
-    params = {"type": workout_type, "difficulty": level}
 
     # Debug logging (remove in production)
     logger.info(f"Requesting exercises: {params}")
