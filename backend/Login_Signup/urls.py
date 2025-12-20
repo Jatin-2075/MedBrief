@@ -13,8 +13,7 @@ urlpatterns = [
     path("profile/get/", views.Send_Profile, name="profile_get"),
     path("profile/status/", views.Status_view, name="profile_status"),
 
-    # -------- CHAT --------
-    path("chats/", views.get_chats, name="get_chats"),
-    path("chats/<int:chat_id>/messages/", views.get_messages, name="get_messages"),
+
+    path("Smart_Help/", views.Smart_Help)
 
 ]

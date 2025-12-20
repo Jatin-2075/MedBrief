@@ -1,164 +1,175 @@
+import { useState } from "react";
 import "../Style/SmartHelp.css";
+import { API_BASE_URL } from "../config/api";
+
 
 const Smart_help = () => {
-  const [conversations, setConversations] = useState([
-    { id: 1, title: "New Chat", messages: [] },
-  ]);
-  const [activeId, setActiveId] = useState(1);
-  const [query, setQuery] = useState("");
+    const [selected, setSelected] = useState("");
+    const [WorkoutLevel, SetWorkoutLevel] = useState("beginner")
+    const [WorkoutType, SetWorkoutType] = useState("strength")
 
-  const chatEndRef = useRef(null);
 
-  // ===============================
-  // ACTIVE CONVERSATION (SAFE)
-  // ===============================
-  const activeConversation =
-    conversations.find((c) => c.id === activeId) || conversations[0];
+    const [BMI, setBMI] = useState("");
+    const [DietData, setDietData] = useState(null);
+    const accessToken = localStorage.getItem("access_token");
 
-  // ===============================
-  // CREATE NEW CHAT
-  // ===============================
-  const createNewChat = () => {
-    const newChat = {
-      id: Date.now(),
-      title: "New Chat",
-      messages: [],
+
+
+    const [WorkoutData, SetWorkoutData] = useState({})
+
+    const HandleSubmit = async () => {
+        if (!selected) return alert("Please select an option first.");
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/Smart_Help/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    know: selected,
+                    Workoutlevel: WorkoutLevel,
+                    WorkoutType: WorkoutType,
+                    bmi: BMI,
+                })
+            });
+
+            // 1. Validate Content-Type to prevent parsing HTML as JSON
+            const contentType = res.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                throw new Error("Server crashed and sent an HTML error page.");
+            }
+
+            const data = await res.json();
+
+            // 2. Handle Logic Errors (502, 400, etc.)
+            if (!res.ok || !data.success) {
+                alert(data.msg || "An error occurred on the server.");
+                return;
+            }
+
+            // 3. Update States
+            if (data.type === "workout") {
+                SetWorkoutData(data);
+                setDietData(null);
+            } else if (data.type === "diet") {
+                setDietData(data.data);
+                SetWorkoutData({});
+            }
+
+        } catch (err) {
+            console.error("Frontend Critical Error:", err);
+            alert("Failed to communicate with the server. Please check the console.");
+        }
     };
 
-    setConversations((prev) => [newChat, ...prev]);
-    setActiveId(newChat.id);
-    setQuery("");
-  };
 
-  // ===============================
-  // REMOVE CHAT
-  // ===============================
-  const removeChat = (id) => {
-    setConversations((prev) => {
-      const updated = prev.filter((c) => c.id !== id);
-      if (id === activeId && updated.length > 0) {
-        setActiveId(updated[0].id);
-      }
-      return updated;
-    });
-  };
+    return (
+        <div className="ai-layout simple-mode">
+            <main className="ai-main">
+                <h1>Smart Help</h1>
+                <p>Health • Lifestyle • Guidance</p>
 
-  // ===============================
-  // SEND MESSAGE
-  // ===============================
-  const sendMessage = () => {
-    if (!query.trim()) return;
+                <div className="options">
+                    <button className={selected === "workout" ? "active" : ""} onClick={() => setSelected("workout")}>Workout</button>
 
-    setConversations((prev) =>
-      prev.map((conv) =>
-        conv.id === activeId
-          ? {
-              ...conv,
-              messages: [...conv.messages, { role: "user", text: query }],
-            }
-          : conv
-      )
+                    <button className={selected === "diet" ? "active" : ""} onClick={() => setSelected("diet")}>Diet</button>
+
+                    <button className={selected === "help" ? "active" : ""} onClick={() => setSelected("help")}>Help</button>
+                </div>
+
+
+
+                <div>
+                    {selected == 'workout' && <div>
+                        <div>
+                            <label>Level</label>
+                            <select value={WorkoutLevel} onChange={(e) => SetWorkoutLevel(e.target.value)}>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="hard">Hard</option>
+                            </select>
+
+                        </div>
+                        <div>
+                            <label>Type</label>
+                            <select value={WorkoutType} onChange={(e) => SetWorkoutType(e.target.value)}>
+                                <option value="strength">strength</option>
+                                <option value="cardio">cardio</option>
+                                <option value="plyometrics">plyometrics</option>
+                                <option value="powerlifting">powerlifting</option>
+                                <option value="olympic_weightlifting">olympic_weightlifting</option>
+                                <option value="strongman">strongman</option>
+                                <option value="calisthenics">calisthenics</option>
+                            </select>
+
+
+
+                        </div>
+                    </div>}
+
+                    {selected === "diet" && (
+                        <div>
+                            <label>BMI</label>
+                            <input type="number" step="0.1" value={BMI} onChange={(e) => setBMI(e.target.value)} placeholder="Enter BMI" />
+                        </div>
+                    )}
+
+
+                    <button onClick={HandleSubmit}>Submit</button>
+
+                    {WorkoutData?.data && Array.isArray(WorkoutData.data) && (
+                        <div style={{ marginTop: "20px" }}>
+                            <h2>Workout Suggestions</h2>
+
+                            {WorkoutData.data.slice(0, 5).map((item, index) => (
+                                <div key={index}>
+                                    <h3>{item.name}</h3>
+
+                                    <p><b>Type:</b> {item.type}</p>
+                                    <p><b>Muscle:</b> {item.muscle}</p>
+                                    <p><b>Difficulty:</b> {item.difficulty}</p>
+
+                                    <p><b>Instructions:</b></p>
+                                    <p>{item.instructions}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+
+                    {DietData && (
+                        <div style={{ marginTop: "20px" }}>
+                            <h2>{DietData.goal}</h2>
+                            <p><b>BMI:</b> {DietData.bmi}</p>
+
+                            {DietData.foods.slice(0, 5).map((food, index) => (
+                                <div
+                                    key={index}
+                                    style={{
+                                        border: "1px solid #ddd",
+                                        padding: "12px",
+                                        marginBottom: "10px",
+                                        borderRadius: "6px",
+                                        background: "#fafafa"
+                                    }}
+                                >
+                                    <h4>{food.name}</h4>
+                                    <p>Calories: {food.calories}</p>
+                                    <p>Protein: {food.protein_g} g</p>
+                                    <p>Carbs: {food.carbohydrates_total_g} g</p>
+                                    <p>Fat: {food.fat_total_g} g</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+
+                </div>
+            </main>
+        </div>
     );
-
-    setQuery("");
-  };
-
-  // ===============================
-  // ENTER vs SHIFT+ENTER
-  // ===============================
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
-  // ===============================
-  // AUTO SCROLL
-  // ===============================
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [activeConversation.messages]);
-
-  return (
-    <div className="ai-layout">
-      {/* ================= SIDEBAR ================= */}
-      <aside className="ai-sidebar">
-        <button className="new-chat-btn" onClick={createNewChat}>
-          + New Chat
-        </button>
-
-        <div className="chat-history">
-          {conversations.map((conv) => (
-            <div
-              key={conv.id}
-              className={`chat-item ${conv.id === activeId ? "active" : ""}`}
-              onClick={() => setActiveId(conv.id)}
-            >
-              <span className="chat-title">{conv.title}</span>
-              <span
-                className="chat-remove"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeChat(conv.id);
-                }}
-              >
-                ✕
-              </span>
-            </div>
-          ))}
-        </div>
-      </aside>
-
-      {/* ================= MAIN ================= */}
-      <main className="ai-main">
-        <h1 className="smart-help-title">Smart Help</h1>
-        <p className="smart-help-subtitle">
-          Ask SmartZen AI anything about health, reports, or lifestyle
-        </p>
-
-        {/* ================= CHAT WINDOW ================= */}
-        <div
-          className={`chat-window ${
-            activeConversation.messages.length === 0 ? "empty" : ""
-          }`}
-        >
-          {activeConversation.messages.length === 0 ? (
-            <div className="empty-chat">
-              Start a conversation by typing below 👇
-            </div>
-          ) : (
-            activeConversation.messages.map((msg, index) => (
-              <div key={index} className={`chat-bubble ${msg.role}`}>
-                {msg.text}
-              </div>
-            ))
-          )}
-          <div ref={chatEndRef} />
-        </div>
-
-        {/* ================= INPUT ================= */}
-        <div className="smart-help-search">
-          <textarea
-            className="chat-textarea"
-            placeholder="Ask SmartZen AI…"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              e.target.style.height = "auto";
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={sendMessage}>Ask</button>
-        </div>
-
-        <p className="input-hint">
-          Press <b>Enter</b> to send • <b>Shift + Enter</b> for new line
-        </p>
-      </main>
-    </div>
-  );
 };
 
 export default Smart_help;

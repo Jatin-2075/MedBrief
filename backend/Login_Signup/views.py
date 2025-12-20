@@ -15,6 +15,8 @@ import random
 import hashlib
 import json
 
+from .Services import func_workout, diet_by_bmi
+
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -240,51 +242,40 @@ def Status_view(request):
         "profile_completed": status_obj.profile_completed
     })
 
-
-@api_view(["GET"])
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def get_chats(request):
-    sessions = ChatSession.objects.filter(
-        user=request.user
-    ).order_by("-created_at")[:20]
+def Smart_Help(request):
+    """Endpoint for AI-driven workout and diet suggestions."""
+    know = request.data.get("know")
 
-    data = [
-        {
-            "id": s.id,
-            "title": s.title,
-            "created_at": s.created_at.isoformat()
-        }
-        for s in sessions
-    ]
-
-    return JsonResponse({"success": True, "chats": data})
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_messages(request, chat_id):
     try:
-        session = ChatSession.objects.get(
-            id=chat_id,
-            user=request.user
-        )
-    except ChatSession.DoesNotExist:
-        return JsonResponse(
-            {"success": False, "msg": "Chat not found"},
-            status=404
-        )
+        if know == "workout":
+            level = request.data.get("Workoutlevel")
+            workout_type = request.data.get("WorkoutType")
+            
+            if not level or not workout_type:
+                return JsonResponse({"success": False, "msg": "Level and Type are required"}, status=400)
+            
+            result = func_workout(level, workout_type)
 
-    messages = ChatMessage.objects.filter(
-        session=session
-    ).order_by("created_at")
+        elif know == "diet":
+            bmi = request.data.get("bmi")
+            if not bmi:
+                return JsonResponse({"success": False, "msg": "BMI is required"}, status=400)
+            
+            result = diet_by_bmi(float(bmi))
 
-    data = [
-        {
-            "role": m.role,
-            "text": m.text,
-            "created_at": m.created_at.isoformat()
-        }
-        for m in messages
-    ]
+        else:
+            return JsonResponse({"success": False, "msg": "Invalid service category"}, status=400)
 
-    return JsonResponse({"success": True, "messages": data})
+        # Handle service-layer failures (like API Ninjas 400 errors)
+        if not result["success"]:
+            return JsonResponse(result, status=502) # Bad Gateway: Upstream API failed
+
+        return JsonResponse({"success": True, "type": know, "data": result["data"]})
+
+    except (ValueError, TypeError):
+        return JsonResponse({"success": False, "msg": "Invalid data types provided"}, status=400)
+    except Exception as e:
+        logger.critical(f"UNHANDLED VIEW ERROR: {str(e)}")
+        return JsonResponse({"success": False, "msg": "Internal Server Error"}, status=500)
