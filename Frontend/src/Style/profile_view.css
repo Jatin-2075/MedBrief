@@ -1,80 +1,100 @@
-/* ===== Container ===== */
-.profile-view-container {
-  min-height: 100vh;
-  background: #f8fbff;
-  display: flex;
-  justify-content: center;
-  padding: 30px 12px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+:root {
+  --bg-main: #f5f8fc;
+  --card-bg: #ffffff;
+  --border-light: #e6ebf2;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --brand: #2563eb;
+  --brand-soft: #eff6ff;
+  --danger: #dc2626;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
-/* ===== Wrapper ===== */
+/* =========================
+   PAGE CONTAINER
+========================= */
+.profile-view-container {
+  min-height: 100vh;
+  background: var(--bg-main);
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  color: var(--text-primary);
+}
+
+/* =========================
+   CARD WRAPPER
+========================= */
 .profile-view-container > div,
 .profile-edit-form {
   width: 100%;
-  max-width: 900px;
-  background: #ffffff;
-  border: 1px solid #eef2f6;
-  border-radius: 16px;
-  padding: 28px;
+  max-width: 960px;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 32px;
 }
 
-/* ===== Header ===== */
+/* =========================
+   HEADER
+========================= */
 .profile-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .profile-header h2 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
-  color: #1e293b;
+  letter-spacing: -0.02em;
 }
 
-/* ===== Buttons ===== */
+/* =========================
+   BUTTONS
+========================= */
 .edit-btn,
 .back-btn {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
   background: #ffffff;
-  color: #2563eb;
+  color: var(--brand);
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .edit-btn:hover,
 .back-btn:hover {
-  background: #eff6ff;
+  background: var(--brand-soft);
+  transform: translateY(-1px);
 }
 
-/* ===== Sections ===== */
-.profile-section,
-.form-section {
-  margin-bottom: 28px;
-}
-
-.profile-section h3,
-.form-section h3 {
-  font-size: 18px;
-  margin-bottom: 16px;
-  color: #1e293b;
-}
-
-/* ===== Grid ===== */
+/* =========================
+   PROFILE GRID
+========================= */
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
+/* =========================
+   PROFILE FIELD
+========================= */
 .profile-field {
-  background: #f8fafc;
-  border: 1px solid #eef2f6;
-  border-radius: 12px;
-  padding: 14px;
+  background: #f9fbff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
 }
 
 .profile-field.full-width {
@@ -83,22 +103,26 @@
 
 .profile-field label {
   font-size: 12px;
-  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
 }
 
 .profile-field p {
-  margin-top: 4px;
+  margin-top: 6px;
+  font-size: 15px;
   font-weight: 600;
-  color: #1e293b;
 }
 
-/* ===== Form ===== */
+/* =========================
+   FORM
+========================= */
 .profile-edit-form {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .form-field {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .form-field.full-width {
@@ -108,67 +132,89 @@
 label {
   display: block;
   font-size: 13px;
-  color: #475569;
+  font-weight: 600;
+  color: var(--text-secondary);
   margin-bottom: 6px;
 }
 
+/* =========================
+   INPUTS
+========================= */
 input,
 select,
 textarea {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  outline: none;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
   font-size: 14px;
+  background: #ffffff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: #2563eb;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  outline: none;
 }
 
-/* ===== Actions ===== */
+/* =========================
+   ACTION BUTTONS
+========================= */
 .form-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 26px;
 }
 
 .save-btn {
   flex: 1;
-  padding: 12px;
-  background: #2563eb;
+  padding: 14px;
+  background: var(--brand);
   color: #ffffff;
   border: none;
-  border-radius: 12px;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .save-btn:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 .cancel-btn {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
   background: #ffffff;
-  color: #475569;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
   cursor: pointer;
 }
 
-/* ===== Loading / Error ===== */
-.loading,
-.error {
-  font-weight: 600;
-  color: #475569;
+.cancel-btn:hover {
+  background: #f1f5f9;
 }
 
-/* ===== Responsive ===== */
+/* =========================
+   LOADING / ERROR
+========================= */
+.loading,
+.error {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
   .profile-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -186,6 +232,12 @@ textarea:focus {
 
   .profile-field.full-width {
     grid-column: span 1;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
   }
 
   .form-actions {

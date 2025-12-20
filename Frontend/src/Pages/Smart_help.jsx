@@ -93,7 +93,7 @@ const Smart_help = () => {
                             <select value={WorkoutLevel} onChange={(e) => SetWorkoutLevel(e.target.value)}>
                                 <option value="beginner">Beginner</option>
                                 <option value="intermediate">Intermediate</option>
-                                <option value="hard">Hard</option>
+                                <option value="expert">expert</option>
                             </select>
                         </div>
 

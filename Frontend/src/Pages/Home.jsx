@@ -40,7 +40,7 @@ const Home = () => {
 
           <div
             className="action-card secondary"
-            onClick={() => navigate("/reports")}
+            onClick={() => navigate("/Reports")}
           >
             <h3>View Reports</h3>
             <p>See summaries from your last 12 uploaded reports</p>
