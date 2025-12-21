@@ -27,7 +27,7 @@ const Intro = () => {
 
                     <div className="medbrief-cta-group">
                         <NavLink to="/Signup" className="medbrief-primary-btn medbrief-big-btn">Get Started</NavLink>
-                        <NavLink to="/Help" className="medbrief-outline-btn medbrief-big-btn">How it Works</NavLink>
+                        <NavLink to="/Demo" className="medbrief-outline-btn medbrief-big-btn">How it Works</NavLink>
                     </div>
                 </div>
 

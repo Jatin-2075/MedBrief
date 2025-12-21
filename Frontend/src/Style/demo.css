@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary-blue: #007AFF;
+    --soft-blue: #F2F7FF;
+    --accent-gradient: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+    --text-dark: #1D1D1F;
+    --text-grey: #6E6E73;
+    --white: #ffffff;
+}
+
+.how-page {
+    background-color: #fbfbfd;
+    min-height: 100vh;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.how-container {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Header Section */
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+}
+
+.how-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-grey);
+    max-width: 600px;
+    margin: 0 auto 60px auto;
+    line-height: 1.5;
+}
+
+/* Steps Layout */
+.steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* Vertical Line Connector (Desktop) */
+.steps::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: rgba(0, 122, 255, 0.1);
+    z-index: 0;
+}
+
+/* Step Card Styling */
+.step-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 24px;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpFade 0.6s ease forwards;
+}
+
+.step-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 122, 255, 0.08);
+    border-color: rgba(0, 122, 255, 0.2);
+}
+
+/* Step Number Circle */
+.step-number {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: var(--accent-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 16px rgba(0, 122, 255, 0.3);
+}
+
+.step-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.step-card p {
+    color: var(--text-grey);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Actions Section */
+.how-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.how-actions button {
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    background: var(--text-dark);
+    color: white;
+}
+
+.how-actions button:hover {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.how-actions button.secondary {
+    background: var(--soft-blue);
+    color: var(--primary-blue);
+}
+
+.how-actions button.secondary:hover {
+    background: #e1ecff;
+}
+
+/* Disclaimer Footer */
+.disclaimer {
+    margin-top: 60px;
+    font-size: 0.85rem;
+    color: var(--text-grey);
+    background: #fff4f4;
+    padding: 15px 25px;
+    border-radius: 12px;
+    display: inline-block;
+    border: 1px solid #ffebeb;
+}
+
+/* Staggered Animations */
+.step-card:nth-child(1) { animation-delay: 0.1s; }
+.step-card:nth-child(2) { animation-delay: 0.2s; }
+.step-card:nth-child(3) { animation-delay: 0.3s; }
+.step-card:nth-child(4) { animation-delay: 0.4s; }
+.step-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .steps::before { display: none; }
+    .step-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 40px 25px;
+    }
+    h1 { font-size: 2.2rem; }
+    .how-actions { flex-direction: column; }
+}
