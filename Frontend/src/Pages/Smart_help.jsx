@@ -8,7 +8,7 @@ const Smart_help = () => {
     const [BMI, setBMI] = useState("");
     const [DietData, setDietData] = useState(null);
     const [WorkoutData, SetWorkoutData] = useState({});
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false); // New Loading State
 
     const accessToken = localStorage.getItem("access_token");
 
