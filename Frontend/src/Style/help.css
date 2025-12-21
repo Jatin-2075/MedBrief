@@ -1,12 +1,3 @@
-:root {
-    --mb-help-blue: #0b4da2;
-    --mb-help-text: #1d1d1f;
-    --mb-help-muted: #64748b;
-    --mb-help-glass: rgba(255, 255, 255, 0.8);
-    --mb-help-border: rgba(255, 255, 255, 0.5);
-    --mb-help-shadow: 0 10px 30px rgba(0, 80, 162, 0.06);
-}
-
 .help-page-container {
     width: 90%;
     max-width: 950px;
@@ -25,26 +16,26 @@
     font-size: clamp(2.5rem, 5vw, 3.5rem) !important;
     font-weight: 800;
     letter-spacing: -1.5px;
-    color: var(--mb-help-text);
+    color: #1d1d1f;
     margin-bottom: 1rem;
     line-height: 1.2;
 }
 
 .help-page-container .help-page-subtitle {
-    color: var(--mb-help-muted);
+    color: #64748b;
     font-size: 1.15rem;
     max-width: 600px;
     margin: 0 auto;
 }
 
 .help-page-container .help-info-card {
-    background: var(--mb-help-glass);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     padding: 35px 40px;
     margin-bottom: 25px;
     border-radius: 24px;
-    border: 1px solid var(--mb-help-border);
-    box-shadow: var(--mb-help-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 80, 162, 0.06);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -57,20 +48,20 @@
     top: 0;
     height: 100%;
     width: 5px;
-    background: var(--mb-help-blue);
+    background: #0b4da2;
     opacity: 0.7;
 }
 
 .help-page-container .help-info-card:hover {
     transform: translateY(-5px) scale(1.01);
     box-shadow: 0 20px 40px rgba(11, 77, 162, 0.1);
-    border-color: var(--mb-help-blue);
+    border-color: #0b4da2;
 }
 
 .help-page-container .help-card-heading {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--mb-help-blue);
+    color: #0b4da2;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -78,7 +69,7 @@
 }
 
 .help-page-container .help-card-description {
-    color: var(--mb-help-muted);
+    color: #64748b;
     line-height: 1.7;
     font-size: 1.05rem;
 }
@@ -101,7 +92,7 @@
     content: "→";
     position: absolute;
     left: 0;
-    color: var(--mb-help-blue);
+    color: #0b4da2;
     font-weight: 900;
 }
 
@@ -140,7 +131,7 @@
 
 .help-page-container .help-contact-details strong {
     color: #ffffff;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 @keyframes helpFadeDown {

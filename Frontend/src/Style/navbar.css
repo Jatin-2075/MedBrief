@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-.medbrief-logo {
+.medbrief-navbar .medbrief-logo {
   font-size: 24px;
   font-weight: 800;
   color: #0b4da2;
@@ -20,13 +20,13 @@
   letter-spacing: -0.5px;
 }
 
-.medbrief-nav-center {
+.medbrief-navbar .medbrief-nav-center {
   display: flex;
   align-items: center;
   gap: 32px;
 }
 
-.medbrief-nav-link {
+.medbrief-navbar .medbrief-nav-link {
   text-decoration: none;
   font-weight: 500;
   color: #64748b;
@@ -35,16 +35,16 @@
   transition: color 0.3s ease;
 }
 
-.medbrief-nav-link:hover {
+.medbrief-navbar .medbrief-nav-link:hover {
   color: #0b4da2;
 }
 
-.medbrief-nav-link.active {
+.medbrief-navbar .medbrief-nav-link.active {
   color: #0b4da2;
   font-weight: 700;
 }
 
-.medbrief-nav-link.active::after {
+.medbrief-navbar .medbrief-nav-link.active::after {
   content: "";
   height: 2px;
   width: 100%;
@@ -55,13 +55,13 @@
   border-radius: 2px;
 }
 
-.medbrief-nav-right {
+.medbrief-navbar .medbrief-nav-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.medbrief-profile-circle {
+.medbrief-navbar .medbrief-profile-circle {
   width: 42px;
   height: 42px;
   background: #1a1a1a;
@@ -75,12 +75,12 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.medbrief-profile-circle:hover {
+.medbrief-navbar .medbrief-profile-circle:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.medbrief-mobile-toggle {
+.medbrief-navbar .medbrief-mobile-toggle {
   display: none;
   background: none;
   border: none;
@@ -91,7 +91,7 @@
 }
 
 @media (max-width: 900px) {
-  .medbrief-nav-center {
+  .medbrief-navbar .medbrief-nav-center {
     gap: 20px;
   }
 }
@@ -101,11 +101,11 @@
     padding: 0 20px;
   }
 
-  .medbrief-mobile-toggle {
+  .medbrief-navbar .medbrief-mobile-toggle {
     display: block;
   }
 
-  .medbrief-nav-center {
+  .medbrief-navbar .medbrief-nav-center {
     position: absolute;
     top: 70px;
     left: 0;
@@ -119,21 +119,21 @@
     transition: max-height 0.4s ease-in-out;
   }
 
-  .medbrief-nav-center.is-open {
+  .medbrief-navbar .medbrief-nav-center.is-open {
     max-height: 400px;
   }
 
-  .medbrief-nav-link {
+  .medbrief-navbar .medbrief-nav-link {
     width: 100%;
     text-align: center;
     padding: 15px 0;
   }
 
-  .medbrief-nav-link.active::after {
+  .medbrief-navbar .medbrief-nav-link.active::after {
     display: none;
   }
 
-  .medbrief-nav-link.active {
+  .medbrief-navbar .medbrief-nav-link.active {
     background: #f0f7ff;
   }
 }

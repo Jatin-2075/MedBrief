@@ -39,14 +39,14 @@
     padding: 8px 16px;
 }
 
-.spinner {
+.medbrief-status-loading .spinner {
     width: 16px;
     height: 16px;
     border: 2px solid #e2e8f0;
     border-top: 2px solid #0b4da2;
     border-radius: 50%;
     display: inline-block;
-    animation: spin 1s linear infinite;
+    animation: medbrief-spin 1s linear infinite;
 }
 
 @keyframes medbrief-pulse {
@@ -55,6 +55,6 @@
     100% { box-shadow: 0 0 0 0 rgba(217, 72, 15, 0); }
 }
 
-@keyframes spin {
+@keyframes medbrief-spin {
     to { transform: rotate(360deg); }
 }

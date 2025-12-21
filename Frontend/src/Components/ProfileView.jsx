@@ -84,7 +84,7 @@ const ProfileView = () => {
     <div className="profile-page">
       <div className="profile-container">
 
-        <h2 className="page-title">My Health Profile</h2>
+        <h2 className="page-title">Health Profile</h2>
 
         {/* Identity */}
         <div className="profile-identity">
