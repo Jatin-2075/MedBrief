@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "../config/api";
+
 const Logout = () => {
     const handleLogout = async () => {
         try {

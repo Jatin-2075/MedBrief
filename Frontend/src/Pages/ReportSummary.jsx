@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import "../Style/reportSummary.css";
+import { API_BASE_URL } from "../config/api";
 
 const ReportSummary = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -15,6 +16,7 @@ const ReportSummary = () => {
     setError("");
     setReportId(null);
     setUploadProgress(0);
+
     setFileInfo({
       name: file.name,
       size: (file.size / 1024 / 1024).toFixed(2) + " MB",
@@ -26,12 +28,16 @@ const ReportSummary = () => {
     const xhr = new XMLHttpRequest();
     xhrRef.current = xhr;
 
-    xhr.open("POST", "http://127.0.0.1:8000/api/reports/upload/");
+    xhr.open("POST", `${API_BASE_URL}/api/reports/upload/`);
+
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    }
 
     xhr.upload.onprogress = (e) => {
       if (e.lengthComputable) {
-        const percent = Math.round((e.loaded / e.total) * 100);
-        setUploadProgress(percent);
+        setUploadProgress(Math.round((e.loaded / e.total) * 100));
       }
     };
 
@@ -72,6 +78,7 @@ const ReportSummary = () => {
   const cancelUpload = () => {
     if (xhrRef.current) {
       xhrRef.current.abort();
+      xhrRef.current = null;
       setProcessing(false);
       setUploadProgress(0);
       setFileInfo(null);
@@ -129,20 +136,12 @@ const ReportSummary = () => {
           </div>
         )}
 
-        {processing && uploadProgress === 100 && (
-          <div className="processing-loader">
-            <span className="loader-dot"></span>
-            <span className="loader-dot"></span>
-            <span className="loader-dot"></span>
-          </div>
-        )}
-
         {error && <div className="upload-error-message">{error}</div>}
 
         {!processing && reportId && (
           <div className="report-action-buttons">
             <a
-              href={`http://127.0.0.1:8000/api/reports/download/${reportId}/`}
+              href={`${API_BASE_URL}/api/reports/download/${reportId}/`}
               className="btn-download-pdf"
             >
               Download PDF
@@ -154,7 +153,7 @@ const ReportSummary = () => {
                 navigator.share
                   ? navigator.share({
                       title: "Medical Report Summary",
-                      url: `http://127.0.0.1:8000/api/reports/download/${reportId}/`,
+                      url: `${API_BASE_URL}/api/reports/download/${reportId}/`,
                     })
                   : alert("Sharing not supported")
               }

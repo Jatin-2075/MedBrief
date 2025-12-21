@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../Style/profile_view.css";
-
-const BASE_URL = "http://127.0.0.1:8000";
+import { API_BASE_URL } from "../config/api";
 
 const ProfileView = () => {
   const [profile, setProfile] = useState(null);
@@ -30,7 +29,7 @@ const ProfileView = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/profile/get`, {
+      const res = await fetch(`${API_BASE_URL}/profile/get`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
