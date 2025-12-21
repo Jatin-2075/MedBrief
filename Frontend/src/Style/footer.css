@@ -1,57 +1,59 @@
-.footer {
+.medbrief-minimal-footer {
   width: 100%;
-  padding: 20px 0;
-  background: #f8f9fa;
-  border-top: 1px solid #e3e3e3;
+  height: 55px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: auto;
 }
 
-.footer-content {
-  width: 85%;
-  margin: auto;
+.medbrief-minimal-container {
+  width: 100%;
+  padding: 0 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.footer-logo h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #333;
-}
-
-.footer-logo p {
-  font-size: 14px;
-  color: #666;
-}
-
-.footer-links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #444;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.footer-links a:hover {
-  color: #2a7be4;
-}
-
-.footer-info {
+.medbrief-footer-text {
   font-size: 13px;
-  color: #666;
-  text-align: right;
+  color: #1e293b; /* Much darker primary text */
+  letter-spacing: 0.1px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.medbrief-accent {
+  color: #0b4da2;
+  font-weight: 700;
+}
+
+.medbrief-footer-separator {
+  margin: 0 10px;
+  color: #94a3b8; /* Darkened bullet point */
+  font-weight: bold;
+}
+
+.medbrief-legal-disclaimer {
+  color: #475569; /* Darker grey for the AI disclaimer */
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
-  .footer-content {
+  .medbrief-minimal-footer {
+    height: auto;
+    padding: 15px 0;
+  }
+  
+  .medbrief-footer-text {
     flex-direction: column;
-    gap: 15px;
     text-align: center;
+    gap: 8px;
   }
 
-  .footer-links a {
-    margin: 5px 8px;
+  .medbrief-footer-separator {
+    display: none;
   }
 }

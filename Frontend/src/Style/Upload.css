@@ -1,3 +1,8 @@
+/* Upload.css
+   Styles designed to match the provided screenshot (clean, airy dashboard look)
+*/
+
+/* --- Global / page-level --- */
 :root{
   --bg: #f7fafc;
   --card: #ffffff;
@@ -10,6 +15,7 @@
   --small-shadow: 0 1px 4px rgba(2,6,23,0.06);
   --dash: #dbeafe;
 
+  /* ⭐ Optimized max container width */
   --container-width: 1200px; 
 }
 
@@ -22,6 +28,7 @@ html,body,#root{
   color: #0f172a;
 }
 
+/* --- Title area --- */
 .title_container{
   max-width: 1100px;
   margin: 28px auto 18px;
@@ -41,15 +48,17 @@ html,body,#root{
   font-size: 14px;
 }
 
+/* --- Main upload area wrapper --- */
 .main_upload_container{
   max-width: 1100px;
   margin: 16px auto;
   padding: 0 20px 28px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr; /* single column, file card sits under upload box */
   gap: 16px;
 }
 
+/* --- Upload box --- */
 .upload_container{
   background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.6));
   border-radius: var(--radius);
@@ -85,10 +94,12 @@ html,body,#root{
   font-size: 13px;
 }
 
+/* ensure real file input is invisible but clickable through parent */
 .file_input{
   display: none;
 }
 
+/* --- File + progress card --- */
 .file_progress_container{
   margin-top: 12px;
   background: var(--card);
@@ -100,6 +111,7 @@ html,body,#root{
   gap: 12px;
 }
 
+/* left icon container */
 .mini_container_1{
   width: 44px;
   height: 44px;
@@ -116,6 +128,7 @@ html,body,#root{
   object-fit: cover;
 }
 
+/* file metadata */
 .mini_container_2{
   flex: 1;
   min-width: 0;
@@ -137,6 +150,7 @@ html,body,#root{
   color: var(--muted);
 }
 
+/* progress display on the right */
 .progress{
   font-size: 13px;
   color: var(--muted);
@@ -145,6 +159,7 @@ html,body,#root{
 }
 
 
+/* Progress bar (add to Upload.css) */
 .progress_bar {
   width: 100%;
   height: 8px;
@@ -161,6 +176,7 @@ html,body,#root{
   transition: width 220ms linear;
 }
 
+/* FIX: Remove unwanted gap + overlapping */
 .file_progress_container::after {
   content: none !important;
 }
@@ -178,6 +194,14 @@ html,body,#root{
   margin-top: 8px !important;
 }
 
+
+
+/* we will use an overlay bar by adding an inner element via pseudo-element - compute using inline style in React? 
+   But to keep pure CSS, the numeric progress text is enough. 
+   If you want a visual bar, add a child <div className="progress_bar"><div className="progress_fill" style={{width: `${progress}%`}}/></div>
+*/
+
+/* --- Generated Summary containers --- */
 .generated_summary_container{
     max-width: 1100px;
     margin: 28px auto 18px;
@@ -219,6 +243,7 @@ html,body,#root{
   font-size: 15px;
 }
 
+/* summary text block */
 .container_1 pre{
   background: #fafafa;
   border-radius: 8px;
@@ -230,6 +255,7 @@ html,body,#root{
   border: 1px solid #eff2f6;
 }
 
+/* container_2 holds action buttons */
 .container_2{
   margin-top: 0;
   display: flex;
@@ -251,6 +277,7 @@ html,body,#root{
   color: #0f172a;
 }
 
+/* remove grey background from <pre> and make it clean like screenshot */
 .container_3 pre {
   margin: 0;
   background: transparent;
@@ -297,9 +324,10 @@ html,body,#root{
   margin-top: 6px;
 }
 
-.dot.yellow { background: #facc15; } 
-.dot.green { background: #22c55e; }  
-.dot.blue { background: #3b82f6; } 
+/* Colors matching the screenshot */
+.dot.yellow { background: #facc15; }  /* yellow */
+.dot.green { background: #22c55e; }   /* green */
+.dot.blue { background: #3b82f6; }    /* blue */
 
 
 /* Buttons */
@@ -345,11 +373,15 @@ html,body,#root{
 }
 
 
+/* small responsiveness */
 @media (min-width: 1000px){
+  /* layout similar to screenshot: make upload and file/progress appear stacked, summary below,
+     If you later add the Key Findings / metrics columns, you could set up a two-column grid here */
   .main_upload_container{
     grid-template-columns: 1fr;
   }
 
+  /* Add subtle hover on upload box */
   .upload_container:hover{
     border-color: #c7ddff;
     transform: translateY(-2px);
@@ -357,6 +389,7 @@ html,body,#root{
   }
 }
 
+/* small screens */
 @media (max-width: 520px){
   .upload_container{
     padding: 28px 16px;

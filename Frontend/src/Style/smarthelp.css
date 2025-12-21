@@ -22,6 +22,7 @@
     overflow: hidden;
 }
 
+/* Background Animated Blobs */
 .background-blob {
     position: absolute;
     width: 500px;
@@ -58,10 +59,12 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
+/* Header */
 .sh-header { text-align: center; margin-bottom: 40px; }
 .sh-title { font-weight: 800; font-size: 2.5rem; color: var(--text-main); margin: 0; }
 .sh-subtitle { color: var(--text-muted); font-size: 1.1rem; margin-top: 10px; }
 
+/* Toggle Buttons */
 .sh-toggle-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -93,6 +96,7 @@
 
 .sh-toggle-btn .icon { font-size: 1.5rem; margin-bottom: 5px; }
 
+/* Inputs */
 .sh-form-wrapper { margin-top: 20px; }
 .sh-input-group { margin-bottom: 25px; display: flex; flex-direction: column; }
 .sh-input-group label { font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
@@ -108,6 +112,7 @@
 
 .sh-select:focus, .sh-input:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1); }
 
+/* Submit Button */
 .sh-submit-btn {
     width: 100%;
     padding: 18px;
@@ -123,6 +128,7 @@
 .sh-submit-btn:hover { background: #000; transform: translateY(-2px); }
 .sh-submit-btn.loading { opacity: 0.7; cursor: not-allowed; }
 
+/* Result Cards */
 .sh-result-grid { margin-top: 50px; }
 .section-label { font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
 
@@ -156,6 +162,7 @@
 
 .macro-stats { display: flex; gap: 15px; margin-top: 10px; font-size: 0.85rem; font-weight: 600; color: var(--primary-blue); }
 
+/* Animations */
 .fade-in { animation: fadeIn 0.5s ease-out forwards; }
 .fade-up { animation: fadeUp 0.8s ease-out forwards; }
 
@@ -175,3 +182,4 @@
     .smart-help-card { padding: 20px; }
     .sh-title { font-size: 1.8rem; }
 }
+

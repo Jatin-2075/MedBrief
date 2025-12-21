@@ -10,6 +10,9 @@ DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",")
 
+# ===============================
+# EMAIL CONFIGURATION 
+# ===============================
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -21,8 +24,9 @@ DEFAULT_FROM_EMAIL = f"SmartZen <{EMAIL_HOST_USER}>"
 
 TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
-
-
+# ===============================
+# APPS & MIDDLEWARE
+# ===============================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -38,7 +42,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_framework_simplejwt", 
+    "rest_framework_simplejwt", # Ensure this is here if using JWT
 
     "allauth",
     "allauth.account",
@@ -49,7 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware", 
+    "corsheaders.middleware.CorsMiddleware", # Best practice: Place near top
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -60,6 +64,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "backend.urls"
 
+# ===============================
+# TEMPLATES (FIXED E403 ERROR)
+# ===============================
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -76,6 +83,9 @@ TEMPLATES = [
     }
 ]
 
+# ===============================
+# REST FRAMEWORK & JWT
+# ===============================
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -89,17 +99,27 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True, 
-    "BLACKLIST_AFTER_ROTATION": False,
+    "BLACKLIST_AFTER_ROTATION": False, # Set to False unless you have simplejwt.token_blacklist in apps
     "AUTH_HEADER_TYPES": ("Bearer",), 
 }
 
+# ===============================
+# CORS & DATABASE
+# ===============================
+# ===============================
+# CORS & CSRF CONFIGURATION
+# ===============================
+
+# Required so the browser doesn't block requests with Authorization headers
 CORS_ALLOW_CREDENTIALS = True
 
+# You MUST list specific origins when CORS_ALLOW_CREDENTIALS is True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
 
+# Explicitly allow headers used by JWT and React
 CORS_ALLOW_HEADERS = [
     "accept",
     "authorization",
@@ -109,6 +129,7 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
+# Ensure CSRF protection works with your React frontend
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -127,15 +148,21 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+# ===============================
+# STATIC & MEDIA
+# ===============================
 STATIC_URL = "/static/"
-
+# Only include this if the directory actually exists to avoid warnings
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+# ===============================
+# ALLAUTH MODERN CONFIG (FIXED WARNINGS)
+# ===============================
 SITE_ID = 1
-
+# ADD THIS INSTEAD
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False

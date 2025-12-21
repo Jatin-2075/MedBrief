@@ -1,3 +1,6 @@
+/* ===============================
+   SIGNUP PAGE WRAPPER
+================================ */
 .signup-page {
   min-height: 100vh;
   display: flex;
@@ -7,6 +10,9 @@
   padding: 16px;
 }
 
+/* ===============================
+   SIGNUP CONTAINER
+================================ */
 .signup-container {
   width: 100%;
   max-width: 420px;
@@ -19,6 +25,9 @@
   animation: fadeUp 0.5s ease;
 }
 
+/* ===============================
+   ANIMATION
+================================ */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -30,6 +39,9 @@
   }
 }
 
+/* ===============================
+   TITLE
+================================ */
 .signup-container h2 {
   text-align: center;
   margin-bottom: 26px;
@@ -39,6 +51,9 @@
   letter-spacing: -0.5px;
 }
 
+/* ===============================
+   FORM FIELD
+================================ */
 .signup-field {
   display: flex;
   flex-direction: column;
@@ -52,6 +67,9 @@
   font-weight: 600;
 }
 
+/* ===============================
+   INPUTS
+================================ */
 .signup-field input {
   padding: 13px 14px;
   font-size: 15px;
@@ -73,6 +91,9 @@
     0 4px 10px rgba(37, 99, 235, 0.1);
 }
 
+/* ===============================
+   BUTTON
+================================ */
 .signup-btn {
   width: 100%;
   padding: 14px;
@@ -103,6 +124,10 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* ===============================
+   LOGIN LINK
+================================ */
 .signup-login-text {
   text-align: center;
   margin-top: 18px;
@@ -120,6 +145,9 @@
   text-decoration: underline;
 }
 
+/* ===============================
+   RESPONSIVE DESIGN
+================================ */
 @media (max-width: 480px) {
   .signup-container {
     padding: 28px 22px;

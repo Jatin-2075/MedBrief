@@ -14,6 +14,7 @@ def func_workout(level):
 
     headers = {"X-Api-Key": settings.API_NINJAS_KEY}
 
+    # ✅ MISSING PART FIXED
     params = {
         "difficulty": level,
     }

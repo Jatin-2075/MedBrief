@@ -25,7 +25,6 @@ const CreateProfile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const accessToken = localStorage.getItem("access_token");
 
         if (!accessToken) {
@@ -54,10 +53,7 @@ const CreateProfile = () => {
                 }),
             });
 
-            console.log("Response status:", res.status);
-
             const data = await res.json();
-            console.log("Response data:", data);
 
             if (!res.ok) {
                 throw new Error(data.msg || "Failed to create profile");
@@ -67,7 +63,6 @@ const CreateProfile = () => {
             navigate("/Home", { replace: true });
 
         } catch (err) {
-            console.error("Profile creation error:", err);
             toast.error(err.message || "Server error");
         } finally {
             setLoading(false);
@@ -95,22 +90,16 @@ const CreateProfile = () => {
                 body: JSON.stringify({ profile_completed: false }),
             });
 
-            console.log("Skip STATUS:", res.status);
-
             const data = await res.json();
-            console.log("Skip data:", data);
 
             if (!res.ok) {
                 throw new Error(data.msg || "Failed to skip profile");
             }
 
             toast.info("Profile skipped");
-
             localStorage.setItem("profile_completed", "false");
-
             navigate("/Home", { replace: true });
         } catch (err) {
-            console.error("Skip error:", err);
             toast.error(err.message || "Skip failed");
         } finally {
             setLoading(false);
@@ -118,41 +107,62 @@ const CreateProfile = () => {
     };
 
     return (
-        <div className="profile-container">
-            <h2>Create Health Profile</h2>
+        <div className="medbrief-profile-page">
+            <div className="medbrief-profile-card">
+                <h2 className="medbrief-profile-title">Create Health Profile</h2>
+                <p className="medbrief-profile-subtitle">Provide your details to personalize your health insights.</p>
 
-            <form onSubmit={handleSubmit} className="profile-form">
-                <input name="name" placeholder="Name" onChange={handleChange} required />
-                <input name="age" type="number" placeholder="Age" onChange={handleChange} required />
+                <form onSubmit={handleSubmit} className="medbrief-profile-form">
+                    <div className="medbrief-input-full">
+                        <input name="name" placeholder="Full Name" onChange={handleChange} required />
+                    </div>
+                    
+                    <div className="medbrief-input-half">
+                        <input name="age" type="number" placeholder="Age" onChange={handleChange} required />
+                    </div>
 
-                <select name="gender" onChange={handleChange} required>
-                    <option value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
+                    <div className="medbrief-input-half">
+                        <select name="gender" onChange={handleChange} required>
+                            <option value="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-                <input name="weight" placeholder="Weight (kg)" onChange={handleChange} />
-                <input name="height" placeholder="Height (cm)" onChange={handleChange} />
+                    <div className="medbrief-input-half">
+                        <input name="weight" placeholder="Weight (kg)" onChange={handleChange} />
+                    </div>
 
-                <select name="bloodgroup" onChange={handleChange}>
-                    <option value="">Blood Group</option>
-                    <option>A+</option><option>A-</option>
-                    <option>B+</option><option>B-</option>
-                    <option>AB+</option><option>AB-</option>
-                    <option>O+</option><option>O-</option>
-                </select>
+                    <div className="medbrief-input-half">
+                        <input name="height" placeholder="Height (cm)" onChange={handleChange} />
+                    </div>
 
-                <textarea name="allergies" placeholder="Allergies" onChange={handleChange} />
+                    <div className="medbrief-input-full">
+                        <select name="bloodgroup" onChange={handleChange}>
+                            <option value="">Blood Group</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option>
+                            <option>O+</option><option>O-</option>
+                        </select>
+                    </div>
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Saving..." : "Save Profile"}
-                </button>
+                    <div className="medbrief-input-full">
+                        <textarea name="allergies" placeholder="Known Allergies (Optional)" onChange={handleChange} />
+                    </div>
 
-                <button type="button" onClick={skiphandle} disabled={loading}>
-                    Skip for now
-                </button>
-            </form>
+                    <div className="medbrief-form-actions">
+                        <button type="submit" className="medbrief-btn-save" disabled={loading}>
+                            {loading ? "Saving Profile..." : "Save Profile"}
+                        </button>
+
+                        <button type="button" className="medbrief-btn-skip" onClick={skiphandle} disabled={loading}>
+                            Skip for now
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

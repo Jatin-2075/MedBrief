@@ -27,6 +27,8 @@ def get_tokens_for_user(user):
         "access": str(refresh.access_token),
     }
 
+
+# ---------------- SIGNUP ----------------
 @csrf_exempt
 @require_POST
 def Signup(request):
@@ -55,7 +57,7 @@ def Signup(request):
         )
 
         Profile.objects.create(user=user)
-        Status.objects.create(user=user) 
+        Status.objects.create(user=user)  # profile_completed = False
 
         return JsonResponse({
             "success": True,
@@ -70,6 +72,7 @@ def Signup(request):
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
+# ---------------- LOGIN ----------------
 @csrf_exempt
 @require_POST
 def Login(request):
@@ -98,6 +101,7 @@ def Login(request):
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
+# ---------------- FORGOT PASSWORD ----------------
 @csrf_exempt
 @require_POST
 def forgot_password(request):
@@ -134,6 +138,7 @@ def forgot_password(request):
         return JsonResponse({"success": True})
 
 
+# ---------------- RESET PASSWORD ----------------
 @csrf_exempt
 @require_POST
 def reset_password(request):
@@ -170,6 +175,7 @@ def reset_password(request):
         return JsonResponse({"success": False, "msg": "Invalid request"}, status=400)
 
 
+# ---------------- PROFILE CREATE ----------------
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def Profile_creation(request):
@@ -180,6 +186,7 @@ def Profile_creation(request):
         profile.age = request.data.get("age")
         profile.gender = request.data.get("gender")
         
+        # Safely convert weight and height to float
         weight = request.data.get("weight")
         height = request.data.get("height")
         
@@ -214,6 +221,7 @@ def Profile_creation(request):
             "msg": "Failed to create profile"
         }, status=500)
 
+# ---------------- SEND PROFILE ----------------
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def Send_Profile(request):
@@ -284,8 +292,9 @@ def Smart_Help(request):
         else:
             return JsonResponse({"success": False, "msg": "Invalid service category"}, status=400)
 
+        # Handle service-layer failures (like API Ninjas 400 errors)
         if not result["success"]:
-            return JsonResponse(result, status=502) 
+            return JsonResponse(result, status=502) # Bad Gateway: Upstream API failed
 
         return JsonResponse({"success": True, "type": know, "data": result["data"]})
 

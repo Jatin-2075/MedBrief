@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Demo from "./Pages/Demo";
 import Layout from "./Components/Layout";
 
 import Home from "./Pages/Home";
@@ -14,7 +14,6 @@ import Help from "./Pages/Help";
 import CreateProfile from "./Services/Profile/Profile_Create";
 import ReportSummary from "./Pages/ReportSummary";
 import ProfileView from "./Components/ProfileView";
-import HowItWorks from "./Pages/HowitWorks";
 
 const router = createBrowserRouter([
   {
@@ -24,22 +23,21 @@ const router = createBrowserRouter([
       { path: "/Reports", element: <Reports /> },
       { path: "/SmartHelper", element: <Smart_help /> },
       { path: "/Help", element: <Help /> },
-      { path: "/Upload", element: <ReportSummary/> },
+      { path: "/Upload", element: <ReportSummary /> },
+      { path: "/Profile", element: <ProfileView /> },
     ],
   },
 
   { path: "/", element: <Intro /> },
   { path: "/Login", element: <Login /> },
   { path: "/Signup", element: <Signup /> },
-  { path: "/Profile_create", element: <> <CreateProfile/> </> },
-  { path: "/Profile", element: <> <ProfileView/> </>},
-  { path: "/howitwork", element: <> <HowItWorks/> </>},
+  { path: "/Profile_create", element: <CreateProfile /> },
+  { path: "/Demo", element: <Demo /> },
 ]);
 
 function App() {
   return (
     <>
-      {/* Toast Notifications (GLOBAL) */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -50,7 +48,6 @@ function App() {
         draggable
       />
 
-      {/* App Router */}
       <RouterProvider router={router} />
     </>
   );

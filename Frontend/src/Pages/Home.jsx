@@ -13,91 +13,81 @@ const Home = () => {
 
   const normalRanges = {
     bp: "120/80",
-    sugar: "70–140 mg/dL",
-    spo2: "95–100%",
-    heartRate: "60–100 bpm",
+    sugar: "70-140 mg/dL",
+    spo2: "95-100%",
+    heartRate: "60-100 bpm",
   };
 
   const sugarTrend = [110, 115, 120, 118, 125, 130];
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-content">
-        <h1>Health Overview</h1>
-        <p className="subtitle">
-          Snapshot from your latest medical reports
-        </p>
+    <div className="dashboard-wrapper">
+      <div className="dashboard-container">
+        <header className="dashboard-header">
+          <h1 className="header-title">Health Overview</h1>
+          <p className="header-subtitle">Snapshot from your latest medical reports</p>
+        </header>
 
-        <div className="quick-actions">
-          <div
-            className="action-card"
-            onClick={() => navigate("/report-summary")}
-          >
-            <h3>Upload Report</h3>
-            <p>Upload a medical report and get an instant summary</p>
+        <div className="action-grid">
+          <div className="action-card-upload" onClick={() => navigate("/Upload")}>
+            <div className="action-icon">↑</div>
+            <h3 className="action-name">Upload Report</h3>
+            <p className="action-text">Get an instant AI-powered summary</p>
           </div>
 
-          <div
-            className="action-card secondary"
-            onClick={() => navigate("/Reports")}
-          >
-            <h3>View Reports</h3>
-            <p>See summaries from your last 12 uploaded reports</p>
+          <div className="action-card-view" onClick={() => navigate("/Reports")}>
+            <div className="action-icon">📂</div>
+            <h3 className="action-name">View History</h3>
+            <p className="action-text">Access your last 12 medical records</p>
           </div>
         </div>
 
-        <div className="vitals-grid">
-          <div className="vital-card">
-            <h4>Blood Pressure</h4>
-            <p className="value">{latestVitals.bp}</p>
-            <p className="normal">
-              Normal: {normalRanges.bp}
-            </p>
-            <span className="status attention">High</span>
+        <div className="vitals-layout">
+          <div className="vital-glass-card">
+            <h4 className="vital-title">Blood Pressure</h4>
+            <div className="vital-main-value">{latestVitals.bp}</div>
+            <div className="vital-reference">Normal: {normalRanges.bp}</div>
+            <span className="badge-alert">High</span>
           </div>
 
-          <div className="vital-card">
-            <h4>Blood Sugar</h4>
-            <p className="value">{latestVitals.sugar} mg/dL</p>
-            <p className="normal">
-              Normal: {normalRanges.sugar}
-            </p>
-            <span className="status attention">High</span>
+          <div className="vital-glass-card">
+            <h4 className="vital-title">Blood Sugar</h4>
+            <div className="vital-main-value">{latestVitals.sugar} <small>mg/dL</small></div>
+            <div className="vital-reference">Normal: {normalRanges.sugar}</div>
+            <span className="badge-alert">High</span>
           </div>
 
-          <div className="vital-card">
-            <h4>SpO₂</h4>
-            <p className="value">{latestVitals.spo2}%</p>
-            <p className="normal">
-              Normal: {normalRanges.spo2}
-            </p>
-            <span className="status normal">Normal</span>
+          <div className="vital-glass-card">
+            <h4 className="vital-title">SpO₂</h4>
+            <div className="vital-main-value">{latestVitals.spo2}%</div>
+            <div className="vital-reference">Normal: {normalRanges.spo2}</div>
+            <span className="badge-safe">Normal</span>
           </div>
 
-          <div className="vital-card">
-            <h4>Heart Rate</h4>
-            <p className="value">{latestVitals.heartRate} bpm</p>
-            <p className="normal">
-              Normal: {normalRanges.heartRate}
-            </p>
-            <span className="status normal">Normal</span>
+          <div className="vital-glass-card">
+            <h4 className="vital-title">Heart Rate</h4>
+            <div className="vital-main-value">{latestVitals.heartRate} <small>bpm</small></div>
+            <div className="vital-reference">Normal: {normalRanges.heartRate}</div>
+            <span className="badge-safe">Normal</span>
           </div>
         </div>
 
-        <div className="trend-card compact">
-          <h3>Blood Sugar Trend</h3>
-          <p className="trend-subtitle">
-            Based on your last {sugarTrend.length} reports
-          </p>
+        <div className="trend-glass-section">
+          <h3 className="trend-main-title">Blood Sugar Trend</h3>
+          <p className="trend-info">Weekly analysis based on recent data</p>
 
-          <div className="bar-graph compact-graph">
+          <div className="chart-container">
             {sugarTrend.map((value, index) => (
-              <div key={index} className="bar">
-                <div
-                  className="bar-fill"
-                  style={{ height: `${value / 2}%` }}
-                />
-                <span>{value}</span>
+              <div key={index} className="chart-column">
+                <div className="chart-bar-wrapper">
+                  <div 
+                    className="chart-bar-fill" 
+                    style={{ height: `${(value / 160) * 100}%` }}
+                  >
+                    <span className="bar-tooltip">{value}</span>
+                  </div>
+                </div>
+                <span className="chart-label">R{index + 1}</span>
               </div>
             ))}
           </div>

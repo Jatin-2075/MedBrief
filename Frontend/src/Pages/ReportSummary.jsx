@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import "../Style/reportSummary.css";
-import { API_BASE_URL } from "../config/api";
 
 const ReportSummary = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -16,7 +15,6 @@ const ReportSummary = () => {
     setError("");
     setReportId(null);
     setUploadProgress(0);
-
     setFileInfo({
       name: file.name,
       size: (file.size / 1024 / 1024).toFixed(2) + " MB",
@@ -28,16 +26,12 @@ const ReportSummary = () => {
     const xhr = new XMLHttpRequest();
     xhrRef.current = xhr;
 
-    xhr.open("POST", `${API_BASE_URL}/api/reports/upload/`);
-
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    }
+    xhr.open("POST", "http://127.0.0.1:8000/api/reports/upload/");
 
     xhr.upload.onprogress = (e) => {
       if (e.lengthComputable) {
-        setUploadProgress(Math.round((e.loaded / e.total) * 100));
+        const percent = Math.round((e.loaded / e.total) * 100);
+        setUploadProgress(percent);
       }
     };
 
@@ -78,7 +72,6 @@ const ReportSummary = () => {
   const cancelUpload = () => {
     if (xhrRef.current) {
       xhrRef.current.abort();
-      xhrRef.current = null;
       setProcessing(false);
       setUploadProgress(0);
       setFileInfo(null);
@@ -87,21 +80,21 @@ const ReportSummary = () => {
   };
 
   return (
-    <div className="page">
-      <div className="card">
-        <h1>Medical Report Summary</h1>
-        <p className="subtitle">
+    <div className="report-summary-page">
+      <div className="report-summary-card">
+        <h1 className="report-summary-title">Medical Report Summary</h1>
+        <p className="report-summary-subtitle">
           Upload your medical report to get a clear, easy-to-read summary.
         </p>
 
         <div
-          className="drop-zone"
+          className="drop-zone-area"
           onClick={() => fileInputRef.current.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
         >
-          <p>Drag & drop your report here</p>
-          <span>or click to browse</span>
+          <p className="drop-zone-text">Drag & drop your report here</p>
+          <span className="drop-zone-browse">or click to browse</span>
         </div>
 
         <input
@@ -113,46 +106,55 @@ const ReportSummary = () => {
         />
 
         {fileInfo && (
-          <div className="file-info">
+          <div className="file-display-info">
             📄 {fileInfo.name} ({fileInfo.size})
           </div>
         )}
 
         {processing && (
-          <div className="progress-wrapper">
-            <div className="progress-track">
+          <div className="upload-progress-container">
+            <div className="upload-progress-track">
               <div
-                className="progress-fill"
+                className="upload-progress-fill"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
-            <span className="progress-label">
+            <span className="upload-progress-text">
               Uploading… {uploadProgress}%
             </span>
-            <button className="btn cancel" onClick={cancelUpload}>
+
+            <button className="btn-cancel-upload" onClick={cancelUpload}>
               Cancel Upload
             </button>
           </div>
         )}
 
-        {error && <div className="error">{error}</div>}
+        {processing && uploadProgress === 100 && (
+          <div className="processing-loader">
+            <span className="loader-dot"></span>
+            <span className="loader-dot"></span>
+            <span className="loader-dot"></span>
+          </div>
+        )}
+
+        {error && <div className="upload-error-message">{error}</div>}
 
         {!processing && reportId && (
-          <div className="actions">
+          <div className="report-action-buttons">
             <a
-              href={`${API_BASE_URL}/api/reports/download/${reportId}/`}
-              className="btn primary"
+              href={`http://127.0.0.1:8000/api/reports/download/${reportId}/`}
+              className="btn-download-pdf"
             >
               Download PDF
             </a>
 
             <button
-              className="btn secondary"
+              className="btn-share-report"
               onClick={() =>
                 navigator.share
                   ? navigator.share({
                       title: "Medical Report Summary",
-                      url: `${API_BASE_URL}/api/reports/download/${reportId}/`,
+                      url: `http://127.0.0.1:8000/api/reports/download/${reportId}/`,
                     })
                   : alert("Sharing not supported")
               }
