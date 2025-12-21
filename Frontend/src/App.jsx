@@ -23,21 +23,20 @@ const router = createBrowserRouter([
       { path: "/Reports", element: <Reports /> },
       { path: "/SmartHelper", element: <Smart_help /> },
       { path: "/Help", element: <Help /> },
-      { path: "/Upload", element: <ReportSummary/> },
+      { path: "/Upload", element: <ReportSummary /> },
+      { path: "/Profile", element: <ProfileView /> },
     ],
   },
 
   { path: "/", element: <Intro /> },
   { path: "/Login", element: <Login /> },
   { path: "/Signup", element: <Signup /> },
-  { path: "/Profile_create", element: <> <CreateProfile/> </> },
-  { path: "/Profile", element: <> <ProfileView/> </>},
+  { path: "/Profile_create", element: <CreateProfile /> },
 ]);
 
 function App() {
   return (
     <>
-      {/* Toast Notifications (GLOBAL) */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -48,7 +47,6 @@ function App() {
         draggable
       />
 
-      {/* App Router */}
       <RouterProvider router={router} />
     </>
   );

@@ -1,28 +1,27 @@
 :root {
-    --primary: #003d9f;
-    --primary-soft: #e8f1ff;
+    --primary-blue: #0b4da2;
     --text-main: #1d1d1f;
-    --text-muted: #626d7a;
-    --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-    --shadow: 0 10px 30px rgba(0, 98, 255, 0.05);
+    --text-muted: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --card-shadow: 0 10px 30px rgba(0, 80, 162, 0.06);
 }
 
-.help-container {
+.help-page-container {
     width: 90%;
-    max-width: 1000px; /* Slightly wider for a "bigger" feel */
+    max-width: 950px;
     margin: 4rem auto;
     padding: 20px;
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* --- Header Styling --- */
-.help-header {
+.help-page-header {
     text-align: center;
-    margin-bottom: 5rem;
-    animation: fadeInDown 0.8s ease-out;
+    margin-bottom: 4rem;
+    animation: helpFadeDown 0.8s ease-out;
 }
 
-.help-header h1 {
+.help-page-title {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -1.5px;
@@ -30,124 +29,134 @@
     margin-bottom: 1rem;
 }
 
-.help-header p {
+.help-page-subtitle {
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     max-width: 600px;
     margin: 0 auto;
-    line-height: 1.6;
 }
 
-/* --- Section Cards --- */
-.help-section {
-    background: white;
+.help-info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
     padding: 35px 40px;
-    margin: 25px 0;
+    margin-bottom: 25px;
     border-radius: 24px;
-    border: 1px solid #f0f3f7;
-    box-shadow: var(--shadow);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
 
-/* The Blue Left Border (More Modern) */
-.help-section::before {
+.help-info-card::before {
     content: "";
     position: absolute;
     left: 0;
     top: 0;
     height: 100%;
-    width: 6px;
-    background: var(--primary);
-    opacity: 0.8;
+    width: 5px;
+    background: var(--primary-blue);
+    opacity: 0.7;
 }
 
-.help-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 98, 255, 0.1);
-    border-color: var(--primary-soft);
+.help-info-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(11, 77, 162, 0.1);
+    border-color: var(--primary-blue);
 }
 
-.help-section h2 {
+.help-card-heading {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--primary-blue);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.help-section p {
+.help-card-description {
     color: var(--text-muted);
     line-height: 1.7;
     font-size: 1.05rem;
 }
 
-/* --- List Styling --- */
-.help-section ul {
+.help-card-list {
     margin-top: 20px;
-    list-style: none; /* Custom icons instead of dots */
+    list-style: none;
     padding-left: 0;
 }
 
-.help-section li {
+.help-list-item {
     color: #444;
     margin: 12px 0;
     padding-left: 28px;
     position: relative;
+    font-size: 1rem;
 }
 
-/* Custom Bullet Point */
-.help-section li::before {
+.help-list-item::before {
     content: "→";
     position: absolute;
     left: 0;
-    color: var(--primary);
-    font-weight: bold;
+    color: var(--primary-blue);
+    font-weight: 900;
 }
 
-/* --- Contact/Support Card --- */
-.contact {
-    background: var(--primary);
+.help-contact-card {
+    background: #1a1a1a;
     color: white;
     text-align: center;
-    padding: 40px;
+    padding: 50px 40px;
     border-radius: 24px;
     margin-top: 4rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
-.contact h2 {
+.help-contact-card:hover {
+    transform: scale(1.02);
+}
+
+.help-contact-heading {
     color: white;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
 }
 
-.contact p {
+.help-contact-text {
     font-size: 1.1rem;
-    opacity: 0.9;
+    opacity: 0.8;
+    margin-bottom: 25px;
 }
 
-.contact::before {
-    display: none; /* Remove blue border for the dark card */
+.help-contact-details p {
+    margin: 8px 0;
+    font-size: 1.1rem;
 }
 
-/* --- Animations --- */
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
+.help-contact-details strong {
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+@keyframes helpFadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @media(max-width: 768px) {
-    .help-container {
+    .help-page-container {
         width: 95%;
         margin-top: 2rem;
     }
     
-    .help-section {
+    .help-info-card {
         padding: 25px;
     }
     
-    .help-header h1 {
-        font-size: 2rem;
+    .help-page-title {
+        font-size: 2.2rem;
     }
 }

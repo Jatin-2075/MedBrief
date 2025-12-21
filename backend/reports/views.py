@@ -19,8 +19,7 @@ from .services.vitals_comparator import compare_vitals
 from .services.observation_engine import generate_observations
 from .services.conclusion_engine import generate_conclusion
 from .services.pdf_generator import generate_summary_pdf
-
-
+from .services.cleanup import cleanup_old_reports
 
 # ==========================================================
 # UPLOAD & PROCESS REPORT
@@ -117,6 +116,8 @@ class UploadReportView(APIView):
         report.key_observations = observations
         report.final_conclusion = final_conclusion
         report.save()
+        # 🔥 Auto cleanup: keep only latest 12 reports
+        cleanup_old_reports()
 
         # --------------------------------------------------
         # 10. API response

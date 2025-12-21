@@ -11,7 +11,6 @@ const ReportSummary = () => {
   const xhrRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // START UPLOAD
   const startUpload = (file) => {
     setError("");
     setReportId(null);
@@ -59,20 +58,17 @@ const ReportSummary = () => {
     xhr.send(formData);
   };
 
-  // FILE SELECT
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) startUpload(file);
   };
 
-  // DRAG & DROP
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) startUpload(file);
   };
 
-  // CANCEL UPLOAD
   const cancelUpload = () => {
     if (xhrRef.current) {
       xhrRef.current.abort();
@@ -84,25 +80,23 @@ const ReportSummary = () => {
   };
 
   return (
-    <div className="page">
-      <div className="card">
-        <h1>Medical Report Summary</h1>
-        <p className="subtitle">
+    <div className="report-summary-page">
+      <div className="report-summary-card">
+        <h1 className="report-summary-title">Medical Report Summary</h1>
+        <p className="report-summary-subtitle">
           Upload your medical report to get a clear, easy-to-read summary.
         </p>
 
-        {/* DRAG & DROP AREA */}
         <div
-          className="drop-zone"
+          className="drop-zone-area"
           onClick={() => fileInputRef.current.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
         >
-          <p>Drag & drop your report here</p>
-          <span>or click to browse</span>
+          <p className="drop-zone-text">Drag & drop your report here</p>
+          <span className="drop-zone-browse">or click to browse</span>
         </div>
 
-        {/* HIDDEN FILE INPUT */}
         <input
           ref={fileInputRef}
           type="file"
@@ -111,56 +105,51 @@ const ReportSummary = () => {
           onChange={handleFileSelect}
         />
 
-        {/* FILE INFO */}
         {fileInfo && (
-          <div className="file-info">
+          <div className="file-display-info">
             📄 {fileInfo.name} ({fileInfo.size})
           </div>
         )}
 
-        {/* PROGRESS BAR */}
         {processing && (
-          <div className="progress-wrapper">
-            <div className="progress-track">
+          <div className="upload-progress-container">
+            <div className="upload-progress-track">
               <div
-                className="progress-fill"
+                className="upload-progress-fill"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
-            <span className="progress-label">
+            <span className="upload-progress-text">
               Uploading… {uploadProgress}%
             </span>
 
-            <button className="btn cancel" onClick={cancelUpload}>
+            <button className="btn-cancel-upload" onClick={cancelUpload}>
               Cancel Upload
             </button>
           </div>
         )}
 
-        {/* LOADER AFTER UPLOAD */}
         {processing && uploadProgress === 100 && (
-          <div className="loader">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div className="processing-loader">
+            <span className="loader-dot"></span>
+            <span className="loader-dot"></span>
+            <span className="loader-dot"></span>
           </div>
         )}
 
-        {/* ERROR */}
-        {error && <div className="error">{error}</div>}
+        {error && <div className="upload-error-message">{error}</div>}
 
-        {/* ACTIONS */}
         {!processing && reportId && (
-          <div className="actions">
+          <div className="report-action-buttons">
             <a
               href={`http://127.0.0.1:8000/api/reports/download/${reportId}/`}
-              className="btn primary"
+              className="btn-download-pdf"
             >
               Download PDF
             </a>
 
             <button
-              className="btn secondary"
+              className="btn-share-report"
               onClick={() =>
                 navigator.share
                   ? navigator.share({

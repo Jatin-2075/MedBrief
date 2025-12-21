@@ -20,36 +20,36 @@ const Reports = () => {
   }, []);
 
   return (
-    <div className="page">
-      <div className="history-container">
-        <h1>Reports History</h1>
-        <p className="subtitle">
+    <div className="reports-page-wrapper">
+      <div className="reports-history-container">
+        <h1 className="reports-main-title">Reports History</h1>
+        <p className="reports-subtitle-text">
           View and download your previously analyzed medical reports.
         </p>
 
-        {loading && <p>Loading reports...</p>}
-        {error && <p className="error">{error}</p>}
+        {loading && <div className="reports-loading-state">Loading reports...</div>}
+        {error && <div className="reports-error-message">{error}</div>}
 
         {!loading && reports.length === 0 && (
-          <div className="empty-state">
+          <div className="reports-empty-state">
             No reports uploaded yet.
           </div>
         )}
 
-        <div className="reports-list">
+        <div className="reports-stack-list">
           {reports.map((report) => (
-            <div className="report-card" key={report.id}>
-              <div className="report-info">
-                <h3>{report.filename}</h3>
-                <span className="date">{report.uploaded_at}</span>
-                <p className="summary">
+            <div className="report-item-card" key={report.id}>
+              <div className="report-item-content">
+                <h3 className="report-item-filename">{report.filename}</h3>
+                <span className="report-item-date">{report.uploaded_at}</span>
+                <p className="report-item-summary">
                   {report.final_conclusion || "No summary available"}
                 </p>
               </div>
 
-              <div className="report-actions">
+              <div className="report-item-actions">
                 <span
-                  className={`status ${report.status === "Normal"
+                  className={`status-pill-${report.status === "Normal"
                       ? "normal"
                       : "attention"
                     }`}
@@ -57,33 +57,33 @@ const Reports = () => {
                   {report.status}
                 </span>
 
-                <a
-                  href={`http://127.0.0.1:8000/api/reports/download/${report.id}/`}
-                  className="btn primary"
-                >
-                  Download
-                </a>
+                <div className="report-action-group">
+                  <a
+                    href={`http://127.0.0.1:8000/api/reports/download/${report.id}/`}
+                    className="btn-download-action"
+                  >
+                    Download
+                  </a>
 
-                <button
-                  className="btn secondary"
-                  onClick={() => {
-                    const url = `http://127.0.0.1:8000/api/reports/download/${report.id}/`;
-
-                    if (navigator.share) {
-                      navigator.share({
-                        title: "Medical Report Summary",
-                        text: "Here is my medical report summary.",
-                        url: url,
-                      });
-                    } else {
-                      navigator.clipboard.writeText(url);
-                      alert("Download link copied to clipboard");
-                    }
-                  }}
-                >
-                  Share
-                </button>
-
+                  <button
+                    className="btn-share-action"
+                    onClick={() => {
+                      const url = `http://127.0.0.1:8000/api/reports/download/${report.id}/`;
+                      if (navigator.share) {
+                        navigator.share({
+                          title: "Medical Report Summary",
+                          text: "Here is my medical report summary.",
+                          url: url,
+                        });
+                      } else {
+                        navigator.clipboard.writeText(url);
+                        alert("Download link copied to clipboard");
+                      }
+                    }}
+                  >
+                    Share
+                  </button>
+                </div>
               </div>
             </div>
           ))}

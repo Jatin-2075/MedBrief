@@ -1,25 +1,22 @@
 import { useState } from "react";
 import "../Style/Navbar.css";
-import { NavLink, useLocation } from "react-router-dom";
-import Profile_Status from "./Profile";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const closeMenu = () => setOpen(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="top-navbar">
-      {/* Left */}
-      <div className="nav-left">
-        <NavLink to="/Home" className="logo" onClick={closeMenu}>
-          HealthApp
+    <header className="medbrief-navbar">
+      <div className="medbrief-nav-left">
+        <NavLink to="/Home" className="medbrief-logo" onClick={closeMenu}>
+          MedBrief
         </NavLink>
       </div>
 
-      {/* Center */}
-      <nav className={`nav-center ${open ? "open" : ""}`}>
+      <nav className={`medbrief-nav-center ${menuOpen ? "is-open" : ""}`}>
         {[
           { path: "/Home", label: "Home" },
           { path: "/Upload", label: "Upload" },
@@ -31,7 +28,7 @@ const Navbar = () => {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              isActive ? "nav-item active" : "nav-item"
+              isActive ? "medbrief-nav-link active" : "medbrief-nav-link"
             }
             onClick={closeMenu}
           >
@@ -40,24 +37,22 @@ const Navbar = () => {
         ))}
       </nav>
 
-      {/* Right */}
-      <div className="nav-right">
-        <Profile_Status />
-
-        <button className="icon-btn" aria-label="Settings">
-          ⚙
-        </button>
-
-        <div className="avatar" title="Profile">
+      <div className="medbrief-nav-right">
+        <NavLink 
+          to="/profile" 
+          className="medbrief-profile-circle" 
+          title="Profile"
+          onClick={closeMenu}
+        >
           👤
-        </div>
+        </NavLink>
 
         <button
-          className="hamburger"
+          className="medbrief-mobile-toggle"
           aria-label="Toggle navigation"
-          onClick={() => setOpen(!open)}
+          onClick={toggleMenu}
         >
-          ☰
+          {menuOpen ? "✕" : "☰"}
         </button>
       </div>
     </header>

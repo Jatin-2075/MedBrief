@@ -1,31 +1,21 @@
-import '../Style/footer.css'
+import "../Style/footer.css";
 
 const Footer = () => {
-    return (
-        <footer className="footer">
-            <div className="footer-content">
+  const currentYear = new Date().getFullYear();
 
-                <div className="footer-logo">
-                    <h2>SmartZen</h2>
-                    <p>Your AI-powered health companion.</p>
-                </div>
-
-                <div className="footer-links">
-                    <a href="/Home">Home</a>
-                    <a href="/Dashboard">Dashboard</a>
-                    <a href="/Upload">Uploads</a>
-                    <a href="/Reports">Reports</a>
-                    <a href="/SmartHelper">Smart Helper</a>
-                </div>
-
-                <div className="footer-info">
-                    <p>Made with ❤️ for better health</p>
-                    <p>© {new Date().getFullYear()} SmartZen. All rights reserved.</p>
-                </div>
-
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="medbrief-minimal-footer">
+      <div className="medbrief-minimal-container">
+        <p className="medbrief-footer-text">
+          © {currentYear} <span className="medbrief-accent">MedBrief</span>. All rights reserved. 
+          <span className="medbrief-footer-separator">•</span> 
+          <span className="medbrief-legal-disclaimer">
+            AI-generated insights are for informational purposes only and do not constitute medical advice.
+          </span>
+        </p>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
