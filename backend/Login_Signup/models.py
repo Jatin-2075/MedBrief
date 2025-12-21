@@ -4,7 +4,6 @@ from django.utils.timezone import now
 import uuid
 
 
-# ---------------- PROFILE ----------------
 class Profile(models.Model):
     user = models.OneToOneField(
         User,

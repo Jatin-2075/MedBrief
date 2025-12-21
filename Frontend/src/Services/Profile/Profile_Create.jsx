@@ -47,8 +47,8 @@ const CreateProfile = () => {
                     name: profile.name.trim(),
                     age: Number(profile.age),
                     gender: profile.gender,
-                    weight: profile.weight ? parseFloat(profile.weight) : null,  // ← FIXED
-                    height: profile.height ? parseFloat(profile.height) : null,  // ← FIXED
+                    weight: profile.weight ? parseFloat(profile.weight) : null,
+                    height: profile.height ? parseFloat(profile.height) : null,
                     bloodgroup: profile.bloodgroup || null,
                     allergies: profile.allergies || null,
                 }),
@@ -106,7 +106,6 @@ const CreateProfile = () => {
 
             toast.info("Profile skipped");
 
-            // Update local storage
             localStorage.setItem("profile_completed", "false");
 
             navigate("/Home", { replace: true });

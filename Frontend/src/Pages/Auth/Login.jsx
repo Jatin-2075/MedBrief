@@ -5,27 +5,18 @@ import { API_BASE_URL } from "../../config/api";
 import { toast } from "react-toastify";
 
 const Login = () => {
-    // ===============================
-    // LOGIN STATES
-    // ===============================
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // ===============================
-    // FORGOT PASSWORD STATES
-    // ===============================
     const [showForgot, setShowForgot] = useState(false);
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [step, setStep] = useState(1); // 1 = email, 2 = otp + new password
+    const [step, setStep] = useState(1);
 
     const navigate = useNavigate();
 
-    // ===============================
-    // OTP TIMER STATES
-    // ===============================
     const [timer, setTimer] = useState(60);
     const [canResend, setCanResend] = useState(false);
 
@@ -43,9 +34,6 @@ const Login = () => {
         }
     }, [timer, step]);
 
-    // ===============================
-    // LOGIN HANDLER
-    // ===============================
     const handleSubmit = async () => {
         if (!username || !password) {
             toast.error("Please enter both username and password.");
@@ -70,18 +58,15 @@ const Login = () => {
             const data = await res.json();
 
             if (data.success) {
-                // Store JWT tokens
                 localStorage.setItem("access_token", data.tokens.access);
                 localStorage.setItem("refresh_token", data.tokens.refresh);
 
-                // Store user info
                 localStorage.setItem("user", JSON.stringify(data.user));
 
                 
                 toast.success("Login successful!");
                 console.log(data)
 
-                // Navigate based on profile completion status
                 if (data.user.profile_completed) {
                     navigate("/Home");
                 } else {
@@ -97,10 +82,6 @@ const Login = () => {
             setLoading(false);
         }
     };
-
-    // ===============================
-    // SEND OTP
-    // ===============================
     const sendOtp = async () => {
         if (!email) {
             toast.error("Please enter your registered email address.");
@@ -144,9 +125,6 @@ const Login = () => {
         }
     };
 
-    // ===============================
-    // RESET PASSWORD
-    // ===============================
     const resetPassword = async () => {
         if (!otp || !newPassword) {
             toast.error("All fields are required.");
@@ -178,7 +156,6 @@ const Login = () => {
             if (data.success) {
                 toast.success("Your password has been reset successfully.");
 
-                // Reset UI
                 setShowForgot(false);
                 setStep(1);
                 setEmail("");
@@ -195,9 +172,6 @@ const Login = () => {
         }
     };
 
-    // ===============================
-    // HANDLE ENTER KEY
-    // ===============================
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
             if (!showForgot) {
@@ -210,9 +184,6 @@ const Login = () => {
         }
     };
 
-    // ===============================
-    // JSX
-    // ===============================
     return (
         <div className="login-page">
             <div className="login-container">

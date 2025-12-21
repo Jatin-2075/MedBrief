@@ -28,7 +28,6 @@ const Home = () => {
           Snapshot from your latest medical reports
         </p>
 
-        {/* ACTION BLOCKS */}
         <div className="quick-actions">
           <div
             className="action-card"
@@ -47,7 +46,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* VITALS */}
         <div className="vitals-grid">
           <div className="vital-card">
             <h4>Blood Pressure</h4>
@@ -86,7 +84,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* TREND */}
         <div className="trend-card compact">
           <h3>Blood Sugar Trend</h3>
           <p className="trend-subtitle">

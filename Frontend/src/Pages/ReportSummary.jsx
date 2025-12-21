@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import "../Style/reportSummary.css";
+import { API_BASE_URL } from "../config/api";
 
 const ReportSummary = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -11,11 +12,11 @@ const ReportSummary = () => {
   const xhrRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // START UPLOAD
   const startUpload = (file) => {
     setError("");
     setReportId(null);
     setUploadProgress(0);
+
     setFileInfo({
       name: file.name,
       size: (file.size / 1024 / 1024).toFixed(2) + " MB",
@@ -27,12 +28,16 @@ const ReportSummary = () => {
     const xhr = new XMLHttpRequest();
     xhrRef.current = xhr;
 
-    xhr.open("POST", "http://127.0.0.1:8000/api/reports/upload/");
+    xhr.open("POST", `${API_BASE_URL}/api/reports/upload/`);
+
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    }
 
     xhr.upload.onprogress = (e) => {
       if (e.lengthComputable) {
-        const percent = Math.round((e.loaded / e.total) * 100);
-        setUploadProgress(percent);
+        setUploadProgress(Math.round((e.loaded / e.total) * 100));
       }
     };
 
@@ -59,23 +64,21 @@ const ReportSummary = () => {
     xhr.send(formData);
   };
 
-  // FILE SELECT
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) startUpload(file);
   };
 
-  // DRAG & DROP
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) startUpload(file);
   };
 
-  // CANCEL UPLOAD
   const cancelUpload = () => {
     if (xhrRef.current) {
       xhrRef.current.abort();
+      xhrRef.current = null;
       setProcessing(false);
       setUploadProgress(0);
       setFileInfo(null);
@@ -91,7 +94,6 @@ const ReportSummary = () => {
           Upload your medical report to get a clear, easy-to-read summary.
         </p>
 
-        {/* DRAG & DROP AREA */}
         <div
           className="drop-zone"
           onClick={() => fileInputRef.current.click()}
@@ -102,7 +104,6 @@ const ReportSummary = () => {
           <span>or click to browse</span>
         </div>
 
-        {/* HIDDEN FILE INPUT */}
         <input
           ref={fileInputRef}
           type="file"
@@ -111,14 +112,12 @@ const ReportSummary = () => {
           onChange={handleFileSelect}
         />
 
-        {/* FILE INFO */}
         {fileInfo && (
           <div className="file-info">
             📄 {fileInfo.name} ({fileInfo.size})
           </div>
         )}
 
-        {/* PROGRESS BAR */}
         {processing && (
           <div className="progress-wrapper">
             <div className="progress-track">
@@ -130,30 +129,18 @@ const ReportSummary = () => {
             <span className="progress-label">
               Uploading… {uploadProgress}%
             </span>
-
             <button className="btn cancel" onClick={cancelUpload}>
               Cancel Upload
             </button>
           </div>
         )}
 
-        {/* LOADER AFTER UPLOAD */}
-        {processing && uploadProgress === 100 && (
-          <div className="loader">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        )}
-
-        {/* ERROR */}
         {error && <div className="error">{error}</div>}
 
-        {/* ACTIONS */}
         {!processing && reportId && (
           <div className="actions">
             <a
-              href={`http://127.0.0.1:8000/api/reports/download/${reportId}/`}
+              href={`${API_BASE_URL}/api/reports/download/${reportId}/`}
               className="btn primary"
             >
               Download PDF
@@ -165,7 +152,7 @@ const ReportSummary = () => {
                 navigator.share
                   ? navigator.share({
                       title: "Medical Report Summary",
-                      url: `http://127.0.0.1:8000/api/reports/download/${reportId}/`,
+                      url: `${API_BASE_URL}/api/reports/download/${reportId}/`,
                     })
                   : alert("Sharing not supported")
               }
