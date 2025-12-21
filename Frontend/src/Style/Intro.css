@@ -1,11 +1,3 @@
-:root {
-    --mb-primary: #0b4da2;
-    --mb-primary-hover: #083a7a;
-    --mb-text-dark: #1e293b;
-    --mb-text-slate: #64748b;
-    --mb-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 .medbrief-intro-container * {
     margin: 0;
     padding: 0;
@@ -15,7 +7,7 @@
 .medbrief-intro-container {
     font-family: 'Inter', -apple-system, sans-serif;
     background-color: #ffffff;
-    color: var(--mb-text-dark);
+    color: #1e293b;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
@@ -48,7 +40,7 @@
 }
 
 .medbrief-intro-container .medbrief-intro-logo span {
-    color: var(--mb-primary);
+    color: #0b4da2;
 }
 
 .medbrief-intro-container .medbrief-intro-nav {
@@ -65,7 +57,7 @@
 
 .medbrief-intro-container .medbrief-hero-badge {
     background: #eff6ff;
-    color: var(--mb-primary);
+    color: #0b4da2;
     padding: 10px 20px;
     border-radius: 100px;
     font-size: 0.9rem;
@@ -92,26 +84,26 @@
 
 .medbrief-intro-container .medbrief-hero-subtitle {
     font-size: 1.2rem;
-    color: var(--mb-text-slate);
+    color: #64748b;
     max-width: 750px;
     margin: 0 auto 3.5rem auto;
     line-height: 1.7;
 }
 
 .medbrief-intro-container .medbrief-primary-btn {
-    background: var(--mb-primary);
+    background: #0b4da2;
     color: #ffffff;
     padding: 14px 28px;
     border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    transition: var(--mb-transition);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     border: none;
     cursor: pointer;
 }
 
 .medbrief-intro-container .medbrief-primary-btn:hover {
-    background: var(--mb-primary-hover);
+    background: #083a7a;
     transform: translateY(-3px);
     box-shadow: 0 12px 24px rgba(11, 77, 162, 0.2);
 }
@@ -122,13 +114,13 @@
     text-decoration: none;
     font-weight: 600;
     border: 2px solid #e2e8f0;
-    color: var(--mb-text-dark);
-    transition: var(--mb-transition);
+    color: #1e293b;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .medbrief-intro-container .medbrief-outline-btn:hover {
-    border-color: var(--mb-primary);
-    color: var(--mb-primary);
+    border-color: #0b4da2;
+    color: #0b4da2;
 }
 
 .medbrief-intro-container .medbrief-big-btn {
@@ -155,14 +147,14 @@
     border-radius: 24px;
     text-align: left;
     border: 1px solid #f1f5f9;
-    transition: var(--mb-transition);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .medbrief-intro-container .medbrief-feature-card:hover {
     transform: translateY(-12px);
     box-shadow: 0 25px 50px rgba(11, 77, 162, 0.08);
-    border-color: var(--mb-primary);
+    border-color: #0b4da2;
 }
 
 .medbrief-intro-container .medbrief-feature-icon {

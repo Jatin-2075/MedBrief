@@ -1,90 +1,80 @@
-:root {
-    --mb-blue: #0b4da2;
-    --mb-blue-dark: #083a7a;
-    --mb-bg: #f8fbff;
-    --mb-text: #1e293b;
-    --mb-slate: #64748b;
-    --mb-border: #e2e8f0;
-    --mb-shadow: 0 10px 25px rgba(11, 77, 162, 0.08);
-}
-
 .medbrief-profile-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--mb-bg);
+    background-color: #f8fbff;
     padding: 20px;
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-.medbrief-profile-card {
+.medbrief-profile-page .medbrief-profile-card {
     background: #ffffff;
     padding: 40px;
     border-radius: 24px;
-    box-shadow: var(--mb-shadow);
+    box-shadow: 0 10px 25px rgba(11, 77, 162, 0.08);
     width: 100%;
     max-width: 550px;
-    border: 1px solid var(--mb-border);
+    border: 1px solid #e2e8f0;
     text-align: center;
 }
 
-.medbrief-profile-title {
-    color: var(--mb-text);
+.medbrief-profile-page .medbrief-profile-title {
+    color: #1e293b;
     font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 8px;
     letter-spacing: -0.5px;
 }
 
-.medbrief-profile-subtitle {
-    color: var(--mb-slate);
+.medbrief-profile-page .medbrief-profile-subtitle {
+    color: #64748b;
     font-size: 0.95rem;
     margin-bottom: 32px;
 }
 
-.medbrief-profile-form {
+.medbrief-profile-page .medbrief-profile-form {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: space-between;
 }
 
-.medbrief-input-full {
+.medbrief-profile-page .medbrief-input-full {
     width: 100%;
 }
 
-.medbrief-input-half {
+.medbrief-profile-page .medbrief-input-half {
     width: calc(50% - 8px);
 }
 
-.medbrief-profile-form input, 
-.medbrief-profile-form select, 
-.medbrief-profile-form textarea {
+.medbrief-profile-page .medbrief-profile-form input, 
+.medbrief-profile-page .medbrief-profile-form select, 
+.medbrief-profile-page .medbrief-profile-form textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 1.5px solid var(--mb-border);
+    border: 1.5px solid #e2e8f0;
     border-radius: 12px;
     font-size: 15px;
-    color: var(--mb-text);
+    color: #1e293b;
     background-color: #ffffff;
     transition: all 0.2s ease;
 }
 
-.medbrief-profile-form input:focus, 
-.medbrief-profile-form select:focus, 
-.medbrief-profile-form textarea:focus {
+.medbrief-profile-page .medbrief-profile-form input:focus, 
+.medbrief-profile-page .medbrief-profile-form select:focus, 
+.medbrief-profile-page .medbrief-profile-form textarea:focus {
     outline: none;
-    border-color: var(--mb-blue);
+    border-color: #0b4da2;
     box-shadow: 0 0 0 4px rgba(11, 77, 162, 0.1);
 }
 
-.medbrief-profile-form textarea {
+.medbrief-profile-page .medbrief-profile-form textarea {
     resize: none;
     height: 100px;
 }
 
-.medbrief-form-actions {
+.medbrief-profile-page .medbrief-form-actions {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -92,10 +82,10 @@
     margin-top: 10px;
 }
 
-.medbrief-btn-save {
+.medbrief-profile-page .medbrief-btn-save {
     width: 100%;
     padding: 16px;
-    background-color: var(--mb-blue);
+    background-color: #0b4da2;
     color: #ffffff;
     border: none;
     border-radius: 12px;
@@ -105,24 +95,24 @@
     transition: all 0.2s ease;
 }
 
-.medbrief-btn-save:hover {
-    background-color: var(--mb-blue-dark);
+.medbrief-profile-page .medbrief-btn-save:hover {
+    background-color: #083a7a;
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(11, 77, 162, 0.2);
 }
 
-.medbrief-btn-save:disabled {
+.medbrief-profile-page .medbrief-btn-save:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
 }
 
-.medbrief-btn-skip {
+.medbrief-profile-page .medbrief-btn-skip {
     width: 100%;
     padding: 14px;
     background: transparent;
-    color: var(--mb-slate);
-    border: 1px solid var(--mb-border);
+    color: #64748b;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
@@ -130,17 +120,17 @@
     transition: all 0.2s ease;
 }
 
-.medbrief-btn-skip:hover {
+.medbrief-profile-page .medbrief-btn-skip:hover {
     background-color: #f1f5f9;
-    color: var(--mb-text);
-    border-color: var(--mb-slate);
+    color: #1e293b;
+    border-color: #64748b;
 }
 
 @media (max-width: 500px) {
-    .medbrief-input-half {
+    .medbrief-profile-page .medbrief-input-half {
         width: 100%;
     }
-    .medbrief-profile-card {
+    .medbrief-profile-page .medbrief-profile-card {
         padding: 24px;
     }
 }
