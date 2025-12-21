@@ -23,7 +23,6 @@
     position: relative;
 }
 
-/* --- Background Decoration --- */
 .blob-bg {
     position: absolute;
     top: -10%;
@@ -36,7 +35,6 @@
     pointer-events: none;
 }
 
-/* --- Header --- */
 .header {
     display: flex;
     justify-content: space-between;
@@ -73,7 +71,6 @@
     color: var(--primary);
 }
 
-/* --- Hero Section --- */
 .hero {
     padding: 4rem 8% 8rem 8%;
     text-align: center;
@@ -114,7 +111,6 @@
     line-height: 1.6;
 }
 
-/* --- Buttons --- */
 .btn {
     padding: 12px 24px;
     border-radius: 12px;
@@ -156,7 +152,6 @@
     justify-content: center;
 }
 
-/* --- Features Cards --- */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -194,7 +189,6 @@
     line-height: 1.5;
 }
 
-/* --- Animations --- */
 @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -238,7 +232,6 @@
     overflow-x: hidden;
 }
 
-/* --- Decorative Blobs --- */
 .blob-bg {
     position: fixed;
     width: 800px;
@@ -249,7 +242,6 @@
     z-index: 0;
 }
 
-/* --- Stats Bar --- */
 .stats-bar {
     display: flex;
     justify-content: center;
@@ -272,7 +264,6 @@
     font-weight: 500;
 }
 
-/* --- Feature Cards (Improved) --- */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -295,7 +286,6 @@
     border-color: var(--primary);
 }
 
-/* --- Newsletter / Text Box Section --- */
 .contact-box-section {
     padding: 4rem 0;
 }
@@ -337,7 +327,6 @@
     padding: 12px 28px;
 }
 
-/* --- Footer --- */
 .footer {
     padding: 3rem;
     text-align: center;
@@ -346,7 +335,6 @@
     font-size: 0.9rem;
 }
 
-/* --- Animations --- */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }

@@ -32,7 +32,6 @@ const Intro = () => {
                     </div>
                 </div>
 
-                {/* --- Added Stats Section --- */}
                 <div className="stats-bar fadeInUp">
                     <div className="stat-item">
                         <h4>99.9%</h4>
@@ -66,7 +65,6 @@ const Intro = () => {
                     </div>
                 </section>
 
-                {/* --- Added Interactive Text Box Section --- */}
                 <section className="contact-box-section fadeInUp">
                     <div className="contact-card">
                         <h2>Ready to get started?</h2>

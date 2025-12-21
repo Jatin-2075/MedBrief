@@ -7,7 +7,7 @@ const Profile_Status = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("access_token");  // ← FIXED
+  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -18,14 +18,14 @@ const Profile_Status = () => {
       }
 
       try {
-        const res = await fetch(`${API_BASE_URL}/profile/status/`, {  // ← FIXED
+        const res = await fetch(`${API_BASE_URL}/profile/status/`, { 
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
         const data = await res.json();
-        console.log("Profile status response:", data);  // ← Added debug
+        console.log("Profile status response:", data);
 
         if (res.ok && data.success) {
           setCompleted(data.profile_completed);

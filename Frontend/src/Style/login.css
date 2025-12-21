@@ -7,7 +7,6 @@
   background: linear-gradient(135deg, #eef4ff, #f9fbff);
 }
 
-/* Main card */
 .login-container {
   width: 90%;
   max-width: 420px;
@@ -18,7 +17,6 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Brand / title */
 .login-container h2 {
   text-align: center;
   margin-bottom: 8px;
@@ -27,22 +25,18 @@
   font-weight: 700;
 }
 
-/* Subtitle (optional) */
 .login-subtitle {
   text-align: center;
   margin-bottom: 26px;
   color: #666;
   font-size: 14px;
 }
-
-/* Field wrapper */
 .login-field {
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
 }
 
-/* Labels */
 .login-field label {
   margin-bottom: 6px;
   color: #444;
@@ -50,7 +44,6 @@
   font-weight: 500;
 }
 
-/* Inputs */
 .login-field input {
   padding: 12px 14px;
   font-size: 15px;
@@ -67,7 +60,6 @@
   box-shadow: 0 0 0 3px rgba(42, 123, 228, 0.15);
 }
 
-/* Login button */
 .login-btn {
   width: 100%;
   padding: 13px;
@@ -93,7 +85,6 @@
   box-shadow: none;
 }
 
-/* Footer text */
 .login-footer {
   text-align: center;
   margin-top: 18px;
@@ -110,8 +101,6 @@
 .login-footer a:hover {
   text-decoration: underline;
 }
-
-/* Small animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -123,11 +112,6 @@
   }
 }
 
-/* ------------------------------
-   Mobile & Tablet Responsiveness
---------------------------------*/
-
-/* Tablets & large phones */
 @media (max-width: 768px) {
   .login-container {
     padding: 28px 22px;
@@ -138,8 +122,6 @@
     font-size: 26px;
   }
 }
-
-/* Small phones */
 @media (max-width: 480px) {
   .login-page {
     padding: 16px;
@@ -174,7 +156,6 @@
   }
 }
 
-/* Very small devices */
 @media (max-width: 360px) {
   .login-container h2 {
     font-size: 22px;

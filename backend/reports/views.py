@@ -22,10 +22,7 @@ from .services.pdf_generator import generate_summary_pdf
 
 
 
-# ==========================================================
-# UPLOAD & PROCESS REPORT
-# ==========================================================
-@method_decorator(csrf_exempt, name="dispatch")  # DEV ONLY
+@method_decorator(csrf_exempt, name="dispatch")
 class UploadReportView(APIView):
     """
     Upload medical report, extract text, parse patient details & vitals,
@@ -37,9 +34,6 @@ class UploadReportView(APIView):
     MAX_FILE_SIZE_MB = 10
 
     def post(self, request):
-        # --------------------------------------------------
-        # 1. Validate file
-        # --------------------------------------------------
         file = request.FILES.get("report")
 
         if not file:
@@ -60,56 +54,31 @@ class UploadReportView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # --------------------------------------------------
-        # 2. Save file metadata
-        # --------------------------------------------------
         report = MedicalReport.objects.create(
             file=file,
             original_filename=file.name,
             file_size_kb=round(file.size / 1024, 2),
         )
 
-        # --------------------------------------------------
-        # 3. Extract & normalize text
-        # --------------------------------------------------
         raw_text = extract_text(report.file.path)
         text = normalize_text(raw_text)
 
-        # --------------------------------------------------
-        # 4. Extract patient details
-        # --------------------------------------------------
         patient_details = extract_patient_details(text)
         patient_details = {
             k: v if v else "Not Available"
             for k, v in patient_details.items()
         }
 
-        # --------------------------------------------------
-        # 5. Extract vitals
-        # --------------------------------------------------
         vitals = extract_vitals(text)
 
-        # --------------------------------------------------
-        # 6. Compare vitals with normal ranges
-        # --------------------------------------------------
         comparison_table = compare_vitals(
             vitals=vitals,
             gender=patient_details.get("gender"),
         )
-
-        # --------------------------------------------------
-        # 7. Generate key observations
-        # --------------------------------------------------
         observations = generate_observations(comparison_table)
 
-        # --------------------------------------------------
-        # 8. Generate final conclusion
-        # --------------------------------------------------
         final_conclusion = generate_conclusion(comparison_table)
 
-        # --------------------------------------------------
-        # 9. Persist everything
-        # --------------------------------------------------
         report.extracted_text = text
         report.patient_details = patient_details
         report.vitals = vitals
@@ -118,9 +87,6 @@ class UploadReportView(APIView):
         report.final_conclusion = final_conclusion
         report.save()
 
-        # --------------------------------------------------
-        # 10. API response
-        # --------------------------------------------------
         return Response(
             {
                 "message": "Report processed successfully",
@@ -137,14 +103,7 @@ class UploadReportView(APIView):
             status=status.HTTP_201_CREATED,
         )
 
-
-# ==========================================================
-# DOWNLOAD SUMMARY PDF
-# ==========================================================
 class DownloadReportPDF(APIView):
-    """
-    Generate and download the medical report summary PDF.
-    """
 
     def get(self, request, report_id):
         try:
@@ -197,11 +156,6 @@ class ReportHistoryView(APIView):
 
 
 class DashboardView(APIView):
-    """
-    Dashboard API:
-    - Latest vitals (BP, Sugar, SpO2, HR)
-    - Blood sugar trend (last 12 reports, one value each)
-    """
 
     def get(self, request):
         reports = list(
@@ -230,9 +184,6 @@ class DashboardView(APIView):
 
         sugar_trend = []
 
-        # -------------------------------------------------
-        # LOOP REPORTS (newest → oldest)
-        # -------------------------------------------------
         for report in reports:
             if not report.comparison_table:
                 continue
@@ -245,16 +196,10 @@ class DashboardView(APIView):
                 value = item.get("patient_value")
                 status_ = item.get("status")
 
-                # -----------------------------
-                # Blood Pressure (latest only)
-                # -----------------------------
                 if "blood pressure" in vital and report.id == latest_report.id:
                     latest_vitals["bp"] = value
                     latest_vitals["bp_status"] = status_
 
-                # -----------------------------
-                # Glucose (priority based)
-                # -----------------------------
                 if "random" in vital:
                     glucose_value = value
                     glucose_status = status_
@@ -267,9 +212,6 @@ class DashboardView(APIView):
                     glucose_value = value
                     glucose_status = status_
 
-            # ----------------------------------
-            # Save ONE glucose per report
-            # ----------------------------------
             if glucose_value is not None:
                 try:
                     sugar_trend.append(float(glucose_value))
@@ -280,9 +222,6 @@ class DashboardView(APIView):
                     latest_vitals["sugar"] = glucose_value
                     latest_vitals["sugar_status"] = glucose_status
 
-            # ----------------------------------
-            # Vitals (NOT range-based)
-            # ----------------------------------
             if report.id == latest_report.id and report.vitals:
                 latest_vitals["spo2"] = report.vitals.get("spo2")
                 latest_vitals["heart_rate"] = report.vitals.get("heart_rate")
@@ -290,7 +229,7 @@ class DashboardView(APIView):
         return Response(
             {
                 "latest_vitals": latest_vitals,
-                "sugar_trend": sugar_trend[::-1],  # oldest → latest
+                "sugar_trend": sugar_trend[::-1],
             },
             status=status.HTTP_200_OK,
         )

@@ -14,6 +14,7 @@ import Help from "./Pages/Help";
 import CreateProfile from "./Services/Profile/Profile_Create";
 import ReportSummary from "./Pages/ReportSummary";
 import ProfileView from "./Components/ProfileView";
+import HowItWorks from "./Pages/HowitWorks";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
   { path: "/Signup", element: <Signup /> },
   { path: "/Profile_create", element: <> <CreateProfile/> </> },
   { path: "/Profile", element: <> <ProfileView/> </>},
+  { path: "/howitwork", element: <> <HowItWorks/> </>},
 ]);
 
 function App() {
