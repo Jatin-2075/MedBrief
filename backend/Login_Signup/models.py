@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 import uuid
 
-
-# ---------------- PROFILE ----------------
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
@@ -36,7 +34,6 @@ class Profile(models.Model):
         return self.user.username
 
 
-# ---------------- STATUS ----------------
 class Status(models.Model):
     user = models.OneToOneField(
         User,
@@ -49,8 +46,6 @@ class Status(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.profile_completed}"
 
-
-# ---------------- PASSWORD RESET OTP ----------------
 class PasswordResetOTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     otp = models.CharField(max_length=128)  # hashed OTP
@@ -61,10 +56,8 @@ class PasswordResetOTP(models.Model):
         get_latest_by = "created_at"
 
     def is_expired(self):
-        return (now() - self.created_at).total_seconds() > 600  # 10 min
+        return (now() - self.created_at).total_seconds() > 600 
 
-
-# ---------------- CHAT SESSION ----------------
 class ChatSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, default="New Chat")
@@ -74,7 +67,6 @@ class ChatSession(models.Model):
         return f"{self.user.username} - {self.title}"
 
 
-# ---------------- CHAT MESSAGE ----------------
 class ChatMessage(models.Model):
     session = models.ForeignKey(
         ChatSession,

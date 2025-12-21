@@ -6,14 +6,11 @@ class MedicalReport(models.Model):
     original_filename = models.CharField(max_length=255)
     file_size_kb = models.FloatField()
 
-    # Extracted raw text
     extracted_text = models.TextField(blank=True, null=True)
 
-    # Structured extracted data
     patient_details = models.JSONField(blank=True, null=True)
     vitals = models.JSONField(blank=True, null=True)
 
-    # Processed outputs
     comparison_table = models.JSONField(blank=True, null=True)
     key_observations = models.JSONField(blank=True, null=True)
     final_conclusion = models.TextField(blank=True, null=True)
