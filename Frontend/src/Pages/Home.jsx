@@ -29,7 +29,7 @@ const Home = () => {
         </header>
 
         <div className="action-grid">
-          <div className="action-card-upload" onClick={() => navigate("/report-summary")}>
+          <div className="action-card-upload" onClick={() => navigate("/Upload")}>
             <div className="action-icon">↑</div>
             <h3 className="action-name">Upload Report</h3>
             <p className="action-text">Get an instant AI-powered summary</p>

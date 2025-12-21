@@ -1,131 +1,146 @@
-/* CreateProfile.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
-.profile-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Inter', sans-serif;
-    padding: 20px;
+:root {
+    --mb-blue: #0b4da2;
+    --mb-blue-dark: #083a7a;
+    --mb-bg: #f8fbff;
+    --mb-text: #1e293b;
+    --mb-slate: #64748b;
+    --mb-border: #e2e8f0;
+    --mb-shadow: 0 10px 25px rgba(11, 77, 162, 0.08);
 }
 
-.profile-container h2 {
-    color: #2c3e50;
-    margin-bottom: 25px;
-    font-weight: 600;
+.medbrief-profile-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mb-bg);
+    padding: 20px;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.medbrief-profile-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: var(--mb-shadow);
+    width: 100%;
+    max-width: 550px;
+    border: 1px solid var(--mb-border);
+    text-align: center;
+}
+
+.medbrief-profile-title {
+    color: var(--mb-text);
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 8px;
     letter-spacing: -0.5px;
 }
 
-.profile-form {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+.medbrief-profile-subtitle {
+    color: var(--mb-slate);
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+}
+
+.medbrief-profile-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.medbrief-input-full {
     width: 100%;
-    max-width: 700px;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two-column layout */
-    gap: 20px;
 }
 
-/* Make certain fields span full width */
-.profile-form > div:nth-child(1), /* Photo */
-.profile-form > div:nth-child(2), /* Name */
-.profile-form > div:nth-child(8), /* Allergies */
-.profile-form button {
-    grid-column: span 2;
+.medbrief-input-half {
+    width: calc(50% - 8px);
 }
 
-.profile-form div {
+.medbrief-profile-form input, 
+.medbrief-profile-form select, 
+.medbrief-profile-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--mb-border);
+    border-radius: 12px;
+    font-size: 15px;
+    color: var(--mb-text);
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.medbrief-profile-form input:focus, 
+.medbrief-profile-form select:focus, 
+.medbrief-profile-form textarea:focus {
+    outline: none;
+    border-color: var(--mb-blue);
+    box-shadow: 0 0 0 4px rgba(11, 77, 162, 0.1);
+}
+
+.medbrief-profile-form textarea {
+    resize: none;
+    height: 100px;
+}
+
+.medbrief-form-actions {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
 }
 
-.profile-form label {
+.medbrief-btn-save {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--mb-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.medbrief-btn-save:hover {
+    background-color: var(--mb-blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(11, 77, 162, 0.2);
+}
+
+.medbrief-btn-save:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.medbrief-btn-skip {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--mb-slate);
+    border: 1px solid var(--mb-border);
+    border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
-    color: #546e7a;
-    margin-bottom: 8px;
-    margin-left: 2px;
-}
-
-.profile-form input, 
-.profile-form select, 
-.profile-form textarea {
-    padding: 12px 16px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    background-color: #fafafa;
-}
-
-.profile-form input:focus, 
-.profile-form select:focus, 
-.profile-form textarea:focus {
-    outline: none;
-    border-color: #4a90e2;
-    background-color: #fff;
-    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
-}
-
-.profile-form textarea {
-    resize: none;
-    height: 80px;
-}
-
-/* Button Styling */
-.profile-form button[type="submit"] {
-    margin-top: 10px;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #4a90e2;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
+    transition: all 0.2s ease;
 }
 
-.profile-form button[type="submit"]:hover {
-    background: #357abd;
-    transform: translateY(-2px);
+.medbrief-btn-skip:hover {
+    background-color: #f1f5f9;
+    color: var(--mb-text);
+    border-color: var(--mb-slate);
 }
 
-.profile-form button[type="button"] { /* Skip button */
-    background: transparent;
-    color: #90a4ae;
-    border: 1px solid #cfd8dc;
-    margin-top: 5px;
-}
-
-.profile-form button[type="button"]:hover {
-    background: #f1f5f9;
-    color: #546e7a;
-}
-
-/* File input custom look */
-input[type="file"]::file-selector-button {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    background: #e1f5fe;
-    color: #0288d1;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    .profile-form {
-        grid-template-columns: 1fr;
-        padding: 20px;
+@media (max-width: 500px) {
+    .medbrief-input-half {
+        width: 100%;
     }
-    .profile-form > div {
-        grid-column: span 1 !important;
+    .medbrief-profile-card {
+        padding: 24px;
     }
 }

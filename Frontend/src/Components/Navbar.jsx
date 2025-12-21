@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../Style/Navbar.css";
 import { NavLink } from "react-router-dom";
+import Profile_Status from "./Profile";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,15 +39,7 @@ const Navbar = () => {
       </nav>
 
       <div className="medbrief-nav-right">
-        <NavLink 
-          to="/profile" 
-          className="medbrief-profile-circle" 
-          title="Profile"
-          onClick={closeMenu}
-        >
-          👤
-        </NavLink>
-
+        <Profile_Status />
         <button
           className="medbrief-mobile-toggle"
           aria-label="Toggle navigation"
