@@ -18,9 +18,21 @@ from .services.vitals_comparator import compare_vitals
 from .services.observation_engine import generate_observations
 from .services.conclusion_engine import generate_conclusion
 from .services.pdf_generator import generate_summary_pdf
+from rest_framework.permissions import IsAuthenticated
+from .services.cleanup_report import cleanup_old_reports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import MedicalReport
 
 
+from django.utils import timezone
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import MedicalReport
 
+
+from rest_framework.permissions import IsAuthenticated
 # ==========================================================
 # UPLOAD & PROCESS REPORT
 # ==========================================================
@@ -31,6 +43,7 @@ class UploadReportView(APIView):
     compare vitals with normal ranges, generate observations & conclusion,
     and return structured summary.
     """
+    permission_classes = [IsAuthenticated]
 
     ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png"]
     MAX_FILE_SIZE_MB = 10
@@ -63,6 +76,7 @@ class UploadReportView(APIView):
         # 2. Save file metadata
         # --------------------------------------------------
         report = MedicalReport.objects.create(
+            user = request.user,
             file=file,
             original_filename=file.name,
             file_size_kb=round(file.size / 1024, 2),
@@ -115,7 +129,55 @@ class UploadReportView(APIView):
         report.comparison_table = comparison_table
         report.key_observations = observations
         report.final_conclusion = final_conclusion
+
+        # -----------------------------
+# Extract Blood Sugar (for graph)
+# -----------------------------
+        blood_sugar = None
+
+        for item in comparison_table:
+            vital = item.get("vital", "").lower()
+            value = item.get("patient_value")
+
+            if value is None:
+                continue
+            
+            try:
+                value = float(value)
+            except (TypeError, ValueError):
+                continue
+            
+            if (
+                "random" in vital
+                or "fasting" in vital
+                or "glucose" in vital
+                or "sugar" in vital
+            ):
+                blood_sugar = value
+                break
+            
+            
+        # -----------------------------
+        # Extract SpO2
+        # -----------------------------
+        spo2 = None
+        if vitals:
+            try:
+                spo2 = int(vitals.get("spo2"))
+            except (TypeError, ValueError):
+                spo2 = None
+
+
+        # -----------------------------
+        # Save structured vitals
+        # -----------------------------
+        report.blood_sugar = blood_sugar
+        report.spo2 = spo2
+
+
         report.save()
+        cleanup_old_reports(request.user)
+
 
         # --------------------------------------------------
         # 10. API response
@@ -161,38 +223,30 @@ class DownloadReportPDF(APIView):
             filename=f"Medical_Report_Summary_{report_id}.pdf",
         )
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MedicalReport
-
-
-from django.utils import timezone
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import MedicalReport
-
 
 class ReportHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        reports = MedicalReport.objects.order_by("-uploaded_at")[:12]
+        reports = (
+            MedicalReport.objects
+            .filter(user=request.user)
+            .order_by("-uploaded_at")[:12]
+        )
 
         data = []
         for report in reports:
             local_time = timezone.localtime(report.uploaded_at)
-
             data.append({
                 "id": report.id,
                 "filename": report.original_filename,
-                "uploaded_at": local_time.strftime(
-                    "%d %b %Y, %I:%M %p"
-                ),
+                "uploaded_at": local_time.strftime("%d %b %Y, %I:%M %p"),
                 "final_conclusion": report.final_conclusion,
                 "status": self._derive_status(report),
             })
 
         return Response(data)
+
 
     def _derive_status(self, report):
         if not report.comparison_table:

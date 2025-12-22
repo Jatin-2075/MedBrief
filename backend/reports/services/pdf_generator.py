@@ -22,15 +22,10 @@ def generate_summary_pdf(report, output_path):
 
     content = []
 
-    # --------------------------------------------------
-    # Title
-    # --------------------------------------------------
     content.append(Paragraph("<b>Medical Report Summary</b>", styles["Title"]))
     content.append(Spacer(1, 14))
 
-    # --------------------------------------------------
-    # 1. Patient Details
-    # --------------------------------------------------
+
     content.append(Paragraph("<b>1. Patient Details</b>", styles["Heading2"]))
 
     for k, v in (report.patient_details or {}).items():
@@ -43,9 +38,7 @@ def generate_summary_pdf(report, output_path):
 
     content.append(Spacer(1, 14))
 
-    # --------------------------------------------------
-    # 2. Vitals Summary (TABLE)
-    # --------------------------------------------------
+
     content.append(Paragraph("<b>2. Vitals Summary</b>", styles["Heading2"]))
     content.append(Spacer(1, 8))
 
@@ -58,7 +51,7 @@ def generate_summary_pdf(report, output_path):
     for idx, item in enumerate(report.comparison_table or [], start=1):
         status = item.get("status", "N/A")
 
-        # Status-based row color
+
         if status == "High":
             bg_color = colors.lightcoral
         elif status == "Low":
@@ -93,7 +86,6 @@ def generate_summary_pdf(report, output_path):
         ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
     ]
 
-    # Apply row background colors
     for i, color in enumerate(row_colors, start=1):
         table_style.append(
             ("BACKGROUND", (0, i), (-1, i), color)
@@ -103,9 +95,7 @@ def generate_summary_pdf(report, output_path):
     content.append(vitals_table)
     content.append(Spacer(1, 14))
 
-    # --------------------------------------------------
-    # 3. Key Observations
-    # --------------------------------------------------
+
     content.append(Paragraph("<b>3. Key Observations</b>", styles["Heading2"]))
 
     observations = report.key_observations or []
@@ -117,9 +107,7 @@ def generate_summary_pdf(report, output_path):
 
     content.append(Spacer(1, 12))
 
-    # --------------------------------------------------
-    # 4. Conclusion
-    # --------------------------------------------------
+
     content.append(Paragraph("<b>4. Conclusion</b>", styles["Heading2"]))
     content.append(
         Paragraph(
@@ -130,9 +118,7 @@ def generate_summary_pdf(report, output_path):
 
     content.append(Spacer(1, 18))
 
-    # --------------------------------------------------
-    # Disclaimer
-    # --------------------------------------------------
+
     content.append(
         Paragraph(
             "<i>This summary is generated automatically and is not a medical diagnosis. "
@@ -141,7 +127,7 @@ def generate_summary_pdf(report, output_path):
         )
     )
 
-    # Build document with footer
+
     doc.build(content, onLaterPages=add_footer, onFirstPage=add_footer)
 
 
@@ -149,14 +135,14 @@ def add_footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("Helvetica", 9)
 
-    # Page number
+
     canvas.drawRightString(
         A4[0] - 40,
         30,
         f"Page {doc.page}"
     )
 
-    # Footer text
+
     canvas.drawString(
         40,
         30,

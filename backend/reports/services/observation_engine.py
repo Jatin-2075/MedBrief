@@ -1,8 +1,5 @@
 def generate_observations(vitals_comparison: list) -> list:
-    """
-    Generate short, human-readable observations
-    from vitals comparison table.
-    """
+    
 
     if not vitals_comparison:
         return []
@@ -34,5 +31,5 @@ def generate_observations(vitals_comparison: list) -> list:
 
         seen.add(vital)
 
-    # Safety: limit number of observations
+
     return observations[:6]

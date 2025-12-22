@@ -7,17 +7,34 @@ const Reports = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/reports/history/")
-      .then((res) => res.json())
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      setError("Not authenticated");
+      setLoading(false);
+      return;
+    }
+
+    fetch("http://127.0.0.1:8000/api/reports/history/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
       .then((data) => {
-        setReports(data);
+        setReports(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(() => {
         setError("Failed to load reports");
+        setReports([]);
         setLoading(false);
       });
   }, []);
+
 
   return (
     <div className="reports-page-wrapper">
@@ -37,7 +54,8 @@ const Reports = () => {
         )}
 
         <div className="reports-stack-list">
-          {reports.map((report) => (
+          {Array.isArray(reports) && reports.map(
+            (report) => (
             <div className="report-item-card" key={report.id}>
               <div className="report-item-content">
                 <h3 className="report-item-filename">{report.filename}</h3>
@@ -86,7 +104,9 @@ const Reports = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )
+          )}
+
         </div>
       </div>
     </div>

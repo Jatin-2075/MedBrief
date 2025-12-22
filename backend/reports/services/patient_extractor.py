@@ -2,10 +2,6 @@ import re
 
 
 def extract_patient_details(text: str) -> dict:
-    """
-    Extract patient-related details from medical report text.
-    Uses flexible regex patterns to support multiple report formats.
-    """
 
     if not text:
         return {}
@@ -49,9 +45,6 @@ def extract_patient_details(text: str) -> dict:
     return extracted
 
 
-# --------------------------------------------------
-# Normalization helpers
-# --------------------------------------------------
 def normalize_field(field: str, value: str) -> str:
     if value == "Not Available":
         return value

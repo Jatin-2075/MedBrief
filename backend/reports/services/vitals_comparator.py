@@ -17,9 +17,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
         normal = NORMAL_RANGES[vital]
         status = "Normal"
 
-        # --------------------------------------------------
-        # BLOOD PRESSURE (Special Case)
-        # --------------------------------------------------
+       
         if normal["type"] == "bp":
             match = re.search(r"(\d{2,3})\s*/\s*(\d{2,3})", str(raw_value))
             if not match:
@@ -42,9 +40,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
             })
             continue
 
-        # --------------------------------------------------
-        # QUALITATIVE TESTS
-        # --------------------------------------------------
+    
         if normal["type"] == "qualitative":
             value_lower = str(raw_value).lower().strip()
             status = (
@@ -61,9 +57,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
             })
             continue
 
-        # --------------------------------------------------
-        # SPO2 (EXPLICIT & ROBUST)
-        # --------------------------------------------------
+
         if vital == "spo2":
             match = re.search(r"(\d{2,3})", str(raw_value))
             if not match:
@@ -84,9 +78,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
             })
             continue
 
-        # --------------------------------------------------
-        # BLOOD SUGAR / GLUCOSE (EXPLICIT)
-        # --------------------------------------------------
+       
         if vital in ["fasting_glucose", "random_glucose"]:
             match = re.search(r"(\d+(\.\d+)?)", str(raw_value))
             if not match:
@@ -110,9 +102,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
             })
             continue
 
-        # --------------------------------------------------
-        # GENERIC NUMERIC VITALS
-        # --------------------------------------------------
+   
         try:
             value = float(raw_value)
         except (ValueError, TypeError):
@@ -140,9 +130,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
     return results
 
 
-# --------------------------------------------------
-# Helper
-# --------------------------------------------------
+
 def format_range(min_val, max_val):
     if min_val is not None and max_val is not None:
         return f"{min_val}-{max_val}"

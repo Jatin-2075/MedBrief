@@ -1,8 +1,4 @@
 def generate_conclusion(vitals_comparison: list) -> str:
-    """
-    Generate a short, clear conclusion based on vitals comparison.
-    """
-
     abnormal_items = [
         item for item in vitals_comparison
         if item.get("status") in ["High", "Low", "Abnormal"]

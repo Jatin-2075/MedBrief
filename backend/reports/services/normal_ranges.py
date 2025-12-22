@@ -1,8 +1,6 @@
 NORMAL_RANGES = {
 
-    # -----------------
-    # VITAL SIGNS
-    # -----------------
+
     "blood_pressure": {
         "type": "bp",
         "systolic_max": 120,
@@ -34,9 +32,7 @@ NORMAL_RANGES = {
         "unit": "%",
     },
 
-    # -----------------
-    # BLOOD SUGAR
-    # -----------------
+
     "fasting_glucose": {
         "type": "numeric",
         "min": 70,
@@ -45,20 +41,17 @@ NORMAL_RANGES = {
     },
     "random_glucose": {
         "type": "numeric",
-        "min": 0,            # explicit lower bound
+        "min": 0,            
         "max": 140,
         "unit": "mg/dL",
     },
 
-    # -----------------
-    # BLOOD COUNTS
-    # -----------------
     "hemoglobin": {
         "type": "gender_based",
         "male": {"min": 13, "max": 17},
         "female": {"min": 12, "max": 15},
 
-        # Fallback (used if gender unknown)
+
         "min": 12,
         "max": 17,
 
@@ -71,9 +64,7 @@ NORMAL_RANGES = {
         "unit": "/µL",
     },
 
-    # -----------------
-    # BIOCHEMISTRY
-    # -----------------
+
     "blood_urea": {
         "type": "numeric",
         "min": 15,
@@ -92,9 +83,7 @@ NORMAL_RANGES = {
         "unit": "mg/dL",
     },
 
-    # -----------------
-    # BODY METRICS
-    # -----------------
+
     "bmi": {
         "type": "numeric",
         "min": 18.5,
@@ -102,9 +91,7 @@ NORMAL_RANGES = {
         "unit": "",
     },
 
-    # -----------------
-    # QUALITATIVE TESTS
-    # -----------------
+
     "urine_sugar": {
         "type": "qualitative",
         "normal": ["absent", "negative"],
