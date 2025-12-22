@@ -1,0 +1,37 @@
+# Django Framework
+Django==5.1.6
+
+# Django REST Framework
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
+
+# CORS Headers
+django-cors-headers==4.3.1
+
+# Django Allauth (Social Authentication)
+django-allauth==0.57.0
+
+# Environment Variables
+python-decouple==3.8
+
+# PDF Processing
+pdfplumber==0.10.3
+reportlab==4.0.7
+
+# Image Processing & OCR
+opencv-python-headless==4.8.1.78
+pytesseract==0.3.10
+Pillow==10.1.0
+
+# HTTP Requests
+requests==2.31.0
+
+# ASGI Server for Production
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Database (if using PostgreSQL on Render instead of SQLite)
+# psycopg2-binary==2.9.9
+
+# Additional dependencies
+numpy==1.24.3
