@@ -18,128 +18,138 @@ from .services.vitals_comparator import compare_vitals
 from .services.observation_engine import generate_observations
 from .services.conclusion_engine import generate_conclusion
 from .services.pdf_generator import generate_summary_pdf
+from rest_framework.permissions import IsAuthenticated
+from .services.cleanup_report import cleanup_old_reports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import MedicalReport
 
 
+from django.utils import timezone
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import MedicalReport
 
+
+from rest_framework.permissions import IsAuthenticated
 # ==========================================================
 # UPLOAD & PROCESS REPORT
-# ==========================================================
-@method_decorator(csrf_exempt, name="dispatch")  # DEV ONLY
+# ==========================================================@method_decorator(csrf_exempt, name="dispatch")  # DEV ONLY
 class UploadReportView(APIView):
-    """
-    Upload medical report, extract text, parse patient details & vitals,
-    compare vitals with normal ranges, generate observations & conclusion,
-    and return structured summary.
-    """
+    permission_classes = [IsAuthenticated]
 
     ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png"]
     MAX_FILE_SIZE_MB = 10
 
     def post(self, request):
-        # --------------------------------------------------
-        # 1. Validate file
-        # --------------------------------------------------
         file = request.FILES.get("report")
-
         if not file:
-            return Response(
-                {"error": "No report file provided"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"error": "No report file provided"}, status=400)
 
         if file.size > self.MAX_FILE_SIZE_MB * 1024 * 1024:
-            return Response(
-                {"error": "File size exceeds 10 MB limit"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"error": "File size exceeds 10 MB limit"}, status=400)
 
         if not any(file.name.lower().endswith(ext) for ext in self.ALLOWED_EXTENSIONS):
-            return Response(
-                {"error": "Unsupported file type"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"error": "Unsupported file type"}, status=400)
 
-        # --------------------------------------------------
-        # 2. Save file metadata
-        # --------------------------------------------------
         report = MedicalReport.objects.create(
+            user=request.user,
             file=file,
             original_filename=file.name,
             file_size_kb=round(file.size / 1024, 2),
         )
 
-        # --------------------------------------------------
-        # 3. Extract & normalize text
-        # --------------------------------------------------
+        # -----------------------------
+        # TEXT EXTRACTION
+        # -----------------------------
         raw_text = extract_text(report.file.path)
         text = normalize_text(raw_text)
 
-        # --------------------------------------------------
-        # 4. Extract patient details
-        # --------------------------------------------------
         patient_details = extract_patient_details(text)
-        patient_details = {
-            k: v if v else "Not Available"
-            for k, v in patient_details.items()
-        }
+        patient_details = {k: v or "Not Available" for k, v in patient_details.items()}
 
-        # --------------------------------------------------
-        # 5. Extract vitals
-        # --------------------------------------------------
         vitals = extract_vitals(text)
-
-        # --------------------------------------------------
-        # 6. Compare vitals with normal ranges
-        # --------------------------------------------------
         comparison_table = compare_vitals(
             vitals=vitals,
             gender=patient_details.get("gender"),
         )
 
-        # --------------------------------------------------
-        # 7. Generate key observations
-        # --------------------------------------------------
         observations = generate_observations(comparison_table)
-
-        # --------------------------------------------------
-        # 8. Generate final conclusion
-        # --------------------------------------------------
         final_conclusion = generate_conclusion(comparison_table)
 
-        # --------------------------------------------------
-        # 9. Persist everything
-        # --------------------------------------------------
+        # -----------------------------
+        # BMI CALCULATION
+        # -----------------------------
+        # -----------------------------
+# BMI EXTRACTION
+# -----------------------------
+        bmi = None
+        try:
+            bmi_value = vitals.get("bmi")
+            if bmi_value:
+                bmi = round(float(bmi_value), 1)
+        except:
+            bmi = None
+        
+        # Fallback: calculate from height & weight
+        if bmi is None:
+            try:
+                weight = float(patient_details.get("weight"))
+                height_cm = float(patient_details.get("height"))
+                height_m = height_cm / 100
+                bmi = round(weight / (height_m ** 2), 1)
+            except:
+                bmi = None
+        
+        # -----------------------------
+        # RESPIRATORY RATE EXTRACTION
+        # -----------------------------
+        respiratory_rate = None
+        try:
+            rr_value = vitals.get("respiratory_rate")
+            if rr_value:
+                respiratory_rate = float(rr_value)
+        except:
+            respiratory_rate = None
+
+
+        # -----------------------------
+        # SAVE EVERYTHING
+        # -----------------------------
         report.extracted_text = text
         report.patient_details = patient_details
         report.vitals = vitals
         report.comparison_table = comparison_table
         report.key_observations = observations
         report.final_conclusion = final_conclusion
-        report.save()
+        report.bmi = bmi
+        report.respiratory_rate = respiratory_rate
 
-        # --------------------------------------------------
-        # 10. API response
-        # --------------------------------------------------
+        # -----------------------------
+        # DEBUG PRINTS
+        # -----------------------------
+        print("\n========== DEBUG ==========")
+        print("Vitals:", vitals)
+        print("Respiratory Rate:", respiratory_rate)
+        print("BMI:", bmi)
+        print("========== END DEBUG ==========\n")
+
+        report.save()
+        cleanup_old_reports(request.user)
+
         return Response(
             {
                 "message": "Report processed successfully",
                 "report_id": report.id,
-                "patient_details": patient_details,
-                "vitals_comparison": comparison_table,
-                "key_observations": observations,
+                "bmi": bmi,
+                "respiratory_rate": respiratory_rate,
                 "final_conclusion": final_conclusion,
-                "disclaimer": (
-                    "This summary is generated automatically and is not a medical diagnosis. "
-                    "Please consult a certified doctor for professional advice."
-                ),
             },
-            status=status.HTTP_201_CREATED,
+            status=201,
         )
 
 
-# ==========================================================
-# DOWNLOAD SUMMARY PDF
-# ==========================================================
 class DownloadReportPDF(APIView):
     """
     Generate and download the medical report summary PDF.
@@ -161,38 +171,30 @@ class DownloadReportPDF(APIView):
             filename=f"Medical_Report_Summary_{report_id}.pdf",
         )
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MedicalReport
-
-
-from django.utils import timezone
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import MedicalReport
-
 
 class ReportHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        reports = MedicalReport.objects.order_by("-uploaded_at")[:12]
+        reports = (
+            MedicalReport.objects
+            .filter(user=request.user)
+            .order_by("-uploaded_at")[:12]
+        )
 
         data = []
         for report in reports:
             local_time = timezone.localtime(report.uploaded_at)
-
             data.append({
                 "id": report.id,
                 "filename": report.original_filename,
-                "uploaded_at": local_time.strftime(
-                    "%d %b %Y, %I:%M %p"
-                ),
+                "uploaded_at": local_time.strftime("%d %b %Y, %I:%M %p"),
                 "final_conclusion": report.final_conclusion,
                 "status": self._derive_status(report),
             })
 
         return Response(data)
+
 
     def _derive_status(self, report):
         if not report.comparison_table:
@@ -204,101 +206,70 @@ class ReportHistoryView(APIView):
         return "Normal"
 
 
+from rest_framework.permissions import IsAuthenticated
+
 class DashboardView(APIView):
     """
     Dashboard API:
-    - Latest vitals (BP, Sugar, SpO2, HR)
-    - Blood sugar trend (last 12 reports, one value each)
+    - Latest vitals (BP, BMI, Respiratory Rate, HR)
+    - BMI trend (last 12 reports)
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         reports = list(
-            MedicalReport.objects.order_by("-uploaded_at")[:12]
+            MedicalReport.objects
+            .filter(user=request.user)
+            .order_by("-uploaded_at")[:12]
         )
 
         if not reports:
             return Response(
                 {
                     "latest_vitals": None,
-                    "sugar_trend": [],
+                    "bmi_trend": [],
                 },
                 status=status.HTTP_200_OK,
             )
 
         latest_report = reports[0]
 
+        # -----------------------------
+        # Latest vitals (DB first)
+        # -----------------------------
         latest_vitals = {
             "bp": None,
             "bp_status": None,
-            "sugar": None,
-            "sugar_status": None,
-            "spo2": None,
-            "heart_rate": None,
+            "bmi": latest_report.bmi,
+            "respiratory_rate": latest_report.respiratory_rate,
+            "heart_rate": (
+                latest_report.vitals.get("heart_rate")
+                if latest_report.vitals else None
+            ),
         }
 
-        sugar_trend = []
-
-        # -------------------------------------------------
-        # LOOP REPORTS (newest → oldest)
-        # -------------------------------------------------
-        for report in reports:
-            if not report.comparison_table:
-                continue
-
-            glucose_value = None
-            glucose_status = None
-
-            for item in report.comparison_table:
+        # -----------------------------
+        # BP status (from comparison table)
+        # -----------------------------
+        if latest_report.comparison_table:
+            for item in latest_report.comparison_table:
                 vital = item.get("vital", "").lower()
-                value = item.get("patient_value")
-                status_ = item.get("status")
+                if "blood pressure" in vital:
+                    latest_vitals["bp"] = item.get("patient_value")
+                    latest_vitals["bp_status"] = item.get("status")
 
-                # -----------------------------
-                # Blood Pressure (latest only)
-                # -----------------------------
-                if "blood pressure" in vital and report.id == latest_report.id:
-                    latest_vitals["bp"] = value
-                    latest_vitals["bp_status"] = status_
-
-                # -----------------------------
-                # Glucose (priority based)
-                # -----------------------------
-                if "random" in vital:
-                    glucose_value = value
-                    glucose_status = status_
-
-                elif "fasting" in vital and glucose_value is None:
-                    glucose_value = value
-                    glucose_status = status_
-
-                elif "sugar" in vital and glucose_value is None:
-                    glucose_value = value
-                    glucose_status = status_
-
-            # ----------------------------------
-            # Save ONE glucose per report
-            # ----------------------------------
-            if glucose_value is not None:
-                try:
-                    sugar_trend.append(float(glucose_value))
-                except (TypeError, ValueError):
-                    pass
-
-                if report.id == latest_report.id:
-                    latest_vitals["sugar"] = glucose_value
-                    latest_vitals["sugar_status"] = glucose_status
-
-            # ----------------------------------
-            # Vitals (NOT range-based)
-            # ----------------------------------
-            if report.id == latest_report.id and report.vitals:
-                latest_vitals["spo2"] = report.vitals.get("spo2")
-                latest_vitals["heart_rate"] = report.vitals.get("heart_rate")
+        # -----------------------------
+        # BMI trend (for graph)
+        # -----------------------------
+        bmi_trend = []
+        for report in reversed(reports):  # oldest → latest
+            if report.bmi is not None:
+                bmi_trend.append(report.bmi)
 
         return Response(
             {
                 "latest_vitals": latest_vitals,
-                "sugar_trend": sugar_trend[::-1],  # oldest → latest
+                "bmi_trend": bmi_trend,
             },
             status=status.HTTP_200_OK,
         )

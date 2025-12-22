@@ -1,35 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../Style/home.css";
-
+import "../Components/customChecks" ; 
 const Home = () => {
   const navigate = useNavigate();
 
   const [latestVitals, setLatestVitals] = useState(null);
-  const [sugarTrend, setSugarTrend] = useState([]);
+  const [bmiTrend, setBmiTrend] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const normalRanges = {
     bp: "120/80",
-    sugar: "70-130 mg/dL",
-    spo2: "95-100%",
-    heartRate: "60-100 bpm",
+    bmi: "18.5 – 24.9",
+    respiratory_rate: "12 – 20 /min",
+    heartRate: "60 – 100 bpm",
   };
 
-  // -----------------------------
+  const token = localStorage.getItem("access_token");
+
+  // =============================
   // FETCH DASHBOARD DATA
-  // -----------------------------
+  // =============================
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/reports/dashboard/")
-      .then((res) => res.json())
+    fetch("http://127.0.0.1:8000/api/reports/dashboard/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
       .then((data) => {
         setLatestVitals(data.latest_vitals);
-        setSugarTrend(data.sugar_trend || []);
+        setBmiTrend(data.bmi_trend || []);
         setLoading(false);
       })
-      .catch(() => {
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -45,7 +52,6 @@ const Home = () => {
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-container">
-
         {/* HEADER */}
         <header className="dashboard-header">
           <h1 className="header-title">Health Overview</h1>
@@ -78,17 +84,16 @@ const Home = () => {
         {/* VITALS */}
         {latestVitals && (
           <div className="vitals-layout">
+            {/* BLOOD PRESSURE */}
             <div className="vital-glass-card">
               <h4 className="vital-title">Blood Pressure</h4>
-              <div className="vital-main-value">
-                {latestVitals.bp || "—"}
-              </div>
-              <div className="vital-reference">
-                Normal: {normalRanges.bp}
-              </div>
+              <div className="vital-main-value">{latestVitals.bp || "—"}</div>
+              <div className="vital-reference">Normal: {normalRanges.bp}</div>
               <span
                 className={
-                  latestVitals.bp_status === "High"
+                  latestVitals.bp_status === "High" ||
+                  latestVitals.bp_status === "Low" ||
+                  latestVitals.bp_status === "Abnormal"
                     ? "badge-alert"
                     : "badge-safe"
                 }
@@ -97,36 +102,27 @@ const Home = () => {
               </span>
             </div>
 
+            {/* RESPIRATORY RATE */}
             <div className="vital-glass-card">
-              <h4 className="vital-title">Blood Sugar</h4>
+              <h4 className="vital-title">Respiratory Rate</h4>
               <div className="vital-main-value">
-                {latestVitals.sugar ?? "—"} <small>mg/dL</small>
+                {latestVitals.respiratory_rate ?? "—"} <small>/min</small>
               </div>
               <div className="vital-reference">
-                Normal: {normalRanges.sugar}
-              </div>
-              <span
-                className={
-                  latestVitals.sugar_status === "High"
-                    ? "badge-alert"
-                    : "badge-safe"
-                }
-              >
-                {latestVitals.sugar_status || "Normal"}
-              </span>
-            </div>
-
-            <div className="vital-glass-card">
-              <h4 className="vital-title">SpO₂</h4>
-              <div className="vital-main-value">
-                {latestVitals.spo2 ?? "—"}%
-              </div>
-              <div className="vital-reference">
-                Normal: {normalRanges.spo2}
+                Normal: {normalRanges.respiratory_rate}
               </div>
               <span className="badge-safe">Normal</span>
             </div>
 
+            {/* BMI */}
+            <div className="vital-glass-card">
+              <h4 className="vital-title">BMI</h4>
+              <div className="vital-main-value">{latestVitals.bmi ?? "—"}</div>
+              <div className="vital-reference">Normal: {normalRanges.bmi}</div>
+              <span className="badge-safe">Normal</span>
+            </div>
+
+            {/* HEART RATE */}
             <div className="vital-glass-card">
               <h4 className="vital-title">Heart Rate</h4>
               <div className="vital-main-value">
@@ -140,32 +136,36 @@ const Home = () => {
           </div>
         )}
 
-        {/* SUGAR TREND */}
-        {sugarTrend.length > 0 && (
+        {/* BMI TREND */}
+        {bmiTrend.length > 0 && (
           <div className="trend-glass-section">
-            <h3 className="trend-main-title">Blood Sugar Trend</h3>
+            <h3 className="trend-main-title">BMI Trend</h3>
             <p className="trend-info">
-              Based on your last {sugarTrend.length} reports
+              Based on your last {bmiTrend.length} reports
             </p>
 
             <div className="chart-container">
-              {sugarTrend.map((value, index) => (
-                <div key={index} className="chart-column">
-                  <div className="chart-bar-wrapper">
-                    <div
-                      className="chart-bar-fill"
-                      style={{ height: `${(value / 160) * 100}%` }}
-                    >
-                      <span className="bar-tooltip">{value}</span>
+              {bmiTrend.map((value, index) => {
+                const maxBMI = 35;
+                const height = Math.min((value / maxBMI) * 100, 100);
+
+                return (
+                  <div key={index} className="chart-column">
+                    <div className="chart-bar-wrapper">
+                      <div
+                        className="chart-bar-fill"
+                        style={{ height: `${height}%` }}
+                      >
+                        <span className="bar-tooltip">{value}</span>
+                      </div>
                     </div>
+                    <span className="chart-label">R{index + 1}</span>
                   </div>
-                  <span className="chart-label">R{index + 1}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

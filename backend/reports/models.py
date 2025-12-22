@@ -1,23 +1,25 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class MedicalReport(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="medical_reports",
+        null=True,
+        blank=True
+    )
     file = models.FileField(upload_to="reports/")
     original_filename = models.CharField(max_length=255)
     file_size_kb = models.FloatField()
-
-    # Extracted raw text
     extracted_text = models.TextField(blank=True, null=True)
-
-    # Structured extracted data
     patient_details = models.JSONField(blank=True, null=True)
     vitals = models.JSONField(blank=True, null=True)
-
-    # Processed outputs
+    respiratory_rate = models.FloatField(null=True, blank=True)
+    bmi = models.IntegerField(null=True, blank=True)   
     comparison_table = models.JSONField(blank=True, null=True)
     key_observations = models.JSONField(blank=True, null=True)
     final_conclusion = models.TextField(blank=True, null=True)
-
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
