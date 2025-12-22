@@ -1,5 +1,4 @@
 from pathlib import Path
-from django.utils import timezone
 
 from django.conf import settings
 from django.http import FileResponse, Http404
@@ -19,7 +18,8 @@ from .services.vitals_comparator import compare_vitals
 from .services.observation_engine import generate_observations
 from .services.conclusion_engine import generate_conclusion
 from .services.pdf_generator import generate_summary_pdf
-from .services.cleanup import cleanup_old_reports
+
+
 
 # ==========================================================
 # UPLOAD & PROCESS REPORT
@@ -116,8 +116,6 @@ class UploadReportView(APIView):
         report.key_observations = observations
         report.final_conclusion = final_conclusion
         report.save()
-        # 🔥 Auto cleanup: keep only latest 12 reports
-        cleanup_old_reports()
 
         # --------------------------------------------------
         # 10. API response
@@ -163,6 +161,16 @@ class DownloadReportPDF(APIView):
             filename=f"Medical_Report_Summary_{report_id}.pdf",
         )
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import MedicalReport
+
+
+from django.utils import timezone
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import MedicalReport
 
 
 class ReportHistoryView(APIView):
@@ -194,7 +202,6 @@ class ReportHistoryView(APIView):
             if item.get("status") in ["High", "Low", "Abnormal"]:
                 return "Attention"
         return "Normal"
-
 
 
 class DashboardView(APIView):

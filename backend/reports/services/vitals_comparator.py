@@ -145,7 +145,7 @@ def compare_vitals(vitals: dict, gender: str = None) -> list:
 # --------------------------------------------------
 def format_range(min_val, max_val):
     if min_val is not None and max_val is not None:
-        return f"{min_val}–{max_val}"
+        return f"{min_val}-{max_val}"
     if min_val is not None:
         return f"≥{min_val}"
     if max_val is not None:

@@ -5,7 +5,6 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 def func_workout(level):
-    """Fetches exercises from API Ninjas with error handling."""
     url = "https://api.api-ninjas.com/v1/exercises"
 
     if not settings.API_NINJAS_KEY:
@@ -14,7 +13,6 @@ def func_workout(level):
 
     headers = {"X-Api-Key": settings.API_NINJAS_KEY}
 
-    # ✅ MISSING PART FIXED
     params = {
         "difficulty": level,
     }
@@ -57,7 +55,6 @@ def func_workout(level):
 
 
 def diet_by_bmi(bmi):
-    """Calculates diet goals and fetches nutrition data."""
 
     if not settings.API_NINJAS_KEY:
         logger.error("API_NINJAS_KEY is not set in settings")
