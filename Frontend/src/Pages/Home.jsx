@@ -40,9 +40,9 @@ const Home = () => {
 
   const normalRanges = {
     bp: "120/80",
-    bmi: "18.5 – 24.9",
-    respiratory_rate: "12 – 20 /min",
-    heartRate: "60 – 100 bpm",
+    bmi: "18.5 - 24.9",
+    respiratory_rate: "12 - 20 /min",
+    heartRate: "60 - 100 bpm",
   };
 
   const token = localStorage.getItem("access_token");
