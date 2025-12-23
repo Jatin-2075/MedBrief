@@ -242,6 +242,7 @@ LOGGING = {
 
 #
 '''
+    PYTHON==3.14.15
     SECRET_KEY=uqd=7=b*&6a$h55@y!o+r1paup07*g-14p!+h2d)(o)(#(q&-a
     DEBUG=True
     ALLOWED_HOSTS=127.0.0.1,localhost
