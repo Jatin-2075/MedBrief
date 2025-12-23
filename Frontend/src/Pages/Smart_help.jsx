@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../Style/SmartHelp.css";
+import "../Style/Smarthelp.css";
 import { API_BASE_URL } from "../config/api";
 
 const Smart_help = () => {

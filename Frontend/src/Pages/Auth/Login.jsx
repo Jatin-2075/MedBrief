@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../../Style/Login.css";
+import "../../Style/login.css";
 import { API_BASE_URL } from "../../config/api";
 import { toast } from "react-toastify";
 

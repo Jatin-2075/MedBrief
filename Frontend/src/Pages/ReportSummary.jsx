@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import "../Style/reportSummary.css";
+import "../Style/reportsummary.css";
 import { API_BASE_URL } from "../config/api";
 
 const ReportSummary = () => {

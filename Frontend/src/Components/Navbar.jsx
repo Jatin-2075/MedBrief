@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../Style/Navbar.css";
+import "../Style/navbar.css";
 import { NavLink } from "react-router-dom";
 import Profile_Status from "./Profile";
 
