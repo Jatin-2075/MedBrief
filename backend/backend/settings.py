@@ -242,5 +242,12 @@ LOGGING = {
 
 #
 '''
-    
+    SECRET_KEY=uqd=7=b*&6a$h55@y!o+r1paup07*g-14p!+h2d)(o)(#(q&-a
+    DEBUG=True
+    ALLOWED_HOSTS=127.0.0.1,localhost
+    FRONTEND_URL=https://med-brief-nine.vercel.app
+    EMAIL_HOST_USER=shivamprakashgami@gmail.com
+    EMAIL_HOST_PASSWORD=ovln rmuu kywv kcml
+    API_NINJAS_KEY=RoE+nmWZTPVUB34sKmFm7A==4WA1mMWA9bLQQsPp
+    DATABASE_URL=postgresql://health_app_project_404_not_found_user:rLUWyGAPEL4zhEZ3MfHNQSOk5ahpwJVW@dpg-d54n33ngi27c73ed9eag-a/health_app_project_404_not_found
 '''
