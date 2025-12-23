@@ -1,4 +1,7 @@
+python==3.10.13
+
 Django==5.1.6
+
 
 # Django REST Framework
 djangorestframework==3.14.0
