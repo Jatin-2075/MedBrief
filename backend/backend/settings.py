@@ -96,12 +96,12 @@ SIMPLE_JWT = {
 CORS_ALLOW_CREDENTIALS = True
 
 # Update with your frontend URL
-FRONTEND_URL = config("FRONTEND_URL", default="https://med-brief-nine.vercel.app")
+FRONTEND_URL = config("FRONTEND_URL", default="https://med-brief-h1s7.vercel.app/")
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://med-brief-nine.vercel.app",
+    "https://med-brief-h1s7.vercel.app/",
 ]
 
 # Add frontend URL if provided
