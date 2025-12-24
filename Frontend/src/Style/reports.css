@@ -1,3 +1,4 @@
+/* --- Base Page Layout --- */
 .reports-page-wrapper {
   min-height: 100vh;
   width: 100%;
@@ -6,6 +7,7 @@
   padding: 60px 20px;
   background: radial-gradient(circle at top right, #f8faff, #ffffff);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-sizing: border-box;
 }
 
 .reports-page-wrapper .reports-history-container {
@@ -38,6 +40,7 @@
   gap: 24px;
 }
 
+/* --- Report Card Styling --- */
 .reports-page-wrapper .report-item-card {
   display: flex;
   justify-content: space-between;
@@ -62,6 +65,8 @@
   font-weight: 700;
   margin-bottom: 6px;
   text-decoration: none;
+  display: block;
+  word-break: break-word; /* Ensure long filenames don't overflow */
 }
 
 .reports-page-wrapper .report-item-date {
@@ -79,6 +84,7 @@
   line-height: 1.7;
 }
 
+/* --- Action Buttons & Status --- */
 .reports-page-wrapper .report-item-actions {
   display: flex;
   flex-direction: column;
@@ -107,20 +113,9 @@
   width: fit-content;
 }
 
-.reports-page-wrapper .status-pill-normal {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.reports-page-wrapper .status-pill-attention {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-.reports-page-wrapper .status-pill-unknown {
-  background: #f1f5f9;
-  color: #475569;
-}
+.reports-page-wrapper .status-pill-normal { background: #dcfce7; color: #166534; }
+.reports-page-wrapper .status-pill-attention { background: #fee2e2; color: #b91c1c; }
+.reports-page-wrapper .status-pill-unknown { background: #f1f5f9; color: #475569; }
 
 .reports-page-wrapper .btn-download-action, 
 .reports-page-wrapper .btn-share-action {
@@ -149,11 +144,65 @@
   color: #ffffff;
 }
 
-.reports-page-wrapper .btn-download-action:hover, 
-.reports-page-wrapper .btn-share-action:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+
+@media (max-width: 850px) {
+  .reports-page-wrapper {
+    padding: 20px 12px;
+  }
+
+  .reports-page-wrapper .reports-history-container {
+    padding: 25px 15px;
+  }
+
+  .reports-page-wrapper .reports-main-title {
+    font-size: 26px;
+  }
+
+  .reports-page-wrapper .report-item-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .reports-page-wrapper .report-item-actions {
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .reports-page-wrapper .report-action-group {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+/* Fix for very narrow screens (Visibility Fix) */
+@media (max-width: 480px) {
+  .reports-page-wrapper .report-item-filename {
+    font-size: 16px;
+    word-break: break-all; /* Prevents long .pdf names from pushing layout */
+  }
+
+  .reports-page-wrapper .report-action-group {
+    flex-direction: column; /* Stack buttons when no room left */
+  }
+
+  /* Navbar Adjustment (Add this if your Navbar CSS is in the same file) */
+  .medbrief-navbar {
+    padding: 0 10px !important;
+  }
+  
+  .medbrief-navbar .medbrief-logo {
+    font-size: 18px !important;
+    flex-shrink: 1;
+  }
+
+  .medbrief-navbar .medbrief-profile-circle {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+  }
 }
 
 .reports-page-wrapper .reports-empty-state {
@@ -163,29 +212,4 @@
   border: 2px dashed #e2e8f0;
   border-radius: 20px;
   background: #fcfdfe;
-}
-
-@media (max-width: 850px) {
-  .reports-page-wrapper {
-    padding: 30px 15px;
-  }
-
-  .reports-page-wrapper .reports-history-container {
-    padding: 30px 20px;
-  }
-
-  .reports-page-wrapper .report-item-card {
-    flex-direction: column;
-    gap: 25px;
-  }
-  
-  .reports-page-wrapper .report-item-actions {
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .reports-page-wrapper .report-action-group {
-    flex-direction: row;
-    gap: 10px;
-  }
 }
