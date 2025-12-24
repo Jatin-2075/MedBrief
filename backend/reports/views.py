@@ -19,6 +19,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.utils import timezone
 from .models import MedicalReport
+from django.core.files import File
+import tempfile
+import os
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -86,7 +89,6 @@ class UploadReportView(APIView):
         except:
             respiratory_rate = None
 
-
         report.extracted_text = text
         report.patient_details = patient_details
         report.vitals = vitals
@@ -95,14 +97,29 @@ class UploadReportView(APIView):
         report.final_conclusion = final_conclusion
         report.bmi = bmi
         report.respiratory_rate = respiratory_rate
-
-        print("\n========== DEBUG ==========")
-        print("Vitals:", vitals)
-        print("Respiratory Rate:", respiratory_rate)
-        print("BMI:", bmi)
-        print("========== END DEBUG ==========\n")
-
         report.save()
+
+        # Generate PDF with error handling
+        try:
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+                generate_summary_pdf(report, tmp.name)
+                tmp.seek(0)
+                report.summary_pdf.save(
+                    f"Medical_Report_Summary_{report.id}.pdf",
+                    File(tmp),
+                    save=True
+                )
+                
+                # Clean up temporary file
+                try:
+                    os.unlink(tmp.name)
+                except:
+                    pass
+        except Exception as e:
+            # Log the error but don't fail the entire request
+            print(f"PDF generation failed: {e}")
+            # The report is still saved, just without the PDF
+
         cleanup_old_reports(request.user)
 
         return Response(
@@ -118,21 +135,24 @@ class UploadReportView(APIView):
 
 
 class DownloadReportPDF(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, report_id):
         try:
-            report = MedicalReport.objects.get(id=report_id)
+            report = MedicalReport.objects.get(
+                id=report_id,
+                user=request.user
+            )
         except MedicalReport.DoesNotExist:
             raise Http404("Report not found")
 
-        pdf_path = Path(settings.MEDIA_ROOT) / f"report_summary_{report_id}.pdf"
-
-        generate_summary_pdf(report, pdf_path)
+        if not report.summary_pdf:
+            raise Http404("PDF not available")
 
         return FileResponse(
-            pdf_path.open("rb"),
+            report.summary_pdf.open("rb"),
             as_attachment=True,
-            filename=f"Medical_Report_Summary_{report_id}.pdf",
+            filename=report.summary_pdf.name.split("/")[-1],
         )
 
 
@@ -155,10 +175,14 @@ class ReportHistoryView(APIView):
                 "uploaded_at": local_time.strftime("%d %b %Y, %I:%M %p"),
                 "final_conclusion": report.final_conclusion,
                 "status": self._derive_status(report),
+                "summary_pdf_url": (
+                    request.build_absolute_uri(f"/api/reports/{report.id}/download/")
+                    if report.summary_pdf else None
+                ),
+                "has_pdf": bool(report.summary_pdf),
             })
 
         return Response(data)
-
 
     def _derive_status(self, report):
         if not report.comparison_table:
@@ -168,8 +192,6 @@ class ReportHistoryView(APIView):
             if item.get("status") in ["High", "Low", "Abnormal"]:
                 return "Attention"
         return "Normal"
-
-
 
 
 class DashboardView(APIView):
@@ -204,9 +226,6 @@ class DashboardView(APIView):
             ),
             "raw_vitals": latest_report.vitals,
         }
-
-        print(latest_vitals)
-
 
         if latest_report.comparison_table:
             for item in latest_report.comparison_table:

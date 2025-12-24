@@ -3,7 +3,7 @@ import { API_BASE_URL } from "../config/api";
 const Logout = () => {
     const handleLogout = async () => {
         try {
-            const res = await fetch(`${ API_BASE_URL } /logout/`, {
+            const res = await fetch(`${API_BASE_URL}/logout/`, {
                 method: "POST",
                 credentials: "include",
             });

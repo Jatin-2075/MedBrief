@@ -6,6 +6,7 @@ const Reports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [downloadingId, setDownloadingId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -16,7 +17,7 @@ const Reports = () => {
       return;
     }
 
-    fetch(` ${ API_BASE_URL } /api/reports/history/`, {
+    fetch(`${API_BASE_URL}/api/reports/history/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -36,6 +37,95 @@ const Reports = () => {
       });
   }, []);
 
+  const downloadReport = async (reportId) => {
+    setDownloadingId(reportId);
+    try {
+      const token = localStorage.getItem("access_token");
+
+      const res = await fetch(
+        `${API_BASE_URL}/api/reports/download/${reportId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Download failed");
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Medical_Report_${reportId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Failed to download report. Please try again.");
+      console.error(err);
+    } finally {
+      setDownloadingId(null);
+    }
+  };
+
+  const shareReport = async (reportId, filename) => {
+    try {
+      const token = localStorage.getItem("access_token");
+
+      const res = await fetch(
+        `${API_BASE_URL}/api/reports/download/${reportId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch report");
+      }
+
+      const blob = await res.blob();
+      const file = new File(
+        [blob],
+        filename || `Medical_Report_${reportId}.pdf`,
+        { type: "application/pdf" }
+      );
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: "Medical Report Summary",
+          text: "Here is my medical report summary.",
+        });
+      } else if (navigator.share) {
+        const shareUrl = `${window.location.origin}/reports/${reportId}`;
+        await navigator.share({
+          title: "Medical Report Summary",
+          text: "Here is my medical report summary.",
+          url: shareUrl,
+        });
+      } else {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename || `Medical_Report_${reportId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        alert("Sharing not supported. File downloaded instead.");
+      }
+    } catch (err) {
+      alert("Failed to share report. Please try again.");
+      console.error(err);
+    }
+  };
 
   return (
     <div className="reports-page-wrapper">
@@ -55,59 +145,45 @@ const Reports = () => {
         )}
 
         <div className="reports-stack-list">
-          {Array.isArray(reports) && reports.map(
-            (report) => (
-            <div className="report-item-card" key={report.id}>
-              <div className="report-item-content">
-                <h3 className="report-item-filename">{report.filename}</h3>
-                <span className="report-item-date">{report.uploaded_at}</span>
-                <p className="report-item-summary">
-                  {report.final_conclusion || "No summary available"}
-                </p>
-              </div>
+          {Array.isArray(reports) &&
+            reports.map((report) => (
+              <div className="report-item-card" key={report.id}>
+                <div className="report-item-content">
+                  <h3 className="report-item-filename">{report.filename}</h3>
+                  <span className="report-item-date">{report.uploaded_at}</span>
+                  <p className="report-item-summary">
+                    {report.final_conclusion || "No summary available"}
+                  </p>
+                </div>
 
-              <div className="report-item-actions">
-                <span
-                  className={`status-pill-${report.status === "Normal"
-                      ? "normal"
-                      : "attention"
+                <div className="report-item-actions">
+                  <span
+                    className={`status-pill-${
+                      report.status === "Normal" ? "normal" : "attention"
                     }`}
-                >
-                  {report.status}
-                </span>
-
-                <div className="report-action-group">
-                  <a
-                    href={` ${ API_BASE_URL } /api/reports/download/${report.id}/`}
-                    className="btn-download-action"
                   >
-                    Download
-                  </a>
+                    {report.status}
+                  </span>
 
-                  <button
-                    className="btn-share-action"
-                    onClick={() => {
-                      const url = `${ API_BASE_URL }/api/reports/download/${report.id}/`;
-                      if (navigator.share) {
-                        navigator.share({
-                          title: "Medical Report Summary",
-                          text: "Here is my medical report summary.",
-                          url: url,
-                        });
-                      } else {
-                        navigator.clipboard.writeText(url);
-                        alert("Download link copied to clipboard");
-                      }
-                    }}
-                  >
-                    Share
-                  </button>
+                  <div className="report-action-group">
+                    <button
+                      className="btn-download-action"
+                      onClick={() => downloadReport(report.id)}
+                      disabled={downloadingId === report.id}
+                    >
+                      {downloadingId === report.id ? "Downloading..." : "Download"}
+                    </button>
+
+                    <button
+                      className="btn-share-action"
+                      onClick={() => shareReport(report.id, report.filename)}
+                    >
+                      Share
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-          )}
-
+            ))}
         </div>
       </div>
     </div>

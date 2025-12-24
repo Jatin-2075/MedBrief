@@ -8,6 +8,7 @@ import {
   checkRespiratoryRate,
 } from "../Components/customChecks";
 
+import { API_BASE_URL } from "../config/api";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -48,7 +49,7 @@ const Home = () => {
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    fetch( ` ${ API_BASE_URL } /api/reports/dashboard/`, {
+    fetch(`${API_BASE_URL}/api/reports/dashboard/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
