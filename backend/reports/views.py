@@ -1,4 +1,7 @@
 from pathlib import Path
+import logging
+import tempfile
+import os
 
 from django.conf import settings
 from django.http import FileResponse, Http404
@@ -20,8 +23,9 @@ from rest_framework import status
 from django.utils import timezone
 from .models import MedicalReport
 from django.core.files import File
-import tempfile
-import os
+
+# Add logging
+logger = logging.getLogger(__name__)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -64,12 +68,13 @@ class UploadReportView(APIView):
         observations = generate_observations(comparison_table)
         final_conclusion = generate_conclusion(comparison_table)
 
+        # Calculate BMI - FIX: Specific exceptions
         bmi = None
         try:
             bmi_value = vitals.get("bmi")
             if bmi_value:
                 bmi = round(float(bmi_value), 1)
-        except:
+        except (ValueError, TypeError):  # ✅ Fixed
             bmi = None
 
         if bmi is None:
@@ -78,15 +83,16 @@ class UploadReportView(APIView):
                 height_cm = float(patient_details.get("height"))
                 height_m = height_cm / 100
                 bmi = round(weight / (height_m ** 2), 1)
-            except:
+            except (ValueError, TypeError, ZeroDivisionError):  # ✅ Fixed
                 bmi = None
 
+        # Extract respiratory rate - FIX: Specific exceptions
         respiratory_rate = None
         try:
             rr_value = vitals.get("respiratory_rate")
             if rr_value:
                 respiratory_rate = float(rr_value)
-        except:
+        except (ValueError, TypeError):  # ✅ Fixed
             respiratory_rate = None
 
         report.extracted_text = text
@@ -110,15 +116,15 @@ class UploadReportView(APIView):
                     save=True
                 )
                 
-                # Clean up temporary file
+                # Clean up temporary file - FIX: Specific exception + logging
                 try:
                     os.unlink(tmp.name)
-                except:
-                    pass
+                except OSError as e:  # ✅ Fixed
+                    logger.warning(f"Failed to delete temp file: {str(e)}")
+                    
         except Exception as e:
-            # Log the error but don't fail the entire request
-            print(f"PDF generation failed: {e}")
-            # The report is still saved, just without the PDF
+            # FIX: Use logger instead of print
+            logger.error(f"PDF generation failed for report {report.id}: {str(e)}")  # ✅ Fixed
 
         cleanup_old_reports(request.user)
 
@@ -158,12 +164,13 @@ class DownloadReportPDF(APIView):
 
 class ReportHistoryView(APIView):
     permission_classes = [IsAuthenticated]
+    MAX_REPORTS = 6  # ✅ Added constant
 
     def get(self, request):
         reports = (
             MedicalReport.objects
             .filter(user=request.user)
-            .order_by("-uploaded_at")[:6]
+            .order_by("-uploaded_at")[:self.MAX_REPORTS]  # ✅ Use constant
         )
 
         data = []
@@ -196,12 +203,13 @@ class ReportHistoryView(APIView):
 
 class DashboardView(APIView):
     permission_classes = [IsAuthenticated]
+    MAX_REPORTS = 6  # ✅ Added constant
 
     def get(self, request):
         reports = list(
             MedicalReport.objects
             .filter(user=request.user)
-            .order_by("-uploaded_at")[:6]
+            .order_by("-uploaded_at")[:self.MAX_REPORTS]  # ✅ Use constant
         )
 
         if not reports:
