@@ -121,10 +121,10 @@ def forgot_password(request):
         if not email:
             return JsonResponse({"success": True, "otp_sent": False})
 
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return JsonResponse({"success": True, "otp_sent": False})
+        user = User.objects.filter(email=email)
+        if not user.exists():
+            return JsonResponse({"success": False, "error": "Email not registered"}, status=400)
+
 
         last_otp = PasswordResetOTP.objects.filter(user=user).order_by("-created_at").first()
         if last_otp:
@@ -155,6 +155,8 @@ def forgot_password(request):
 
     except Exception:
         return JsonResponse({"success": False}, status=500)
+
+
 
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
