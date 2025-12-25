@@ -4,31 +4,16 @@ from datetime import timedelta
 from decouple import config
 import dj_database_url
 
-# ======================================================
-# BASE
-# ======================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY", default="_v#c)12#_+wfh2$$uoknksjyh)&fkvx@$57oadlyz7&7^j64*3")
-
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-
-CORS_ALLOW_ALL_HEADERS = True
-CORS_ALLOW_ALL_METHODS = True
-
-# ======================================================
-# HOSTS
-# ======================================================
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",")
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# ======================================================
-# APPS
-# ======================================================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -36,21 +21,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
-
     "Login_Signup",
     "reports",
 ]
 
-# ======================================================
-# MIDDLEWARE
-# ======================================================
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",   # 🔥 FIRST
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -61,12 +41,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "backend.urls"
 
-# ======================================================
-# TEMPLATES
-# ======================================================
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -85,11 +61,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-# ======================================================
-# DATABASE
-# ======================================================
 DATABASE_URL = config("DATABASE_URL", default=None)
-
 if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.parse(
@@ -106,9 +78,6 @@ else:
         }
     }
 
-# ======================================================
-# AUTH / JWT
-# ======================================================
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -125,38 +94,34 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# ======================================================
-# CORS + CSRF (VERCEL FRONTEND)
-# ======================================================
-FRONTEND_DOMAIN = "https://med-brief-h1s7.vercel.app"
+FRONTEND_DOMAIN = config("FRONTEND_DOMAIN", default="https://med-brief-h1s7.vercel.app")
 
-CORS_ALLOW_CREDENTIALS = False
-
-CORS_ALLOWED_ORIGINS = [
-    "https://med-brief-h1s7.vercel.app",
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [FRONTEND_DOMAIN]
+CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 ]
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://med-brief-h1s7.vercel.app",
-]
-
+CSRF_TRUSTED_ORIGINS = [FRONTEND_DOMAIN]
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
-# ======================================================
-# EMAIL
-# ======================================================
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = f"MedBrief <{EMAIL_HOST_USER}>"
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=f"MedBrief <{EMAIL_HOST_USER}>")
 
-# ======================================================
-# STATIC & MEDIA
-# ======================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -172,11 +137,8 @@ STORAGES = {
     },
 }
 
-# ======================================================
-# SECURITY (PRODUCTION)
-# ======================================================
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
+if SECURE_SSL_REDIRECT:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
@@ -185,10 +147,10 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+else:
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
-# ======================================================
-# MISC
-# ======================================================
 TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
 
@@ -197,25 +159,13 @@ LOGIN_URL = "/login/"
 
 API_NINJAS_KEY = config("API_NINJAS_KEY", default="")
 
-# ======================================================
-# LOGGING
-# ======================================================
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {
-        "console": {"class": "logging.StreamHandler"},
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "root": {"handlers": ["console"], "level": "INFO"},
     "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": False,
-        },
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": False},
     },
 }
 
