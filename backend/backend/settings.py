@@ -12,7 +12,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",")
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
 if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ALLOWED_HOSTS.append(f".{RENDER_EXTERNAL_HOSTNAME}")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -110,6 +110,7 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
 CSRF_TRUSTED_ORIGINS = [FRONTEND_DOMAIN]
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
@@ -138,18 +139,8 @@ STORAGES = {
 }
 
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
-if SECURE_SSL_REDIRECT:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = "DENY"
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-else:
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
+CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
 
 TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
@@ -172,11 +163,11 @@ LOGGING = {
 '''
     PYTHON_VERSION==3.10.13
     SECRET_KEY=uqd=7=b*&6a$h55@y!o+r1paup07*g-14p!+h2d)(o)(#(q&-a
-    DEBUG=True
+    DEBUG=False
     ALLOWED_HOSTS=127.0.0.1,localhost
     FRONTEND_URL=https://med-brief-h1s7.vercel.app
     EMAIL_HOST_USER=medbrief9@gmail.com
-    EMAIL_HOST_PASSWORD=hkdf rvfg nowb gpga
+    EMAIL_HOST_PASSWORD=hkdfrvfgnowbgpga
     API_NINJAS_KEY=RoE+nmWZTPVUB34sKmFm7A==4WA1mMWA9bLQQsPp
-    DATABASE_URL=postgresql://health_app_project_404_not_found_user:rLUWyGAPEL4zhEZ3MfHNQSOk5ahpwJVW@dpg-d54n33ngi27c73ed9eag-a/health_app_project_404_not_found
+    DATABASE_URL=postgresql://health_app_project_404_not_found_user:rLUWyGAPEL4zhEZ3MfHNQSOk5ahpwJVW@dpg-d54n33ngi27c73ed9eag-a.virginia-postgres.render.com:5432/health_app_project_404_not_found
     '''
