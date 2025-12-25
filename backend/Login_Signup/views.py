@@ -120,26 +120,33 @@ def forgot_password(request):
         except User.DoesNotExist:
             return JsonResponse({"success": True})
 
+        # Delete old OTPs for this user
         PasswordResetOTP.objects.filter(user=user).delete()
 
+        # Generate 6-digit OTP
         raw_otp = str(random.randint(100000, 999999))
         hashed_otp = hashlib.sha256(raw_otp.encode()).hexdigest()
 
+        # Save hashed OTP to database
         PasswordResetOTP.objects.create(user=user, otp=hashed_otp)
 
+        # Send email with proper configuration
+        from django.conf import settings
+        
         send_mail(
-            "Password Reset OTP",
-            f"Your OTP is {raw_otp}",
-            None,
-            [email],
+            subject="Password Reset OTP - MedBrief",
+            message=f"Your OTP for password reset is: {raw_otp}\n\nThis OTP will expire in 10 minutes.\n\nIf you did not request this, please ignore this email.",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[email],
             fail_silently=False
         )
-
+        
+        logger.info(f"Password reset OTP sent to {email}")
         return JsonResponse({"success": True})
 
-    except Exception:
-        return JsonResponse({"success": True})
-
+    except Exception as e:
+        logger.error(f"Password reset error: {str(e)}")
+        return JsonResponse({"success": False})
 
 @csrf_exempt
 @require_POST
