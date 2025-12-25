@@ -18,7 +18,7 @@ import logging
 from .Services import func_workout, diet_by_bmi
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-
+from django.views.decorators.http import require_http_methods
 def logout_view(request):
     logout(request)
     return redirect("/login/")
@@ -35,8 +35,11 @@ def get_tokens_for_user(user):
 
 
 @csrf_exempt
-@require_POST
+@require_http_methods(["POST", "OPTIONS"])
 def Signup(request):
+    if request.method == "OPTIONS":
+        return JsonResponse({"detail": "OK"})
+
     try:
         data = json.loads(request.body)
 
@@ -76,10 +79,12 @@ def Signup(request):
     except Exception:
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
-
 @csrf_exempt
-@require_POST
+@require_http_methods(["POST", "OPTIONS"])
 def Login(request):
+    if request.method == "OPTIONS":
+        return JsonResponse({"detail": "OK"})
+
     try:
         data = json.loads(request.body)
         username = data.get("username", "").strip()
@@ -104,10 +109,12 @@ def Login(request):
     except Exception:
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
-
 @csrf_exempt
-@require_POST
+@require_http_methods(["POST", "OPTIONS"])
 def forgot_password(request):
+    if request.method == "OPTIONS":
+        return JsonResponse({"detail": "OK"})
+
     try:
         data = json.loads(request.body)
         email = data.get("email", "").strip()
@@ -142,8 +149,11 @@ def forgot_password(request):
 
 
 @csrf_exempt
-@require_POST
+@require_http_methods(["POST", "OPTIONS"])
 def reset_password(request):
+    if request.method == "OPTIONS":
+        return JsonResponse({"detail": "OK"})
+
     try:
         data = json.loads(request.body)
 
