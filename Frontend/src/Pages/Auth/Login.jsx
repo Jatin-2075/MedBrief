@@ -194,7 +194,7 @@ const Login = () => {
     return (
         <div className="login-page">
             <div className="login-container">
-                <h2>SmartZen</h2>
+                <h2>MedBrief</h2>
 
                 {!showForgot && (
                     <>

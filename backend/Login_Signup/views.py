@@ -18,7 +18,7 @@ import logging
 from .Services import func_workout, diet_by_bmi
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from django.views.decorators.http import require_http_methods
+
 def logout_view(request):
     logout(request)
     return redirect("/login/")
@@ -109,43 +109,59 @@ def Login(request):
     except Exception:
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
+
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
 def forgot_password(request):
-    if request.method == "OPTIONS":
-        return JsonResponse({"detail": "OK"})
-
     try:
         data = json.loads(request.body)
         email = data.get("email", "").strip()
 
+        email = (data.get("email") or "").strip()
         if not email:
-            return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "otp_sent": False})
 
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "otp_sent": False})
+
+        last_otp = (
+            PasswordResetOTP.objects
+            .filter(user=user)
+            .order_by("-created_at")
+            .first()
+        )
+        if last_otp:
+            elapsed = (timezone.now() - last_otp.created_at).total_seconds()
+            if elapsed < OTP_RESEND_COOLDOWN_SECONDS and not last_otp.is_expired():
+                return JsonResponse({"success": True, "otp_sent": False})
 
         PasswordResetOTP.objects.filter(user=user).delete()
 
-        raw_otp = str(random.randint(100000, 999999))
+        raw_otp = f"{random.randint(100000, 999999):06d}"
         hashed_otp = hashlib.sha256(raw_otp.encode()).hexdigest()
 
         PasswordResetOTP.objects.create(user=user, otp=hashed_otp)
 
-        send_mail(
-            "Password Reset OTP",
-            f"Your OTP is {raw_otp}",
-            None,
-            [email],
-            fail_silently=False
-        )
+        try:
+            send_mail(
+                "Password Reset OTP",
+                f"Your OTP is {raw_otp}. It will expire in 10 minutes.",
+                getattr(settings, "DEFAULT_FROM_EMAIL", settings.EMAIL_HOST_USER),
+                [email],
+                fail_silently=False,
+            )
+        except Exception as send_err:
+            logger.error("Failed to send password reset OTP to %s: %s", email, str(send_err))
+            PasswordResetOTP.objects.filter(user=user).delete()
+            return JsonResponse({"success": True, "otp_sent": False})
 
-        return JsonResponse({"success": True})
+        return JsonResponse({"success": True, "otp_sent": True})
 
-    except Exception:
-        return JsonResponse({"success": True})
+    except Exception as e:
+        logger.exception("Unexpected error in forgot_password: %s", str(e))
+        return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
 @csrf_exempt
@@ -176,6 +192,14 @@ def reset_password(request):
             otp_obj.attempts += 1
             otp_obj.save()
             return JsonResponse({"success": False, "msg": "Invalid OTP"}, status=400)
+
+        try:
+            validate_password(new_password, user)
+        except ValidationError as e:
+            return JsonResponse(
+                {"success": False, "msg": e.messages},
+                status=400
+            )
 
         user.set_password(new_password)
         user.save()
