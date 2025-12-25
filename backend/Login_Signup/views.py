@@ -132,7 +132,7 @@ def forgot_password(request):
             f"Your OTP is {raw_otp}",
             None,
             [email],
-            fail_silently=True
+            fail_silently=False
         )
 
         return JsonResponse({"success": True})
