@@ -13,6 +13,10 @@ SECRET_KEY = config("SECRET_KEY", default="_v#c)12#_+wfh2$$uoknksjyh)&fkvx@$57oa
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+
+CORS_ALLOW_ALL_HEADERS = True
+CORS_ALLOW_ALL_METHODS = True
+
 # ======================================================
 # HOSTS
 # ======================================================
@@ -46,9 +50,9 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 # ======================================================
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",   # 🔥 FIRST
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -56,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "backend.urls"
 
@@ -125,13 +130,14 @@ SIMPLE_JWT = {
 # ======================================================
 FRONTEND_DOMAIN = "https://med-brief-h1s7.vercel.app"
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
+
 CORS_ALLOWED_ORIGINS = [
-    FRONTEND_DOMAIN,
+    "https://med-brief-h1s7.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    FRONTEND_DOMAIN,
+    "https://med-brief-h1s7.vercel.app",
 ]
 
 if RENDER_EXTERNAL_HOSTNAME:
