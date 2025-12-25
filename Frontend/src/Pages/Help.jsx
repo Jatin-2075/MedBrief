@@ -6,7 +6,7 @@ const Help = () => {
         <div className="help-page-container">
             <header className="help-page-header">
                 <h1 className="help-page-title">Need Help?</h1>
-                <p className="help-page-subtitle">Your guide to using SmartZen smoothly.</p>
+                <p className="help-page-subtitle">Your guide to using MedBrief smoothly.</p>
             </header>
 
             <section className="help-info-card">
@@ -18,7 +18,7 @@ const Help = () => {
                 <ul className="help-card-list">
                     <li className="help-list-item">Go to “Uploads” section</li>
                     <li className="help-list-item">Select your file</li>
-                    <li className="help-list-item">Submit & SmartZen will analyze it automatically</li>
+                    <li className="help-list-item">Submit & MedBrief will analyze it automatically</li>
                 </ul>
             </section>
 
@@ -45,7 +45,7 @@ const Help = () => {
             <section className="help-info-card">
                 <h2 className="help-card-heading">🔐 Privacy & Security</h2>
                 <p className="help-card-description">
-                    Your data is encrypted and stored securely. SmartZen never shares personal
+                    Your data is encrypted and stored securely. heathbrief never shares personal
                     information with third parties.
                 </p>
             </section>
@@ -54,7 +54,7 @@ const Help = () => {
                 <h2 className="help-contact-heading">📞 Contact Support</h2>
                 <p className="help-contact-text">If you need further help, reach out:</p>
                 <div className="help-contact-details">
-                    <p>Email: <strong>support@smartzen.ai</strong></p>
+                    <p>Email: <strong>support@heathbrief.ai</strong></p>
                     <p>WhatsApp: <strong>+91 90000 00000</strong></p>
                 </div>
             </section>

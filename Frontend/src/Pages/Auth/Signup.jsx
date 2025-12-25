@@ -102,7 +102,7 @@ const Signup = () => {
   return (
     <div className="signup-page">
       <div className="signup-container">
-        <h2>SmartZen</h2>
+        <h2>MedBrief</h2>
 
         <div className="signup-field">
           <label>Username</label>
