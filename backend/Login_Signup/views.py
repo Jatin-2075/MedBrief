@@ -1,30 +1,32 @@
 from .models import Profile, Status, PasswordResetOTP, ChatSession, ChatMessage
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods
 from django.core.mail import send_mail
-from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.timezone import now
+from django.conf import settings
+from django.shortcuts import redirect
+from django.utils import timezone
+from django.contrib.auth.password_validation import validate_password
 import random
 import hashlib
 import json
-import logging 
+import logging
 from .Services import func_workout, diet_by_bmi
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+
+logger = logging.getLogger(__name__)
+
+OTP_RESEND_COOLDOWN_SECONDS = 60
 
 def logout_view(request):
     logout(request)
     return redirect("/login/")
-
-
-logger = logging.getLogger(__name__)
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -32,7 +34,6 @@ def get_tokens_for_user(user):
         "refresh": str(refresh),
         "access": str(refresh.access_token),
     }
-
 
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
@@ -42,21 +43,20 @@ def Signup(request):
 
     try:
         data = json.loads(request.body)
-
         username = data.get("username", "").strip()
         email = data.get("email", "").strip()
         password = data.get("password", "")
 
         if not username or not email or not password:
-            return JsonResponse({"success": False, "msg": "All fields required"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
         validate_email(email)
 
         if User.objects.filter(username=username).exists():
-            return JsonResponse({"success": False, "msg": "Username exists"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
         if User.objects.filter(email=email).exists():
-            return JsonResponse({"success": False, "msg": "Email exists"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
         user = User.objects.create_user(
             username=username,
@@ -77,7 +77,7 @@ def Signup(request):
         }, status=201)
 
     except Exception:
-        return JsonResponse({"success": False, "msg": "Server error"}, status=500)
+        return JsonResponse({"success": False}, status=500)
 
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
@@ -92,7 +92,7 @@ def Login(request):
 
         user = authenticate(username=username, password=password)
         if not user:
-            return JsonResponse({"success": False, "msg": "Invalid credentials"}, status=401)
+            return JsonResponse({"success": False}, status=401)
 
         status_obj, _ = Status.objects.get_or_create(user=user)
 
@@ -107,16 +107,16 @@ def Login(request):
         })
 
     except Exception:
-        return JsonResponse({"success": False, "msg": "Server error"}, status=500)
-
+        return JsonResponse({"success": False}, status=500)
 
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
 def forgot_password(request):
+    if request.method == "OPTIONS":
+        return JsonResponse({"detail": "OK"})
+
     try:
         data = json.loads(request.body)
-        email = data.get("email", "").strip()
-
         email = (data.get("email") or "").strip()
         if not email:
             return JsonResponse({"success": True, "otp_sent": False})
@@ -126,12 +126,7 @@ def forgot_password(request):
         except User.DoesNotExist:
             return JsonResponse({"success": True, "otp_sent": False})
 
-        last_otp = (
-            PasswordResetOTP.objects
-            .filter(user=user)
-            .order_by("-created_at")
-            .first()
-        )
+        last_otp = PasswordResetOTP.objects.filter(user=user).order_by("-created_at").first()
         if last_otp:
             elapsed = (timezone.now() - last_otp.created_at).total_seconds()
             if elapsed < OTP_RESEND_COOLDOWN_SECONDS and not last_otp.is_expired():
@@ -148,21 +143,18 @@ def forgot_password(request):
             send_mail(
                 "Password Reset OTP",
                 f"Your OTP is {raw_otp}. It will expire in 10 minutes.",
-                getattr(settings, "DEFAULT_FROM_EMAIL", settings.EMAIL_HOST_USER),
+                settings.DEFAULT_FROM_EMAIL,
                 [email],
                 fail_silently=False,
             )
-        except Exception as send_err:
-            logger.error("Failed to send password reset OTP to %s: %s", email, str(send_err))
+        except Exception:
             PasswordResetOTP.objects.filter(user=user).delete()
             return JsonResponse({"success": True, "otp_sent": False})
 
         return JsonResponse({"success": True, "otp_sent": True})
 
-    except Exception as e:
-        logger.exception("Unexpected error in forgot_password: %s", str(e))
-        return JsonResponse({"success": False, "msg": "Server error"}, status=500)
-
+    except Exception:
+        return JsonResponse({"success": False}, status=500)
 
 @csrf_exempt
 @require_http_methods(["POST", "OPTIONS"])
@@ -172,7 +164,6 @@ def reset_password(request):
 
     try:
         data = json.loads(request.body)
-
         email = data.get("email")
         otp = data.get("otp")
         new_password = data.get("new_password")
@@ -182,34 +173,27 @@ def reset_password(request):
 
         if otp_obj.is_expired():
             otp_obj.delete()
-            return JsonResponse({"success": False, "msg": "OTP expired"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
         if otp_obj.attempts >= 3:
             otp_obj.delete()
-            return JsonResponse({"success": False, "msg": "Too many attempts"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
         if hashlib.sha256(otp.encode()).hexdigest() != otp_obj.otp:
             otp_obj.attempts += 1
             otp_obj.save()
-            return JsonResponse({"success": False, "msg": "Invalid OTP"}, status=400)
+            return JsonResponse({"success": False}, status=400)
 
-        try:
-            validate_password(new_password, user)
-        except ValidationError as e:
-            return JsonResponse(
-                {"success": False, "msg": e.messages},
-                status=400
-            )
+        validate_password(new_password, user)
 
         user.set_password(new_password)
         user.save()
         otp_obj.delete()
 
-        return JsonResponse({"success": True, "msg": "Password reset done"})
+        return JsonResponse({"success": True})
 
     except Exception:
-        return JsonResponse({"success": False, "msg": "Invalid request"}, status=400)
-
+        return JsonResponse({"success": False}, status=400)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
