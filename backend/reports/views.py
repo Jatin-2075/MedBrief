@@ -116,9 +116,9 @@ class UploadReportView(APIView):
                 except:
                     pass
         except Exception as e:
-            # Log the error but don't fail the entire request
+
             print(f"PDF generation failed: {e}")
-            # The report is still saved, just without the PDF
+
 
         cleanup_old_reports(request.user)
 
