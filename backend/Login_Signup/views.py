@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.timezone import now
 import random
@@ -45,14 +45,15 @@ def get_tokens_for_user(user):
     }
 
 
-# ✅ FIXED: Added @api_view and @permission_classes([AllowAny])
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_exempt
+@require_POST
 def Signup(request):
     try:
-        username = request.data.get("username", "").strip()
-        email = request.data.get("email", "").strip()
-        password = request.data.get("password", "")
+        data = json.loads(request.body)
+
+        username = data.get("username", "").strip()
+        email = data.get("email", "").strip()
+        password = data.get("password", "")
 
         if not username or not email or not password:
             return JsonResponse({"success": False, "msg": "All fields required"}, status=400)
@@ -87,13 +88,13 @@ def Signup(request):
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
-# ✅ FIXED: Added @api_view and @permission_classes([AllowAny])
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_exempt
+@require_POST
 def Login(request):
     try:
-        username = request.data.get("username", "").strip()
-        password = request.data.get("password", "")
+        data = json.loads(request.body)
+        username = data.get("username", "").strip()
+        password = data.get("password", "")
 
         user = authenticate(username=username, password=password)
         if not user:
@@ -115,12 +116,17 @@ def Login(request):
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
-# ✅ FIXED: Added @api_view and @permission_classes([AllowAny])
-@api_view(['POST'])
-@permission_classes([AllowAny])
+
+@csrf_exempt
+@require_POST
 def forgot_password(request):
     try:
-        email = request.data.get("email", "").strip()
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": True, "otp_sent": False})
+
+        email = (data.get("email") or "").strip()
         if not email:
             return JsonResponse({"success": True, "otp_sent": False})
 
@@ -167,14 +173,15 @@ def forgot_password(request):
         return JsonResponse({"success": False, "msg": "Server error"}, status=500)
 
 
-# ✅ FIXED: Added @api_view and @permission_classes([AllowAny])
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_exempt
+@require_POST
 def reset_password(request):
     try:
-        email = request.data.get("email")
-        otp = request.data.get("otp")
-        new_password = request.data.get("new_password")
+        data = json.loads(request.body)
+
+        email = data.get("email")
+        otp = data.get("otp")
+        new_password = data.get("new_password")
 
         user = User.objects.get(email=email)
         otp_obj = PasswordResetOTP.objects.filter(user=user).latest("created_at")
