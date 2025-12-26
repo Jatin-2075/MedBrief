@@ -152,7 +152,7 @@ def Profile_creation(request):
 @api_view(["GET","POST"])
 @permission_classes([IsAuthenticated])
 def Send_Profile(request):
-    profile = Profile.objects.get(user=request.user)
+    profile, _ = Profile.objects.get_or_create(user=request.user)
     return Response({
         "success": True,
         "username": request.user.username,
