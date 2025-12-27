@@ -49,7 +49,7 @@ const Home = () => {
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/dashboard/`, {
+    fetch(`${API_BASE_URL}/api/reports/dashboard/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

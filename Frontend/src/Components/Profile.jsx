@@ -18,7 +18,7 @@ const Profile_Status = () => {
       }
 
       try {
-        const res = await fetch(`${API_BASE_URL}/profile/status/`, {
+        const res = await fetch(`${API_BASE_URL}/api/reports/profile/status/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
