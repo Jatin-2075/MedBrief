@@ -50,11 +50,13 @@ const Home = () => {
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/reports/dashboard/`, {
+      method:"GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
+        console.log(res)
         if (!res.ok) throw new Error("Unauthorized");
         return res.json();
       })
