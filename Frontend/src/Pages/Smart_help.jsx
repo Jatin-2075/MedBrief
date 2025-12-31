@@ -25,7 +25,7 @@ const Smart_help = () => {
                 },
                 body: JSON.stringify({
                     know: selected,
-                    workout_level: WorkoutLevel, // ✅ FIXED
+                    workout_level: WorkoutLevel,
                     bmi: BMI,
                 })
 

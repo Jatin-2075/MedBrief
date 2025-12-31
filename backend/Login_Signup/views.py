@@ -183,6 +183,9 @@ def Status_view(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def Smart_Help(request):
+    print("USER:", request.user)
+    print("DATA:", request.data)
+
     know = request.data.get("know")
 
     logger.info(f"Incoming request - know: {know}, data: {request.data}")
@@ -241,7 +244,7 @@ def Smart_Help(request):
 
 
 
-        
+
 from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(["POST"])
