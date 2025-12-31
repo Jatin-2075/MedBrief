@@ -25,7 +25,6 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -33,12 +32,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
-
+    "rest_framework_simplejwt.token_blacklist",
     "Login_Signup",
     "reports",
 ]
@@ -61,7 +59,7 @@ ROOT_URLCONF = "backend.urls"
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
-
+# Database Configuration
 DATABASE_URL = config("DATABASE_URL", default="")
 
 if DATABASE_URL:
@@ -85,7 +83,7 @@ else:
         raise RuntimeError("DATABASE_URL must be set in production")
 
 
-
+# Templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -103,6 +101,7 @@ TEMPLATES = [
 ]
 
 
+# REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -113,32 +112,46 @@ REST_FRAMEWORK = {
 }
 
 
+# JWT Settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+
 FRONTEND_DOMAIN = config("FRONTEND_DOMAIN", default="http://localhost:3000")
 
 CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=DEBUG, cast=bool)
-CORS_ALLOW_CREDENTIALS = True  
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = []
 if not CORS_ALLOW_ALL_ORIGINS:
     if FRONTEND_DOMAIN:
-        CORS_ALLOWED_ORIGINS.append(FRONTEND_DOMAIN)
+        frontend_url = FRONTEND_DOMAIN.rstrip('/')
+        CORS_ALLOWED_ORIGINS.append(frontend_url)
+    
     if RENDER_EXTERNAL_HOSTNAME:
         CORS_ALLOWED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
     "https://med-brief-4hin.vercel.app",
 ]
+
 if FRONTEND_DOMAIN:
-    CSRF_TRUSTED_ORIGINS.append(FRONTEND_DOMAIN)
+    frontend_url = FRONTEND_DOMAIN.rstrip('/')
+    if frontend_url not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(frontend_url)
+
 if RENDER_EXTERNAL_HOSTNAME:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+    render_url = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_url not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_url)
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -165,9 +178,8 @@ STORAGES = {
     },
 }
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-
+static_dir = BASE_DIR / "static"
+STATICFILES_DIRS = [static_dir] if static_dir.exists() else []
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_BROWSER_XSS_FILTER = True
@@ -177,6 +189,7 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    
     if CORS_ALLOW_CREDENTIALS:
         SESSION_COOKIE_SAMESITE = None
         CSRF_COOKIE_SAMESITE = None
@@ -194,11 +207,15 @@ else:
     SESSION_COOKIE_SAMESITE = "Lax"
     CSRF_COOKIE_SAMESITE = "Lax"
 
+
 TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
+LANGUAGE_CODE = "en-us"
+USE_I18N = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/login/"
+
 
 API_NINJAS_KEY = config("API_NINJAS_KEY", default="")
 
@@ -207,10 +224,19 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {"class": "logging.StreamHandler"},
+        "console": {
+            "class": "logging.StreamHandler",
+        },
     },
     "root": {
         "handlers": ["console"],
         "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
