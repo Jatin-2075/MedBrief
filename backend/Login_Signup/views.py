@@ -186,9 +186,6 @@ def Smart_Help(request):
     try:
         if know == "workout":
             level = request.data.get("workout_level")
-            if not level:
-                return Response({"success": False, "msg": "Level and Type are required"}, status=status.HTTP_400_BAD_REQUEST)
-            result = func_workout(level)
         elif know == "diet":
             bmi = request.data.get("bmi")
             if bmi is None:
