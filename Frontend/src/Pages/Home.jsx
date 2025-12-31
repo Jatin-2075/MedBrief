@@ -7,7 +7,7 @@ import {
   checkHeartRate,
   checkRespiratoryRate,
 } from "../Components/customChecks";
-
+import { API_BASE_URL } from "../config/api";
 import {
   Chart as ChartJS,
   CategoryScale,

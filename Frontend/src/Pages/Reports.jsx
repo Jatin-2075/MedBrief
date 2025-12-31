@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../Style/reports.css";
+import { API_BASE_URL } from "../config/api";
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
