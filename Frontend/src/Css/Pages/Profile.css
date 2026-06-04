@@ -1,8 +1,3 @@
-/* ==========================================================================
-   MEDBRIEF MODERN DASHBOARD VIEWPORTS (PROFILE PANELS)
-   ========================================================================== */
-
-/* Outer wrapper inheriting spacing rules from the root layout engine */
 .profile-container {
   display: grid;
   grid-template-columns: 1fr 1.25fr;
@@ -12,7 +7,6 @@
   width: 100%;
 }
 
-/* Base style setup for all content block surfaces (Glassmorphism layout) */
 .profile-card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
@@ -34,9 +28,6 @@
   padding-bottom: 0.75rem;
 }
 
-/* ==========================================================================
-   ROLE-BASED OVERVIEW CARDS
-   ========================================================================== */
 .table-card {
   display: flex;
   flex-direction: column;
@@ -59,7 +50,6 @@
   font-weight: 500;
 }
 
-/* Copy ID Row utilities */
 .profile-id-row {
   background: rgba(0, 0, 0, 0.15);
   padding: 0.5rem 0.75rem;
@@ -77,9 +67,6 @@
   font-size: 0.85rem;
 }
 
-/* ==========================================================================
-   UNIFIED CONTROL FORM LAYOUTS
-   ========================================================================== */
 .profile-form {
   display: flex;
   flex-direction: column;
@@ -116,7 +103,6 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-/* Force consistency on native dropdown elements */
 select.form-input {
   appearance: none;
   cursor: pointer;
@@ -132,9 +118,6 @@ select.form-input option {
   color: #f1f5f9;
 }
 
-/* ==========================================================================
-   BUTTON DESIGN SYSTEM CONFIGURATIONS
-   ========================================================================== */
 .page-button {
   display: inline-flex;
   align-items: center;
@@ -179,9 +162,6 @@ select.form-input option {
   color: #f8fafc;
 }
 
-/* ==========================================================================
-   DOCTOR'S ASSIGNED PATIENTS DATA TABLE LIST
-   ========================================================================== */
 .assigned-patients-section {
   grid-column: span 2;
   margin-top: 1rem;
@@ -229,7 +209,6 @@ select.form-input option {
   color: #f1f5f9;
 }
 
-/* Action button grouping inside rows */
 .patient-actions-row {
   grid-column: span 6;
   border-top: 1px dashed rgba(255, 255, 255, 0.05);
@@ -250,9 +229,6 @@ select.form-input option {
   color: #38bdf8;
 }
 
-/* ==========================================================================
-   RESPONSIVE LAYOUT BREAKPOINTS (TABLETS & PORTABLE MONITORS)
-   ========================================================================== */
 @media (max-width: 1024px) {
   .profile-container {
     grid-template-columns: 1fr;

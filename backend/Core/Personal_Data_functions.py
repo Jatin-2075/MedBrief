@@ -99,7 +99,7 @@ def delete_doctor(db: Session, doctor_id: UUID) -> dict:
     return {"detail": "Doctor deleted successfully"}
 
 
-# ── Profile ───────────────────────────────────────────────────────────────────
+# ── patient ───────────────────────────────────────────────────────────────────
 
 def create_profile(db: Session, data: ProfileCreate) -> Profile:
     existing = db.query(Profile).filter(Profile.user_id == data.user_id).first()

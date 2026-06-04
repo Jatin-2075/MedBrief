@@ -1,6 +1,3 @@
-/* ==========================================================================
-   DESIGN SYSTEM VARIABLES & RESET
-   ========================================================================== */
 :root {
   --bg-main: #050508;
   --bg-surface: #0a0a0f;
@@ -39,9 +36,7 @@ html, body, #root {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* ==========================================================================
-   GLOBAL ANIMATION ENGINE (SHARED KEYFRAMES)
-   ========================================================================== */
+/* Animations */
 @keyframes pulseRing {
   0% { transform: scale(0.8); opacity: 0.6; }
   100% { transform: scale(2.2); opacity: 0; }
@@ -70,57 +65,77 @@ html, body, #root {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
 }
-
-
-/* ==========================================================================
-   FLUID APPSHELL VIEWPORT AND ANTI-COLLISION ENGINE
-   ========================================================================== */
-
-/* 1. Root structural window frame layout canvas */
+/* Layout Structure */
 .appMainLayoutContainer {
   display: flex;
+  flex-direction: row; 
   min-height: 100vh;
   width: 100%;
   background-color: var(--bg-main);
   overflow-x: hidden;
   
-  /* Configure default architectural spaces utilizing the sidebar design system tokens */
-  --sidebar-width: var(--sb-width-expanded, 260px);
+  /* Fallbacks match your sidebar :root variables */
+  --sidebar-width: 260px; 
   transition: --sidebar-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* 2. State configuration modifications injected when sidebar collapses */
 .appMainLayoutContainer.sidebar-is-collapsed {
-  --sidebar-width: var(--sb-width-collapsed, 78px);
+  --sidebar-width: 78px;
 }
 
-/* 3. GLOBAL ROUTE WRAPPER FIX: Locks page elements securely away from sidebar overlays */
 .page-content-wrapper {
   flex: 1;
-  /* Dynamically shifts page margins based on the state variable */
-  margin-left: var(--sidebar-width); 
   padding: 2.5rem 2rem;
   box-sizing: border-box;
-  min-width: 0; /* Curbs layout flex engines from clipping data grids */
+  min-width: 0;
   background-color: var(--bg-main);
   
-  /* Seamless transition mapping matching the MacBook spring easing curve */
+  /* FIX: Pushes the main content rightwards so it never overlaps the fixed sidebar */
+  margin-left: var(--sidebar-width); 
+  
+  /* Smoothly shifts content layout when sidebar expands or collapses */
   transition: margin-left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  
   animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ==========================================================================
-   CROSS PLATFORM RESPONSIVE OVERRIDES (MOBILE OR TRANSLATE VIEWPORTS)
-   ========================================================================== */
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .appMainLayoutContainer {
+    --sidebar-width: 220px; /* Syncs up with your sidebar's media query tablet width */
+  }
+}
+
 @media (max-width: 768px) {
   .appMainLayoutContainer,
   .appMainLayoutContainer.sidebar-is-collapsed {
-    --sidebar-width: 0px; /* Sidebar goes full flyout floating drawer on mobile */
+    --sidebar-width: 0px; /* Sidebar goes off-screen on mobile, so reset margin to 0 */
   }
 
   .page-content-wrapper {
-    margin-left: 0 !important;
     padding: 1.5rem 1rem;
     width: 100%;
+    margin-left: 0;
   }
+}
+
+
+/* Style the navigation text buttons inside the pill */
+.nav-link {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.2s ease-in-out !important;
+    outline: none !important;
+}
+
+/* Add a clean violet glow/smooth text fade when hovering */
+.nav-link:hover {
+    color: #c084fc !important; /* Soft violet color */
+    background: rgba(167, 139, 250, 0.08) !important; /* Subtle dark violet background highlight */
 }

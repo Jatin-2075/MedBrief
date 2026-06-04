@@ -77,7 +77,6 @@ export default function Prescriptions() {
         }
     }, [navigate, user]);
 
-    // Handle view toggling safely across differing authorization identities
     const handleToggleFilter = (activeState: boolean) => {
         setShowActive(activeState);
         if (user?.role === "patient") {
@@ -108,7 +107,6 @@ export default function Prescriptions() {
                 </div>
             </header>
 
-            {/* ── Section 1: Doctor Operations Panel Matrix ── */}
             {user.role === "doctor" && (
                 <section className="rx-glass-card rx-search-workspace">
                     <div className="rx-card-header">
@@ -150,7 +148,6 @@ export default function Prescriptions() {
                 </section>
             )}
 
-            {/* ── Section 2: Patient Filter Toggle Bar ── */}
             {user.role === "patient" && (
                 <div className="rx-segmented-wrapper">
                     <button
@@ -168,7 +165,6 @@ export default function Prescriptions() {
                 </div>
             )}
 
-            {/* ── Section 3: Records Data Grid Block ── */}
             <section className="rx-glass-card rx-results-workspace">
                 <div className="rx-card-header">
                     <h2 className="rx-section-title">

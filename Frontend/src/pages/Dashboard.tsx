@@ -6,7 +6,7 @@ import type { HealthData, User } from "../Config/Types";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import "../Css/Pages/Dashboard.css";
 
-export const Dashboard = () => {
+export default function Dashboard() {
     const authContext = useContext(AuthContext);
     if (!authContext) throw new Error("AuthContext.Provider is required.");
 
@@ -96,15 +96,20 @@ export const Dashboard = () => {
             return;
         }
 
-        const form = new FormData();
-        form.append("file", file);
+        // Build query string for patient_id
+        const params = new URLSearchParams();
         if (role === "doctor" && patientId.trim()) {
-            form.append("patient_id", patientId.trim());
+            params.append("patient_id", patientId.trim());
         }
+
+        const form = new FormData();
+        form.append("file", file);  // only file in form data
+
+        const url = `/reports/upload${params.toString() ? `?${params.toString()}` : ""}`;
 
         setLoading(true);
         try {
-            const newReport = await API<HealthData>("POST", "/reports/upload", form);
+            const newReport = await API<HealthData>("POST", url, form);
             setReports(prev => [newReport, ...prev]);
             setMessage("Report uploaded successfully.");
             setFile(null);
@@ -125,7 +130,6 @@ export const Dashboard = () => {
         });
     };
 
-    // Dynamically mapping the dataset based on the active state metric variable
     const chartData = reports
         .filter(report => report[metric as keyof HealthData] != null)
         .map(report => ({
@@ -143,7 +147,6 @@ export const Dashboard = () => {
                 </div>
             </header>
 
-            {/* ── Section 1: Upload Workspace File System ── */}
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Upload Health Report</h2>
                 <div className="dashboard-form-group">
@@ -167,7 +170,6 @@ export const Dashboard = () => {
                 {message && <p className="dashboard-message">{message}</p>}
             </section>
 
-            {/* ── Section 2: Recharts Health Trends Visualization ── */}
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
 
@@ -209,7 +211,6 @@ export const Dashboard = () => {
                 </div>
             </section>
 
-            {/* ── Section 3: Historical Records Feed ── */}
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Chronological Medical Records</h2>
                 {loadingReports ? (
@@ -244,7 +245,6 @@ export const Dashboard = () => {
                 )}
             </section>
 
-            {/* ── Section 4: Deep AI Analysis Expansion Layer ── */}
             {selectedReport && (
                 <section className="dashboard-card">
                     <h2 className="dashboard-section-title">Deep Metric Struct Analysis</h2>

@@ -5,7 +5,6 @@ import { AuthContext } from "../Context/AuthContext";
 import type { Doctor, Profile as PatientProfile } from "../Config/Types";
 import "../Css/Pages/Profile.css";
 
-// Frontend mapping for the gender enum
 const GENDER_LABELS: Record<string | number, string> = {
     1: "Male",
     2: "Female",
@@ -57,7 +56,6 @@ export default function Profile() {
                 const data = await API<Doctor | PatientProfile>("GET", endpoint);
                 setProfile(data);
                 
-                // Safe initialization of form state to prevent uncontrolled transitions
                 setEditData({
                     name: data.name ?? "",
                     email: "email" in data ? (data.email ?? "") : "",
@@ -143,7 +141,6 @@ export default function Profile() {
             ) : profile ? (
                 <div className="profile-container">
                     
-                    {/* Role-Based Overview Card */}
                     <div className="profile-card data-summary-card">
                         {user.role === "doctor" ? (
                             <div className="table-card">
@@ -153,6 +150,19 @@ export default function Profile() {
                                 {"email" in profile && <p><strong>Email:</strong> {profile.email}</p>}
                                 {"phone" in profile && <p><strong>Phone:</strong> {profile.phone}</p>}
                                 <p><strong>System Role:</strong> {user.role}</p>
+                                {profile.id && (
+                                    <div className="profile-id-row" style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}>
+                                        <p style={{ margin: 0 }}><strong>Doctor ID:</strong> <code>{profile.id}</code></p>
+                                        <button
+                                            type="button"
+                                            className="page-button copy-btn"
+                                            style={{ padding: "2px 8px", fontSize: "12px", marginTop: 0 }}
+                                            onClick={() => copyToClipboard(String(profile.id))}
+                                        >
+                                            Copy
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <div className="table-card">
@@ -160,8 +170,8 @@ export default function Profile() {
                                 <p><strong>Name:</strong> {profile.name}</p>
                                 <p><strong>System Role:</strong> {user.role}</p>
                                 {profile.id && (
-                                    <div className="profile-id-row" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                                        <p style={{ margin: 0 }}><strong>Profile ID:</strong> <code>{profile.id}</code></p>
+                                    <div className="profile-id-row" style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}>
+                                        <p style={{ margin: 0 }}><strong>Patient ID:</strong> <code>{profile.id}</code></p>
                                         <button
                                             type="button"
                                             className="page-button copy-btn"
@@ -176,7 +186,6 @@ export default function Profile() {
                         )}
                     </div>
 
-                    {/* Unified Form Editing Box */}
                     <div className="profile-card form-edit-card">
                         <h2>Edit Profile Details</h2>
                         <div className="profile-form">
@@ -287,7 +296,6 @@ export default function Profile() {
                         )}
                     </div>
 
-                    {/* Assigned Patients Section (Exclusive to Doctors) */}
                     {user.role === "doctor" && (
                         <section className="profile-section assigned-patients-section">
                             <h2 className="section-title">My Patients</h2>
@@ -296,10 +304,10 @@ export default function Profile() {
                             ) : (
                                 <div className="table-card">
                                     {patients.map((patient) => (
-                                        <div key={patient.id} className="table-row">
+                                        <div key={patient.id} className="table-row" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "15px", marginBottom: "15px" }}>
                                             <p><strong>{patient.name}</strong></p>
                                             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                                                <span><strong>Profile ID:</strong> <code>{patient.id}</code></span>
+                                                <span><strong>Patient ID:</strong> <code>{patient.id}</code></span>
                                                 <button
                                                     type="button"
                                                     className="page-button copy-btn"
@@ -336,7 +344,7 @@ export default function Profile() {
                     )}
                 </div>
             ) : (
-                <p>{message ?? "Profile profile records could not be found."}</p>
+                <p>{message ?? "Profile records could not be found."}</p>
             )}
         </div>
     );

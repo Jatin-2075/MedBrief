@@ -32,8 +32,6 @@ export default function Chat() {
             setLoadingMessages(true);
             try {
                 const data = await API<ChatMessage[]>("GET", `/system/chat/user/${user.id}`);
-                // Keep the array original or reversed depending on visual stack flow
-                // We show newest messages at the bottom of the conversational layout stream
                 setMessages([...data]);
             } catch (error) {
                 setMessage("Unable to load chat history.");
@@ -52,16 +50,15 @@ export default function Chat() {
         }
 
         const currentQuery = prompt.trim();
-        setPrompt(""); // Clear input early for fluid UX acceleration
+        setPrompt("");
         setMessage(null);
         setLoading(true);
 
-        // Optimistically drop user query into stack immediately to mimic active typing reflection
         const optimisticMsg: ChatMessage = {
             id: `temp-${Date.now()}`,
             user_query: currentQuery,
             ai_response: "Analyzing records...",
-            chat_mode: "gemini", // <-- Add this missing property to satisfy ChatMessage type rules
+            chat_mode: "gemini",
             created_at: new Date().toISOString(),
             session_id: "temp"
         };
@@ -74,19 +71,16 @@ export default function Chat() {
             };
             const reply = await API<ChatMessage>("POST", "/system/chat", payload);
 
-            // Replace optimistic item with actual verified payload message
             setMessages(prev => prev.map(m => m.id === optimisticMsg.id ? reply : m));
         } catch (error) {
-            // Remove optimistic message and show error state notice
             setMessages(prev => prev.filter(m => m.id !== optimisticMsg.id));
-            setPrompt(currentQuery); // Restore user context text
+            setPrompt(currentQuery);
             setMessage("Unable to send message.");
         } finally {
             setLoading(false);
         }
     };
 
-    // MacBook native key handler: Cmd/Ctrl + Enter triggers send
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
             e.preventDefault();
@@ -104,7 +98,6 @@ export default function Chat() {
             </header>
 
             <div className="chat-window-frame">
-                {/* ── Conversational Stream Timeline ── */}
                 <div className="chat-history-viewport">
                     {loadingMessages ? (
                         <div className="chat-status-alert">
@@ -122,14 +115,12 @@ export default function Chat() {
                             {messages.map(msg => (
                                 <div key={msg.id ?? `${msg.session_id}-${msg.created_at}`} className="dialog-block-pair">
 
-                                    {/* User Query Speech Fragment */}
                                     <div className="bubble-wrapper user">
                                         <div className="speech-bubble user">
                                             {msg.user_query}
                                         </div>
                                     </div>
 
-                                    {/* Assistant Insights Fragment */}
                                     <div className="bubble-wrapper ai">
                                         <div className="ai-avatar">MB</div>
                                         <div className={`speech-bubble ai ${msg.id?.toString().startsWith("temp-") ? "typing-state" : ""}`}>
@@ -148,7 +139,6 @@ export default function Chat() {
                     )}
                 </div>
 
-                {/* ── Interactive Workspace Command Dock ── */}
                 <div className="chat-input-dock">
                     {message && <div className="chat-error-toast">{message}</div>}
                     <div className="input-bar-group">

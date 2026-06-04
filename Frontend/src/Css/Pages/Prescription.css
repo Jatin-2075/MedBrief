@@ -1,6 +1,3 @@
-/* ==========================================================================
-   MACBOOK METRIC CANVAS HEALTH PRE-SYSTEM STYLING - PRESCRIPTION MODULE
-   ========================================================================== */
 .rx-page-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +9,6 @@
   gap: 1.5rem;
 }
 
-/* ─── TITLE MATRIX HEADER LAYOUT ─── */
 .rx-page-header {
   margin-bottom: 0.25rem;
 }
@@ -31,7 +27,6 @@
   margin: 0;
 }
 
-/* ─── CORE GLASS COMPONENT BOARDS ─── */
 .rx-glass-card {
   background: rgba(20, 20, 28, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -49,7 +44,7 @@
 .rx-section-title {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #a78bfa; /* Glowing purple neon accent matching components */
+  color: #a78bfa;
   margin: 0 0 0.25rem 0;
   letter-spacing: -0.01em;
 }
@@ -60,7 +55,6 @@
   margin: 0;
 }
 
-/* ─── INTERACTIVE SYSTEM CONFIG LAYOUT ─── */
 .rx-form-group {
   display: flex;
   flex-direction: column;
@@ -100,7 +94,6 @@
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
 }
 
-/* ─── CONTROL SPLIT SEGMENTS BUTTON DECK ─── */
 .rx-button-split-group {
   display: flex;
   background: rgba(5, 5, 8, 0.4);
@@ -133,7 +126,6 @@
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
 }
 
-/* ─── SEGMENTED NAVIGATION TAB WRAPPER (PATIENTS ROLE) ─── */
 .rx-segmented-wrapper {
   display: flex;
   background: rgba(20, 20, 28, 0.5);
@@ -161,7 +153,6 @@
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
-/* ─── GRID CARD DECK DATA VIEW ─── */
 .rx-grid-deck {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -241,7 +232,6 @@
   color: #f87171;
 }
 
-/* Embedded Modular Data Fields Specs Grid */
 .rx-specs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -277,7 +267,6 @@
   font-weight: 500;
 }
 
-/* ─── SYSTEM LOADER NODES AND ALERTS ─── */
 .rx-status-feedback {
   font-size: 0.82rem;
   font-weight: 500;
@@ -325,7 +314,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Responsive Structural Collapsing Hooks */
 @media (max-width: 768px) {
   .rx-input-row {
     flex-direction: column;

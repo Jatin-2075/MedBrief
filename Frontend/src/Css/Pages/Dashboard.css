@@ -1,6 +1,3 @@
-/* ==========================================================================
-   MACBOOK COMPACT INTELLIGENT CLINICAL DASHBOARD ARCHITECTURE
-   ========================================================================== */
 .dashboard-page {
   display: flex;
   flex-direction: column;
@@ -12,7 +9,6 @@
   gap: 1.5rem;
 }
 
-/* ─── WORKSPACE HEADER LAYER ─── */
 .dashboard-header {
   margin-bottom: 0.5rem;
 }
@@ -32,7 +28,6 @@
   text-transform: capitalize;
 }
 
-/* ─── SPLIT COMMAND WORKSPACE GRID (Upload & Trends Side-by-Side) ─── */
 @media (min-width: 992px) {
   .dashboard-page {
     display: grid;
@@ -41,24 +36,20 @@
   .dashboard-header {
     grid-column: span 12;
   }
-  /* First Card (Upload Form) takes 5 columns */
   .dashboard-page > .dashboard-card:nth-of-type(1) {
     grid-column: span 5;
     height: 100%;
   }
-  /* Second Card (Trends Line Chart) takes 7 columns */
   .dashboard-page > .dashboard-card:nth-of-type(2) {
     grid-column: span 7;
     height: 100%;
   }
-  /* Reports Lists and detail panels take full span */
   .dashboard-page > .dashboard-card:nth-of-type(3),
   .dashboard-page > .dashboard-card:nth-of-type(4) {
     grid-column: span 12;
   }
 }
 
-/* ─── BASE CORE GLASSMORPHIC DASHBOARD PANELS ─── */
 .dashboard-card {
   background: rgba(20, 20, 28, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -75,12 +66,11 @@
 .dashboard-section-title {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #a78bfa; /* Premium neon accent */
+  color: #a78bfa;
   margin: 0;
   letter-spacing: -0.01em;
 }
 
-/* ─── INTERACTIVE FORM LAYER ELEMENTS ─── */
 .dashboard-form-group {
   display: flex;
   flex-direction: column;
@@ -95,7 +85,6 @@
   color: #9ca3af;
 }
 
-/* Universal Inputs, Dropdowns, and File Pickers custom fields styling */
 .dashboard-input {
   background: rgba(5, 5, 8, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -110,7 +99,6 @@
   box-sizing: border-box;
 }
 
-/* File input field unique spacing adjustment overrides */
 input[type="file"].dashboard-input {
   padding: 0.5rem;
   cursor: pointer;
@@ -140,7 +128,6 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
 }
 
-/* Premium High-Contrast Command Trigger Actions */
 .dashboard-button {
   background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%);
   color: #ffffff;
@@ -175,11 +162,10 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 .dashboard-message {
   font-size: 0.85rem;
   font-weight: 500;
-  color: #34d399; /* Positive confirmation accent */
+  color: #34d399;
   margin: 0;
 }
 
-/* Recharts Internal Elements Styling Modifications */
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
   stroke: rgba(255, 255, 255, 0.05);
@@ -199,7 +185,6 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   color: #ffffff !important;
 }
 
-/* ─── HEALTH REPORT LIST DECK MASONRY GRID ─── */
 .dashboard-report-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -249,7 +234,6 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   font-weight: 500;
 }
 
-/* Sub-level Card Inner View Details Action Buttons Layout */
 .report-detail-button {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -271,7 +255,6 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   color: #ffffff;
 }
 
-/* ─── EXPANDED ANALYSIS REPORT DETAILS MODAL FRAME ─── */
 .report-detail {
   display: flex;
   flex-direction: column;
@@ -304,13 +287,11 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   color: #a78bfa;
 }
 
-/* Loading state placeholders text modifiers */
 p.dashboard-message:contains("failed"),
 p.dashboard-message:contains("Could not") {
   color: #f87171;
 }
 
-/* Mobile Screen Bounds Fluid Resets */
 @media (max-width: 576px) {
   .dashboard-page {
     padding: 1rem;

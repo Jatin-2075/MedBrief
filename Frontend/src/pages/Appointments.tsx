@@ -132,7 +132,6 @@ export default function Appointments() {
     };
 
     return (
-        /* Scoping container added right here to safely trap component CSS */
         <div className="appointments-wrapper-root">
             <div className="page-content">
                 <h1 className="page-title">Appointments</h1>

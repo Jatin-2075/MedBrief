@@ -1,11 +1,9 @@
-import os
 from google import genai
 from ...Security.Settings import settings 
 
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
-
 async def call_genai(prompts: str) -> str:
     try:
+        client = genai.Client(api_key=settings.GEMINI_API_KEY)
         model_name = settings.GEMINI_MODEL
         
         if model_name.startswith("models/"):

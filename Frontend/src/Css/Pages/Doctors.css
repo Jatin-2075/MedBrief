@@ -1,6 +1,3 @@
-/* ==========================================================================
-   MACBOOK COMPACT PREMIUM PRACTITIONER MANAGEMENT MODULE
-   ========================================================================== */
 .doctors-page-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +9,6 @@
   gap: 1.5rem;
 }
 
-/* ─── PAGE HEADERS ─── */
 .doctors-page-header {
   margin-bottom: 0.5rem;
 }
@@ -31,7 +27,6 @@
   margin: 0;
 }
 
-/* ─── CORE GLASS COMPONENT PANELS ─── */
 .doctors-glass-card {
   background: rgba(20, 20, 28, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -51,12 +46,11 @@
 .doctors-section-title {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #a78bfa; /* Glowing purple style color matching dashboard */
+  color: #a78bfa;
   margin: 0 0 1.25rem 0;
   letter-spacing: -0.01em;
 }
 
-/* ─── CORE LAYOUT CONTROL INPUT FORM LAYER ─── */
 .doctors-form-group {
   display: flex;
   flex-direction: column;
@@ -95,7 +89,6 @@
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
 }
 
-/* Premium Primary Accent Buttons Controls */
 .doctors-action-button {
   background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%);
   color: #ffffff;
@@ -126,7 +119,6 @@
 .doctors-status-feedback.success { color: #34d399; }
 .doctors-status-feedback.error { color: #f87171; }
 
-/* ─── DOCTOR VIEW MODE: PATIENTS PROFILE DECK GRID ─── */
 .patients-grid-deck {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -189,7 +181,6 @@
   font-family: monospace;
 }
 
-/* Embedded Micro Metrics Display Matrix Boxes Block */
 .patient-specs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -217,7 +208,6 @@
   font-weight: 500;
 }
 
-/* ─── PATIENT VIEW MODE: DETAILED SINGLE PROVIDER VIEW ─── */
 .single-doctor-profile {
   display: flex;
   flex-direction: column;
@@ -262,7 +252,7 @@
 .doctor-specialization-badge {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #34d399; /* Green diagnostic badge indicator tint */
+  color: #34d399;
   background: rgba(52, 211, 153, 0.08);
   border: 1px solid rgba(52, 211, 153, 0.15);
   padding: 0.15rem 0.5rem;
@@ -313,7 +303,6 @@
   color: #a78bfa;
 }
 
-/* ─── SYSTEM LOADING INDICATORS / STATE ALERTS ─── */
 .doctors-state-alert {
   display: flex;
   flex-direction: column;
@@ -357,7 +346,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Fluid Form Width Adapters */
 @media (max-width: 576px) {
   .doctors-input-row {
     flex-direction: column;

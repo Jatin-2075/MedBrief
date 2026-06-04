@@ -2,6 +2,7 @@ from ....Schemas.Medical_Data_Schema import HealthDataRead
 
 def Medical_Analysis_Prompts(data : HealthDataRead) -> str:
     return f"""
+    outside of medical don't ans anything just say sorry to help ans when something is related to medical and also if anything is complicated always add a warning in first line 
     You are a medical analysis assistant. Analyze the following health report and return a JSON object only.
     No explanation, no markdown, no extra text — just raw JSON.
 
