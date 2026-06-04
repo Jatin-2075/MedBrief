@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-// Types for structural data configurations
 interface FeatureItem {
     icon: React.ReactNode;
     tag: string;
@@ -29,14 +28,12 @@ export default function Intro() {
     const [isExiting, setIsExiting] = useState(false);
     const [scrollY, setScrollY] = useState(0);
 
-    // Scroll listener for dynamic glassmorphic navbar tracking
     useEffect(() => {
         const onScroll = () => setScrollY(window.scrollY);
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    // Ambient Moving Particle Canvas Implementation
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -194,7 +191,6 @@ export default function Intro() {
 
     return (
         <>
-            {/* Smooth Floating Navigation Pill */}
             <nav 
                 className="nav-pill" 
                 style={{ 
@@ -225,7 +221,6 @@ export default function Intro() {
                 <button className="nav-link" onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" })}>Get Started</button>
             </nav>
 
-            {/* Root Section Content Container Wrapper */}
             <div 
                 className="intro-wrapper-root" 
                 style={{ 
@@ -241,17 +236,15 @@ export default function Intro() {
                     transform: isExiting ? "scale(0.96) translateY(-8px)" : "scale(1) translateY(0)" 
                 }}
             >
-                {/* HERO LANDING SECTION */}
                 <section style={{ position: "relative", width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", padding: "4rem 1.5rem 2rem", boxSizing: "border-box" }}>
                     <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }} />
                     
-                    {/* Glowing Accent Ambient Sphere */}
                     <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)", width: "40rem", height: "40rem", borderRadius: "50%", background: "radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 65%)", pointerEvents: "none", zIndex: 1 }} />
 
-                    <div /> {/* Layout Balance Space Spacer */}
+                    <div />
 
-                    <div style={{ zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", textSpacing: "normal" }}>
-                        {/* Pulse Heart-Rate Animated Ring Group */}
+                    <div style={{ zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", }}>
+                    
                         <div style={{ position: "relative", width: "7.5rem", height: "7.5rem", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "2.5rem" }}>
                             <div className="mb-intro-pr" style={{ border: "1px solid rgba(124,58,237,0.5)", animationDelay: "0s" }} />
                             <div className="mb-intro-pr" style={{ border: "1px solid rgba(167,139,250,0.3)", animationDelay: "0.6s" }} />
@@ -263,7 +256,6 @@ export default function Intro() {
                             </div>
                         </div>
 
-                        {/* Title Gradient Headings */}
                         <h1 style={{ fontSize: "clamp(3.2rem, 8vw, 4.8rem)", fontWeight: 900, letterSpacing: "-0.04em", margin: "0 0 1rem 0", background: "linear-gradient(135deg, #ffffff 30%, #c084fc 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", display: "flex", gap: "1px" }}>
                             {"MedBrief".split("").map((char, i) => (
                                 <span key={i} className="mb-letter" style={{ animationDelay: `${0.4 + i * 0.06}s` }}>{char}</span>
@@ -274,7 +266,6 @@ export default function Intro() {
                             Your intelligent, AI-guided clinical health engine.
                         </p>
 
-                        {/* Portal Triggers Control Row */}
                         <div className="mb-ctas" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "1.25rem", width: "100%", maxWidth: "32rem", padding: "0 1rem", justifyContent: "center", boxSizing: "border-box" }}>
                             <button onClick={() => handleLoginSelect("Patient")} className="shimmer-btn btn-p" style={{ flex: "1 1 160px", padding: "1rem 1.75rem", fontSize: "0.9rem", fontWeight: 600, color: "#fff", backgroundColor: "#7c3aed", border: "1px solid rgba(167,139,250,0.2)", borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", transition: "all 0.2s" }}>
                                 Patient Portal
@@ -285,20 +276,17 @@ export default function Intro() {
                             </button>
                         </div>
 
-                        {/* Interactive Float Scroll Indicator */}
                         <div style={{ marginTop: "4rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", color: "rgba(255,255,255,0.3)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                             <span>Scroll to explore</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "float 2s ease-in-out infinite" }}><path d="M12 5v14M5 12l7 7 7-7" /></svg>
                         </div>
                     </div>
 
-                    {/* Standard Footer Footprint Tagline */}
                     <div className="mb-foot" style={{ fontFamily: "monospace", fontSize: "10px", letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", display: "flex", alignItems: "center", gap: "0.75rem", userSelect: "none", zIndex: 10, marginTop: "2rem" }}>
                         <span>SECURE MEDICAL CHANNELS</span><span>•</span><span>HIPAA COMPLIANT INFRASTRUCTURE</span>
                     </div>
                 </section>
 
-                {/* FEATURES ARCHITECTURE VIEW LISTING */}
                 <section id="features" style={{ maxWidth: "900px", margin: "0 auto", padding: "8rem 1.5rem", boxSizing: "border-box" }}>
                     <div style={{ textAlign: "center", marginBottom: "5rem" }}>
                         <div className="section-tag" style={{ display: "inline-block", padding: "0.35rem 0.85rem", borderRadius: "2rem", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "rgba(124,58,237,0.12)", color: "#a78bfa", marginBottom: "1rem" }}>System Core Capabilities</div>
@@ -318,7 +306,6 @@ export default function Intro() {
                     </div>
                 </section>
 
-                {/* HISTORICAL CLINICAL IMPACT METRICS STATS */}
                 <section id="stats" style={{ background: "linear-gradient(180deg, rgba(10,10,15,0.4) 0%, rgba(5,5,8,0.8) 100%)", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "6rem 1.5rem", boxSizing: "border-box" }}>
                     <div style={{ maxWidth: "900px", margin: "0 auto" }}>
                         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
@@ -333,7 +320,6 @@ export default function Intro() {
                     </div>
                 </section>
 
-                {/* PROCEDURAL SEQUENTIAL STEPS INSTRUCTIONAL LIST */}
                 <section style={{ maxWidth: "900px", margin: "0 auto", padding: "8rem 1.5rem", boxSizing: "border-box" }}>
                     <div style={{ textAlign: "center", marginBottom: "4.5rem" }}>
                         <div className="section-tag" style={{ display: "inline-block", padding: "0.35rem 0.85rem", borderRadius: "2rem", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "rgba(129,140,248,0.12)", color: "#818cf8", marginBottom: "1rem" }}>Integration Process</div>
@@ -346,7 +332,6 @@ export default function Intro() {
                     </div>
                 </section>
 
-                {/* BOTTOM CALL TO ACTION INTERNET SECTION MODULE */}
                 <section id="cta" style={{ padding: "4rem 1.5rem 8rem", boxSizing: "border-box", display: "flex", justifyContent: "center" }}>
                     <CtaSection onPatient={() => handleLoginSelect("Patient")} onDoctor={() => handleLoginSelect("Doctor")} />
                 </section>
@@ -355,7 +340,6 @@ export default function Intro() {
     );
 }
 
-/* INTERSECTION-OBSERVER LINKED ANIMATED FEATURE COMPONENT */
 function FeatureCard({ feature: f, index }: { feature: FeatureItem; index: number }) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = useState(false);
@@ -433,7 +417,6 @@ function FeatureCard({ feature: f, index }: { feature: FeatureItem; index: numbe
     );
 }
 
-/* GRID CONTAINER DATA CARD METRIC */
 function StatCard({ stat, delay }: { stat: StatItem; delay: number }) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = useState(false);
@@ -477,7 +460,6 @@ function StatCard({ stat, delay }: { stat: StatItem; delay: number }) {
     );
 }
 
-/* SEQUENTIAL DIAGRAM STEP TIMELINE CARD */
 function HowItWorksCard({ s, delay }: { s: StepItem; delay: number }) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = useState(false);
@@ -519,7 +501,6 @@ function HowItWorksCard({ s, delay }: { s: StepItem; delay: number }) {
     );
 }
 
-/* SIGN OFF RADIAL CARD AREA HOOK */
 function CtaSection({ onPatient, onDoctor }: { onPatient: () => void; onDoctor: () => void }) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = useState(false);
@@ -563,7 +544,7 @@ function CtaSection({ onPatient, onDoctor }: { onPatient: () => void; onDoctor: 
             <h2 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 1rem 0", lineHeight: 1.2 }}>
                 Transform your digital<br />healthcare experience
             </h2>
-            <p style={{ color: "#9ca3af", fontSize: "0.95rem", maxMidth: "480px", margin: "0 auto 2.5rem", lineHeight: 1.6 }}>
+            <p style={{ color: "#9ca3af", fontSize: "0.95rem", maxWidth: "480px", margin: "0 auto 2.5rem", lineHeight: 1.6 }}>
                 Join thousands of patients and clinicians optimizing medical tracking timelines, secure channels, and simplified document intelligence.
             </p>
             <div style={{ display: "flex", gap: "1.25rem", justifyContent: "center", flexWrap: "wrap" }}>
