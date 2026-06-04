@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from uuid import UUID
 from typing import Optional
 from enum import IntEnum
@@ -10,10 +10,16 @@ class GenderEnum(IntEnum):
 
 class DoctorCreate(BaseModel):
     user_id: UUID
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
     specialization: str
     license_number: str
 
 class DoctorUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
     specialization: Optional[str] = None
     license_number: Optional[str] = None
 
@@ -23,11 +29,12 @@ class DoctorResponse(BaseModel):
 
     id: UUID
     user_id: UUID
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
     specialization: str
     license_number: str
 
-    class Config:
-        from_attributes = True
 
 class ProfileCreate(BaseModel):
     user_id: UUID
@@ -58,6 +65,3 @@ class ProfileResponse(BaseModel):
     gender: GenderEnum
     weight: int
     height: int
-
-    class Config:
-        from_attributes = True

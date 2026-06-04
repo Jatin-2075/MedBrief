@@ -1,8 +1,9 @@
+import enum
 import uuid
 from sqlalchemy import Column, String, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from DataBase import Base
+from ..DataBase import Base
 
 class UserRole(enum.Enum):
     PATIENT = "patient"
@@ -20,4 +21,9 @@ class Auth_User(Base):
 
     profile = relationship("Profile", back_populates="owner", uselist=False)
     chat_history = relationship("ChatMessage", back_populates="owner", uselist=True)
-    health_reports = relationship("HealthData", back_populates="owner", uselist=True)
+    health_reports = relationship(
+        "HealthData",
+        back_populates="owner",
+        uselist=True,
+        foreign_keys="HealthData.user_id",
+    )

@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Page Layout & Container
+   ========================================================================== */
+
+.prescriptionPageWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.prescriptionPageTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 2rem;
+    letter-spacing: -0.025em;
+}
+
+/* Form Container Card */
+.prescriptionCardContainer {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    padding: 2.25rem;
+}
+
+/* ==========================================================================
+   Form Controls & Grid Layout
+   ========================================================================== */
+
+.prescriptionFormGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* Two column split for balanced layout on screens bigger than phones */
+@media (min-width: 640px) {
+    .prescriptionFormRowTwoCol {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+}
+
+.prescriptionFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.prescriptionFormLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.prescriptionFormInput {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    padding: 0.625rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: #ffffff;
+    color: #1f2937;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.prescriptionFormInput::placeholder {
+    color: #9ca3af;
+}
+
+.prescriptionFormInput:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+/* Special styling wrapper specifically for date type fields */
+.prescriptionFormInput[type="date"] {
+    color: #374151;
+}
+
+/* ==========================================================================
+   Submission Controls
+   ========================================================================== */
+
+.prescriptionSubmitBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7c3aed;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    width: 100%;
+}
+
+.prescriptionSubmitBtn:hover {
+    background-color: #6d28d9;
+}
+
+.prescriptionSubmitBtn:active {
+    transform: scale(0.99);
+}
+
+/* ==========================================================================
+   Feedback Alert Messages
+   ========================================================================== */
+
+.prescriptionStatusBanner {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.875rem 1rem;
+    border-radius: 0.375rem;
+    margin-top: 1.5rem;
+    border: 1px solid transparent;
+}
+
+/* Dynamic styling logic flags depending on response state */
+.prescriptionStatusSuccess {
+    background-color: #f0fdf4;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.prescriptionStatusError {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border-color: #fecaca;
+}

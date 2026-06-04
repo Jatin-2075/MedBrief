@@ -1,4 +1,5 @@
 from .Auth_Data import Auth_User
-from .Ai_Data import HealthAdvice, ChatMessage
-from .Medical_Data import HealthData, MedicalAnalysis, MedicalReference
-from .Personal_Data import Profile
+from .Medical_Data import HealthData, MedicalAnalysis
+from .Medicine_Data import Medicine, Prescription
+from .Personal_Data import Doctor, Profile
+from .System import Appointment, ChatMessage, AuditLog

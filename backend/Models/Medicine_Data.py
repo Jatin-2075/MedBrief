@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Boolean, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship 
-from DataBase import Base
+from Backend.DataBase import Base
 
 class Medicine(Base):
     __tablename__ = "medicines"

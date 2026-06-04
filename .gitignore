@@ -31,3 +31,19 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pyi
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.coverage
+coverage.xml
+htmlcov/
+
+# Local database files
+database.db
+*.db

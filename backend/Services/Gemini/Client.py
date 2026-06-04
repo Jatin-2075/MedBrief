@@ -1,13 +1,21 @@
-import google.generativeai as genai 
-from ...Security.Settings import settings
+import os
+from google import genai
+from ...Security.Settings import settings 
 
-genai.configure(api_key=settings.GEMINI_API_KEY)
-
-_model = genai.GenerativeModel("gemini-1.5-flash")
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 async def call_genai(prompts: str) -> str:
-    try: 
-        response = _model.generate_content(prompts)
-        return response.text.strip()
+    try:
+        model_name = settings.GEMINI_MODEL
+        
+        if model_name.startswith("models/"):
+            model_name = model_name.replace("models/", "", 1)
+            
+        response = client.models.generate_content(
+            model=model_name,
+            contents=prompts
+        )
+        return response.text
+        
     except Exception as e:
-        raise RuntimeError(f"GenAI Model Is Throwing Error {str(e)}")
+        raise RuntimeError(f"GenAI Model is throwing error: {e}") from e

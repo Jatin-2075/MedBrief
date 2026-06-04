@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from uuid import UUID
-
+from ..Core.Personal_Data_functions import (
+    get_doctor_by_user_id,
+    get_profile_by_user_id,
+)
 from ..DataBase.Database import get_db
 from ..Security.Dependencies import get_current_user
 from ..Schemas.Medicine_Data_Schema import BulkPrescriptionCreate, PrescriptionRead
 from ..Core.Medicine_Data_Functions import (
-    get_or_create_medicine,
     create_prescription,
     get_active_prescription,
     get_all_prescriptions,
@@ -28,13 +30,12 @@ def upload_prescription(
             detail="Only doctors can upload prescriptions."
         )
 
-    for medicine in data.medicines:
-        get_or_create_medicine(db, medicine.model_dump())
+    doctor = get_doctor_by_user_id(db, current_user.id)
 
     prescriptions = create_prescription(
         db=db,
         profile_id=data.profile_id,
-        doctor_id=current_user.id,
+        doctor_id=doctor.id,
         medicines=[m.model_dump() for m in data.medicines]
     )
 
@@ -59,6 +60,32 @@ def prescription_history(
     return get_all_prescriptions(db, profile_id)
 
 
+@router.get("/my-active", response_model=list[PrescriptionRead])
+def my_active_prescriptions(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    profile = get_profile_by_user_id(db, current_user.id)
+
+    return get_active_prescription(
+        db,
+        profile.id
+    )
+
+
+@router.get("/my-history", response_model=list[PrescriptionRead])
+def my_history_prescriptions(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    profile = get_profile_by_user_id(db, current_user.id)
+
+    return get_all_prescriptions(
+        db,
+        profile.id
+    )
+
+
 @router.get("/{prescription_id}", response_model=PrescriptionRead)
 def get_prescription(
     prescription_id: UUID,
@@ -80,3 +107,5 @@ def get_prescription(
         )
 
     return prescription
+
+

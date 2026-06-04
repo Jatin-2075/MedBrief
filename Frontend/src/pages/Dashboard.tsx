@@ -1,421 +1,297 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { API } from "../Config/Api";
+import { AuthContext } from "../Context/AuthContext";
+import type { HealthData, User } from "../Config/Types";
+import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
+import "../Css/Pages/Dashboard.css";
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
-import { LineChart, Line, ResponsiveContainer } from "recharts";
-import {
-  Heart,
-  Flame,
-  Droplet,
-  Compass,
-  Calendar,
-  Pill,
-  MessageSquare,
-  FileText,
-  User,
-  TrendingDown,
-  ArrowRight,
-  Target,
-  ArrowBigRightDash
-} from "lucide-react";
-import { useAuth } from "../hooks/useAuth";
-import { useHealthData } from "../hooks/useHealthData";
-import type { HealthReport } from "../types";
+export const Dashboard = () => {
+    const authContext = useContext(AuthContext);
+    if (!authContext) throw new Error("AuthContext.Provider is required.");
 
-export default function Dashboard() {
-  const navigate = useNavigate();
-  const { currentUser, currentProfile } = useAuth();
-  const { reports, appointments, analyses, prescriptions } = useHealthData();
+    const { user, setUser, setrole, role } = authContext;
+    const navigate = useNavigate();
 
-  // Redirect to login if user is not authenticated
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/");
-    }
-  }, [currentUser, navigate]);
+    const [reports, setReports] = useState<HealthData[]>([]);
+    const [selectedReport, setSelectedReport] = useState<HealthData | null>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [patientId, setPatientId] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [loadingReports, setLoadingReports] = useState(false);
+    const [loadingDetails, setLoadingDetails] = useState(false);
+    const [message, setMessage] = useState<string | null>(null);
+    const [metric, setMetric] = useState("hba1c");
 
-  if (!currentUser || !currentProfile) return null;
+    const handleLogout = () => {
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        setUser(null);
+        setrole(null);
+        navigate("/login");
+    };
 
-  // Filter patient's specific health records
-  const patientReports = reports
-    .filter((r) => r.user_id === currentUser.id || currentUser.role === "Doctor")
-    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()); // chronological order
+    const fetchCurrentUser = async () => {
+        try {
+            const data = await API<User>("GET", "/auth/me");
+            setUser(data);
+            setrole(data.role);
+        } catch (error) {
+            handleLogout();
+        }
+    };
 
-  const latestReport = patientReports.length > 0 ? patientReports[patientReports.length - 1] : null;
+    const loadReports = async () => {
+        setLoadingReports(true);
+        try {
+            const data = await API<HealthData[]>("GET", "/reports/mydataall");
+            setReports(data);
+        } catch (error) {
+            setMessage("Could not load your reports.");
+        } finally {
+            setLoadingReports(false);
+        }
+    };
 
-  // 1. Sparkline data builders
-  const bpmSpark = patientReports.map((r) => ({ value: r.resting_heart_rate }));
-  const pressureSpark = patientReports.map((r) => {
-    const sysObj = parseInt(r.blood_pressure.split("/")[0]) || 120;
-    return { value: sysObj };
-  });
-  const hba1cSpark = patientReports.map((r) => ({ value: r.hba1c }));
-  const spo2Spark = patientReports.map((r) => ({ value: r.spo2 }));
+    const loadReportDetails = async (reportId: string) => {
+        setMessage(null);
+        setLoadingDetails(true);
+        try {
+            const data = await API<HealthData>("GET", `/reports/${reportId}`);
+            setSelectedReport(data);
+        } catch (error) {
+            setMessage("Unable to load report details.");
+        } finally {
+            setLoadingDetails(false);
+        }
+    };
 
-  // Fallback defaults if no reports uploaded yet
-  const statsList = [
-    {
-      title: "Resting Heart Rate",
-      value: latestReport ? `${latestReport.resting_heart_rate} bpm` : "72 bpm",
-      unit: "bpm",
-      status: latestReport && latestReport.resting_heart_rate > 80 ? "Elevated" : "Optimal",
-      statusColor: latestReport && latestReport.resting_heart_rate > 80 ? "text-amber-500" : "text-emerald-500",
-      icon: Heart,
-      iconColor: "text-red-500",
-      sparkData: bpmSpark.length > 0 ? bpmSpark : [{ value: 72 }, { value: 70 }, { value: 74 }, { value: 71 }],
-      strokeColor: "#ef4444"
-    },
-    {
-      title: "Blood Pressure",
-      value: latestReport ? latestReport.blood_pressure : "120/80",
-      unit: "mmHg",
-      status: latestReport && parseInt(latestReport.blood_pressure.split("/")[0]) >= 135 ? "High (Stage 1)" : "Normal",
-      statusColor: latestReport && parseInt(latestReport.blood_pressure.split("/")[0]) >= 135 ? "text-red-500" : "text-emerald-500",
-      icon: TrendingDown,
-      iconColor: "text-violet-500",
-      sparkData: pressureSpark.length > 0 ? pressureSpark : [{ value: 130 }, { value: 125 }, { value: 122 }, { value: 118 }],
-      strokeColor: "#8b5cf6"
-    },
-    {
-      title: "HbA1c Glucose",
-      value: latestReport ? `${latestReport.hba1c}%` : "5.4%",
-      unit: "%",
-      status: latestReport && latestReport.hba1c >= 6.5 ? "Diabetic Range" : latestReport && latestReport.hba1c >= 5.7 ? "Pre-diabetic Range" : "Optimal",
-      statusColor: latestReport && latestReport.hba1c >= 6.5 ? "text-red-500" : latestReport && latestReport.hba1c >= 5.7 ? "text-amber-500" : "text-emerald-500",
-      icon: Droplet,
-      iconColor: "text-blue-500",
-      sparkData: hba1cSpark.length > 0 ? hba1cSpark : [{ value: 6.8 }, { value: 6.2 }, { value: 5.9 }, { value: 5.4 }],
-      strokeColor: "#3b82f6"
-    },
-    {
-      title: "Vitals SpO2 Status",
-      value: latestReport ? `${latestReport.spo2}%` : "99%",
-      unit: "%",
-      status: latestReport && latestReport.spo2 < 95 ? "Sub-optimal" : "Saturated",
-      statusColor: latestReport && latestReport.spo2 < 95 ? "text-red-500" : "text-emerald-500",
-      icon: Flame,
-      iconColor: "text-emerald-500",
-      sparkData: spo2Spark.length > 0 ? spo2Spark : [{ value: 96 }, { value: 98 }, { value: 98 }, { value: 99 }],
-      strokeColor: "#10b981"
-    }
-  ];
+    useEffect(() => {
+        const access = localStorage.getItem("access");
+        if (!access) {
+            navigate("/login");
+            return;
+        }
+        if (!user) {
+            fetchCurrentUser();
+            return;
+        }
+    }, [navigate, user]);
 
-  // Get next 2 active appointments
-  const upcomingAppointments = appointments
-    .filter((a) => a.profile_id === currentProfile.id && a.status === "scheduled")
-    .slice(0, 2);
+    useEffect(() => {
+        if (user) {
+            loadReports();
+        }
+    }, [user]);
 
-  // Get recent activity (last 3 reports)
-  const recentReports = [...reports]
-    .filter((r) => r.user_id === currentUser.id || currentUser.role === "Doctor")
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()) // latest first
-    .slice(0, 3);
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0] ?? null;
+        setFile(selectedFile);
+    };
 
-  // Count active prescriptions
-  const activeCount = prescriptions.filter((p) => p.is_active).length;
+    const handleUpload = async () => {
+        setMessage(null);
+        if (!file) {
+            setMessage("Please select a PDF file first.");
+            return;
+        }
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 pb-32">
-      {/* Greetings Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 select-none"
-      >
-        <div>
-          <span className="font-mono text-xs text-med-accent tracking-widest font-semibold block mb-1">
-            CLINICAL REPORT PORTAL
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-bold font-display text-med-text-main tracking-tight">
-            Good morning, {currentProfile.name}
-          </h1>
-          <p className="text-sm text-med-text-sub mt-0.5">
-            Today is Monday, May 25, 2026 • Secure patient channel active
-          </p>
-        </div>
+        const form = new FormData();
+        form.append("file", file);
+        if (role === "doctor" && patientId.trim()) {
+            form.append("patient_id", patientId.trim());
+        }
 
-        {/* BMI fast metric indicator */}
-        <div className="bg-med-bg-secondary border border-med-border p-4 rounded-2xl flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-med-accent/10 flex items-center justify-center text-med-accent">
-            <Target className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="text-[11px] font-mono tracking-wider text-med-text-sub uppercase">Height & Weight BMI</div>
-            <div className="text-xs font-semibold text-med-text-main">
-              {currentProfile.height}cm • {currentProfile.weight}kg (
-              {((currentProfile.weight / Math.pow(currentProfile.height / 100, 2))).toFixed(1)} BMI)
-            </div>
-          </div>
-        </div>
-      </motion.div>
+        setLoading(true);
+        try {
+            const newReport = await API<HealthData>("POST", "/reports/upload", form);
+            setReports(prev => [newReport, ...prev]);
+            setMessage("Report uploaded successfully.");
+            setFile(null);
+            setPatientId("");
+        } catch (error) {
+            setMessage(error instanceof Error ? error.message : "Upload failed.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      {/* Grid: 4 Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {statsList.map((stat, idx) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              className="bg-med-bg-tertiary border border-med-border p-6 rounded-2xl flex flex-col justify-between hover-glow shadow-sm"
-            >
-              <div className="flex justify-between items-start mb-3 select-none">
+    const formatDate = (value: string | undefined) => {
+        if (!value) return "Unknown";
+        return new Date(value).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    };
+
+    // Dynamically mapping the dataset based on the active state metric variable
+    const chartData = reports
+        .filter(report => report[metric as keyof HealthData] != null)
+        .map(report => ({
+            date: new Date(report.created_at ?? "").toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+            [metric]: Number(report[metric as keyof HealthData])
+        }))
+        .reverse();
+
+    return (
+        <div className="dashboard-page">
+            <header className="dashboard-header">
                 <div>
-                  <span className="text-xs text-med-text-sub font-medium font-display uppercase tracking-wide block">
-                    {stat.title}
-                  </span>
-                  <div className="text-2xl font-bold text-med-text-main font-mono mt-1">
-                    {stat.value}
-                  </div>
+                    <h1 className="dashboard-title">Clinical Dashboard</h1>
+                    <p className="dashboard-welcome">Welcome back, {user?.username ?? "Guest"} {role ? `(${role})` : ""}</p>
                 </div>
-                <div className={`w-9 h-9 rounded-xl bg-med-bg-secondary flex items-center justify-center ${stat.iconColor}`}>
-                  <Icon className="w-5 h-5" />
-                </div>
-              </div>
+            </header>
 
-              {/* Sparkline & Status */}
-              <div className="flex items-end justify-between mt-4">
-                <span className={`text-[11px] font-semibold tracking-wider ${stat.statusColor} uppercase`}>
-                  ● {stat.status}
-                </span>
-
-                {/* Micro Recharts sparkline */}
-                <div className="w-24 h-10 select-none pointer-events-none">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={stat.sparkData}>
-                      <Line
-                        type="monotone"
-                        dataKey="value"
-                        stroke={stat.strokeColor}
-                        strokeWidth={1.8}
-                        dot={false}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
+            {/* ── Section 1: Upload Workspace File System ── */}
+            <section className="dashboard-card">
+                <h2 className="dashboard-section-title">Upload Health Report</h2>
+                <div className="dashboard-form-group">
+                    <label className="dashboard-label">Select Medical Report PDF</label>
+                    <input className="dashboard-input" type="file" accept="application/pdf" onChange={handleFileChange} />
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Grid: Quick Actions & Feeds */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Span: Quick Actions + Appointments */}
-        <div className="lg:col-span-8 space-y-8">
-          {/* Quick Actions Panel */}
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm">
-            <h3 className="text-lg font-bold font-display text-med-text-main mb-4 select-none">
-              Quick Diagnostic Actions
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <Link
-                to="/reports?action=add"
-                className="flex items-center gap-4 p-4 rounded-2xl bg-med-bg-secondary border border-med-border hover:border-med-accent hover_glow transition-all"
-              >
-                <div className="w-12 h-12 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-med-text-main">Record Lipid/Sugar</h4>
-                  <p className="text-[11px] text-med-text-sub mt-0.5">Upload lab sheet report</p>
-                </div>
-              </Link>
-
-              <Link
-                to="/chat"
-                className="flex items-center gap-4 p-4 rounded-2xl bg-med-bg-secondary border border-med-border hover:border-med-accent hover_glow transition-all"
-              >
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
-                  <MessageSquare className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-med-text-main">Clinical AI chat</h4>
-                  <p className="text-[11px] text-med-text-sub mt-0.5">Diagnose metrics instantly</p>
-                </div>
-              </Link>
-
-              <Link
-                to="/prescriptions"
-                className="flex items-center gap-4 p-4 rounded-2xl bg-med-bg-secondary border border-med-border hover:border-med-accent hover_glow transition-all"
-              >
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-                  <Pill className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-med-text-main">Prescriptions</h4>
-                  <p className="text-[11px] text-med-text-sub mt-0.5">Verify {activeCount} active drug doses</p>
-                </div>
-              </Link>
-            </div>
-          </section>
-
-          {/* Activity Feed: Recent Health Reports */}
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold font-display text-med-text-main select-none">
-                Biomedical Record History
-              </h3>
-              <Link to="/reports" className="text-xs text-med-accent font-semibold flex items-center gap-1 hover:underline">
-                View database database <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            <div className="space-y-4">
-              {recentReports.map((item, index) => {
-                const associatedAnalysis = analyses.find((a) => a.report_id === item.id);
-                const riskColor =
-                  associatedAnalysis?.cardiac_risk_score.includes("High")
-                    ? "bg-red-500/10 text-red-500 border border-red-500/20"
-                    : associatedAnalysis?.cardiac_risk_score.includes("Borderline")
-                    ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
-                    : "bg-green-500/10 text-green-500 border border-green-500/20";
-
-                return (
-                  <div
-                    key={item.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-med-bg-secondary border border-med-border rounded-2xl gap-3"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-med-bg-tertiary flex flex-col items-center justify-center border border-med-border select-none">
-                        <span className="text-[10px] font-mono text-med-text-sub uppercase">
-                          {new Date(item.created_at).toLocaleString("default", { month: "short" })}
-                        </span>
-                        <span className="text-sm font-bold text-med-text-main font-mono -mt-1">
-                          {new Date(item.created_at).getDate()}
-                        </span>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-semibold text-med-text-main">
-                          Vascular Panel Vitals Scan
-                        </h4>
-                        <p className="text-xs text-med-text-sub mt-0.5">
-                          SYS/DIA: {item.blood_pressure} mmHg • HbA1c: {item.hba1c}% • LDL: {item.ldl_cholesterol} mg/dL
-                        </p>
-                      </div>
+                {role === "doctor" && (
+                    <div className="dashboard-form-group">
+                        <label className="dashboard-label">Patient ID (Optional Assignment)</label>
+                        <input
+                            className="dashboard-input"
+                            value={patientId}
+                            onChange={e => setPatientId(e.target.value)}
+                            placeholder="Assign to patient UUID token..."
+                        />
                     </div>
+                )}
+                <button className="dashboard-button" type="button" onClick={handleUpload} disabled={loading}>
+                    {loading ? "Parsing Secure Records…" : "Upload & Analyze"}
+                </button>
+                {message && <p className="dashboard-message">{message}</p>}
+            </section>
 
-                    <div className="flex items-center gap-3">
-                      {associatedAnalysis && (
-                        <span className={`text-[10px] font-semibold tracking-wider font-display shrink-0 uppercase px-2.5 py-1 rounded-full ${riskColor}`}>
-                          {associatedAnalysis.cardiac_risk_score.split(" ")[0]}
-                        </span>
-                      )}
-                      <Link
-                        to={`/reports?report=${item.id}`}
-                        className="p-1 px-3 text-xs font-semibold text-med-accent hover:text-med-text-main hover:bg-med-accent/10 border border-med-accent/20 rounded-lg transition-all flex items-center gap-1 shrink-0"
-                      >
-                        Inspect
-                        <ArrowBigRightDash className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
+            {/* ── Section 2: Recharts Health Trends Visualization ── */}
+            <section className="dashboard-card">
+                <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
 
-              {recentReports.length === 0 && (
-                <div className="text-center py-8 text-med-text-sub text-xs">
-                  No medical reports logged yet. Let's upload a clinical panel standard spreadsheet!
-                </div>
-              )}
-            </div>
-          </section>
-        </div>
-
-        {/* Right Span: Upcoming Appointments & Attending Doctor */}
-        <div className="lg:col-span-4 space-y-8">
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm">
-            <h3 className="text-lg font-bold font-display text-med-text-main mb-4 select-none">
-              Clinician Consultations
-            </h3>
-
-            <div className="space-y-4">
-              {upcomingAppointments.map((app) => (
-                <div
-                  key={app.id}
-                  className="p-4 bg-med-bg-secondary border border-med-border rounded-2xl relative overflow-hidden"
-                >
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-med-accent/10 rounded-bl-[40px] pointer-events-none" />
-                  <Calendar className="w-8 h-8 text-med-accent mb-2" />
-                  <h4 className="text-sm font-bold text-med-text-main">{app.doctor_name}</h4>
-                  <p className="text-[11px] text-med-text-sub mt-1">
-                    {new Date(app.start_time).toLocaleDateString(undefined, {
-                      weekday: "long",
-                      month: "short",
-                      day: "numeric"
-                    })}
-                  </p>
-                  <p className="text-xs font-mono font-medium text-med-accent mt-0.5">
-                    {new Date(app.start_time).toLocaleTimeString(undefined, {
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    })}
-                  </p>
-
-                  <p className="text-[11px] text-med-text-sub mt-3 italic line-clamp-2">
-                    "{app.notes}"
-                  </p>
-
-                  {app.meeting_link && (
-                    <a
-                      href={app.meeting_link}
-                      target="_blank"
-                      referrerPolicy="no-referrer"
-                      className="mt-4 w-full py-2 px-3 text-center rounded-xl bg-med-accent text-white hover:bg-med-accent-sub text-xs font-semibold hover-glow transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                <div className="dashboard-form-group">
+                    <label className="dashboard-label">Select Visual Metric Axis</label>
+                    <select
+                        className="dashboard-input"
+                        value={metric}
+                        onChange={(e) => setMetric(e.target.value)}
                     >
-                      Join Google Meet
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
-                  )}
+                        <option value="hba1c">Blood Sugar (HbA1c)</option>
+                        <option value="fasting_glucose">Fasting Blood Sugar</option>
+                        <option value="blood_pressure">Blood Pressure</option>
+                        <option value="resting_heart_rate">Heart Rate</option>
+                        <option value="spo2">Blood Oxygen (SpO₂)</option>
+                        <option value="ldl_cholesterol">Bad Cholesterol (LDL)</option>
+                        <option value="hdl_cholesterol">Good Cholesterol (HDL)</option>
+                        <option value="triglycerides">Blood Fat (Triglycerides)</option>
+                    </select>
                 </div>
-              ))}
 
-              {upcomingAppointments.length === 0 && (
-                <div className="text-center py-10 bg-med-bg-secondary border border-dashed border-med-border rounded-2xl text-med-text-sub text-xs select-none">
-                  No upcoming virtual clinic slots. Click Calendar to book a consultation!
+                <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
+                    <ResponsiveContainer>
+                        <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="date" tickLine={false} />
+                            <YAxis tickLine={false} domain={['auto', 'auto']} />
+                            <Tooltip />
+                            <Line
+                                type="monotone"
+                                dataKey={metric}
+                                stroke="#a78bfa"
+                                strokeWidth={3}
+                                activeDot={{ r: 6 }}
+                                dot={{ strokeWidth: 1, r: 3 }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
                 </div>
-              )}
+            </section>
 
-              <Link
-                to="/appointments"
-                className="block text-center py-3 w-full bg-med-bg-secondary border border-med-border hover:border-med-accent/35 rounded-xl text-xs font-semibold text-med-text-main hover:bg-med-bg-tertiary transition-all"
-              >
-                Browse clinician agenda
-              </Link>
-            </div>
-          </section>
+            {/* ── Section 3: Historical Records Feed ── */}
+            <section className="dashboard-card">
+                <h2 className="dashboard-section-title">Chronological Medical Records</h2>
+                {loadingReports ? (
+                    <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>Fetching clinical database blocks…</p>
+                ) : reports.length === 0 ? (
+                    <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>No reports cataloged for this identity profile map.</p>
+                ) : (
+                    <div className="dashboard-report-list">
+                        {reports.map(report => (
+                            <div key={report.id} className="dashboard-report-item">
+                                <div className="report-header">
+                                    <strong>ID:</strong> {report.id}
+                                </div>
+                                <div className="report-row">
+                                    <span>Date Logged:</span>
+                                    <span>{formatDate(report.created_at)}</span>
+                                </div>
+                                <div className="report-row">
+                                    <span>Blood Pressure:</span>
+                                    <span>{report.blood_pressure ?? "N/A"}</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    className="report-detail-button"
+                                    onClick={() => report.id && loadReportDetails(report.id)}
+                                >
+                                    Review Framework
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
 
-          {/* Quick Doctor Profile Reference */}
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm text-center">
-            <h3 className="text-sm font-mono tracking-widest text-med-text-sub uppercase mb-3 select-none">
-              Primary Medical Officer
-            </h3>
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full border-2 border-med-accent overflow-hidden mb-3 relative">
-                <img
-                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=150&h=150"
-                  alt="Dr Sarah Jenkins"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h4 className="text-base font-bold text-med-text-main">Dr. Sarah Jenkins, MD</h4>
-              <p className="text-xs text-med-accent font-medium font-display mt-0.5">
-                Cardiology & Arterial Specialist
-              </p>
-              <div className="mt-4 py-2 px-3 bg-med-bg-secondary border border-med-border rounded-xl text-[10px] text-med-text-sub font-mono uppercase tracking-wide">
-                MEMBER ID: #MED-9428-SK
-              </div>
-            </div>
-          </section>
+            {/* ── Section 4: Deep AI Analysis Expansion Layer ── */}
+            {selectedReport && (
+                <section className="dashboard-card">
+                    <h2 className="dashboard-section-title">Deep Metric Struct Analysis</h2>
+                    {loadingDetails ? (
+                        <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>Compiling clinical insight vectors…</p>
+                    ) : (
+                        <div className="report-detail">
+                            <div className="report-row">
+                                <span>Report Reference Node:</span>
+                                <span style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>{selectedReport.id}</span>
+                            </div>
+                            <div className="report-row">
+                                <span>Timeline Coordinate:</span>
+                                <span>{formatDate(selectedReport.created_at)}</span>
+                            </div>
+                            <div className="report-row">
+                                <span>Bad Cholesterol (LDL):</span>
+                                <span>{selectedReport.ldl_cholesterol ?? "N/A"} mg/dL</span>
+                            </div>
+                            <div className="report-row">
+                                <span>Good Cholesterol (HDL):</span>
+                                <span>{selectedReport.hdl_cholesterol ?? "N/A"} mg/dL</span>
+                            </div>
+                            <div className="report-row">
+                                <span>Serum Triglycerides:</span>
+                                <span>{selectedReport.triglycerides ?? "N/A"} mg/dL</span>
+                            </div>
+                            <div className="report-row">
+                                <span>Glycated Hemoglobin (HbA1c):</span>
+                                <span>{selectedReport.hba1c ?? "N/A"} %</span>
+                            </div>
+
+                            {selectedReport.analysis && (
+                                <div className="report-analysis">
+                                    <p><strong>Clinical LLM Summary Insight:</strong></p>
+                                    <p style={{ fontSize: "0.9rem", color: "#e5e7eb", marginBottom: "1rem" }}>
+                                        {selectedReport.analysis.ai_summary ?? "No active metadata synthesis response found."}
+                                    </p>
+                                    <p><strong>Cardiovascular Index Score:</strong> {selectedReport.analysis.cardiac_risk_score ?? "N/A"}</p>
+                                    <p><strong>Metabolic Panel Profile:</strong> {selectedReport.analysis.metabolic_status ?? "N/A"}</p>
+                                    <p><strong>Renal Metric Filtration Status:</strong> {selectedReport.analysis.kidney_status ?? "N/A"}</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </section>
+            )}
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};

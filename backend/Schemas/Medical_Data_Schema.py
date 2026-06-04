@@ -47,6 +47,8 @@ class HealthDataRead(HealthDataBase):
     id: UUID
     user_id: UUID
     created_at: datetime
+    uploaded_by: Optional[UUID] = None
+    pdf_path: Optional[str] = None
     analysis: Optional[MedicalAnalysisRead] = None
 
     model_config = ConfigDict(from_attributes=True)

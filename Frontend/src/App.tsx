@@ -1,70 +1,131 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { useContext, useEffect, useState } from "react";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { API } from "./Config/Api";
+import { AuthContext } from "./Context/AuthContext";
+import Intro from "./Pages/Intro";
+import Auth from "./Pages/Auth";
+import { Dashboard } from "./Pages/Dashboard";
+import Profile from "./Pages/Profile";
+import Chat from "./Pages/Chat";
+import Doctors from "./Pages/Doctors";
+import Appointments from "./Pages/Appointments";
+import Prescriptions from "./Pages/Prescriptions";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import type { User } from "./Config/Types";
+import "./index.css";
+import Sidebar from "./Components/Sidebar";
+import UploadPrescription from "./Pages/Upload_prescription";
 
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
-import { HealthDataProvider } from "./context/HealthDataContext";
+const App = () => {
+    const authContext = useContext(AuthContext);
+    const location = useLocation();
+    const [loadingUser, setLoadingUser] = useState(false);
+    const isAuthPage = location.pathname === "/" || location.pathname === "/login";
 
-// Import all pages and central components
-import Dock from "./components/Dock";
-import Intro from "./pages/Intro";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Reports from "./pages/Reports";
-import AIChat from "./pages/AIChat";
-import Prescriptions from "./pages/Prescriptions";
-import Appointments from "./pages/Appointments";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
+    useEffect(() => {
+        const access = localStorage.getItem("access");
+        if (!access || !authContext) {
+            return;
+        }
 
-function AnimatedAppLayout() {
-  const location = useLocation();
+        if (authContext.user) {
+            return;
+        }
 
-  return (
-    <div className="relative min-h-screen flex flex-col justify-between">
-      {/* Dynamic Route Viewports with Framer Motion Page transitions */}
-      <div className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.main
-            key={location.pathname}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="min-h-[85vh]"
-          >
-            <Routes location={location}>
-              <Route path="/" element={<Intro />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/chat" element={<AIChat />} />
-              <Route path="/prescriptions" element={<Prescriptions />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
-              {/* Fallback back to entry point */}
-              <Route path="*" element={<Intro />} />
-            </Routes>
-          </motion.main>
-        </AnimatePresence>
-      </div>
+        setLoadingUser(true);
+        API<User>("GET", "/auth/me")
+            .then(user => {
+                authContext.setUser(user);
+                authContext.setrole(user.role);
+            })
+            .catch(() => {
+                localStorage.removeItem("access");
+                localStorage.removeItem("refresh");
+            })
+            .finally(() => setLoadingUser(false));
+    }, [authContext]);
 
-      {/* Persistence Mac-Style Bottom Dock */}
-      <Dock />
-    </div>
-  );
-}
+    if (loadingUser) {
+        return <div className="app-loading">Loading your session…</div>;
+    }
 
-export default function App() {
-  return (
-    <HealthDataProvider>
-      <Router>
-        <AnimatedAppLayout />
-      </Router>
-    </HealthDataProvider>
-  );
-}
+    return (
+        <div className="appMainLayoutContainer">
+            {!isAuthPage && <Sidebar />}
+
+            <main className="page-content-wrapper">
+                <Routes>
+                    <Route path="/" element={<Intro />} />
+                    <Route path="/login" element={<Auth />} />
+
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/appointments"
+                        element={
+                            <ProtectedRoute>
+                                <Appointments />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/doctors"
+                        element={
+                            <ProtectedRoute>
+                                <Doctors />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/chat"
+                        element={
+                            <ProtectedRoute>
+                                <Chat />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/prescriptions"
+                        element={
+                            <ProtectedRoute>
+                                <Prescriptions />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/uploadprescription"
+                        element={
+                            <ProtectedRoute>
+                                <UploadPrescription />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </main>
+        </div>
+    );
+};
+
+export default App;

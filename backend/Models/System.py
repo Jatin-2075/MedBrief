@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship 
-from DataBase import Base
+from Backend.DataBase import Base
 import uuid
 
 class Appointment(Base):
@@ -13,22 +13,12 @@ class Appointment(Base):
     
     start_time = Column(DateTime, nullable=False)
     end_time = Column(DateTime, nullable=False)
-    status = Column(String, default="scheduled")
+    status = Column(String, default="pending")
     meeting_link = Column(String, nullable=True)
     notes = Column(String, nullable=True)
 
     doctor = relationship("Doctor", back_populates="appointments")
     profile = relationship("Profile", back_populates="appointments")
-
-
-class HealthAdvice(Base):
-    __tablename__ = "health_advice"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    condition_tag = Column(String)
-    advice_title = Column(String)
-    advice_content = Column(String)
-    severity_level = Column(Integer)
 
 
 class ChatMessage(Base):
@@ -58,17 +48,3 @@ class AuditLog(Base):
 
     actor = relationship("Auth_User")
     target_profile = relationship("Profile")
-
-
-# TODO: wire up Notification model and background job for appointment reminders
-# class Notification(Base):
-#     __tablename__ = "notifications"
-
-#     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#     user_id = Column(UUID(as_uuid=True), ForeignKey("auth_users.id"), nullable=False)
-    
-#     title = Column(String, nullable=False)
-#     message = Column(String, nullable=False)
-#     is_read = Column(Boolean, default=False)
-#     notif_type = Column(String)
-#     created_at = Column(DateTime, default=func.now())

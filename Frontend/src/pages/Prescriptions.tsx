@@ -1,271 +1,229 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState } from "react";
-import { motion } from "motion/react";
-import {
-  Pill,
-  Clock,
-  User,
-  ShieldPlus,
-  Plus,
-  Compass,
-  Sparkles,
-  Info,
-  CalendarDays,
-  FileCheck2
-} from "lucide-react";
-import { useHealthData } from "../hooks/useHealthData";
-import { useAuth } from "../hooks/useAuth";
-import type { Prescription, Medicine } from "../types";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API } from "../Config/Api";
+import { AuthContext } from "../Context/AuthContext";
+import type { Prescription } from "../Config/Types";
+import "../Css/Pages/Prescription.css";
 
 export default function Prescriptions() {
-  const { prescriptions, medicines, doctors, addPrescription } = useHealthData();
-  const { currentUser, currentProfile } = useAuth();
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedMedicineId, setSelectedMedicineId] = useState<number>(1);
-  const [instructions, setInstructions] = useState("");
-  const [duration, setDuration] = useState("90 Days");
-  const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
+    if (!authContext) throw new Error("AuthContext.Provider is required.");
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    const { user } = authContext;
+    const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
+    const [profileId, setProfileId] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState<string | null>(null);
+    const [showActive, setShowActive] = useState(true);
 
-  // Helper: map medicine details onto prescription records
-  const compilePrescriptions = (): Prescription[] => {
-    return prescriptions.map((p) => {
-      const med = medicines.find((m) => m.id === p.medicine_id);
-      return {
-        ...p,
-        medicine_detail: med
-      };
-    });
-  };
+    const loadPrescriptions = async (isActive: boolean) => {
+        if (!profileId.trim()) {
+            setMessage("Please enter a valid patient profile verification ID.");
+            return;
+        }
 
-  const activePrescriptions = compilePrescriptions();
+        setLoading(true);
+        setMessage(null);
+        try {
+            const endpoint = isActive
+                ? `/prescriptions/active/${profileId.trim()}`
+                : `/prescriptions/history/${profileId.trim()}`;
+            const data = await API<Prescription[]>("GET", endpoint);
+            setPrescriptions(data);
+        } catch (error) {
+            setMessage("Unable to load prescriptions. Verify target node configuration identification.");
+            setPrescriptions([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const handleCreatePrescription = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+    const loadMyPrescriptions = async (isActive: boolean) => {
+        setLoading(true);
+        setMessage(null);
+        try {
+            const endpoint = isActive
+                ? "/prescriptions/my-active"
+                : "/prescriptions/my-history";
 
-    try {
-      await addPrescription({
-        medicine_id: Number(selectedMedicineId),
-        dosage_instructions: instructions,
-        duration: duration,
-        start_date: startDate,
-        end_date: new Date(new Date(startDate).getTime() + parseInt(duration) * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
-      });
+            const data = await API<Prescription[]>("GET", endpoint);
+            setPrescriptions(data);
+        } catch {
+            setMessage("Unable to coordinate secure prescription database link.");
+            setPrescriptions([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      setIsModalOpen(false);
-      setInstructions("");
-    } catch (err) {
-      console.error("Prescription creation failed", err);
-    } finally {
-      setIsSubmitting(false);
+    useEffect(() => {
+        const access = localStorage.getItem("access");
+        if (!access) {
+            navigate("/login");
+            return;
+        }
+
+        if (!user) {
+            navigate("/dashboard");
+            return;
+        }
+
+        setLoading(false);
+
+        if (user?.role === "patient") {
+            loadMyPrescriptions(showActive);
+        }
+    }, [navigate, user]);
+
+    // Handle view toggling safely across differing authorization identities
+    const handleToggleFilter = (activeState: boolean) => {
+        setShowActive(activeState);
+        if (user?.role === "patient") {
+            loadMyPrescriptions(activeState);
+        } else if (user?.role === "doctor" && profileId.trim()) {
+            loadPrescriptions(activeState);
+        }
+    };
+
+    if (!user) {
+        return (
+            <div className="rx-state-alert error">
+                <p>System configuration map access denied. Token authorization invalid.</p>
+            </div>
+        );
     }
-  };
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 pb-32">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <div>
-          <span className="font-mono text-xs text-med-accent tracking-widest font-semibold block mb-1">
-            ACTIVE PHARMACOTHERAPY REGISTER
-          </span>
-          <h1 className="text-3xl font-bold font-display tracking-tight text-med-text-main">
-            Prescriptions Ledger
-          </h1>
-          <p className="text-xs sm:text-sm text-med-text-sub mt-0.5">
-            Monitor chemical dosing, administration directions, and physician approvals
-          </p>
-        </div>
-
-        {/* Doctor portal triggers new prescriptions */}
-        {currentUser?.role === "Doctor" && (
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="shimmer-btn flex items-center gap-2 bg-med-accent hover:bg-med-accent-sub text-white px-5 py-3 rounded-xl text-xs font-bold shadow-lg hover-glow active:scale-95 duration-300 transition-all border border-med-accent/20 cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            Issue New Prescription
-          </button>
-        )}
-      </div>
-
-      {/* Grid List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activePrescriptions.map((item, idx) => {
-          const med = item.medicine_detail;
-          const isExpired = !item.is_active || (item.end_date && new Date(item.end_date).getTime() < new Date("2026-05-25").getTime());
-
-          return (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              className="bg-med-bg-tertiary border border-med-border p-6 rounded-2xl flex flex-col justify-between hover-glow shadow-sm relative overflow-hidden"
-            >
-              {/* Top Accent Ribbon */}
-              <div className={`absolute top-0 left-0 right-0 h-1 ${isExpired ? "bg-gray-500" : "bg-med-accent"}`} />
-
-              <div className="space-y-4">
-                {/* Medicine Title & Dosage Form */}
-                <div className="flex justify-between items-start pt-2">
-                  <div>
-                    <h3 className="text-base font-bold text-med-text-main font-display">
-                      {med?.name || "Target Compound"}
-                    </h3>
-                    <p className="text-xs text-med-text-sub font-mono">
-                      Brand: {med?.brand} • {med?.strength}
-                    </p>
-                  </div>
-
-                  <span className={`text-[9px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-md border ${
-                    isExpired
-                      ? "bg-gray-500/10 text-gray-400 border-gray-500/20"
-                      : "bg-emerald-500/10 text-emerald-500 border-emerald-500/20 animate-pulse"
-                  }`}>
-                    {isExpired ? "Expired" : "Active"}
-                  </span>
-                </div>
-
-                {/* Dosing Instructions block */}
-                <div className="p-3.5 rounded-xl bg-med-bg-secondary border border-med-border text-xs text-med-text-sub leading-normal">
-                  <span className="font-mono text-[9px] text-med-accent uppercase font-bold block mb-1">
-                    Administration Guidelines:
-                  </span>
-                  "{item.dosage_instructions}"
-                </div>
-
-                {/* Metadata timelines */}
-                <div className="flex gap-4 border-t border-med-border/40 pt-4 text-xs select-none">
-                  <div className="flex items-center gap-1.5 text-med-text-sub">
-                    <Clock className="w-3.5 h-3.5 text-med-accent shrink-0" />
-                    <span>Duration: <strong className="text-med-text-main font-mono">{item.duration}</strong></span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 text-med-text-sub">
-                    <CalendarDays className="w-3.5 h-3.5 text-med-accent shrink-0" />
-                    <span>Starts: <strong className="text-med-text-main font-mono">{item.start_date}</strong></span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Prescribing Doctor Attribution */}
-              <div className="flex items-center gap-3 border-t border-med-border/40 pt-4 mt-4 bg-med-bg-secondary/20 -mx-6 -mb-6 p-6 rounded-b-2xl">
-                <div className="w-8 h-8 rounded-full bg-med-accent/10 border border-med-accent/20 flex items-center justify-center text-med-accent text-xs font-bold shrink-0">
-                  <ShieldPlus className="w-4 h-4" />
-                </div>
+    return (
+        <div className="rx-page-container">
+            <header className="rx-page-header">
                 <div>
-                  <span className="text-[9px] font-mono text-med-text-sub block uppercase tracking-wide">Authorized By</span>
-                  <p className="text-xs font-semibold text-med-text-main">{item.doctor_name}</p>
+                    <h1 className="rx-page-title">Medication Framework</h1>
+                    <p className="rx-page-subtitle">
+                        {user.role === "doctor"
+                            ? "Review and monitor treatment protocol distribution plans."
+                            : "Track real-time pharmaceutical prescriptions and tracking arrays."}
+                    </p>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-
-        {activePrescriptions.length === 0 && (
-          <div className="col-span-full py-16 text-center text-med-text-sub bg-med-bg-tertiary rounded-3xl border border-med-border">
-            No drugs recorded. Doctors can prescribe medications by using Doctor Portal.
-          </div>
-        )}
-      </div>
-
-      {/* Modal issuing (Doctor Role Only) */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div onClick={() => setIsModalOpen(false)} className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div className="bg-med-bg-secondary border border-med-border w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative z-10 p-6">
-            <header className="flex justify-between items-center mb-6">
-              <h3 className="text-base font-bold font-display text-med-text-main flex items-center gap-2">
-                <Pill className="w-5 h-5 text-med-accent" />
-                Prescribe Medication Dosing
-              </h3>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-med-text-sub hover:text-med-text-main"
-              >
-                Close
-              </button>
             </header>
 
-            <form onSubmit={handleCreatePrescription} className="space-y-4">
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Select Compound Formulation
-                </label>
-                <select
-                  value={selectedMedicineId}
-                  onChange={(e) => setSelectedMedicineId(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-sm bg-med-bg-tertiary border border-med-border rounded-xl text-med-text-main font-mono"
-                >
-                  {medicines.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.name} ({m.brand} • {m.strength})
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* ── Section 1: Doctor Operations Panel Matrix ── */}
+            {user.role === "doctor" && (
+                <section className="rx-glass-card rx-search-workspace">
+                    <div className="rx-card-header">
+                        <h2 className="rx-section-title">Query Patient Archives</h2>
+                        <p className="rx-section-desc">Provide patient record hash token key below to pull treatment arrays</p>
+                    </div>
 
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Administration Instructions
-                </label>
-                <textarea
-                  value={instructions}
-                  onChange={(e) => setInstructions(e.target.value)}
-                  placeholder="e.g. Take 1 tablet daily in the evening. Avoid saturated fats."
-                  className="w-full px-3 py-2 text-sm bg-med-bg-tertiary border border-med-border rounded-xl text-med-text-main h-20"
-                  required
-                />
-              </div>
+                    <div className="rx-form-group">
+                        <label className="rx-label-text">Patient Profile UUID Node</label>
+                        <div className="rx-input-row">
+                            <input
+                                className="rx-text-input"
+                                value={profileId}
+                                onChange={e => setProfileId(e.target.value)}
+                                placeholder="Enter system security hash token..."
+                            />
+                            <div className="rx-button-split-group">
+                                <button
+                                    type="button"
+                                    className={`rx-toggle-btn ${showActive ? "active" : ""}`}
+                                    onClick={() => handleToggleFilter(true)}
+                                    disabled={loading}
+                                >
+                                    View Active
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`rx-toggle-btn secondary ${!showActive ? "active" : ""}`}
+                                    onClick={() => handleToggleFilter(false)}
+                                    disabled={loading}
+                                >
+                                    View History
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                    Therapy Cycle Duration
-                  </label>
-                  <input
-                    type="text"
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    placeholder="90 Days"
-                    className="w-full px-3 py-2 text-sm bg-med-bg-tertiary border border-med-border rounded-xl text-med-text-main font-mono"
-                    required
-                  />
+                    {message && <p className="rx-status-feedback error">{message}</p>}
+                </section>
+            )}
+
+            {/* ── Section 2: Patient Filter Toggle Bar ── */}
+            {user.role === "patient" && (
+                <div className="rx-segmented-wrapper">
+                    <button
+                        className={`rx-segment-tab ${showActive ? "active" : ""}`}
+                        onClick={() => handleToggleFilter(true)}
+                    >
+                        Active Prescriptions
+                    </button>
+                    <button
+                        className={`rx-segment-tab ${!showActive ? "active" : ""}`}
+                        onClick={() => handleToggleFilter(false)}
+                    >
+                        Historical Logs
+                    </button>
+                </div>
+            )}
+
+            {/* ── Section 3: Records Data Grid Block ── */}
+            <section className="rx-glass-card rx-results-workspace">
+                <div className="rx-card-header">
+                    <h2 className="rx-section-title">
+                        {showActive ? "Active Pharmacological Directives" : "Archived Directives Log"}
+                    </h2>
                 </div>
 
-                <div>
-                  <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                    Therapy Start Date
-                  </label>
-                  <input
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-med-bg-tertiary border border-med-border rounded-xl text-med-text-main font-mono"
-                    required
-                  />
-                </div>
-              </div>
+                {loading ? (
+                    <div className="rx-state-alert">
+                        <div className="rx-loader-spin" />
+                        <p>Accessing medical mainframe logs...</p>
+                    </div>
+                ) : prescriptions.length === 0 ? (
+                    <div className="rx-empty-view">
+                        <p>No recorded prescriptions match this active filter profile path node.</p>
+                    </div>
+                ) : (
+                    <div className="rx-grid-deck">
+                        {prescriptions.map((rx, idx) => (
+                            <div key={String(rx.id) || idx} className="rx-profile-card">
+                                <div className="rx-card-top">
+                                    <div className="rx-med-icon-box">Rx</div>
+                                    <div className="rx-meta-header">
+                                        <h3 className="rx-medication-name">
+                                            {rx.medicine?.name ?? "Unspecified Compound"}
+                                        </h3>
+                                        <span className={`rx-status-badge ${rx.is_active ? "active" : "inactive"}`}>
+                                            {rx.is_active ? "Active Protocol" : "Terminated"}
+                                        </span>
+                                    </div>
+                                </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3 bg-med-accent hover:bg-med-accent-sub text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shimmer-btn"
-              >
-                {isSubmitting ? "Issuing..." : "Authorize Prescription"}
-              </button>
-            </form>
-          </div>
+                                <div className="rx-specs-grid">
+                                    <div className="rx-spec-box long">
+                                        <span>Dosage Guidelines</span>
+                                        <p>{rx.dosage_instructions ?? "As directed by medical supervisor"}</p>
+                                    </div>
+                                    <div className="rx-spec-box">
+                                        <span>Frequency / Day</span>
+                                        <p>{rx.duration ?? "N/A"}</p>
+                                    </div>
+                                    <div className="rx-spec-box">
+                                        <span>Strength Metric</span>
+                                        <p>{rx.medicine?.strength ?? "Standard"}</p>
+                                    </div>
+                                    <div className="rx-spec-box long">
+                                        <span>Form Factor Unit</span>
+                                        <p>{rx.medicine?.dosage_form ?? "Tablet/Capsule"}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
         </div>
-      )}
-    </div>
-  );
+    );
 }

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, status
+from pathlib import Path
 from sqlalchemy.orm import Session
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from ..DataBase.Database import get_db
 from ..Models.Medical_Data import HealthData
@@ -9,23 +10,21 @@ from ..Services.PDF_Extractor import extract_text_from_pdf, parse_health_fields
 from ..Security.Dependencies import get_current_user
 from ..Services.Gemini.Analysis_Services import Analysis_And_Save
 
+UPLOAD_ROOT = Path(__file__).resolve().parents[1] / "uploads" / "reports"
+UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
+
 
 router = APIRouter(prefix="/reports", tags=["Health Reports"])
 
 MAX_PDF_SIZE_MB = 10
 
 
-@router.post("/upload", response_model=HealthDataRead, status_code=status.HTTP_201_CREATED)
-async def upload_health_reports(
-    file: UploadFile = File(...),
-    patient_id: UUID | None = None,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
-):
+@router.post("/upload",response_model=HealthDataRead,status_code=status.HTTP_201_CREATED)
+async def upload_health_reports(file: UploadFile = File(...),patient_id: UUID | None = None,db: Session = Depends(get_db),current_user=Depends(get_current_user),):
     if file.content_type != "application/pdf":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Only PDF Files are accepted." 
+            detail="Only PDF files are accepted."
         )
 
     pdf_bytes = await file.read()
@@ -36,41 +35,66 @@ async def upload_health_reports(
             detail=f"File too large. Max size is {MAX_PDF_SIZE_MB}MB."
         )
 
-    text = extract_text_from_pdf(pdf_bytes)
-
-    if not text.strip():
+    if current_user.role == "doctor" and not patient_id:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Could not extract any text from this PDF."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="patient_id is required for doctor uploads."
         )
 
-    raw_fields = parse_health_fields(text)
+    pdf_filename = f"{uuid4()}.pdf"
+    saved_pdf_path = UPLOAD_ROOT / pdf_filename
 
     try:
-        health_input = HealthDataCreate(**raw_fields)
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Extracted data failed validation: {str(e)}"
+        saved_pdf_path.write_bytes(pdf_bytes)
+
+        text = extract_text_from_pdf(pdf_bytes)
+
+        if not text.strip():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Could not extract any text from this PDF."
+            )
+
+        raw_fields = parse_health_fields(text)
+
+        try:
+            health_input = HealthDataCreate(**raw_fields)
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Extracted data failed validation: {str(e)}"
+            )
+
+        target_user_id = (
+            patient_id
+            if current_user.role == "doctor"
+            else current_user.id
         )
 
-    is_doctor = current_user.role == "doctor"
-    target_user_id = patient_id if (is_doctor and patient_id) else current_user.id
+        report = HealthData(
+            user_id=target_user_id,
+            uploaded_by=current_user.id,
+            **health_input.model_dump()
+        )
 
-    report = HealthData(
-        user_id=target_user_id,
-        uploaded_by=current_user.id,
-        **health_input.model_dump()
-    )
+        db.add(report)
+        db.commit()
+        db.refresh(report)
 
-    db.add(report)
-    db.commit()
-    db.refresh(report)
+        report_schema = HealthDataRead.model_validate(report)
 
-    report_schema = HealthDataRead.model_validate(report)
-    await Analysis_And_Save(report_schema, db)
+        try:
+            await Analysis_And_Save(report_schema, db)
+        except Exception as e:
+            print(f"Analysis failed: {e}")
 
-    return report
+        return report
+
+    finally:
+        try:
+            saved_pdf_path.unlink(missing_ok=True)
+        except Exception:
+            pass
 
 
 @router.get("/mydataall", response_model=list[HealthDataRead])

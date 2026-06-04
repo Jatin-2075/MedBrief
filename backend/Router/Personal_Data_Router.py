@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from uuid import UUID
 from typing import List
-
+from ..Security.Dependencies import get_current_user
 from ..DataBase.Database import get_db
 from ..Schemas.Personal_Data_Schema import (
     DoctorCreate,
@@ -12,7 +12,7 @@ from ..Schemas.Personal_Data_Schema import (
     ProfileUpdate,
     ProfileResponse,
 )
-from ..Core.Personal_data_functions import (
+from ..Core.Personal_Data_functions import (
     create_doctor,
     get_doctor_by_id,
     get_doctor_by_user_id,
@@ -26,6 +26,8 @@ from ..Core.Personal_data_functions import (
     list_profiles,
     update_profile,
     delete_profile,
+    get_my_doctor,
+    assign_patient_to_doctor,
 )
 
 router = APIRouter(prefix="/personal", tags=["Personal Data"])
@@ -53,7 +55,7 @@ def read_doctor_by_user(user_id: UUID, db: Session = Depends(get_db)):
 
 @router.get("/doctors/{doctor_id}/patients", response_model=List[ProfileResponse])
 def read_doctor_patients(doctor_id: UUID, db: Session = Depends(get_db)):
-    get_doctor_by_id(db, doctor_id)  # 404 guard
+    get_doctor_by_id(db, doctor_id)
     return get_profiles_by_doctor(db, doctor_id)
 
 
@@ -66,6 +68,12 @@ def update_doctor_route(doctor_id: UUID, payload: DoctorUpdate, db: Session = De
 def delete_doctor_route(doctor_id: UUID, db: Session = Depends(get_db)):
     return delete_doctor(db, doctor_id)
 
+@router.get("/my-doctor", response_model=DoctorResponse)
+def my_doctor_route(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    return get_my_doctor(db, current_user.id)
 
 
 @router.post("/profiles", response_model=ProfileResponse, status_code=status.HTTP_201_CREATED)
@@ -101,3 +109,29 @@ def update_profile_route(profile_id: UUID, payload: ProfileUpdate, db: Session =
 @router.delete("/profiles/{profile_id}")
 def delete_profile_route(profile_id: UUID, db: Session = Depends(get_db)):
     return delete_profile(db, profile_id)
+
+
+@router.post("/assign-patient/{profile_id}")
+def assign_patient(
+    profile_id: UUID,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    return assign_patient_to_doctor(
+        db,
+        current_user.id,
+        profile_id
+    )
+
+
+@router.get("/my-patients", response_model=List[ProfileResponse])
+def my_patients(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    doctor = get_doctor_by_user_id(db, current_user.id)
+
+    return get_profiles_by_doctor(
+        db,
+        doctor.id
+    )

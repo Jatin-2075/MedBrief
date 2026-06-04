@@ -1,361 +1,343 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API } from "../Config/Api";
+import { AuthContext } from "../Context/AuthContext";
+import type { Doctor, Profile as PatientProfile } from "../Config/Types";
+import "../Css/Pages/Profile.css";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  User,
-  Scale,
-  Ruler,
-  TrendingUp,
-  Briefcase,
-  Contact2,
-  Calendar,
-  Save,
-  Edit2,
-  Check,
-  Building,
-  Target,
-  Info
-} from "lucide-react";
-import { useAuth } from "../hooks/useAuth";
+// Frontend mapping for the gender enum
+const GENDER_LABELS: Record<string | number, string> = {
+    1: "Male",
+    2: "Female",
+    3: "Other"
+};
 
 export default function Profile() {
-  const { currentProfile, updateProfile, currentUser } = useAuth();
-  const [isEditMode, setIsEditMode] = useState(false);
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  // Form states initialized from current profile
-  const [name, setName] = useState(currentProfile?.name || "");
-  const [age, setAge] = useState(currentProfile?.age || 35);
-  const [gender, setGender] = useState<1 | 2 | 3>(currentProfile?.gender || 1);
-  const [weight, setWeight] = useState(currentProfile?.weight || 70);
-  const [height, setHeight] = useState(currentProfile?.height || 175);
+    if (!authContext) throw new Error("AuthContext.Provider is required.");
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuccessGlow, setShowSuccessGlow] = useState(false);
+    const { user } = authContext;
+    const [profile, setProfile] = useState<Doctor | PatientProfile | null>(null);
+    const [patients, setPatients] = useState<PatientProfile[]>([]);
+    const [editData, setEditData] = useState<Record<string, string>>({
+        name: "",
+        email: "",
+        phone: "",
+        specialization: "",
+        license_number: "",
+        age: "",
+        gender: "1",
+        weight: "",
+        height: "",
+    });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState<string | null>(null);
+    const [isError, setIsError] = useState(false);
 
-  if (!currentProfile || !currentUser) return null;
+    useEffect(() => {
+        const access = localStorage.getItem("access");
+        if (!access) {
+            navigate("/login");
+            return;
+        }
 
-  // Calculate live Body Mass Index (BMI)
-  const calculateBMI = (): number => {
-    const hM = height / 100;
-    if (hM === 0) return 0;
-    return weight / (hM * hM);
-  };
+        if (!user) return;
 
-  const bmi = calculateBMI();
+        const loadProfile = async () => {
+            setLoading(true);
+            setIsError(false);
+            try {
+                const endpoint = user.role === "doctor"
+                    ? `/personal/doctors/user/${user.id}`
+                    : `/personal/profiles/user/${user.id}`;
+                
+                const data = await API<Doctor | PatientProfile>("GET", endpoint);
+                setProfile(data);
+                
+                // Safe initialization of form state to prevent uncontrolled transitions
+                setEditData({
+                    name: data.name ?? "",
+                    email: "email" in data ? (data.email ?? "") : "",
+                    phone: "phone" in data ? (data.phone ?? "") : "",
+                    specialization: "specialization" in data ? (data.specialization ?? "") : "",
+                    license_number: "license_number" in data ? (data.license_number ?? "") : "",
+                    age: "age" in data ? String(data.age ?? "") : "",
+                    gender: "gender" in data ? String(data.gender ?? "1") : "1",
+                    weight: "weight" in data ? String(data.weight ?? "") : "",
+                    height: "height" in data ? String(data.height ?? "") : "",
+                });
 
-  // Determine BMI Category and grading ranges
-  const getBMICategory = (val: number) => {
-    if (val < 18.5) return { label: "Underweight Range", color: "text-amber-500", progress: "bg-amber-500", border: 'border-amber-500/20' };
-    if (val < 25) return { label: "Perfect Optimal Range", color: "text-emerald-500", progress: "bg-emerald-500", border: 'border-emerald-500/20' };
-    if (val < 30) return { label: "Overweight Range", color: "text-yellow-500", progress: "bg-yellow-500", border: 'border-yellow-500/20' };
-    return { label: "Obese (Elevated Risk)", color: "text-red-500", progress: "bg-red-500", border: 'border-red-500/20' };
-  };
+                if (user.role === "doctor" && data.id) {
+                    const patientsData = await API<PatientProfile[]>("GET", `/personal/doctors/${data.id}/patients`);
+                    setPatients(patientsData);
+                }
+            } catch (error) {
+                setIsError(true);
+                setMessage("Unable to load profile data.");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  const bmiMeta = getBMICategory(bmi);
+        loadProfile();
+    }, [navigate, user]);
 
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+    const handleSave = async () => {
+        if (!profile || !user) return;
+        setMessage(null);
+        setIsError(false);
+        setSaving(true);
 
-    try {
-      await updateProfile({
-        name,
-        age: Number(age),
-        gender: Number(gender) as 1 | 2 | 3,
-        weight: Number(weight),
-        height: Number(height)
-      });
+        try {
+            if (user.role === "doctor" && "id" in profile && profile.id) {
+                const body = {
+                    name: editData.name,
+                    email: editData.email,
+                    phone: editData.phone,
+                    specialization: editData.specialization,
+                    license_number: editData.license_number,
+                };
+                const updated = await API<Doctor>("PUT", `/personal/doctors/${profile.id}`, body);
+                setProfile(updated);
+                setMessage("Doctor profile updated successfully.");
+            }
+            
+            if (user.role === "patient" && "id" in profile && profile.id) {
+                const body = {
+                    name: editData.name,
+                    age: editData.age ? Number(editData.age) : null,
+                    gender: Number(editData.gender),
+                    weight: editData.weight ? Number(editData.weight) : null,
+                    height: editData.height ? Number(editData.height) : null,
+                };
+                const updated = await API<PatientProfile>("PUT", `/personal/profiles/${profile.id}`, body);
+                setProfile(updated);
+                setMessage("Patient profile updated successfully.");
+            }
+        } catch (error) {
+            setIsError(true);
+            setMessage("Unable to save profile changes.");
+        } finally {
+            setSaving(false);
+        }
+    };
 
-      setIsEditMode(false);
-      setShowSuccessGlow(true);
-      setTimeout(() => setShowSuccessGlow(false), 2000);
-    } catch (err) {
-      console.error("Failed to update profile", err);
-    } finally {
-      setIsLoading(false);
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text);
+        alert("ID copied to clipboard!");
+    };
+
+    if (!user) {
+        return <div className="page-content"><p>Redirecting or validating authentication...</p></div>;
     }
-  };
 
-  // Extract initials for the avatar holder
-  const getInitials = (userNameStr: string): string => {
-    const names = userNameStr.split(" ");
-    if (names.length >= 2) {
-      return (names[0].charAt(0) + names[1].charAt(0)).toUpperCase();
-    }
-    return userNameStr.slice(0, 2).toUpperCase();
-  };
+    return (
+        <div className="page-content">
+            <h1 className="page-title">Profile</h1>
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 pb-32">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 select-none">
-        <div>
-          <span className="font-mono text-xs text-med-accent tracking-widest font-semibold block mb-1">
-            BIOMETRIC SECURE CREDENTIALING
-          </span>
-          <h1 className="text-3xl font-bold font-display tracking-tight text-med-text-main">
-            Biometric Profile
-          </h1>
-          <p className="text-xs sm:text-sm text-med-text-sub mt-0.5">
-            Audit personal somatic measurements, track BMI quotients, and configure primary physician maps
-          </p>
-        </div>
+            {loading ? (
+                <p>Loading profile information...</p>
+            ) : profile ? (
+                <div className="profile-container">
+                    
+                    {/* Role-Based Overview Card */}
+                    <div className="profile-card data-summary-card">
+                        {user.role === "doctor" ? (
+                            <div className="table-card">
+                                <h2>Doctor Overview</h2>
+                                <p><strong>Name:</strong> {profile.name}</p>
+                                {"specialization" in profile && <p><strong>Specialization:</strong> {profile.specialization}</p>}
+                                {"email" in profile && <p><strong>Email:</strong> {profile.email}</p>}
+                                {"phone" in profile && <p><strong>Phone:</strong> {profile.phone}</p>}
+                                <p><strong>System Role:</strong> {user.role}</p>
+                            </div>
+                        ) : (
+                            <div className="table-card">
+                                <h2>Patient Overview</h2>
+                                <p><strong>Name:</strong> {profile.name}</p>
+                                <p><strong>System Role:</strong> {user.role}</p>
+                                {profile.id && (
+                                    <div className="profile-id-row" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                        <p style={{ margin: 0 }}><strong>Profile ID:</strong> <code>{profile.id}</code></p>
+                                        <button
+                                            type="button"
+                                            className="page-button copy-btn"
+                                            style={{ padding: "2px 8px", fontSize: "12px", marginTop: 0 }}
+                                            onClick={() => copyToClipboard(String(profile.id))}
+                                        >
+                                            Copy
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
 
-        {/* Edit mode toggle button */}
-        {!isEditMode ? (
-          <button
-            onClick={() => setIsEditMode(true)}
-            className="flex items-center gap-2 bg-med-bg-tertiary border border-med-border hover:border-med-accent hover:text-med-accent text-med-text-main py-2.5 px-5 rounded-xl text-xs font-semibold hover-glow transition-all cursor-pointer"
-          >
-            <Edit2 className="w-4 h-4" />
-            Edit Somatic Records
-          </button>
-        ) : (
-          <div className="flex gap-2">
-            <button
-              onClick={() => {
-                setIsEditMode(false);
-                // Reset form values to original state
-                setName(currentProfile.name);
-                setAge(currentProfile.age);
-                setGender(currentProfile.gender);
-                setWeight(currentProfile.weight);
-                setHeight(currentProfile.height);
-              }}
-              className="px-4 py-2 bg-med-bg-tertiary border border-med-border text-med-text-sub rounded-xl text-xs font-semibold cursor-pointer"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-      </div>
+                    {/* Unified Form Editing Box */}
+                    <div className="profile-card form-edit-card">
+                        <h2>Edit Profile Details</h2>
+                        <div className="profile-form">
+                            <label className="form-label">
+                                Name
+                                <input
+                                    className="form-input"
+                                    value={editData.name}
+                                    onChange={(e) => setEditData(prev => ({ ...prev, name: e.target.value }))}
+                                />
+                            </label>
 
-      {/* Profile Form Canvas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Span: Avatar and Somatic values editor */}
-        <div className="lg:col-span-7 bg-med-bg-tertiary border border-med-border rounded-3xl p-6 sm:p-8 shadow-sm">
-          <form onSubmit={handleUpdate} className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-med-border/45">
-              {/* Initials Avatar Plate */}
-              <div className="w-20 h-20 rounded-3xl bg-med-accent text-white flex items-center justify-center text-2xl font-extrabold font-display shadow-lg select-none glow-accent uppercase">
-                {getInitials(name || currentProfile.name)}
-              </div>
+                            {user.role === "doctor" ? (
+                                <>
+                                    <label className="form-label">
+                                        Specialization
+                                        <input
+                                            className="form-input"
+                                            value={editData.specialization}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, specialization: e.target.value }))}
+                                        />
+                                    </label>
+                                    <label className="form-label">
+                                        Email
+                                        <input
+                                            className="form-input"
+                                            type="email"
+                                            value={editData.email}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, email: e.target.value }))}
+                                        />
+                                    </label>
+                                    <label className="form-label">
+                                        Phone
+                                        <input
+                                            className="form-input"
+                                            type="tel"
+                                            value={editData.phone}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, phone: e.target.value }))}
+                                        />
+                                    </label>
+                                    <label className="form-label">
+                                        License Number
+                                        <input
+                                            className="form-input"
+                                            value={editData.license_number}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, license_number: e.target.value }))}
+                                        />
+                                    </label>
+                                </>
+                            ) : (
+                                <>
+                                    <label className="form-label">
+                                        Age
+                                        <input
+                                            className="form-input"
+                                            type="number"
+                                            value={editData.age}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, age: e.target.value }))}
+                                        />
+                                    </label>
+                                    <label className="form-label">
+                                        Gender
+                                        <select
+                                            className="form-input"
+                                            value={editData.gender}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, gender: e.target.value }))}
+                                        >
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Other</option>
+                                        </select>
+                                    </label>
+                                    <label className="form-label">
+                                        Weight (kg)
+                                        <input
+                                            className="form-input"
+                                            type="number"
+                                            value={editData.weight}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, weight: e.target.value }))}
+                                        />
+                                    </label>
+                                    <label className="form-label">
+                                        Height (cm)
+                                        <input
+                                            className="form-input"
+                                            type="number"
+                                            value={editData.height}
+                                            onChange={(e) => setEditData(prev => ({ ...prev, height: e.target.value }))}
+                                        />
+                                    </label>
+                                </>
+                            )}
 
-              <div className="text-center sm:text-left select-none">
-                <h3 className="text-lg font-bold text-med-text-main font-display">{name || currentProfile.name}</h3>
-                <p className="text-xs text-med-text-sub font-mono uppercase tracking-wide">
-                  Account Role: Security {currentUser.role} • ID: #{currentUser.id.slice(-6).toUpperCase()}
-                </p>
+                            <button
+                                className="page-button save-btn"
+                                type="button"
+                                onClick={handleSave}
+                                disabled={saving}
+                            >
+                                {saving ? "Saving Changes..." : "Save Profile"}
+                            </button>
+                        </div>
+                        
+                        {message && (
+                            <p className={`status-message ${isError ? "error-text" : "success-text"}`} style={{ marginTop: "15px", color: isError ? "#ef4444" : "#10b981" }}>
+                                {message}
+                            </p>
+                        )}
+                    </div>
 
-                {/* Feedback glow indicator */}
-                <AnimatePresence>
-                  {showSuccessGlow && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="mt-2 text-xs font-semibold text-emerald-500 bg-emerald-500/10 py-1 px-3 border border-emerald-500/20 rounded-lg flex items-center gap-1.5 justify-center sm:justify-start"
-                    >
-                      <Check className="w-3.5 h-3.5" />
-                      Somatic parameters synchronized!
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+                    {/* Assigned Patients Section (Exclusive to Doctors) */}
+                    {user.role === "doctor" && (
+                        <section className="profile-section assigned-patients-section">
+                            <h2 className="section-title">My Patients</h2>
+                            {patients.length === 0 ? (
+                                <p>No patients currently assigned to your dashboard.</p>
+                            ) : (
+                                <div className="table-card">
+                                    {patients.map((patient) => (
+                                        <div key={patient.id} className="table-row">
+                                            <p><strong>{patient.name}</strong></p>
+                                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                                <span><strong>Profile ID:</strong> <code>{patient.id}</code></span>
+                                                <button
+                                                    type="button"
+                                                    className="page-button copy-btn"
+                                                    style={{ padding: "2px 8px", fontSize: "12px", marginTop: 0 }}
+                                                    onClick={() => copyToClipboard(String(patient.id))}
+                                                >
+                                                    Copy
+                                                </button>
+                                            </div>
+                                            <p>Age: {patient.age ?? "N/A"}</p>
+                                            <p>Gender: {patient.gender ? (GENDER_LABELS[patient.gender] ?? "Unknown") : "Unknown"}</p>
+                                            <p>Weight: {patient.weight ? `${patient.weight} kg` : "N/A"}</p>
+                                            <p>Height: {patient.height ? `${patient.height} cm` : "N/A"}</p>
 
-            {/* Grid form fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Full Account Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2.5 text-sm bg-med-bg-secondary border border-med-border rounded-xl text-med-text-main focus:ring-1 focus:ring-med-accent focus:outline-none"
-                  disabled={!isEditMode}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Biological Age (Years)
-                </label>
-                <input
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 text-sm bg-med-bg-secondary border border-med-border rounded-xl text-med-text-main font-mono focus:ring-1 focus:ring-med-accent focus:outline-none"
-                  disabled={!isEditMode}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Gender Assignment
-                </label>
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(Number(e.target.value) as 1 | 2 | 3)}
-                  className="w-full px-4 py-2.5 text-sm bg-med-bg-secondary border border-med-border rounded-xl text-med-text-main focus:ring-1 focus:ring-med-accent focus:outline-none"
-                  disabled={!isEditMode}
-                >
-                  <option value={1}>Male</option>
-                  <option value={2}>Female</option>
-                  <option value={3}>Other / Non-Binary</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Personal Weight (kg)
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-med-text-sub text-xs">
-                    <Scale className="w-3.5 h-3.5" />
-                  </span>
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={weight}
-                    onChange={(e) => setWeight(Number(e.target.value))}
-                    className="w-full pl-9 pr-4 py-2.5 text-sm bg-med-bg-secondary border border-med-border rounded-xl text-med-text-main font-mono focus:ring-1 focus:ring-med-accent focus:outline-none"
-                    disabled={!isEditMode}
-                    required
-                  />
+                                            <div className="patient-actions-row" style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                                                <button
+                                                    className="page-button"
+                                                    onClick={() => navigate(`/upload-prescription?profile=${patient.id}`)}
+                                                >
+                                                    Upload Prescription
+                                                </button>
+                                                <button
+                                                    className="page-button"
+                                                    onClick={() => navigate(`/prescriptions?profile=${patient.id}`)}
+                                                >
+                                                    View Prescriptions
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+                    )}
                 </div>
-              </div>
-
-              <div>
-                <label className="text-[10px] text-med-text-sub font-mono uppercase tracking-wide block mb-1">
-                  Personal Height (cm)
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-med-text-sub text-xs">
-                    <Ruler className="w-3.5 h-3.5" />
-                  </span>
-                  <input
-                    type="number"
-                    value={height}
-                    onChange={(e) => setHeight(Number(e.target.value))}
-                    className="w-full pl-9 pr-4 py-2.5 text-sm bg-med-bg-secondary border border-med-border rounded-xl text-med-text-main font-mono focus:ring-1 focus:ring-med-accent focus:outline-none"
-                    disabled={!isEditMode}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            {isEditMode && (
-              <div className="pt-4 border-t border-med-border/40 flex justify-end">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-6 py-3 bg-med-accent hover:bg-med-accent-sub text-white text-xs font-semibold rounded-xl flex items-center gap-2 cursor-pointer hover-glow shimmer-btn"
-                >
-                  {isLoading ? (
-                    "Saving changes..."
-                  ) : (
-                    <>
-                      <Save className="w-4 h-4" />
-                      Save Biometric Record
-                    </>
-                  )}
-                </button>
-              </div>
+            ) : (
+                <p>{message ?? "Profile profile records could not be found."}</p>
             )}
-          </form>
         </div>
-
-        {/* Right Span: Gauge BMI & Assigned clinician info */}
-        <div className="lg:col-span-5 space-y-8 select-none">
-          {/* Live body BMI tracker */}
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm text-center">
-            <h3 className="text-base font-bold font-display text-med-text-main mb-2">Live BMI Quotient</h3>
-            <p className="text-xs text-med-text-sub">Body mass index based on live somatic dimensions</p>
-
-            {/* BMI visual value displays */}
-            <div className="my-6">
-              <span className="text-5xl font-extrabold font-mono tracking-tight bg-gradient-to-r from-med-accent to-med-accent-sub bg-clip-text text-transparent">
-                {bmi.toFixed(1)}
-              </span>
-              <p className={`text-xs font-bold font-display tracking-wider uppercase mt-2 ${bmiMeta.color}`}>
-                {bmiMeta.label}
-              </p>
-            </div>
-
-            {/* Interactive linear progress tracker gauge */}
-            <div className="space-y-2 text-left mb-4">
-              <div className="h-2 w-full rounded-full bg-med-bg-secondary border border-med-border relative overflow-hidden">
-                {/* Dynamically sliding percentage marker representing standard BMI scope of 15 to 35 */}
-                <span
-                  style={{
-                    width: `${Math.min(100, Math.max(0, ((bmi - 15) / 20) * 100))}%`
-                  }}
-                  className={`absolute top-0 bottom-0 left-0 transition-all duration-300 ${bmiMeta.progress}`}
-                />
-              </div>
-
-              <div className="flex justify-between text-[9px] font-mono text-med-text-sub uppercase tracking-tight">
-                <span>15.0 Underweight</span>
-                <span>25.0 Normal</span>
-                <span>35.0 High Risk</span>
-              </div>
-            </div>
-
-            <div className="p-3 bg-med-bg-secondary rounded-xl text-center text-[10px] text-med-text-sub border border-med-border leading-normal flex items-start gap-1.5">
-              <Info className="w-4 h-4 text-med-accent shrink-0" />
-              Formula uses metric inputs height & weight. Standard normal guidelines are locked between 18.5 and 24.9.
-            </div>
-          </section>
-
-          {/* Assigned clinician card */}
-          <section className="bg-med-bg-tertiary border border-med-border p-6 rounded-3xl shadow-sm">
-            <h3 className="text-xs font-mono tracking-widest text-med-text-sub uppercase mb-4 text-center">
-              Assigned Clinic Officer
-            </h3>
-
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full border-2 border-med-accent overflow-hidden mb-3">
-                <img
-                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=150&h=150"
-                  alt="Dr Sarah Jenkins"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h4 className="text-sm font-bold text-med-text-main">Dr. Sarah Jenkins, MD</h4>
-              <p className="text-[11px] text-med-accent font-semibold font-mono tracking-wider uppercase mt-1">
-                Cardiology Specialist
-              </p>
-
-              <div className="w-full mt-4 p-3 bg-med-bg-secondary rounded-xl text-left text-xs space-y-1 bg-med-bg-secondary border border-med-border">
-                <div className="flex justify-between font-mono text-[10px] text-med-text-sub">
-                  <span>CLINIC STATION</span>
-                  <span className="text-med-text-main font-semibold">STATION-A4</span>
-                </div>
-                <div className="flex justify-between font-mono text-[10px] text-med-text-sub">
-                  <span>TELEMETRY STACKS</span>
-                  <span className="text-med-text-main font-semibold">SECURE VPN</span>
-                </div>
-                <div className="flex justify-between font-mono text-[10px] text-med-text-sub">
-                  <span>SCHEDULING CODE</span>
-                  <span className="text-med-text-main font-semibold">MED-CARDIO-JW</span>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

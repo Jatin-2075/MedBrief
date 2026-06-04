@@ -2,15 +2,18 @@ import uuid
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from DataBase import Base
+from Backend.DataBase import Base
 
 class HealthData(Base):
     __tablename__ = 'health_reports'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("auth_users.id"))
+    uploaded_by = Column(UUID(as_uuid=True), ForeignKey("auth_users.id"), nullable=False)
+    pdf_path = Column(String, nullable=True)
     created_at = Column(DateTime, default=func.now())
-    owner = relationship("Auth_User", back_populates="health_reports")
+    owner = relationship("Auth_User", back_populates="health_reports", foreign_keys=[user_id])
+    uploaded_by_user = relationship("Auth_User", foreign_keys=[uploaded_by])
     
     ldl_cholesterol = Column(Float)
     hdl_cholesterol = Column(Float)

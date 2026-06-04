@@ -1,23 +1,19 @@
-import re
-from pydantic import BaseModel, EmailStr, field_validator, Field, ConfigDict
+from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
 from datetime import datetime
 from typing import Optional
 
 class SignupRequest(BaseModel):
-    username: str
     email: EmailStr 
     password: str
     role: str = "patient"
 
-    @field_validator("username")
+    @field_validator("role")
     @classmethod
-    def validate_username(cls, v: str) -> str:
-        v = v.strip()
-        if len(v) < 3 or len(v) > 30:
-            raise ValueError("Username must be 3 - 30 characters")
-        if not re.match(r"^[a-zA-Z0-9_]+$", v):
-            raise ValueError("Username can only contain letters, numbers, and underscores")
-        return v.lower()
+    def validate_role(cls, v: str) -> str:
+        normalized = v.strip().lower()
+        if normalized not in {"doctor", "patient"}:
+            raise ValueError("Role must be either 'doctor' or 'patient'")
+        return normalized
 
     @field_validator("password")
     @classmethod
@@ -27,7 +23,7 @@ class SignupRequest(BaseModel):
         return v
 
 class LoginRequest(BaseModel):
-    username: str
+    email: EmailStr
     password: str
 
 class TokenResponse(BaseModel):

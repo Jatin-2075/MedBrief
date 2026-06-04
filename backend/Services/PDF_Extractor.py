@@ -1,30 +1,30 @@
-import pyplumber
+import pdfplumber
 import re
 from io import BytesIO
 from typing import Optional
 
 def extract_text_from_pdf(pdf_bytes: bytes) -> str:
     text = ""
-    with pyplumber.open(BytesIO(pdf_bytes)) as pdf:
+    with pdfplumber.open(BytesIO(pdf_bytes)) as pdf:
         for page in pdf.pages:
-            text += pages.extract_text() or ""
-        return text
+            text += page.extract_text() or ""
+    return text
 
 
 def _find_float(patterns: list[str], text: str) -> Optional[float]:
     for pattern in patterns:
-        math = re.search(pattern, text, re.IGNORECASE)
-        if match :
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
             try:
                 return float(match.group(1))
             except ValueError:
                 continue
-        return None
+    return None
 
 
 def _find_int(patterns: list[str], text: str) -> Optional[int]:
     val = _find_float(patterns, text)
-    return int (val) if val is not None else None
+    return int(val) if val is not None else None
 
 
 def _find_bp(text: str) -> Optional[str]:

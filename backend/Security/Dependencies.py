@@ -1,3 +1,4 @@
+import uuid
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
@@ -20,10 +21,15 @@ async def get_current_user(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: str | None = payload.get("sub")
+        user_id_str: str | None = payload.get("sub")
         token_type: str | None = payload.get("type")
 
-        if user_id is None or token_type != "access":
+        if user_id_str is None or token_type != "access":
+            raise credentials_exception
+
+        try:
+            user_id = uuid.UUID(user_id_str)
+        except ValueError:
             raise credentials_exception
 
         user = db.query(Auth_User).filter(Auth_User.id == user_id).first()

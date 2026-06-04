@@ -15,9 +15,20 @@ from ..Schemas.Personal_Data_Schema import (
 # ── Doctor ────────────────────────────────────────────────────────────────────
 
 def create_doctor(db: Session, data: DoctorCreate) -> Doctor:
-    existing = db.query(Doctor).filter(Doctor.license_number == data.license_number).first()
-    if existing:
+    existing_license = db.query(Doctor).filter(Doctor.license_number == data.license_number).first()
+    if existing_license:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="License number already registered")
+
+    if data.email:
+        existing_email = db.query(Doctor).filter(Doctor.email == data.email).first()
+        if existing_email:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Doctor email already registered")
+
+    if data.phone:
+        existing_phone = db.query(Doctor).filter(Doctor.phone == data.phone).first()
+        if existing_phone:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Doctor phone already registered")
+
     doctor = Doctor(**data.model_dump())
     db.add(doctor)
     db.commit()
@@ -55,6 +66,24 @@ def update_doctor(db: Session, doctor_id: UUID, data: DoctorUpdate) -> Doctor:
         )
         if conflict:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="License number already registered")
+
+    if "email" in update_data and update_data["email"] is not None:
+        conflict = (
+            db.query(Doctor)
+            .filter(Doctor.email == update_data["email"], Doctor.id != doctor_id)
+            .first()
+        )
+        if conflict:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Doctor email already registered")
+
+    if "phone" in update_data and update_data["phone"] is not None:
+        conflict = (
+            db.query(Doctor)
+            .filter(Doctor.phone == update_data["phone"], Doctor.id != doctor_id)
+            .first()
+        )
+        if conflict:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Doctor phone already registered")
 
     for field, value in update_data.items():
         setattr(doctor, field, value)
@@ -119,3 +148,34 @@ def delete_profile(db: Session, profile_id: UUID) -> dict:
     db.delete(profile)
     db.commit()
     return {"detail": "Profile deleted successfully"}
+
+
+
+def get_my_doctor(db: Session, user_id: UUID) -> Doctor:
+    profile = get_profile_by_user_id(db, user_id)
+
+    if not profile.doctor_id:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No doctor assigned"
+        )
+
+    return get_doctor_by_id(db, profile.doctor_id)
+
+
+def assign_patient_to_doctor(
+    db: Session,
+    doctor_user_id: UUID,
+    profile_id: UUID
+) -> Profile:
+
+    doctor = get_doctor_by_user_id(db, doctor_user_id)
+
+    profile = get_profile_by_id(db, profile_id)
+
+    profile.doctor_id = doctor.id
+
+    db.commit()
+    db.refresh(profile)
+
+    return profile

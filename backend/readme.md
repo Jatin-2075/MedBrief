@@ -1,236 +1,287 @@
-﻿# MedBrief & Health Tracker: Backend Database Reference
+﻿# MedBrief Backend API Documentation
 
-This README documents the actual backend database tables, fields, and relationships for MedBrief & Health Tracker. Use this reference to build frontend screens and API integration.
+This is the backend API for MedBrief AI, a health management platform built with FastAPI. It handles authentication, user profiles, health data management, AI analysis, and appointment scheduling.
 
-## Database Tables
+## Technology Stack
 
-### `auth_users`
-- Purpose: stores application users and authentication credentials.
-- Primary key: `id` (UUID)
+- **Framework:** FastAPI
+- **Database:** SQLAlchemy ORM (SQLite/PostgreSQL)
+- **Authentication:** JWT with bcrypt
+- **AI Integration:** Google Gemini
+- **Document Processing:** PDF extraction & OCR
+- **Database Migrations:** Alembic
 
-Fields:
-- `id`: UUID
-- `username`: String, unique
-- `email`: String, unique
-- `password`: String
-- `role`: String, default `patient`
+## Database Schema
 
-Relationships:
-- `profile`: one-to-one with `Profile`
-- `chat_history`: one-to-many with `ChatMessage`
-- `health_reports`: one-to-many with `HealthData`
+### Authentication
 
----
-
-### `Profile`
-- Purpose: stores patient profile and baseline health demographics.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `user_id`: UUID, foreign key → `auth_users.id`
-- `doctor_id`: UUID, foreign key → `doctors.id`, nullable
-- `name`: String
-- `age`: Integer
-- `gender`: Integer (`1=MALE`, `2=FEMALE`, `3=OTHER`)
-- `weight`: Integer (kg)
-- `height`: Integer (cm)
+**`auth_users`** — User accounts and authentication
+- `id` (UUID): Primary key
+- `username` (String): Unique username
+- `email` (String): Unique email
+- `password` (String): Bcrypt hashed
+- `role` (String): "patient" or "doctor"
 
 Relationships:
-- `owner`: belongs to `Auth_User`
-- `managed_by_doctor`: belongs to `Doctor`
-- `images`: one-to-many with `UserImage` (if used)
+- One-to-one: `Profile`
+- One-to-many: `ChatMessage`, `HealthData`, `AuditLog`
 
----
+### User Profiles
 
-### `doctors`
-- Purpose: stores doctor profiles and specialties.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `user_id`: UUID, foreign key → `auth_users.id`, unique
-- `specialization`: String
-- `license_number`: String, unique
-
-Relationships:
-- `patients`: one-to-many with `Profile`
-- `uploaded_images`: one-to-many with `UserImage`
-- `prescriptions`: one-to-many with `Prescription`
-
----
-
-### `medicines`
-- Purpose: stores medication catalog entries.
-- Primary key: `id` (Integer)
-
-Fields:
-- `id`: Integer
-- `name`: String, unique
-- `brand_name`: String, nullable
-- `dosage_form`: String
-- `strength`: String
-- `description`: String, nullable
+**`Profile`** — Patient demographics and health baseline
+- `id` (UUID): Primary key
+- `user_id` (UUID): Foreign key → `auth_users`
+- `doctor_id` (UUID): Optional foreign key → `doctors`
+- `name` (String): Patient name
+- `age` (Integer): Patient age
+- `gender` (Enum): 1=MALE, 2=FEMALE, 3=OTHER
+- `weight` (Integer): kg
+- `height` (Integer): cm
 
 Relationships:
-- `prescriptions`: one-to-many with `Prescription`
+- One-to-many: `Appointment`, `HealthData`
+- Many-to-one: `Doctor`
 
----
-
-### `prescriptions`
-- Purpose: stores prescribed medications for a profile.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `doctor_id`: UUID, foreign key → `doctors.id`
-- `profile_id`: UUID, foreign key → `Profile.id`
-- `medicine_id`: Integer, foreign key → `medicines.id`
-- `dosage_instructions`: String
-- `duration`: String
-- `start_date`: DateTime, defaults to current time
-- `end_date`: DateTime, nullable
-- `is_active`: Boolean, default `True`
+**`doctors`** — Doctor profiles
+- `id` (UUID): Primary key
+- `user_id` (UUID): Foreign key → `auth_users`
+- `name` (String): Doctor name
+- `email` (String): Doctor email
+- `phone` (String): Phone number
+- `specialization` (String): Medical specialty
+- `license_number` (String): Medical license
 
 Relationships:
-- `doctor`: belongs to `Doctor`
-- `profile`: belongs to `Profile`
-- `medicine`: belongs to `Medicine`
+- One-to-many: `Profile`, `Prescription`, `Appointment`
 
----
+### Health Data
 
-### `appointments`
-- Purpose: stores appointment scheduling between doctor and patient.
-- Primary key: `id` (UUID)
+**`health_reports`** — Medical lab results and vital signs
+- `id` (UUID): Primary key
+- `user_id` (UUID): Foreign key → `auth_users`
+- `uploaded_by` (UUID): Foreign key → `auth_users` (uploader)
+- `pdf_path` (String): Path to uploaded PDF
+- `created_at` (DateTime): Upload timestamp
 
-Fields:
-- `id`: UUID
-- `doctor_id`: UUID, foreign key → `doctors.id`
-- `profile_id`: UUID, foreign key → `Profile.id`
-- `start_time`: DateTime
-- `end_time`: DateTime
-- `status`: String, default `scheduled`
-- `meeting_link`: String, nullable
-- `notes`: String, nullable
-
-Relationships:
-- `doctor`: belongs to `Doctor`
-- `profile`: belongs to `Profile`
-
----
-
-### `audit_logs`
-- Purpose: stores audit trails for user actions on patient profiles.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `actor_id`: UUID, foreign key → `auth_users.id`
-- `target_profile_id`: UUID, foreign key → `Profile.id`
-- `action`: String
-- `ip_address`: String, nullable
-- `created_at`: DateTime, default current time
+Lab Fields:
+- `ldl_cholesterol`, `hdl_cholesterol`, `triglycerides` (Float)
+- `hba1c`, `fasting_glucose` (Float)
+- `haemoglobin` (Float)
+- `wbc_count`, `platelet_count` (Integer)
+- `alt_ast`, `egfr` (Float)
+- `resting_heart_rate` (Integer)
+- `blood_pressure` (String): "120/80" format
+- `spo2` (Float): 0-100 range
 
 Relationships:
-- `actor`: belongs to `Auth_User`
-- `target_profile`: belongs to `Profile`
+- One-to-one: `MedicalAnalysis`
 
----
-
-### `health_reports`
-- Purpose: stores raw clinical lab data and vitals.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `user_id`: UUID, foreign key → `auth_users.id`
-- `created_at`: DateTime, default current time
-- `ldl_cholesterol`: Float
-- `hdl_cholesterol`: Float
-- `triglycerides`: Float
-- `hba1c`: Float
-- `fasting_glucose`: Float
-- `haemoglobin`: Float
-- `wbc_count`: Integer
-- `platelet_count`: Integer
-- `alt_ast`: Float
-- `egfr`: Float
-- `resting_heart_rate`: Integer
-- `blood_pressure`: String (example `120/80`)
-- `spo2`: Float
+**`medical_analysis`** — AI-generated health analysis
+- `id` (UUID): Primary key
+- `report_id` (UUID): Foreign key → `health_reports`
+- `cardiac_risk_score` (String): Risk assessment
+- `metabolic_status` (String): Metabolic health
+- `kidney_status` (String): Kidney function
+- `ai_summary` (String): AI analysis text
+- `created_at` (DateTime): Analysis timestamp
 
 Relationships:
-- `owner`: belongs to `Auth_User`
-- `analysis`: one-to-one with `MedicalAnalysis`
+- One-to-one: `HealthData`
 
----
+### Medicines & Prescriptions
 
-### `medical_analysis`
-- Purpose: stores the health evaluation results and AI summary.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `report_id`: UUID, foreign key → `health_reports.id`
-- `cardiac_risk_score`: String
-- `metabolic_status`: String
-- `kidney_status`: String
-- `ai_summary`: String, nullable
-- `created_at`: DateTime, default current time
+**`medicines`** — Medication catalog
+- `id` (Integer): Primary key
+- `name` (String): Medication name, unique
+- `brand_name` (String): Brand name
+- `dosage_form` (String): Tablet, capsule, etc.
+- `strength` (String): Dosage strength
+- `description` (String): Optional notes
 
 Relationships:
-- `report`: belongs to `HealthData`
+- One-to-many: `Prescription`
 
----
-
-### `health_advice`
-- Purpose: stores condition-specific advice content.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `condition_tag`: String
-- `advice_title`: String
-- `advice_content`: String
-- `severity_level`: Integer
-
----
-
-### `chat_messages`
-- Purpose: stores user / AI conversation history.
-- Primary key: `id` (UUID)
-
-Fields:
-- `id`: UUID
-- `user_id`: UUID, foreign key → `auth_users.id`
-- `user_query`: String
-- `ai_response`: String
-- `timestamp`: DateTime, default current time
-- `session_id`: UUID, indexed
+**`prescriptions`** — Active and historical prescriptions
+- `id` (UUID): Primary key
+- `doctor_id` (UUID): Foreign key → `doctors`
+- `profile_id` (UUID): Foreign key → `Profile`
+- `medicine_id` (Integer): Foreign key → `medicines`
+- `dosage_instructions` (String): "1 tablet twice daily"
+- `duration` (String): "10 days" or "ongoing"
+- `start_date` (DateTime): Start date
+- `end_date` (DateTime): Optional end date
+- `is_active` (Boolean): Currently active
 
 Relationships:
-- `owner`: belongs to `Auth_User`
+- Many-to-one: `Doctor`, `Profile`, `Medicine`
 
----
+### Appointments & Communication
 
-## Relationship Summary
-- `auth_users.id` → `Profile.user_id`, `HealthData.user_id`, `ChatMessage.user_id`, `Doctor.user_id`, `AuditLog.actor_id`
-- `Profile.id` → `Prescription.profile_id`, `Appointment.profile_id`, `AuditLog.target_profile_id`
-- `Doctor.id` → `Prescription.doctor_id`, `Appointment.doctor_id`
-- `Medicine.id` → `Prescription.medicine_id`
-- `health_reports.id` → `MedicalAnalysis.report_id`
+**`appointments`** — Doctor-patient meetings
+- `id` (UUID): Primary key
+- `doctor_id` (UUID): Foreign key → `doctors`
+- `profile_id` (UUID): Foreign key → `Profile`
+- `start_time` (DateTime): Appointment start
+- `end_time` (DateTime): Appointment end
+- `status` (String): "scheduled", "completed", "cancelled"
+- `meeting_link` (String): Optional video call link
+- `notes` (String): Optional appointment notes
 
-## Frontend Guidance
-- Use `auth_users` for login/register and role data.
-- Use `Profile` for patient demographic and personal baseline information.
-- Use `HealthData` (`health_reports`) for lab and vital sign records.
-- Use `MedicalAnalysis` for interpreted results, risk status, and AI summary.
-- Use `Prescription` and `Medicine` for medication history and active prescriptions.
-- Use `Appointment` for scheduling and calendar events.
-- Use `ChatMessage` for chat history and session-based conversations.
-- Use `HealthAdvice` for advice and condition-based recommendations.
+Relationships:
+- Many-to-one: `Doctor`, `Profile`
 
-## Notes
-- The backend currently defines these tables in `Backend/Models/`.
-- There is no `MedicalReference` table implemented in the current model files.
-- Field names should be used exactly as defined when building frontend request/response models.
+**`chat_messages`** — AI conversation history
+- `id` (UUID): Primary key
+- `user_id` (UUID): Foreign key → `auth_users`
+- `user_query` (String): User's question
+- `ai_response` (String): AI's answer
+- `chat_mode` (String): "gemini" or "doctor"
+- `session_id` (UUID): Conversation session
+- `timestamp` (DateTime): Message time
+
+Relationships:
+- Many-to-one: `Auth_User`
+
+### Audit & Compliance
+
+**`audit_logs`** — Access and action tracking
+- `id` (UUID): Primary key
+- `actor_id` (UUID): Foreign key → `auth_users` (who acted)
+- `target_profile_id` (UUID): Foreign key → `Profile` (what was accessed)
+- `action` (String): Action description
+- `ip_address` (String): Requester IP
+- `created_at` (DateTime): Action timestamp
+
+## API Endpoints
+
+### Authentication (`/auth`)
+
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | `/signup` | ✗ | Register new user |
+| POST | `/login` | ✗ | Login and get tokens |
+| POST | `/refresh` | ✗ | Refresh access token |
+| GET | `/me` | ✓ | Get current user |
+
+### Health Reports (`/reports`)
+
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | `/upload` | ✓ | Upload PDF report |
+| GET | `/mydataall` | ✓ | List user's reports |
+| GET | `/{report_id}` | ✓ | Get report details |
+
+### Personal Data (`/personal`)
+
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | `/profiles` | ✓ | Create profile |
+| GET | `/profiles` | ✓ | List profiles |
+| GET | `/profiles/{id}` | ✓ | Get profile |
+| PUT | `/profiles/{id}` | ✓ | Update profile |
+| DELETE | `/profiles/{id}` | ✓ | Delete profile |
+| POST | `/doctors` | ✓ | Register doctor |
+| GET | `/doctors` | ✓ | List doctors |
+| GET | `/doctors/{id}` | ✓ | Get doctor |
+| GET | `/doctors/{id}/patients` | ✓ | Doctor's patients |
+| PUT | `/doctors/{id}` | ✓ | Update doctor |
+| DELETE | `/doctors/{id}` | ✓ | Delete doctor |
+
+### Prescriptions (`/prescriptions`)
+
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | `/uploadprescription` | ✓ | Add prescriptions |
+| GET | `/active/{profile_id}` | ✓ | Active prescriptions |
+| GET | `/history/{profile_id}` | ✓ | Prescription history |
+| GET | `/{prescription_id}` | ✓ | Get prescription |
+
+### System (`/system`)
+
+| Method | Endpoint | Auth | Purpose |
+|--------|----------|------|---------|
+| POST | `/appointments` | ✓ | Schedule appointment |
+| GET | `/appointments` | ✓ | List appointments |
+| GET | `/appointments/{id}` | ✓ | Get appointment |
+| PATCH | `/appointments/{id}` | ✓ | Update appointment |
+| DELETE | `/appointments/{id}` | ✓ | Cancel appointment |
+| POST | `/chat` | ✓ | Send chat message |
+| GET | `/chat/session/{id}` | ✓ | Get conversation |
+| GET | `/chat/user/{id}` | ✓ | User chat history |
+| DELETE | `/chat/{id}` | ✓ | Delete message |
+
+## Development
+
+### Running Locally
+
+```bash
+cd Backend
+
+pip install -r requirements.txt
+
+python -m uvicorn main:app --reload
+```
+
+Server runs on `http://localhost:8000`
+
+### Database Migrations
+
+Create new migration:
+```bash
+alembic revision --autogenerate -m "Description"
+```
+
+Apply migrations:
+```bash
+alembic upgrade head
+```
+
+### Testing Endpoints
+
+Access Swagger UI: `http://localhost:8000/docs`
+
+## Production Deployment
+
+### Environment Setup
+
+Create `.env`:
+```env
+DATABASE_URL=postgresql://user:pass@host/dbname
+SECRET_KEY=generate-strong-key
+GEMINI_API_KEY=your-api-key
+ALLOWED_HOSTS=https://yourdomain.com
+DEBUG=False
+```
+
+### Checklist
+
+- [ ] Use PostgreSQL (not SQLite)
+- [ ] Set strong SECRET_KEY
+- [ ] Configure CORS hosts
+- [ ] Enable HTTPS
+- [ ] Set up database backups
+- [ ] Configure logging
+- [ ] Test all error cases
+- [ ] Performance test APIs
+- [ ] Security audit
+
+## Error Handling
+
+All errors follow standard HTTP status codes:
+
+- `400` — Bad request (validation error)
+- `401` — Unauthorized (missing/invalid token)
+- `403` — Forbidden (insufficient permissions)
+- `404` — Not found
+- `409` — Conflict (duplicate entry)
+- `422` — Unprocessable entity (invalid data)
+- `500` — Server error
+
+## Security
+
+- JWT tokens: 30-minute expiration
+- Passwords: bcrypt with salt
+- CORS: Restricted to configured hosts
+- Database: SQL injection protection via ORM
+- Audit logs: Track all data access
+- Role-based access: Patient vs. Doctor
