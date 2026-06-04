@@ -36,7 +36,6 @@ html, body, #root {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* Animations */
 @keyframes pulseRing {
   0% { transform: scale(0.8); opacity: 0.6; }
   100% { transform: scale(2.2); opacity: 0; }
@@ -65,7 +64,6 @@ html, body, #root {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
 }
-/* Layout Structure */
 .appMainLayoutContainer {
   display: flex;
   flex-direction: row; 
@@ -74,7 +72,6 @@ html, body, #root {
   background-color: var(--bg-main);
   overflow-x: hidden;
   
-  /* Fallbacks match your sidebar :root variables */
   --sidebar-width: 260px; 
   transition: --sidebar-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -90,26 +87,23 @@ html, body, #root {
   min-width: 0;
   background-color: var(--bg-main);
   
-  /* FIX: Pushes the main content rightwards so it never overlaps the fixed sidebar */
   margin-left: var(--sidebar-width); 
   
-  /* Smoothly shifts content layout when sidebar expands or collapses */
   transition: margin-left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   
   animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Responsive Overrides */
 @media (max-width: 1024px) {
   .appMainLayoutContainer {
-    --sidebar-width: 220px; /* Syncs up with your sidebar's media query tablet width */
+    --sidebar-width: 220px;
   }
 }
 
 @media (max-width: 768px) {
   .appMainLayoutContainer,
   .appMainLayoutContainer.sidebar-is-collapsed {
-    --sidebar-width: 0px; /* Sidebar goes off-screen on mobile, so reset margin to 0 */
+    --sidebar-width: 0px;
   }
 
   .page-content-wrapper {
@@ -120,7 +114,6 @@ html, body, #root {
 }
 
 
-/* Style the navigation text buttons inside the pill */
 .nav-link {
     background: transparent !important;
     border: none !important;
@@ -134,8 +127,7 @@ html, body, #root {
     outline: none !important;
 }
 
-/* Add a clean violet glow/smooth text fade when hovering */
 .nav-link:hover {
-    color: #c084fc !important; /* Soft violet color */
-    background: rgba(167, 139, 250, 0.08) !important; /* Subtle dark violet background highlight */
+    color: #c084fc !important;
+    background: rgba(167, 139, 250, 0.08) !important;
 }
