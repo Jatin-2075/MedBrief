@@ -3,15 +3,15 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { API } from "./Config/Api";
 import { AuthContext } from "./Context/AuthContext";
 
-import Intro from "./Pages/Intro";
-import Auth from "./Pages/Auth";
-import Dashboard from "./Pages/Dashboard";
-import Profile from "./Pages/Profile";
-import Chat from "./Pages/Chat";
-import Doctors from "./Pages/Doctors";
-import Appointments from "./Pages/Appointments";
-import Prescriptions from "./Pages/Prescriptions";
-import UploadPrescription from "./Pages/Upload_prescription";
+import Intro from "./pages/Intro";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Chat from "./pages/Chat";
+import Doctors from "./pages/Doctors";
+import Appointments from "./pages/Appointments";
+import Prescriptions from "./pages/Prescriptions";
+import UploadPrescription from "./pages/Upload_prescription";
 
 import "./index.css";
 
