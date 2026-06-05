@@ -53,9 +53,6 @@ const App = () => {
         return <div className="app-loading">Loading your session…</div>;
     }
 
-    // --- FIX: STRUCTURAL DECOUPLING ---
-    // If we are on Intro or Login, return them directly inside a clean, unstyled div container.
-    // This makes it completely impossible for the dashboard's CSS grids/sidebars to push the pages right.
     if (isAuthPage) {
         return (
             <div style={{ width: "100vw", minHeight: "100vh", margin: 0, padding: 0 }}>
@@ -68,7 +65,6 @@ const App = () => {
         );
     }
 
-    // The standard Dashboard/Authenticated Layout remains untouched down here
     return (
         <div className="appMainLayoutContainer">
             <Sidebar />
