@@ -108,25 +108,18 @@ export interface Profile {
     height: number | null;
 }
 
-export interface Appointment {
+export type Appointment = {
     id?: string;
-
-    doctor_id: string;
-    profile_id: string;
-
-    start_time: string | null;
-    end_time: string | null;
-
-    status:
-    | "pending"
-    | "approved"
-    | "rejected"
-    | "completed"
-    | "cancelled";
-
-    meeting_link: string | null;
-    notes: string | null;
-}
+    doctor_id?: string;
+    profile_id?: string;
+    start_time?: string;
+    end_time?: string;
+    status?: "pending" | "approved" | "rejected" | "completed" | "cancelled";
+    meeting_link?: string | null;
+    notes?: string | null;
+    appointment_typeof?: string;
+    typeof?: string;
+};
 
 export interface ChatMessage {
     id?: string;

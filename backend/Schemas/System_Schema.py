@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, model_validator
 from uuid import UUID
 from datetime import datetime
 from typing import Optional
@@ -12,25 +12,26 @@ class AppointmentBase(BaseModel):
     profile_id: UUID
     start_time: datetime
     end_time: datetime
-
-    status: Literal[
-        "pending",
-        "approved",
-        "rejected",
-        "completed",
-        "cancelled"
-    ] = "pending"
+    typeof: Optional[Literal["offline", "online"]] = None
+    meeting_link: Optional[str] = None
+    status: Literal["pending", "approved", "rejected", "completed", "cancelled"] = "pending"
 
 class AppointmentStatusUpdate(BaseModel):
-    status: Literal[
-        "approved",
-        "rejected",
-        "completed",
-        "cancelled"
-    ] 
+    status: Literal["approved", "rejected"]
+    meeting_link: Optional[str] = None
 
+class AppointmentFinalize(BaseModel):
+    typeof: Literal["offline", "online"]
+    meeting_link: Optional[str] = None
+    status: Literal["approved", "rejected"] = "approved"
 
-    
+    @model_validator(mode="after")
+    def check_link_for_online(self):
+        if self.status == "approved" and self.typeof == "online" and not self.meeting_link:
+            raise ValueError("meeting_link is required for online appointments")
+        return self
+
+        
 class AppointmentRead(AppointmentBase):
     id: UUID
     model_config = ConfigDict(from_attributes=True)

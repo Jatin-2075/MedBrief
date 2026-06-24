@@ -15,7 +15,7 @@ class Appointment(Base):
     end_time = Column(DateTime, nullable=False)
     status = Column(String, default="pending")
     meeting_link = Column(String, nullable=True)
-    notes = Column(String, nullable=True)
+    typeof = Column(String, default="online")
 
     doctor = relationship("Doctor", back_populates="appointments")
     profile = relationship("Profile", back_populates="appointments")

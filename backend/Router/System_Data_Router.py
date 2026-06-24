@@ -44,12 +44,14 @@ def list_appointments(
         query = query.filter(Appointment.profile_id == profile_id)
     return query.all()
 
+
 @router.get("/appointments/{appointment_id}", response_model=AppointmentRead)
 def get_appointment(appointment_id: UUID, db: Session = Depends(get_db)):
     appointment = db.get(Appointment, appointment_id)
     if not appointment:
         raise HTTPException(status_code=404, detail="Appointment not found")
     return appointment
+
 
 @router.patch("/appointments/{appointment_id}", response_model=AppointmentRead)
 def update_appointment(appointment_id: UUID, payload: AppointmentStatusUpdate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
@@ -67,6 +69,7 @@ def update_appointment(appointment_id: UUID, payload: AppointmentStatusUpdate, d
     db.commit()
     db.refresh(appointment)
     return appointment
+
 
 @router.delete("/appointments/{appointment_id}", status_code=204)
 def delete_appointment(appointment_id: UUID, db: Session = Depends(get_db)):
