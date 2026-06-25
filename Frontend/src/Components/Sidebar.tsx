@@ -25,6 +25,11 @@ const navItems = [
         icon: "🩺",
     },
     {
+        to: "/alldoctorlist",
+        label: "All Doctors",
+        icon: "🏥",
+    },
+    {
         to: "/chat",
         label: "Chat",
         icon: "💬",

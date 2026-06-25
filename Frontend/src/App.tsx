@@ -18,6 +18,7 @@ import "./index.css";
 import Sidebar from "./Components/Sidebar";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import type { User } from "./Config/Types";
+import AllDoctorsList from "./pages/All_Doctor";
 
 const App = () => {
     const authContext = useContext(AuthContext);
@@ -105,6 +106,11 @@ const App = () => {
                                 <Doctors />
                             </ProtectedRoute>
                         }
+                    />
+
+                    <Route
+                        path="/alldoctorlist"
+                        element={<AllDoctorsList/>}
                     />
 
                     <Route
