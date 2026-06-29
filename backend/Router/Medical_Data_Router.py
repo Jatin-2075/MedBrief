@@ -5,6 +5,7 @@ from uuid import UUID, uuid4
 
 from ..DataBase.Database import get_db
 from ..Models.Medical_Data import HealthData
+from ..Models.Personal_Data import Doctor, Profile
 from ..Schemas.Medical_Data_Schema import HealthDataCreate, HealthDataRead
 from ..Services.PDF_Extractor import extract_text_from_pdf, parse_health_fields
 from ..Security.Dependencies import get_current_user
@@ -13,14 +14,48 @@ from ..Services.Gemini.Analysis_Services import Analysis_And_Save
 UPLOAD_ROOT = Path(__file__).resolve().parents[1] / "uploads" / "reports"
 UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
 
-
 router = APIRouter(prefix="/reports", tags=["Health Reports"])
 
 MAX_PDF_SIZE_MB = 10
 
 
-@router.post("/upload",response_model=HealthDataRead,status_code=status.HTTP_201_CREATED)
-async def upload_health_reports(file: UploadFile = File(...),patient_id: UUID | None = None,db: Session = Depends(get_db),current_user=Depends(get_current_user),):
+# ── helpers ────────────────────────────────────────────────────────────────────
+
+def _verify_doctor_owns_patient(db: Session, doctor_user_id: UUID, report_user_id: UUID) -> None:
+    """
+    Raises HTTP 403 if the doctor is not assigned to the patient who owns this report.
+    Looks up: Doctor row by user_id → Profile row by user_id → checks profile.doctor_id.
+    """
+    doctor = db.query(Doctor).filter(Doctor.user_id == doctor_user_id).first()
+    if not doctor:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Doctor profile not found."
+        )
+
+    patient_profile = db.query(Profile).filter(Profile.user_id == report_user_id).first()
+    if not patient_profile:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Patient profile not found."
+        )
+
+    if patient_profile.doctor_id != doctor.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not the assigned doctor for this patient."
+        )
+
+
+# ── routes ─────────────────────────────────────────────────────────────────────
+
+@router.post("/upload", response_model=HealthDataRead, status_code=status.HTTP_201_CREATED)
+async def upload_health_reports(
+    file: UploadFile = File(...),
+    patient_id: UUID | None = None,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
     if file.content_type != "application/pdf":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -74,6 +109,7 @@ async def upload_health_reports(file: UploadFile = File(...),patient_id: UUID | 
         report = HealthData(
             user_id=target_user_id,
             uploaded_by=current_user.id,
+            analysis_status="pending",
             **health_input.model_dump()
         )
 
@@ -85,9 +121,13 @@ async def upload_health_reports(file: UploadFile = File(...),patient_id: UUID | 
 
         try:
             await Analysis_And_Save(report_schema, db)
+            report.analysis_status = "completed"
         except Exception as e:
-            print(f"Analysis failed: {e}")
+            print(f"[Analysis] Failed for report {report.id}: {e}")
+            report.analysis_status = "failed"
 
+        db.commit()
+        db.refresh(report)
         return report
 
     finally:
@@ -97,36 +137,76 @@ async def upload_health_reports(file: UploadFile = File(...),patient_id: UUID | 
             pass
 
 
+@router.post("/{report_id}/retry-analysis", response_model=HealthDataRead)
+async def retry_analysis(
+    report_id: UUID,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    """Bug #2 fix: let users re-trigger analysis on failed reports."""
+    report = db.query(HealthData).filter(HealthData.id == report_id).first()
+
+    if not report:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Report not found.")
+
+    # Same access control as GET /{report_id}
+    if current_user.role == "doctor":
+        _verify_doctor_owns_patient(db, current_user.id, report.user_id)
+    elif report.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied.")
+
+    if report.analysis_status == "completed":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Analysis already completed.")
+
+    report_schema = HealthDataRead.model_validate(report)
+
+    try:
+        await Analysis_And_Save(report_schema, db)
+        report.analysis_status = "completed"
+        db.commit()
+        db.refresh(report)
+        return report
+    except Exception as e:
+        print(f"[Analysis] Retry failed for report {report_id}: {e}")
+        report.analysis_status = "failed"
+        db.commit()
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="AI analysis service unavailable. Try again later."
+        )
+
+
 @router.get("/mydataall", response_model=list[HealthDataRead])
 async def get_my_all_reports(
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user),
+    current_user=Depends(get_current_user),
 ):
-    reports = db.query(HealthData)\
-                .filter(HealthData.user_id == current_user.id)\
-                .order_by(HealthData.created_at.desc())\
-                .all()
-    
+    reports = (
+        db.query(HealthData)
+        .filter(HealthData.user_id == current_user.id)
+        .order_by(HealthData.created_at.desc())
+        .all()
+    )
     return reports
 
 
 @router.get("/{report_id}", response_model=HealthDataRead)
 async def get_report_by_id(
-    report_id : UUID,
+    report_id: UUID,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user),
+    current_user=Depends(get_current_user),
 ):
-    report = db.query(HealthData)\
-        .filter(HealthData.id == report_id)\
-        .first()
+    report = db.query(HealthData).filter(HealthData.id == report_id).first()
 
     if not report:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Report not Found."
+            detail="Report not found."
         )
-    
-    if current_user.role != "doctor" and report.user_id != current_user.id:
+
+    if current_user.role == "doctor":
+        _verify_doctor_owns_patient(db, current_user.id, report.user_id)
+    elif report.user_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You do not have permission to view this report."

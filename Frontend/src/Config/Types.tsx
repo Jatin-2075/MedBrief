@@ -47,6 +47,8 @@ export interface HealthData {
         kidney_status: string | null;
         ai_summary: string | null;
     } | null;
+
+    analysis_status: "pending" | "completed" | "failed";
 }
 
 export interface MedicalAnalysis {
