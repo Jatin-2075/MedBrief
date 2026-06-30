@@ -139,3 +139,29 @@ export interface ChatSessionResponse {
     session_id: string;
     messages: ChatMessage[];
 }
+
+export interface ConversationParticipant {
+    id: string;
+    username: string;
+    role: "doctor" | "patient";
+}
+
+export interface ConversationSummary {
+    id: string;
+    doctor_user_id: string;
+    patient_user_id: string;
+    created_at: string;
+    last_message_at: string;
+    other_user: ConversationParticipant;
+    last_message_preview: string | null;
+    unread_count: number;
+}
+
+export interface DirectMessage {
+    id: string;
+    conversation_id: string;
+    sender_id: string;
+    content: string;
+    is_read: boolean;
+    created_at: string;
+}

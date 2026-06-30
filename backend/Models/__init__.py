@@ -3,3 +3,4 @@ from .Medical_Data import HealthData, MedicalAnalysis
 from .Medicine_Data import Medicine, Prescription
 from .Personal_Data import Doctor, Profile
 from .System import Appointment, ChatMessage, AuditLog
+from .Messaging import Conversation, DirectMessage

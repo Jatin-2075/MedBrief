@@ -149,7 +149,6 @@ async def retry_analysis(
     if not report:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Report not found.")
 
-    # Same access control as GET /{report_id}
     if current_user.role == "doctor":
         _verify_doctor_owns_patient(db, current_user.id, report.user_id)
     elif report.user_id != current_user.id:

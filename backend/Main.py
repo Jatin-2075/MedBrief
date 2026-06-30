@@ -7,6 +7,7 @@ from .Router.Personal_Data_Router import router as personal_router
 from .Router.Medical_Data_Router import router as medical_router
 from .Router.Medicine_Data_Router import router as medicine_router
 from .Router.System_Data_Router import router as system_router
+from .Router.Messaging_Router import router as messaging_router
 from .Security.Settings import settings
 
 app = FastAPI(
@@ -29,6 +30,7 @@ app.include_router(personal_router)
 app.include_router(medical_router)
 app.include_router(medicine_router)
 app.include_router(system_router)
+app.include_router(messaging_router)
 
 Base.metadata.create_all(bind=engine)
 

@@ -12,6 +12,7 @@ import Doctors from "./pages/Doctors";
 import Appointments from "./pages/Appointments";
 import Prescriptions from "./pages/Prescriptions";
 import UploadPrescription from "./pages/Upload_prescription";
+import Messages from "./pages/Messages";
 
 import "./index.css";
 
@@ -118,6 +119,15 @@ const App = () => {
                         element={
                             <ProtectedRoute>
                                 <Chat />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/messages"
+                        element={
+                            <ProtectedRoute>
+                                <Messages />
                             </ProtectedRoute>
                         }
                     />

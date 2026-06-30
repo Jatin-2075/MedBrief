@@ -10,8 +10,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-from Backend.DataBase.Database import Base
-import Backend.Models  # noqa: F401
+from backend.DataBase.Database import Base
+import backend.Models  # noqa: F401
 
 config = context.config
 

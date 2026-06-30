@@ -1,8 +1,8 @@
 """initial schema
 
-Revision ID: 46db4309836a
+Revision ID: 370325941b53
 Revises: 
-Create Date: 2026-06-04 23:39:36.549094
+Create Date: 2026-06-30 14:44:32.923307
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '46db4309836a'
+revision: str = '370325941b53'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -55,6 +55,19 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_chat_messages_session_id'), 'chat_messages', ['session_id'], unique=False)
+    op.create_table('conversations',
+    sa.Column('id', sa.UUID(), nullable=False),
+    sa.Column('doctor_user_id', sa.UUID(), nullable=False),
+    sa.Column('patient_user_id', sa.UUID(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('last_message_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.ForeignKeyConstraint(['doctor_user_id'], ['auth_users.id'], ),
+    sa.ForeignKeyConstraint(['patient_user_id'], ['auth_users.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('doctor_user_id', 'patient_user_id', name='uq_conversation_pair')
+    )
+    op.create_index(op.f('ix_conversations_doctor_user_id'), 'conversations', ['doctor_user_id'], unique=False)
+    op.create_index(op.f('ix_conversations_patient_user_id'), 'conversations', ['patient_user_id'], unique=False)
     op.create_table('doctors',
     sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('user_id', sa.UUID(), nullable=True),
@@ -107,6 +120,19 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('id')
     )
+    op.create_table('direct_messages',
+    sa.Column('id', sa.UUID(), nullable=False),
+    sa.Column('conversation_id', sa.UUID(), nullable=False),
+    sa.Column('sender_id', sa.UUID(), nullable=False),
+    sa.Column('content', sa.String(), nullable=False),
+    sa.Column('is_read', sa.Boolean(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['conversation_id'], ['conversations.id'], ),
+    sa.ForeignKeyConstraint(['sender_id'], ['auth_users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_direct_messages_conversation_id'), 'direct_messages', ['conversation_id'], unique=False)
+    op.create_index(op.f('ix_direct_messages_created_at'), 'direct_messages', ['created_at'], unique=False)
     op.create_table('medical_analysis',
     sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('report_id', sa.UUID(), nullable=False),
@@ -126,7 +152,7 @@ def upgrade() -> None:
     sa.Column('end_time', sa.DateTime(), nullable=False),
     sa.Column('status', sa.String(), nullable=True),
     sa.Column('meeting_link', sa.String(), nullable=True),
-    sa.Column('notes', sa.String(), nullable=True),
+    sa.Column('typeof', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['doctor_id'], ['doctors.id'], ),
     sa.ForeignKeyConstraint(['profile_id'], ['Profile.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -167,9 +193,15 @@ def downgrade() -> None:
     op.drop_table('audit_logs')
     op.drop_table('appointments')
     op.drop_table('medical_analysis')
+    op.drop_index(op.f('ix_direct_messages_created_at'), table_name='direct_messages')
+    op.drop_index(op.f('ix_direct_messages_conversation_id'), table_name='direct_messages')
+    op.drop_table('direct_messages')
     op.drop_table('Profile')
     op.drop_table('health_reports')
     op.drop_table('doctors')
+    op.drop_index(op.f('ix_conversations_patient_user_id'), table_name='conversations')
+    op.drop_index(op.f('ix_conversations_doctor_user_id'), table_name='conversations')
+    op.drop_table('conversations')
     op.drop_index(op.f('ix_chat_messages_session_id'), table_name='chat_messages')
     op.drop_table('chat_messages')
     op.drop_index(op.f('ix_medicines_id'), table_name='medicines')

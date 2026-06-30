@@ -35,6 +35,11 @@ const navItems = [
         icon: "💬",
     },
     {
+        to: "/messages",
+        label: "Messages",
+        icon: "📨",
+    },
+    {
         to: "/prescriptions",
         label: "Prescriptions",
         icon: "💊",
