@@ -11,6 +11,7 @@ class HealthData(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey("auth_users.id"))
     uploaded_by = Column(UUID(as_uuid=True), ForeignKey("auth_users.id"), nullable=False)
     pdf_path = Column(String, nullable=True)
+    analysis_status = Column(String, default="pending", nullable=False)
     created_at = Column(DateTime, default=func.now())
     owner = relationship("Auth_User", back_populates="health_reports", foreign_keys=[user_id])
     uploaded_by_user = relationship("Auth_User", foreign_keys=[uploaded_by])

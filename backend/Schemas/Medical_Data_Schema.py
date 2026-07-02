@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, ConfigDict
 from uuid import UUID
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Literal
 
 
 class HealthDataBase(BaseModel):
@@ -49,6 +49,7 @@ class HealthDataRead(HealthDataBase):
     created_at: datetime
     uploaded_by: Optional[UUID] = None
     pdf_path: Optional[str] = None
+    analysis_status: Literal["pending", "completed", "failed"] = "pending"   # ← add this
     analysis: Optional[MedicalAnalysisRead] = None
 
     model_config = ConfigDict(from_attributes=True)
