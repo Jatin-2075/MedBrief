@@ -26,7 +26,7 @@ class ConversationRead(BaseModel):
 
 class ConversationSummary(ConversationRead):
     other_user: ConversationParticipant
-    last_message_preview: Optional[str] = None
+    last_message_at: Optional[datetime] = None
     unread_count: int = 0
 
 
