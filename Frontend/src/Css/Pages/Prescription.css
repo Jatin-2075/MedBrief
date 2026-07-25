@@ -4,8 +4,8 @@
   padding: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #ffffff;
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--text, #e6f1ef);
   gap: 1.5rem;
 }
 
@@ -14,27 +14,28 @@
 }
 
 .rx-page-title {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0 0 0.35rem 0;
-  color: #ffffff;
+  color: var(--text, #e6f1ef);
 }
 
 .rx-page-subtitle {
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: var(--text-dim, #7f95a3);
   margin: 0;
 }
 
 .rx-glass-card {
-  background: rgba(20, 20, 28, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(13, 17, 23, 0.85);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
   border-radius: 16px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 1.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 45px -30px rgba(0, 0, 0, 0.6);
 }
 
 .rx-card-header {
@@ -42,16 +43,17 @@
 }
 
 .rx-section-title {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 1.15rem;
   font-weight: 600;
-  color: #a78bfa;
+  color: var(--vital, #2dd4bf);
   margin: 0 0 0.25rem 0;
   letter-spacing: -0.01em;
 }
 
 .rx-section-desc {
   font-size: 0.82rem;
-  color: #6b7280;
+  color: var(--text-dim, #7f95a3);
   margin: 0;
 }
 
@@ -66,7 +68,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #9ca3af;
+  color: var(--text-dim, #7f95a3);
 }
 
 .rx-input-row {
@@ -78,33 +80,38 @@
 
 .rx-text-input {
   flex: 1;
-  background: rgba(5, 5, 8, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-2, #121822);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
   border-radius: 10px;
   padding: 0.75rem 0.95rem;
-  color: #ffffff;
+  color: var(--text, #e6f1ef);
   font-size: 0.92rem;
   font-family: inherit;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.rx-text-input::placeholder {
+  color: var(--text-dim, #7f95a3);
+  opacity: 0.7;
+}
+
 .rx-text-input:focus {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  border-color: var(--vital, #2dd4bf);
+  box-shadow: 0 0 0 3px var(--vital-dim, rgba(45, 212, 191, 0.14));
 }
 
 .rx-button-split-group {
   display: flex;
-  background: rgba(5, 5, 8, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--panel-2, #121822);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
   padding: 0.25rem;
   border-radius: 10px;
 }
 
 .rx-toggle-btn {
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-dim, #7f95a3);
   border: none;
   font-weight: 600;
   font-size: 0.85rem;
@@ -116,20 +123,21 @@
 }
 
 .rx-toggle-btn.active {
-  background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  background: linear-gradient(135deg, var(--vital, #2dd4bf) 0%, var(--info, #38bdf8) 100%);
+  color: #04120f;
+  box-shadow: 0 4px 12px -2px rgba(45, 212, 191, 0.35);
 }
 
 .rx-toggle-btn.secondary.active {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  background: linear-gradient(135deg, var(--info, #38bdf8) 0%, var(--vital, #2dd4bf) 100%);
+  color: #04120f;
+  box-shadow: 0 4px 12px -2px rgba(56, 189, 248, 0.3);
 }
 
 .rx-segmented-wrapper {
   display: flex;
-  background: rgba(20, 20, 28, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--panel-2, #121822);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
   padding: 0.3rem;
   border-radius: 12px;
   align-self: flex-start;
@@ -138,7 +146,7 @@
 .rx-segment-tab {
   background: transparent;
   border: none;
-  color: #9ca3af;
+  color: var(--text-dim, #7f95a3);
   padding: 0.6rem 1.5rem;
   font-size: 0.88rem;
   font-weight: 600;
@@ -148,9 +156,9 @@
 }
 
 .rx-segment-tab.active {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
+  color: var(--text, #e6f1ef);
+  box-shadow: none;
 }
 
 .rx-grid-deck {
@@ -161,8 +169,8 @@
 }
 
 .rx-profile-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--panel, #0d1117);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
   border-radius: 14px;
   padding: 1.25rem;
   display: flex;
@@ -172,8 +180,8 @@
 }
 
 .rx-profile-card:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(167, 139, 250, 0.18);
+  background: var(--panel-2, #121822);
+  border-color: var(--vital, #2dd4bf);
 }
 
 .rx-card-top {
@@ -185,9 +193,9 @@
 .rx-med-icon-box {
   width: 40px;
   height: 40px;
-  background: rgba(124, 58, 237, 0.12);
-  border: 1px solid rgba(124, 58, 237, 0.25);
-  color: #a78bfa;
+  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  color: var(--vital, #2dd4bf);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -206,7 +214,7 @@
 .rx-medication-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text, #e6f1ef);
   margin: 0;
 }
 
@@ -221,25 +229,25 @@
 }
 
 .rx-status-badge.active {
-  background: rgba(52, 211, 153, 0.08);
-  border: 1px solid rgba(52, 211, 153, 0.2);
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.28);
   color: #34d399;
 }
 
 .rx-status-badge.inactive {
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background: rgba(251, 113, 133, 0.1);
+  border: 1px solid rgba(251, 113, 133, 0.28);
+  color: var(--critical, #fb7185);
 }
 
 .rx-specs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
-  background: rgba(5, 5, 8, 0.2);
+  background: var(--panel-2, #121822);
   padding: 0.85rem;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
 }
 
 .rx-spec-box {
@@ -254,7 +262,7 @@
 
 .rx-spec-box span {
   font-size: 0.72rem;
-  color: #6b7280;
+  color: var(--text-dim, #7f95a3);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -262,7 +270,7 @@
 
 .rx-spec-box p {
   font-size: 0.85rem;
-  color: #e5e7eb;
+  color: var(--text, #e6f1ef);
   margin: 0;
   font-weight: 500;
 }
@@ -271,8 +279,9 @@
   font-size: 0.82rem;
   font-weight: 500;
   margin: 1rem 0 0 0;
+  color: var(--text-dim, #7f95a3);
 }
-.rx-status-feedback.error { color: #f87171; }
+.rx-status-feedback.error { color: var(--critical, #fb7185); }
 
 .rx-state-alert {
   display: flex;
@@ -281,12 +290,12 @@
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
-  color: #9ca3af;
+  color: var(--text-dim, #7f95a3);
   font-size: 0.9rem;
 }
 
 .rx-state-alert.error p {
-  color: #f87171;
+  color: var(--critical, #fb7185);
 }
 
 .rx-empty-view {
@@ -294,7 +303,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  color: #6b7280;
+  color: var(--text-dim, #7f95a3);
   text-align: center;
   font-size: 0.88rem;
   font-style: italic;
@@ -303,8 +312,8 @@
 .rx-loader-spin {
   width: 24px;
   height: 24px;
-  border: 2px solid rgba(167, 139, 250, 0.15);
-  border-top-color: #a78bfa;
+  border: 2px solid var(--vital-dim, rgba(45, 212, 191, 0.14));
+  border-top-color: var(--vital, #2dd4bf);
   border-radius: 50%;
   margin-bottom: 1rem;
   animation: rxSpinCircle 0.85s linear infinite;

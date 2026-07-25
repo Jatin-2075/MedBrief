@@ -1,67 +1,92 @@
+/* Stops the whole document from scrolling while this page is mounted —
+   only .chat-history-viewport below scrolls. Scoped to this class so no
+   other page is affected. */
+body.chat-active {
+  overflow: hidden;
+}
 
 .chat-page-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 4rem);
-  max-width: 1100px;
-  margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  height: calc(100dvh - 4rem); /* 4rem = fixed navbar height */
+  min-height: 0;
+  overflow: hidden;
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   --ease-mac: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Local fallbacks — will inherit from index.css :root if already defined there */
+  --bg: var(--bg, #070a0f);
+  --panel: var(--panel, #0d1117);
+  --panel-2: var(--panel-2, #121822);
+  --border-soft: var(--border-soft, rgba(45, 212, 191, 0.14));
+  --vital: var(--vital, #2dd4bf);
+  --vital-dim: var(--vital-dim, rgba(45, 212, 191, 0.14));
+  --info: var(--info, #38bdf8);
+  --amber: var(--amber, #f2b84b);
+  --critical: var(--critical, #fb7185);
+  --text: var(--text, #e6f1ef);
+  --text-dim: var(--text-dim, #7f95a3);
+}
+
+/* Shared centered column, ChatGPT-style — both the message list and the
+   input dock use this so everything lines up on one central axis. */
+.chat-column {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .chat-page-header {
+  padding-top: 2rem;
   margin-bottom: 1.5rem;
 }
 
 .chat-page-title {
-  font-size: 1.6rem;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text);
   letter-spacing: -0.02em;
   margin: 0 0 0.25rem 0;
 }
 
 .chat-page-subtitle {
-  font-size: 0.88rem;
-  color: #9ca3af;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
   margin: 0;
 }
 
-.chat-window-frame {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: rgba(20, 20, 28, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  position: relative;
-}
-
+/* The scrolling message list — this, not the page, is what scrolls.
+   flex: 1 + min-height: 0 together are what actually fix it: without
+   min-height: 0 a flex child refuses to shrink below its content size,
+   so it was pushing the whole page taller instead of scrolling itself. */
 .chat-history-viewport {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
+  padding-bottom: 1rem;
+}
 
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-  }
+.chat-history-viewport::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-history-viewport::-webkit-scrollbar-thumb {
+  background: rgba(45, 212, 191, 0.18);
+  border-radius: 10px;
+}
+.chat-history-viewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(45, 212, 191, 0.3);
 }
 
 .chat-dialog-stream {
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  margin-top: auto;
+  padding-bottom: 1rem;
 }
 
 .dialog-block-pair {
@@ -85,79 +110,85 @@
   gap: 0.75rem;
 }
 
-.speech-bubble {
-  max-width: 70%;
-  padding: 0.85rem 1.15rem;
+/* User message keeps a bubble, like ChatGPT's right-aligned user turn */
+.speech-bubble.user {
+  max-width: 75%;
+  padding: 0.7rem 1.05rem;
   border-radius: 16px;
   font-size: 0.94rem;
   line-height: 1.5;
-  position: relative;
   word-wrap: break-word;
-}
-
-.speech-bubble.user {
-  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
-  color: #ffffff;
+  background: linear-gradient(180deg, var(--vital) 0%, #0f8f80 100%);
+  color: #04120f;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+  box-shadow: 0 4px 16px -4px rgba(45, 212, 191, 0.35);
 }
 
-.speech-bubble.ai {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  color: #e5e7eb;
-  border-top-left-radius: 4px;
-  padding-bottom: 1.5rem;
-}
-
-.speech-bubble.ai.typing-state {
-  color: #9ca3af;
-  opacity: 0.8;
-  animation: pulseLoading 1.5s infinite var(--ease-mac);
-}
-
+/* Assistant response is plain text next to a small avatar, not a bubble —
+   matches ChatGPT's reading-first layout instead of a boxed chat feel */
 .ai-avatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--info) 0%, var(--vital) 100%);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
   font-weight: 700;
-  font-size: 0.75rem;
-  color: #ffffff;
+  font-size: 0.68rem;
+  color: #04120f;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 14px -2px rgba(56, 189, 248, 0.35);
+}
+
+.ai-response-text {
+  flex: 1;
+  padding-top: 0.2rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text);
+  position: relative;
+}
+
+.ai-response-text.typing-state {
+  color: var(--text-dim);
+  animation: vitalPulse 1.5s infinite var(--ease-mac);
 }
 
 .bubble-timestamp {
-  position: absolute;
-  bottom: 0.35rem;
-  right: 0.75rem;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.35);
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  opacity: 0.6;
 }
 
+/* Floating input dock, pinned to the bottom of the column like ChatGPT's
+   composer — no full-width bar or top border, just a soft rounded pill. */
 .chat-input-dock {
-  background: rgba(15, 15, 22, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1.25rem 2rem;
+  flex-shrink: 0;
+  padding-bottom: 3.5rem;
+  background: linear-gradient(180deg, transparent 0%, var(--bg) 40%);
 }
 
 .input-bar-group {
   display: flex;
   align-items: center;
-  background: rgba(5, 5, 8, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 0.5rem 0.75rem;
+  background: var(--panel-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  padding: 0.6rem 0.6rem 0.6rem 1.1rem;
   gap: 0.75rem;
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
-  &:focus-within {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
-  }
+.input-bar-group:focus-within {
+  border-color: var(--vital);
+  box-shadow: 0 0 0 3px var(--vital-dim);
 }
 
 .dock-textarea {
@@ -165,20 +196,22 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: var(--text);
   font-size: 0.95rem;
   font-family: inherit;
   resize: none;
+  max-height: 8rem;
   padding: 0.4rem 0.25rem;
   line-height: 1.4;
+}
 
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.25);
-  }
+.dock-textarea::placeholder {
+  color: var(--text-dim);
+  opacity: 0.7;
 }
 
 .dock-send-btn {
-  background: #ffffff;
+  background: var(--vital);
   border: none;
   width: 32px;
   height: 32px;
@@ -187,25 +220,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0d0d12;
+  color: #04120f;
   cursor: pointer;
-  font-size: 1rem;
   transition: transform 0.2s var(--ease-mac), background-color 0.2s ease, opacity 0.2s ease;
+}
 
-  &:hover:not(:disabled) {
-    transform: scale(1.05);
-    background-color: #e5e7eb;
-  }
+.dock-send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: #26c4b0;
+}
 
-  &:active:not(:disabled) {
-    transform: scale(0.95);
-  }
+.dock-send-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
 
-  &:disabled {
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.2);
-    cursor: not-allowed;
-  }
+.dock-send-btn:disabled {
+  background: rgba(230, 241, 239, 0.08);
+  color: var(--text-dim);
+  cursor: not-allowed;
 }
 
 .chat-status-alert {
@@ -214,70 +246,93 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: auto;
-  color: #9ca3af;
+  margin: 4rem auto;
+  color: var(--text-dim);
+}
 
-  &.empty {
-    max-width: 320px;
-    h3 { color: #ffffff; font-size: 1.1rem; margin: 0 0 0.5rem 0; font-weight: 600; }
-    p { font-size: 0.85rem; line-height: 1.5; margin: 0; }
-  }
+.chat-status-alert.empty {
+  max-width: 320px;
+  margin: 5rem auto;
+}
 
-  .alert-icon {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.02) 100%);
-    color: #a78bfa;
-    padding: 1rem;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-    border: 1px solid rgba(124, 58, 237, 0.2);
-  }
+.chat-status-alert.empty h3 {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  color: var(--text);
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.chat-status-alert.empty p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.chat-status-alert .alert-icon {
+  color: var(--vital);
+  padding: 1rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.16) 0%, rgba(45, 212, 191, 0.02) 70%);
+  border: 1px solid var(--vital-dim);
+  animation: ringPulse 2.4s infinite var(--ease-mac);
 }
 
 .chat-error-toast {
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background: rgba(251, 113, 133, 0.08);
+  border: 1px solid rgba(251, 113, 133, 0.24);
+  color: var(--critical);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
   padding: 0.6rem 1rem;
   border-radius: 8px;
-  font-size: 0.85rem;
   margin-bottom: 0.75rem;
   text-align: center;
   font-weight: 500;
 }
 
 .chat-spinner {
-  display: inline-block;
   animation: spin 0.8s linear infinite;
+  color: var(--vital);
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes pulseLoading {
-  50% { opacity: 0.5; }
+/* heartbeat-style pulse instead of a plain fade */
+@keyframes vitalPulse {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ringPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.28);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(45, 212, 191, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+  }
 }
 
 @media (max-width: 768px) {
-  .chat-page-container {
-    height: calc(100vh - 2.5rem);
+  .chat-column {
+    padding: 0 1rem;
   }
 
-  .chat-window-frame {
-    border-radius: 12px;
-  }
-
-  .chat-history-viewport {
-    padding: 1.25rem;
-  }
-
-  .speech-bubble {
+  .speech-bubble.user {
     max-width: 85%;
     font-size: 0.9rem;
-  }
-
-  .chat-input-dock {
-    padding: 1rem 1.25rem;
   }
 }

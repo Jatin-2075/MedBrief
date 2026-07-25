@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../Config/Api";
@@ -18,6 +18,14 @@ export default function Chat() {
     const [loading, setLoading] = useState(false);
     const [loadingMessages, setLoadingMessages] = useState(true);
     const [message, setMessage] = useState<string | null>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    // Prevent the whole page from scrolling — only the message list scrolls.
+    // (This page manages its own fixed-height layout under the navbar.)
+    useEffect(() => {
+        document.body.classList.add("chat-active");
+        return () => document.body.classList.remove("chat-active");
+    }, []);
 
     useEffect(() => {
         const access = localStorage.getItem("access");
@@ -42,6 +50,10 @@ export default function Chat() {
 
         loadMessages();
     }, [navigate, user]);
+
+    useEffect(() => {
+        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    }, [messages]);
 
     const handleSend = async () => {
         if (!prompt.trim() || !user) {
@@ -90,23 +102,21 @@ export default function Chat() {
 
     return (
         <div className="chat-page-container">
-            <header className="chat-page-header">
-                <div className="header-meta">
-                    <h1 className="chat-page-title">MedBrief AI</h1>
-                    <p className="chat-page-subtitle">Ask your assistant about medical records, prescriptions, or clinical insights.</p>
-                </div>
-            </header>
+            <div className="chat-history-viewport" ref={scrollRef}>
+                <div className="chat-column">
+                    <header className="chat-page-header">
+                        <h1 className="chat-page-title">MedBrief AI</h1>
+                        <p className="chat-page-subtitle">Ask your assistant about medical records, prescriptions, or clinical insights.</p>
+                    </header>
 
-            <div className="chat-window-frame">
-                <div className="chat-history-viewport">
                     {loadingMessages ? (
                         <div className="chat-status-alert">
-                            <i className="ti ti-loader-quarter chat-spinner" />
+                            <SpinnerIcon className="chat-spinner" />
                             <p>Reading secure clinical logs…</p>
                         </div>
                     ) : messages.length === 0 ? (
                         <div className="chat-status-alert empty">
-                            <i className="ti ti-message-chatbot alert-icon" />
+                            <ChatBubbleIcon className="alert-icon" />
                             <h3>No Active Consultation</h3>
                             <p>Send a clinical diagnostic statement below to start your session history.</p>
                         </div>
@@ -123,7 +133,7 @@ export default function Chat() {
 
                                     <div className="bubble-wrapper ai">
                                         <div className="ai-avatar">MB</div>
-                                        <div className={`speech-bubble ai ${msg.id?.toString().startsWith("temp-") ? "typing-state" : ""}`}>
+                                        <div className={`ai-response-text ${msg.id?.toString().startsWith("temp-") ? "typing-state" : ""}`}>
                                             {msg.ai_response}
                                             {msg.created_at && !msg.id?.toString().startsWith("temp-") && (
                                                 <span className="bubble-timestamp">
@@ -138,8 +148,10 @@ export default function Chat() {
                         </div>
                     )}
                 </div>
+            </div>
 
-                <div className="chat-input-dock">
+            <div className="chat-input-dock">
+                <div className="chat-column">
                     {message && <div className="chat-error-toast">{message}</div>}
                     <div className="input-bar-group">
                         <textarea
@@ -157,15 +169,40 @@ export default function Chat() {
                             disabled={loading || !prompt.trim()}
                             aria-label="Send Message"
                         >
-                            {loading ? (
-                                <i className="ti ti-loader-quarter chat-spinner" />
-                            ) : (
-                                <i className="ti ti-arrow-up" />
-                            )}
+                            {loading ? <SpinnerIcon /> : <ArrowUpIcon />}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+    );
+}
+
+/* Inline SVG icons — kept local so they never depend on an icon-font
+   being loaded/available on the page (that's why the send arrow was
+   invisible before: the "ti ti-arrow-up" glyph had nothing to render). */
+
+function ArrowUpIcon() {
+    return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 19V5M12 5L5 12M12 5l7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}
+
+function SpinnerIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.2" />
+            <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+    );
+}
+
+function ChatBubbleIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
     );
 }

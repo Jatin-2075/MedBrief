@@ -1,10 +1,88 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../Config/Api";
 import { AuthContext } from "../Context/AuthContext";
 import type { HealthData, User } from "../Config/Types";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import "../Css/Pages/Dashboard.css";
+
+const METRIC_OPTIONS = [
+    { value: "hba1c", label: "Blood Sugar (HbA1c)" },
+    { value: "fasting_glucose", label: "Fasting Blood Sugar" },
+    { value: "blood_pressure", label: "Blood Pressure" },
+    { value: "resting_heart_rate", label: "Heart Rate" },
+    { value: "spo2", label: "Blood Oxygen (SpO₂)" },
+    { value: "ldl_cholesterol", label: "Bad Cholesterol (LDL)" },
+    { value: "hdl_cholesterol", label: "Good Cholesterol (HDL)" },
+    { value: "triglycerides", label: "Blood Fat (Triglycerides)" },
+];
+
+// Native <select> dropdown popups are rendered by the OS, not the page, so
+// CSS (background-color/color on <option>) can't reliably restyle them —
+// that's why the metric picker's open list was showing up plain white
+// regardless of theme. This is a small custom listbox instead, fully
+// themeable since it's just regular divs.
+function ThemedSelect({
+    value,
+    onChange,
+    options,
+}: {
+    value: string;
+    onChange: (value: string) => void;
+    options: { value: string; label: string }[];
+}) {
+    const [open, setOpen] = useState(false);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const current = options.find((o) => o.value === value);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    return (
+        <div className="themed-select" ref={rootRef}>
+            <button
+                type="button"
+                className="themed-select-trigger"
+                onClick={() => setOpen((o) => !o)}
+                aria-haspopup="listbox"
+                aria-expanded={open}
+            >
+                <span>{current?.label ?? "Select…"}</span>
+                <svg
+                    className={`themed-select-chevron${open ? " open" : ""}`}
+                    width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </button>
+            {open && (
+                <ul className="themed-select-menu" role="listbox">
+                    {options.map((opt) => (
+                        <li
+                            key={opt.value}
+                            role="option"
+                            aria-selected={opt.value === value}
+                            className={`themed-select-option${opt.value === value ? " selected" : ""}`}
+                            onClick={() => {
+                                onChange(opt.value);
+                                setOpen(false);
+                            }}
+                        >
+                            {opt.label}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}
 
 function AnalysisBlock({
     report,
@@ -33,7 +111,7 @@ function AnalysisBlock({
         return (
             <div className="report-analysis">
                 <p><strong>Clinical LLM Summary Insight:</strong></p>
-                <p style={{ fontSize: "0.9rem", color: "#e5e7eb", marginBottom: "1rem" }}>
+                <p style={{ fontSize: "0.9rem", color: "var(--text)", marginBottom: "1rem" }}>
                     {report.analysis.ai_summary ?? "No active metadata synthesis response found."}
                 </p>
                 <p><strong>Cardiovascular Index Score:</strong> {report.analysis.cardiac_risk_score ?? "N/A"}</p>
@@ -50,8 +128,8 @@ function AnalysisBlock({
                 marginTop: "1rem",
                 padding: "1rem 1.25rem",
                 borderRadius: "10px",
-                border: "1px solid rgba(239, 68, 68, 0.3)",
-                background: "rgba(239, 68, 68, 0.08)",
+                border: "1px solid rgba(251, 113, 133, 0.3)",
+                background: "rgba(251, 113, 133, 0.08)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -59,14 +137,14 @@ function AnalysisBlock({
                 flexWrap: "wrap",
             }}>
                 <div>
-                    <p style={{ color: "#f87171", fontWeight: 600, fontSize: "0.9rem", margin: 0 }}>
+                    <p style={{ color: "var(--critical)", fontWeight: 600, fontSize: "0.9rem", margin: 0 }}>
                         AI analysis failed
                     </p>
-                    <p style={{ color: "#9ca3af", fontSize: "0.8rem", margin: "0.25rem 0 0" }}>
+                    <p style={{ color: "var(--text-dim)", fontSize: "0.8rem", margin: "0.25rem 0 0" }}>
                         The report was saved but Gemini could not process it.
                     </p>
                     {retryError && (
-                        <p style={{ color: "#fca5a5", fontSize: "0.78rem", margin: "0.25rem 0 0" }}>
+                        <p style={{ color: "var(--critical)", fontSize: "0.78rem", margin: "0.25rem 0 0", opacity: 0.85 }}>
                             {retryError}
                         </p>
                     )}
@@ -78,9 +156,9 @@ function AnalysisBlock({
                     style={{
                         padding: "0.5rem 1rem",
                         borderRadius: "8px",
-                        border: "1px solid rgba(239, 68, 68, 0.4)",
-                        background: "rgba(239, 68, 68, 0.15)",
-                        color: "#fca5a5",
+                        border: "1px solid rgba(251, 113, 133, 0.4)",
+                        background: "rgba(251, 113, 133, 0.15)",
+                        color: "var(--critical)",
                         fontSize: "0.82rem",
                         cursor: retrying ? "not-allowed" : "pointer",
                         opacity: retrying ? 0.6 : 1,
@@ -98,13 +176,13 @@ function AnalysisBlock({
             marginTop: "1rem",
             padding: "1rem 1.25rem",
             borderRadius: "10px",
-            border: "1px solid rgba(251, 191, 36, 0.3)",
-            background: "rgba(251, 191, 36, 0.08)",
+            border: "1px solid rgba(242, 184, 75, 0.3)",
+            background: "rgba(242, 184, 75, 0.08)",
         }}>
-            <p style={{ color: "#fbbf24", fontWeight: 600, fontSize: "0.9rem", margin: 0 }}>
+            <p style={{ color: "var(--amber)", fontWeight: 600, fontSize: "0.9rem", margin: 0 }}>
                 Analysis pending
             </p>
-            <p style={{ color: "#9ca3af", fontSize: "0.8rem", margin: "0.25rem 0 0" }}>
+            <p style={{ color: "var(--text-dim)", fontSize: "0.8rem", margin: "0.25rem 0 0" }}>
                 AI analysis is queued and will appear shortly. Refresh to check.
             </p>
         </div>
@@ -127,6 +205,7 @@ export default function Dashboard() {
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const [metric, setMetric] = useState("hba1c");
+    const detailSectionRef = useRef<HTMLElement | null>(null);
 
     const handleLogout = () => {
         localStorage.removeItem("access");
@@ -170,6 +249,16 @@ export default function Dashboard() {
             setLoadingDetails(false);
         }
     };
+
+    useEffect(() => {
+        if (!selectedReport || !detailSectionRef.current) return;
+
+        const frame = window.requestAnimationFrame(() => {
+            detailSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        return () => window.cancelAnimationFrame(frame);
+    }, [selectedReport]);
 
     const handleRetrySuccess = (updated: HealthData) => {
         setSelectedReport(updated);
@@ -296,27 +385,14 @@ export default function Dashboard() {
                 >
                     {loading ? "Parsing Secure Records…" : "Upload & Analyze"}
                 </button>
-                {message && <p className="dashboard-message">{message}</p>}
+                {message && <p className={`dashboard-message${message.toLowerCase().includes("failed") || message.toLowerCase().includes("could not") ? " error" : ""}`}>{message}</p>}
             </section>
 
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
                 <div className="dashboard-form-group">
                     <label className="dashboard-label">Select Visual Metric Axis</label>
-                    <select
-                        className="dashboard-input"
-                        value={metric}
-                        onChange={(e) => setMetric(e.target.value)}
-                    >
-                        <option value="hba1c">Blood Sugar (HbA1c)</option>
-                        <option value="fasting_glucose">Fasting Blood Sugar</option>
-                        <option value="blood_pressure">Blood Pressure</option>
-                        <option value="resting_heart_rate">Heart Rate</option>
-                        <option value="spo2">Blood Oxygen (SpO₂)</option>
-                        <option value="ldl_cholesterol">Bad Cholesterol (LDL)</option>
-                        <option value="hdl_cholesterol">Good Cholesterol (HDL)</option>
-                        <option value="triglycerides">Blood Fat (Triglycerides)</option>
-                    </select>
+                    <ThemedSelect value={metric} onChange={setMetric} options={METRIC_OPTIONS} />
                 </div>
                 <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
                     <ResponsiveContainer>
@@ -328,10 +404,10 @@ export default function Dashboard() {
                             <Line
                                 type="monotone"
                                 dataKey={metric}
-                                stroke="#a78bfa"
+                                stroke="var(--vital, #2dd4bf)"
                                 strokeWidth={3}
-                                activeDot={{ r: 6 }}
-                                dot={{ strokeWidth: 1, r: 3 }}
+                                activeDot={{ r: 6, fill: "var(--vital, #2dd4bf)", stroke: "#04120f", strokeWidth: 2 }}
+                                dot={{ strokeWidth: 1, r: 3, fill: "var(--vital, #2dd4bf)", stroke: "var(--vital, #2dd4bf)" }}
                             />
                         </LineChart>
                     </ResponsiveContainer>
@@ -341,11 +417,11 @@ export default function Dashboard() {
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Chronological Medical Records</h2>
                 {loadingReports ? (
-                    <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>
+                    <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
                         Fetching clinical database blocks…
                     </p>
                 ) : reports.length === 0 ? (
-                    <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>
+                    <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
                         No reports cataloged for this identity profile map.
                     </p>
                 ) : (
@@ -360,8 +436,8 @@ export default function Dashboard() {
                                             fontSize: "0.72rem",
                                             padding: "0.15rem 0.5rem",
                                             borderRadius: "999px",
-                                            background: "rgba(239,68,68,0.15)",
-                                            color: "#f87171",
+                                            background: "rgba(251, 113, 133, 0.15)",
+                                            color: "var(--critical)",
                                         }}>
                                             Analysis failed
                                         </span>
@@ -372,8 +448,8 @@ export default function Dashboard() {
                                             fontSize: "0.72rem",
                                             padding: "0.15rem 0.5rem",
                                             borderRadius: "999px",
-                                            background: "rgba(251,191,36,0.15)",
-                                            color: "#fbbf24",
+                                            background: "rgba(242, 184, 75, 0.15)",
+                                            color: "var(--amber)",
                                         }}>
                                             Pending
                                         </span>
@@ -391,8 +467,9 @@ export default function Dashboard() {
                                     type="button"
                                     className="report-detail-button"
                                     onClick={() => report.id && loadReportDetails(report.id)}
+                                    disabled={loadingDetails}
                                 >
-                                    Review Report
+                                    {loadingDetails ? "Loading report…" : "Review Report"}
                                 </button>
                             </div>
                         ))}
@@ -401,17 +478,17 @@ export default function Dashboard() {
             </section>
 
             {selectedReport && (
-                <section className="dashboard-card">
+                <section className="dashboard-card" ref={detailSectionRef}>
                     <h2 className="dashboard-section-title">Deep Metric Struct Analysis</h2>
                     {loadingDetails ? (
-                        <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>
+                        <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
                             Compiling clinical insight vectors…
                         </p>
                     ) : (
                         <div className="report-detail">
                             <div className="report-row">
                                 <span>Report Reference Node:</span>
-                                <span style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>
+                                <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.85rem" }}>
                                     {selectedReport.id}
                                 </span>
                             </div>

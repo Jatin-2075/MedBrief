@@ -82,9 +82,6 @@ export default function Sidebar() {
         navigate("/login");
     };
 
-    const toggleSidebar = () => {
-        setIsCollapsed(prev => !prev);
-    };
 
     return (
         <nav className={`navbar ${isCollapsed ? "collapsed" : ""}`}>
@@ -99,13 +96,7 @@ export default function Sidebar() {
                     )}
                 </div>
 
-                <button
-                    type="button"
-                    className="navbar-toggle"
-                    onClick={toggleSidebar}
-                >
-                    {isCollapsed ? "➔" : "❮"}
-                </button>
+                
             </div>
 
             <div className="navbar-nav">

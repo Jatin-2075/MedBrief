@@ -1,45 +1,73 @@
+/* ============================================================
+   navbar.css — self-contained. No rules here touch <body>,
+   <html>, or any selector outside .navbar and its children, so
+   this file can't collide with other pages' stylesheets.
+
+   Positioning note:
+   `position: sticky` was breaking on some pages because a parent
+   wrapper there has `overflow` or a `transform` set, which
+   silently defeats sticky in every browser. Rather than track
+   that down page by page, this uses `position: fixed` instead —
+   it pins to the viewport no matter what any ancestor does.
+
+   To avoid reintroducing the earlier white-gap issue, the
+   compensating space is reserved with `body:has(.navbar)` rather
+   than a blanket `body` rule. That means: pages that render this
+   navbar get exactly the right top padding automatically, and
+   pages that don't render it are completely untouched — so this
+   file still can't collide with any other page's own spacing.
+   (`:has()` needs a modern browser — Chrome 105+, Safari 15.4+,
+   Firefox 121+ — which covers effectively all current usage.)
+   ============================================================ */
+
 :root {
-  --sb-width-expanded: 260px;
-  --sb-width-collapsed: 78px;
-  --sb-bg: rgba(13, 13, 18, 0.75);
-  --sb-border: rgba(255, 255, 255, 0.06);
-  --sb-glow: rgba(124, 58, 237, 0.5);
-  --sb-text-active: #ffffff;
-  --sb-text-inactive: #9ca3af;
-  --sb-item-hover: rgba(255, 255, 255, 0.04);
-  --sb-item-active: rgba(124, 58, 237, 0.15);
-  --sb-blur: 24px;
+  --sb-width-expanded: 100%;
+  --sb-height: 78px;
+  --sb-bg: rgba(7, 10, 15, 0.88);
+  --sb-border: rgba(45, 212, 191, 0.16);
+  --sb-glow: rgba(45, 212, 191, 0.14);
+  --sb-text-active: #2dd4bf;
+  --sb-text-inactive: #7c8a9a;
+  --sb-text-primary: #e6edf3;
+  --sb-item-hover: rgba(45, 212, 191, 0.08);
+  --sb-item-active: rgba(45, 212, 191, 0.1);
+  --sb-blur: 18px;
   --ease-mac: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Only applies on pages that actually render the navbar. */
+body:has(.navbar) {
+  padding-top: var(--sb-height);
 }
 
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  width: var(--sb-width-expanded);
-  background-color: var(--sb-bg);
-  border-right: 1px solid var(--sb-border);
+  right: 0;
+  z-index: 999;
+  width: 100%;
+  min-height: var(--sb-height);
+  background: var(--sb-bg);
+  border-bottom: 1px solid var(--sb-border);
   backdrop-filter: blur(var(--sb-blur));
   -webkit-backdrop-filter: blur(var(--sb-blur));
   display: flex;
-  flex-direction: column;
-  padding: 1.25rem 0.85rem;
-  z-index: 999;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
   user-select: none;
-  transition: width 0.4s var(--ease-mac), background-color 0.3s ease;
-  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.2);
-}
-
-.navbar.collapsed {
-  width: var(--sb-width-collapsed);
+  transition: padding 0.25s ease, background-color 0.25s ease;
+  box-shadow: 0 18px 45px -28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .navbar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.6rem 1.5rem 0.6rem;
+  gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 .navbar-brand {
@@ -50,25 +78,29 @@
 }
 
 .navbar-logo {
-  min-width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  min-width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #0e2f2a;
+  border: 1px solid var(--sb-text-active);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 0.95rem;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+  color: var(--sb-text-active);
+  box-shadow: 0 0 20px var(--sb-glow);
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
 .navbar-title {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #ffffff;
-  letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--sb-text-primary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   white-space: nowrap;
   animation: sbFadeIn 0.3s var(--ease-mac) forwards;
 }
@@ -77,142 +109,124 @@
   background: transparent;
   border: none;
   color: var(--sb-text-inactive);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
 
-  &:hover {
-    background-color: var(--sb-item-hover);
-    color: #ffffff;
-  }
-  
-  &:active {
-    transform: scale(0.95);
-  }
+.navbar-toggle:hover {
+  background-color: var(--sb-item-hover);
+  color: var(--sb-text-active);
+}
+
+.navbar-toggle:active {
+  transform: scale(0.95);
 }
 
 .navbar-nav {
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.5rem;
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 2px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+  scrollbar-width: none;
+}
 
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+.navbar-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .navbar-link {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 0.85rem;
-  border-radius: 10px;
+  gap: 0.7rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
   color: var(--sb-text-inactive);
   text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   position: relative;
+  border: 1px solid transparent;
+  flex-shrink: 0;
   transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s var(--ease-mac);
+}
 
-  .nav-icon {
-    font-size: 1.25rem;
-    min-width: 24px;
-    display: flex;
-    justify-content: center;
-    transition: transform 0.3s var(--ease-mac), color 0.2s ease;
-  }
+.navbar-link .nav-icon {
+  display: none;
+}
 
-  .nav-label {
-    white-space: nowrap;
-    animation: sbFadeIn 0.3s var(--ease-mac) forwards;
-  }
+.navbar-link .nav-label {
+  white-space: nowrap;
+  animation: sbFadeIn 0.3s var(--ease-mac) forwards;
+}
 
-  &:hover {
-    background-color: var(--sb-item-hover);
-    color: #ffffff;
-    
-    .nav-icon {
-      transform: scale(1.08);
-    }
-  }
+.navbar-link:hover {
+  background-color: var(--sb-item-hover);
+  color: var(--sb-text-primary);
+}
 
-  &.active {
-    color: var(--sb-text-active);
-    background-color: var(--sb-item-active);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    font-weight: 600;
+.navbar-link:hover .nav-icon {
+  transform: translateY(-1px);
+}
 
-    .nav-icon {
-      color: #a78bfa;
-    }
+.navbar-link.active {
+  color: var(--sb-text-active);
+  background-color: var(--sb-item-active);
+  border-color: rgba(45, 212, 191, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 12px var(--sb-glow);
+}
 
-    &::before {
-      content: '';
-      position: absolute;
-      left: -4px;
-      top: 25%;
-      height: 50%;
-      width: 3px;
-      background-color: #7c3aed;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 0 0 10px var(--sb-glow);
-    }
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+.navbar-link.active .nav-icon {
+  color: var(--sb-text-active);
 }
 
 .navbar-footer {
-  border-top: 1px solid var(--sb-border);
-  padding-top: 1rem;
-  margin-top: auto;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 12px;
+  gap: 0.7rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  transition: padding 0.4s var(--ease-mac);
-
-  &.collapsed {
-    padding: 0.5rem 0.2rem;
-    background: transparent;
-    border-color: transparent;
-  }
+  border: 1px solid rgba(45, 212, 191, 0.12);
+  transition: padding 0.25s ease;
 }
 
 .user-avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: #0e2f2a;
+  border: 1px solid var(--sb-text-active);
+  color: var(--sb-text-active);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
-  box-shadow: inset 0 1px 3px rgba(255,255,255,0.2);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.06);
 }
 
 .user-info {
@@ -223,61 +237,56 @@
 }
 
 .user-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--sb-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .user-role {
-  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
   color: var(--sb-text-inactive);
-  text-transform: capitalize;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
 .navbar-logout {
-  width: 100%;
-  background: transparent;
-  border: none;
+  background: rgba(251, 113, 133, 0.08);
+  border: 1px solid rgba(251, 113, 133, 0.2);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 0.85rem;
-  border-radius: 10px;
-  color: #ef4444;
-  font-size: 0.92rem;
-  font-weight: 500;
+  gap: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
+  color: #fb7185;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  flex-shrink: 0;
   transition: background-color 0.2s ease, transform 0.15s var(--ease-mac);
+}
 
-  .nav-icon {
-    font-size: 1.25rem;
-    min-width: 24px;
-    display: flex;
-    justify-content: center;
-    color: #ef4444;
-    transition: transform 0.2s ease;
-  }
+.navbar-logout .nav-icon {
+  font-size: 1.1rem;
+  min-width: 20px;
+  display: flex;
+  justify-content: center;
+  color: #fb7185;
+}
 
-  .nav-label {
-    white-space: nowrap;
-    animation: sbFadeIn 0.3s var(--ease-mac) forwards;
-  }
+.navbar-logout:hover {
+  background-color: rgba(251, 113, 133, 0.14);
+}
 
-  &:hover {
-    background-color: rgba(239, 68, 68, 0.08);
-    
-    .nav-icon {
-      transform: translateX(-2px);
-    }
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+.navbar-logout:active {
+  transform: scale(0.98);
 }
 
 @keyframes sbFadeIn {
@@ -286,35 +295,66 @@
 }
 
 @media (max-width: 1024px) {
-  :root {
-    --sb-width-expanded: 220px;
+  .navbar {
+    flex-wrap: wrap;
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-footer {
+    margin-left: 0;
   }
 }
 
 @media (max-width: 768px) {
   .navbar {
-    transform: translateX(-100%);
-    width: 260px !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(10, 10, 14, 0.92);
-    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.6);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 0.8rem 0.9rem;
+    gap: 0.75rem;
   }
 
-  .navbar.collapsed {
-    transform: translateX(0);
+  .navbar-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    order: 3;
+    padding: 0.15rem 0 0;
+  }
+
+  .navbar-footer {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .navbar .nav-label,
   .navbar .navbar-title,
   .navbar .user-info {
-    display: block !important;
-    opacity: 1 !important;
-    animation: none !important;
-    transform: none !important;
+    display: none !important;
   }
 
-  .navbar-header {
-    padding-bottom: 1rem;
+  .navbar-link {
+    padding: 0.6rem 0.7rem;
+  }
+
+  .navbar-user {
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .navbar-logo {
+    min-width: 32px;
+    height: 32px;
+  }
+
+  .navbar-toggle {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
   }
 }

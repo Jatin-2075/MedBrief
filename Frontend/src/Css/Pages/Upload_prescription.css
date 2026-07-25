@@ -16,12 +16,12 @@
 }
 
 .prescriptionCardContainer {
-    background: var(--bg-card);
-    border: var(--border-soft);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 12px;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 40px -24px rgba(15, 23, 42, 0.24);
     padding: 2.25rem;
     position: relative;
     overflow: hidden;
@@ -35,7 +35,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-violet-pure), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-accent-pure), transparent);
 }
 
 .prescriptionFormGrid {
@@ -72,7 +72,7 @@
     padding: 0.65rem 0.95rem;
     border: var(--border-soft);
     border-radius: 8px;
-    background-color: rgba(5, 5, 8, 0.6); /* Slightly darker translucent input fill */
+    background-color: #f8fbff;
     color: var(--text-primary);
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
@@ -83,14 +83,14 @@
 
 .prescriptionFormInput:hover {
     border-color: rgba(124, 58, 237, 0.4);
-    background-color: rgba(25, 20, 45, 0.2);
+    background-color: #ffffff;
 }
 
 .prescriptionFormInput:focus {
     outline: none;
-    background-color: rgba(10, 10, 15, 0.9);
-    border-color: var(--color-violet-light);
-    box-shadow: 0 0 0 3px var(--color-violet-glow);
+    background-color: #ffffff;
+    border-color: var(--color-accent-light);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
 }
 
 /* Fixes calendar icon and text coloring in dark mode default date inputs */
@@ -103,7 +103,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--color-violet-pure) 0%, #6d28d9 100%);
+    background: linear-gradient(135deg, var(--color-accent-pure) 0%, #1d4ed8 100%);
     color: #ffffff;
     font-size: 0.95rem;
     font-weight: 600;
@@ -135,6 +135,7 @@
     margin-top: 1.5rem;
     border: 1px solid transparent;
     backdrop-filter: blur(4px);
+    background: #f8fbff;
 }
 
 .prescriptionStatusSuccess {

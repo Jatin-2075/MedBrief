@@ -1,21 +1,28 @@
 :root {
-  --bg-main: #050508;
-  --bg-surface: #0a0a0f;
-  --bg-card: rgba(15, 15, 25, 0.7);
-  --bg-card-hover: rgba(25, 20, 45, 0.4);
-  
-  --color-violet-pure: #7c3aed;
-  --color-violet-light: #a78bfa;
-  --color-violet-glow: rgba(124, 58, 237, 0.25);
-  --color-violet-soft: rgba(124, 58, 237, 0.08);
-  
-  --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-  --text-muted: rgba(255, 255, 255, 0.45);
-  --text-dark: #4b5563;
-  
-  --border-glow: 1px solid rgba(124, 58, 237, 0.25);
-  --border-soft: 1px solid rgba(255, 255, 255, 0.07);
+  --bg-main: #070a0f;
+  --bg-surface: #0b0f16;
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --bg-card-hover: rgba(255, 255, 255, 0.04);
+
+  --color-accent-pure: #2dd4bf;
+  --color-accent-light: #5eead4;
+  --color-accent-glow: rgba(45, 212, 191, 0.14);
+  --color-accent-soft: rgba(45, 212, 191, 0.08);
+
+  --color-info: #38bdf8;
+  --color-amber: #f2b84b;
+  --color-critical: #fb7185;
+
+  --text-primary: #e6edf3;
+  --text-secondary: #9aa8b8;
+  --text-muted: #7c8a9a;
+  --text-dark: #c3ccd6;
+
+  --border-glow: 1px solid rgba(45, 212, 191, 0.16);
+  --border-soft: 1px solid rgba(255, 255, 255, 0.08);
+
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
 }
 
 *, *::before, *::after {
@@ -30,10 +37,23 @@ html {
 }
 
 html, body, #root {
-  background-color: var(--bg-main);
+  background: linear-gradient(180deg, #070a0f 0%, #05070a 100%);
   min-height: 100%;
   color: var(--text-primary);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+body {
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-accent-glow);
+  color: var(--text-primary);
 }
 
 @keyframes pulseRing {
@@ -58,7 +78,7 @@ html, body, #root {
 
 @keyframes heartbeat {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.06); filter: drop-shadow(0 0 12px var(--color-violet-pure)); }
+  50% { opacity: 0.85; transform: scale(1.06); filter: drop-shadow(0 0 12px var(--color-accent-pure)); }
 }
 
 @keyframes shimmer {
@@ -84,57 +104,34 @@ html, body, #root {
 
 .appMainLayoutContainer {
   display: flex;
-  flex-direction: row; 
+  flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  background-color: var(--bg-main);
+  background: transparent;
   overflow-x: hidden;
-  
-  --sidebar-width: 260px; 
-  transition: --sidebar-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.appMainLayoutContainer.sidebar-is-collapsed {
-  --sidebar-width: 78px;
 }
 
 .page-content-wrapper {
   flex: 1;
-  padding: 2.5rem 2rem;
+  padding: 1.75rem 2rem 3rem;
   box-sizing: border-box;
   min-width: 0;
-  background-color: var(--bg-main);
-  
-  margin-left: var(--sidebar-width); 
-  
-  transition: margin-left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  
+  background: transparent;
+  transition: padding 0.25s ease;
   animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@media (max-width: 1024px) {
-  .appMainLayoutContainer {
-    --sidebar-width: 220px;
-  }
-}
-
 @media (max-width: 768px) {
-  .appMainLayoutContainer,
-  .appMainLayoutContainer.sidebar-is-collapsed {
-    --sidebar-width: 0px;
-  }
-
   .page-content-wrapper {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem 2rem;
     width: 100%;
-    margin-left: 0;
   }
 }
 
 .nav-link {
   background: transparent !important;
   border: none !important;
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: var(--text-secondary) !important;
   font-size: 0.85rem !important;
   font-weight: 500 !important;
   cursor: pointer !important;
@@ -145,8 +142,8 @@ html, body, #root {
 }
 
 .nav-link:hover {
-  color: #c084fc !important;
-  background: rgba(167, 139, 250, 0.08) !important;
+  color: var(--color-accent-pure) !important;
+  background: var(--color-accent-soft) !important;
 }
 
 .mb-letter {
@@ -180,7 +177,7 @@ html, body, #root {
   top: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.13), transparent);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25), transparent);
   transform: skewX(-25deg);
   left: -75%;
 }
@@ -191,7 +188,7 @@ html, body, #root {
 
 .shimmer-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 10px 24px var(--color-accent-glow);
 }
 
 .appointments-grid-container {
