@@ -392,7 +392,7 @@ export default function Dashboard() {
                                     className="report-detail-button"
                                     onClick={() => report.id && loadReportDetails(report.id)}
                                 >
-                                    Review Framework
+                                    Review Report
                                 </button>
                             </div>
                         ))}

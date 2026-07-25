@@ -31,7 +31,7 @@ const navItems = [
     },
     {
         to: "/chat",
-        label: "Chat",
+        label: "AI Chat",
         icon: "💬",
     },
     {
