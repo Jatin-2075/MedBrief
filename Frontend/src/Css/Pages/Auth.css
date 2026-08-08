@@ -21,30 +21,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at top, rgba(45, 212, 191, 0.08) 0%, transparent 55%), #070a0f;
+  background: radial-gradient(ellipse at top, rgba(31, 138, 76, 0.08) 0%, transparent 55%), #fafcfb;
   padding: 1.5rem;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --ease-apple: cubic-bezier(0.25, 1, 0.5, 1);
-  --auth-vital: #2dd4bf;
-  --auth-vital-soft: rgba(45, 212, 191, 0.1);
-  --auth-critical: #fb7185;
-  --auth-critical-soft: rgba(251, 113, 133, 0.1);
-  --auth-text: #e6edf3;
-  --auth-muted: #7c8a9a;
+  --auth-vital: #1f8a4c;
+  --auth-vital-soft: rgba(31, 138, 76, 0.1);
+  --auth-critical: #e11d48;
+  --auth-critical-soft: rgba(225, 29, 72, 0.1);
+  --auth-text: #0f2419;
+  --auth-muted: #64766d;
   --auth-mono: 'JetBrains Mono', monospace;
 }
 
 .auth-page .auth-card {
   width: 100%;
   max-width: 440px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(45, 212, 191, 0.14);
+  background: #ffffff;
+  border: 1px solid rgba(31, 138, 76, 0.14);
   border-radius: 1.5rem;
   padding: 2.5rem 2.25rem;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 20px 45px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  box-shadow: 0 20px 45px -24px rgba(15, 36, 25, 0.12), inset 0 1px 0 #ffffff;
   animation: authCardReveal 0.5s var(--ease-apple) forwards;
 }
 
@@ -81,7 +81,7 @@
 .auth-page .auth-icon-inner {
   width: 48px;
   height: 48px;
-  background: #0e2f2a;
+  background: #eaf6ee;
   border: 1px solid var(--auth-vital);
   border-radius: 50%;
   display: flex;
@@ -115,8 +115,8 @@
 
 .auth-page .auth-toggle {
   display: flex;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #ffffff;
+  border: 1px solid rgba(15, 36, 25, 0.06);
   padding: 0.25rem;
   border-radius: 0.85rem;
   margin-bottom: 2rem;
@@ -145,7 +145,7 @@
 .auth-page .auth-tab.active {
   background: var(--auth-vital-soft);
   color: var(--auth-vital);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px var(--auth-vital-soft);
+  box-shadow: inset 0 1px 0 rgba(15, 36, 25, 0.04), 0 0 10px var(--auth-vital-soft);
   cursor: default;
 }
 
@@ -174,8 +174,8 @@
 
 .auth-page .auth-input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(15, 36, 25, 0.08);
   border-radius: 0.75rem;
   padding: 0.8rem 1rem;
   font-size: 0.95rem;
@@ -186,12 +186,12 @@
 }
 
 .auth-page .auth-input::placeholder {
-  color: rgba(230, 237, 243, 0.3);
+  color: rgba(15, 36, 25, 0.3);
 }
 
 .auth-page .auth-input:focus {
   border-color: var(--auth-vital);
-  background-color: rgba(45, 212, 191, 0.04);
+  background-color: rgba(31, 138, 76, 0.04);
   box-shadow: 0 0 0 3px var(--auth-vital-soft);
 }
 
@@ -216,8 +216,8 @@
 }
 
 .auth-page .auth-role-button {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(15, 36, 25, 0.08);
   color: var(--auth-muted);
   padding: 0.8rem;
   border-radius: 0.75rem;
@@ -228,9 +228,9 @@
 }
 
 .auth-page .auth-role-button:hover {
-  border-color: rgba(45, 212, 191, 0.3);
+  border-color: rgba(31, 138, 76, 0.3);
   color: var(--auth-text);
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
 }
 
 .auth-page .auth-role-button.selected {
@@ -250,7 +250,7 @@
   border: 1px solid var(--auth-vital);
   border-radius: 0.75rem;
   padding: 0.85rem;
-  color: #04211d;
+  color: #eef8f1;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
@@ -268,9 +268,9 @@
 }
 
 .auth-page .auth-submit:disabled {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.06);
-  color: rgba(230, 237, 243, 0.25);
+  background: rgba(15, 36, 25, 0.04);
+  border-color: rgba(15, 36, 25, 0.06);
+  color: rgba(15, 36, 25, 0.25);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -279,7 +279,7 @@
   margin-top: 1.25rem;
   padding: 0.75rem 1rem;
   background: var(--auth-critical-soft);
-  border: 1px solid rgba(251, 113, 133, 0.25);
+  border: 1px solid rgba(225, 29, 72, 0.25);
   border-radius: 0.65rem;
   color: var(--auth-critical);
   font-size: 0.85rem;

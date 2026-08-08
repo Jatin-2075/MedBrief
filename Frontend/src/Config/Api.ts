@@ -7,7 +7,7 @@ type HttpRequest = "POST" | "GET" | "DELETE" | "PUT" | "PATCH";
 
 let isRefreshing = false;
 let refreshQueue: Array<{
-    resolve: (success: boolean) => void;
+    resolve: (success: boolean) => void; 
 }> = [];
 
 const processQueue = (success: boolean) => {

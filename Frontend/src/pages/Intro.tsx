@@ -23,20 +23,18 @@ interface StepItem {
     color: string;
 }
 
-/* ---------- theme tokens ---------- */
-const COLOR_BG = "#070a0f";
-const COLOR_TEXT = "#e6edf3";
-const COLOR_MUTED = "#7c8a9a";
-const COLOR_VITAL = "#2dd4bf"; // steady / normal telemetry
-const COLOR_VITAL_SOFT = "rgba(45, 212, 191, 0.10)";
-const COLOR_CRITICAL = "#fb7185"; // alert / escalation
-const COLOR_CRITICAL_SOFT = "rgba(251, 113, 133, 0.12)";
-const COLOR_INFO = "#38bdf8";
-const COLOR_INFO_SOFT = "rgba(56, 189, 248, 0.10)";
-const COLOR_AMBER = "#f2b84b";
-const COLOR_AMBER_SOFT = "rgba(242, 184, 75, 0.10)";
+const COLOR_BG = "#fafcfb";
+const COLOR_TEXT = "#0f2419";
+const COLOR_MUTED = "#5b6b64";
+const COLOR_VITAL = "#1f8a4c";
+const COLOR_VITAL_SOFT = "rgba(31, 138, 76, 0.10)";
+const COLOR_CRITICAL = "#e11d48"; 
+const COLOR_CRITICAL_SOFT = "rgba(225, 29, 72, 0.12)";
+const COLOR_INFO = "#0ea5e9";
+const COLOR_INFO_SOFT = "rgba(14, 165, 233, 0.10)";
+const COLOR_AMBER = "#d97706";
+const COLOR_AMBER_SOFT = "rgba(217, 119, 6, 0.10)";
 
-/* ---------- small scroll utilities ---------- */
 
 function useScrollProgress() {
     const [progress, setProgress] = useState(0);
@@ -62,7 +60,6 @@ function useScrollProgress() {
     return progress;
 }
 
-/** Parallax offset for an element based on its position relative to viewport center. */
 function useParallax(strength = 20) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [offset, setOffset] = useState(0);
@@ -85,7 +82,6 @@ function useParallax(strength = 20) {
     return { ref, offset };
 }
 
-/** Counts a numeric prefix up from 0 once `trigger` becomes true, keeping any suffix (%, +, s, bpm...). */
 function useCountUp(rawValue: string, trigger: boolean, duration = 900) {
     const [display, setDisplay] = useState<string>(rawValue.replace(/[0-9.]+/, "0"));
     const started = useRef(false);
@@ -116,10 +112,7 @@ function useCountUp(rawValue: string, trigger: boolean, duration = 900) {
     return display;
 }
 
-/* ---------- ECG scroll-progress trace (signature element) ---------- */
-
 function EcgProgressBar({ progress }: { progress: number }) {
-    // one repeatable heartbeat unit, 300 units wide, baseline y=25
     const unit = "L36,25 L46,15 L54,25 L64,25 L74,-2 L82,52 L90,10 L98,25 L110,25 L300,25";
     const copies = 8;
     let d = "M0,25 ";
@@ -136,7 +129,7 @@ function EcgProgressBar({ progress }: { progress: number }) {
                 width: "100%",
                 height: "34px",
                 zIndex: 200,
-                background: "linear-gradient(180deg, rgba(7,10,15,0.9) 0%, rgba(7,10,15,0) 100%)",
+                background: "linear-gradient(180deg, rgba(250,252,251,0.95) 0%, rgba(250,252,251,0) 100%)",
                 pointerEvents: "none",
             }}
         >
@@ -145,7 +138,7 @@ function EcgProgressBar({ progress }: { progress: number }) {
                 preserveAspectRatio="none"
                 style={{ width: "100%", height: "100%", display: "block" }}
             >
-                <path d={d} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={2} />
+                <path d={d} fill="none" stroke="rgba(15,36,25,0.08)" strokeWidth={2} />
                 <path
                     d={d}
                     fill="none"
@@ -365,19 +358,19 @@ export default function Intro() {
                 @keyframes blinkDot { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
                 .status-dot { animation: blinkDot 1.6s ease-in-out infinite; }
 
-                .nav-link { background: none; border: none; color: #94a3b8; font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; padding: .35rem .6rem; border-radius: .5rem; transition: color .2s, background .2s; }
-                .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+                .nav-link { background: none; border: none; color: #5b6b64; font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; padding: .35rem .6rem; border-radius: .5rem; transition: color .2s, background .2s; }
+                .nav-link:hover { color: #0f2419; background: rgba(15,36,25,0.06); }
 
                 .shimmer-btn { position: relative; overflow: hidden; }
                 .shimmer-btn::after { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); transition: left .6s ease; }
                 .shimmer-btn:hover::after { left: 120%; }
                 .shimmer-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
-                .btn-o:hover { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.2) !important; }
+                .btn-o:hover { background: rgba(15,36,25,0.04) !important; border-color: rgba(31,138,76,0.3) !important; }
 
                 .feat-card { transition: border-color .3s ease, background .3s ease; }
-                .feat-card:hover { border-color: rgba(255,255,255,0.08) !important; background: rgba(255,255,255,0.02) !important; }
+                .feat-card:hover { border-color: rgba(31,138,76,0.2) !important; background: #ffffff !important; }
                 .bullet-item { transition: transform .2s ease, color .2s ease; }
-                .feat-card:hover .bullet-item { transform: translateX(3px); color: #fff !important; }
+                .feat-card:hover .bullet-item { transform: translateX(3px); color: #0f2419 !important; }
 
                 @media (max-width: 720px) {
                     .feat-card { flex-direction: column !important; text-align: center; }
@@ -404,7 +397,7 @@ export default function Intro() {
                     gap: "1.25rem",
                     padding: "0.6rem 1.5rem",
                     borderRadius: "9999px",
-                    background: "rgba(7, 10, 15, 0.8)",
+                    background: "rgba(255, 255, 255, 0.85)",
                     border: "1px solid rgba(45, 212, 191, 0.16)",
                     backdropFilter: "blur(12px)",
                     WebkitBackdropFilter: "blur(12px)",
@@ -412,14 +405,14 @@ export default function Intro() {
                     transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                     opacity: scrollY > 60 ? 1 : 0,
                     pointerEvents: scrollY > 60 ? "all" : "none",
-                    boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+                    boxShadow: "0 10px 30px -10px rgba(15, 36, 25, 0.12), inset 0 1px 0 rgba(255,255,255,0.6)",
                 }}
             >
                 <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "'JetBrains Mono', monospace" }}>
                     <span className="status-dot" style={{ width: "6px", height: "6px", borderRadius: "50%", background: COLOR_VITAL, boxShadow: `0 0 6px ${COLOR_VITAL}` }} />
                     <span style={{ color: COLOR_VITAL, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.05em" }}>MEDBRIEF</span>
                 </span>
-                <div style={{ width: "1px", height: "1rem", background: "rgba(255,255,255,0.15)" }} />
+                <div style={{ width: "1px", height: "1rem", background: "rgba(15,36,25,0.12)" }} />
                 <button className="nav-link" onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}>Modules</button>
                 <button className="nav-link" onClick={() => document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" })}>Telemetry</button>
                 <button className="nav-link" onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" })}>Get Started</button>
@@ -453,7 +446,7 @@ export default function Intro() {
                             <div className="mb-intro-pr" style={{ border: `1px solid ${COLOR_VITAL}80`, animationDelay: "0s" }} />
                             <div className="mb-intro-pr" style={{ border: `1px solid ${COLOR_VITAL}4d`, animationDelay: "0.6s" }} />
                             <div className="mb-intro-pr" style={{ border: `1px solid ${COLOR_VITAL}33`, animationDelay: "1.2s" }} />
-                            <div style={{ width: "3.75rem", height: "3.75rem", borderRadius: "50%", backgroundColor: "#0e2f2a", border: `1px solid ${COLOR_VITAL}`, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 2, boxShadow: `0 0 30px ${COLOR_VITAL_SOFT}` }}>
+                            <div style={{ width: "3.75rem", height: "3.75rem", borderRadius: "50%", backgroundColor: "#eaf6ee", border: `1px solid ${COLOR_VITAL}`, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 2, boxShadow: `0 0 30px ${COLOR_VITAL_SOFT}` }}>
                                 <svg className="mb-heart" style={{ width: "1.75rem", height: "1.75rem" }} viewBox="0 0 24 24" fill="none" stroke={COLOR_VITAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M3 12h3l2-7 4 14 2-7h7" />
                                 </svg>
@@ -465,7 +458,7 @@ export default function Intro() {
                             System status: online
                         </div>
 
-                        <h1 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "clamp(3.2rem, 8vw, 4.8rem)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 1rem 0", background: `linear-gradient(135deg, #ffffff 30%, ${COLOR_VITAL} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", display: "flex", gap: "1px" }}>
+                        <h1 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "clamp(3.2rem, 8vw, 4.8rem)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 1rem 0", background: `linear-gradient(135deg, #0f2419 30%, ${COLOR_VITAL} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", display: "flex", gap: "1px" }}>
                             {"MedBrief".split("").map((char, i) => (
                                 <span key={i} className="mb-letter" style={{ animationDelay: `${0.4 + i * 0.06}s` }}>{char}</span>
                             ))}
@@ -476,22 +469,22 @@ export default function Intro() {
                         </p>
 
                         <div className="mb-ctas" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "1.25rem", width: "100%", maxWidth: "32rem", padding: "0 1rem", justifyContent: "center", boxSizing: "border-box" }}>
-                            <button onClick={() => handleLoginSelect("Patient")} className="shimmer-btn btn-p" style={{ flex: "1 1 160px", padding: "1rem 1.75rem", fontSize: "0.9rem", fontWeight: 600, color: "#04211d", backgroundColor: COLOR_VITAL, border: `1px solid ${COLOR_VITAL}`, borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", transition: "all 0.2s" }}>
+                            <button onClick={() => handleLoginSelect("Patient")} className="shimmer-btn btn-p" style={{ flex: "1 1 160px", padding: "1rem 1.75rem", fontSize: "0.9rem", fontWeight: 600, color: "#ffffff", backgroundColor: COLOR_VITAL, border: `1px solid ${COLOR_VITAL}`, borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", transition: "all 0.2s" }}>
                                 Patient Portal
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                             </button>
-                            <button onClick={() => handleLoginSelect("Doctor")} className="shimmer-btn btn-o" style={{ flex: "1 1 160px", padding: "1rem 1.75rem", fontSize: "0.9rem", fontWeight: 600, color: "#e5e7eb", backgroundColor: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s" }}>
+                            <button onClick={() => handleLoginSelect("Doctor")} className="shimmer-btn btn-o" style={{ flex: "1 1 160px", padding: "1rem 1.75rem", fontSize: "0.9rem", fontWeight: 600, color: "#0f2419", backgroundColor: "#ffffff", border: "1px solid rgba(31,138,76,0.2)", borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s" }}>
                                 Clinician Portal
                             </button>
                         </div>
 
-                        <div className="mb-scroll-hint" style={{ marginTop: "4rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", color: "rgba(255,255,255,0.3)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>
+                        <div className="mb-scroll-hint" style={{ marginTop: "4rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", color: "rgba(15,36,25,0.4)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>
                             <span>Scroll to explore</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
                         </div>
                     </div>
 
-                    <div className="mb-foot" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center", userSelect: "none", zIndex: 10, marginTop: "2rem", textAlign: "center" }}>
+                    <div className="mb-foot" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", letterSpacing: "0.18em", color: "rgba(15,36,25,0.35)", display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center", userSelect: "none", zIndex: 10, marginTop: "2rem", textAlign: "center" }}>
                         <span>SECURE MEDICAL CHANNELS</span><span>•</span><span>HIPAA-ALIGNED ACCESS CONTROL</span><span>•</span><span>CRITICAL ALERT ENGINE ACTIVE</span>
                     </div>
                 </section>
@@ -515,7 +508,7 @@ export default function Intro() {
                     </div>
                 </section>
 
-                <section id="stats" style={{ background: "linear-gradient(180deg, rgba(10,15,18,0.4) 0%, rgba(7,10,15,0.8) 100%)", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "6rem 1.5rem", boxSizing: "border-box" }}>
+                <section id="stats" style={{ background: "linear-gradient(180deg, rgba(234,246,238,0.5) 0%, rgba(250,252,251,0.9) 100%)", borderTop: "1px solid rgba(31,138,76,0.12)", borderBottom: "1px solid rgba(31,138,76,0.12)", padding: "6rem 1.5rem", boxSizing: "border-box" }}>
                     <div style={{ maxWidth: "900px", margin: "0 auto" }}>
                         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
                             <div className="section-tag" style={{ display: "inline-block", padding: "0.35rem 0.85rem", borderRadius: "2rem", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", background: COLOR_INFO_SOFT, color: COLOR_INFO, marginBottom: "1rem" }}>Live Telemetry</div>
@@ -582,8 +575,8 @@ function FeatureCard({ feature: f, index }: { feature: FeatureItem; index: numbe
                 flexDirection: isRight ? "row-reverse" : "row",
                 gap: "2.5rem",
                 padding: "2.5rem",
-                background: "rgba(255, 255, 255, 0.01)",
-                border: isCritical ? `1px solid ${COLOR_CRITICAL}33` : "1px solid rgba(255, 255, 255, 0.03)",
+                background: "#ffffff",
+                border: isCritical ? `1px solid ${COLOR_CRITICAL}33` : "1px solid rgba(31, 138, 76, 0.14)",
                 borderRadius: "1.5rem",
                 alignItems: "center",
                 flexWrap: "wrap",
@@ -606,7 +599,7 @@ function FeatureCard({ feature: f, index }: { feature: FeatureItem; index: numbe
                     alignItems: "center",
                     justifyContent: "center",
                     boxShadow: `0 8px 30px -10px ${f.accentSoft}`,
-                    border: `1px solid rgba(255,255,255,0.02)`,
+                    border: `1px solid rgba(31,138,76,0.12)`,
                     flexShrink: 0,
                 }}
             >
@@ -617,11 +610,11 @@ function FeatureCard({ feature: f, index }: { feature: FeatureItem; index: numbe
                 <div style={{ display: "inline-block", padding: "0.25rem 0.65rem", borderRadius: "2rem", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", background: f.accentSoft, color: f.accent, marginBottom: "0.75rem" }}>
                     {f.tag}
                 </div>
-                <h3 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "1.35rem", fontWeight: 700, letterSpacing: "-0.01em", margin: "0 0 0.75rem 0", color: "#ffffff" }}>{f.title}</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "1.35rem", fontWeight: 700, letterSpacing: "-0.01em", margin: "0 0 0.75rem 0", color: "#0f2419" }}>{f.title}</h3>
                 <p style={{ fontSize: "0.925rem", color: COLOR_MUTED, lineHeight: 1.65, margin: "0 0 1.25rem 0" }}>{f.desc}</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {f.bullets.map((b: string, i: number) => (
-                        <div key={i} className="bullet-item" style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.75)" }}>
+                        <div key={i} className="bullet-item" style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.85rem", color: "rgba(15,36,25,0.72)" }}>
                             <div className="bullet-dot" style={{ width: "5px", height: "5px", borderRadius: "50%", background: f.accent, boxShadow: `0 0 8px ${f.accent}`, flexShrink: 0 }} />
                             {b}
                         </div>
@@ -655,8 +648,8 @@ function StatCard({ stat, delay }: { stat: StatItem; delay: number }) {
             ref={ref}
             style={{
                 padding: "2rem 1.5rem",
-                background: "rgba(255,255,255,0.01)",
-                border: "1px solid rgba(255,255,255,0.03)",
+                background: "#ffffff",
+                border: "1px solid rgba(31,138,76,0.14)",
                 borderRadius: "1.25rem",
                 textAlign: "center",
                 boxSizing: "border-box",
@@ -698,8 +691,8 @@ function HowItWorksCard({ s, delay }: { s: StepItem; delay: number }) {
             ref={ref}
             style={{
                 padding: "2rem",
-                background: "rgba(10, 12, 17, 0.5)",
-                border: "1px solid rgba(255,255,255,0.02)",
+                background: "rgba(234, 246, 238, 0.6)",
+                border: "1px solid rgba(31,138,76,0.12)",
                 borderRadius: "1.25rem",
                 boxSizing: "border-box",
                 opacity: visible ? 1 : 0,
@@ -711,7 +704,7 @@ function HowItWorksCard({ s, delay }: { s: StepItem; delay: number }) {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.75rem", fontWeight: 700, color: s.color, opacity: 0.5, letterSpacing: "-0.02em", marginBottom: "0.75rem" }}>
                 {s.step}
             </div>
-            <h4 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "1.05rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#ffffff" }}>{s.title}</h4>
+            <h4 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: "1.05rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#0f2419" }}>{s.title}</h4>
             <p style={{ fontSize: "0.875rem", color: COLOR_MUTED, lineHeight: 1.5, margin: 0 }}>{s.desc}</p>
         </div>
     );
@@ -742,7 +735,7 @@ function CtaSection({ onPatient, onDoctor }: { onPatient: () => void; onDoctor: 
                 maxWidth: "720px",
                 textAlign: "center",
                 padding: "4rem 2rem",
-                background: `radial-gradient(ellipse at top, ${COLOR_VITAL_SOFT} 0%, rgba(7,10,15,0) 70%)`,
+                background: `radial-gradient(ellipse at top, ${COLOR_VITAL_SOFT} 0%, rgba(250,252,251,0) 70%)`,
                 border: `1px solid ${COLOR_VITAL}26`,
                 borderRadius: "2rem",
                 boxSizing: "border-box",
@@ -752,7 +745,7 @@ function CtaSection({ onPatient, onDoctor }: { onPatient: () => void; onDoctor: 
                 transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
         >
-            <div style={{ width: "3.25rem", height: "3.25rem", borderRadius: "50%", background: "#0e2f2a", border: `1px solid ${COLOR_VITAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.75rem", boxShadow: `0 0 25px ${COLOR_VITAL_SOFT}` }}>
+            <div style={{ width: "3.25rem", height: "3.25rem", borderRadius: "50%", background: "#eaf6ee", border: `1px solid ${COLOR_VITAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.75rem", boxShadow: `0 0 25px ${COLOR_VITAL_SOFT}` }}>
                 <svg style={{ width: "1.5rem", height: "1.5rem" }} viewBox="0 0 24 24" fill="none" stroke={COLOR_VITAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 12h3l2-7 4 14 2-7h7" />
                 </svg>
@@ -764,10 +757,10 @@ function CtaSection({ onPatient, onDoctor }: { onPatient: () => void; onDoctor: 
                 Join the patients and clinicians already using MedBrief for simplified reports, secure messaging, and alerts the moment a value turns critical.
             </p>
             <div style={{ display: "flex", gap: "1.25rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <button onClick={onPatient} className="shimmer-btn btn-p" style={{ padding: "0.95rem 2.25rem", fontSize: "0.9rem", fontWeight: 600, color: "#04211d", backgroundColor: COLOR_VITAL, border: `1px solid ${COLOR_VITAL}`, borderRadius: "0.85rem", cursor: "pointer", transition: "all 0.2s" }}>
+                <button onClick={onPatient} className="shimmer-btn btn-p" style={{ padding: "0.95rem 2.25rem", fontSize: "0.9rem", fontWeight: 600, color: "#ffffff", backgroundColor: COLOR_VITAL, border: `1px solid ${COLOR_VITAL}`, borderRadius: "0.85rem", cursor: "pointer", transition: "all 0.2s" }}>
                     Start as Patient
                 </button>
-                <button onClick={onDoctor} className="shimmer-btn btn-o" style={{ padding: "0.95rem 2.25rem", fontSize: "0.9rem", fontWeight: 600, color: "#e5e7eb", backgroundColor: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.85rem", cursor: "pointer", transition: "all 0.2s" }}>
+                <button onClick={onDoctor} className="shimmer-btn btn-o" style={{ padding: "0.95rem 2.25rem", fontSize: "0.9rem", fontWeight: 600, color: "#0f2419", backgroundColor: "#ffffff", border: "1px solid rgba(31,138,76,0.2)", borderRadius: "0.85rem", cursor: "pointer", transition: "all 0.2s" }}>
                     Join as Clinician
                 </button>
             </div>

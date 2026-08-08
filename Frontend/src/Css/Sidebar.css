@@ -1,41 +1,18 @@
-/* ============================================================
-   navbar.css — self-contained. No rules here touch <body>,
-   <html>, or any selector outside .navbar and its children, so
-   this file can't collide with other pages' stylesheets.
-
-   Positioning note:
-   `position: sticky` was breaking on some pages because a parent
-   wrapper there has `overflow` or a `transform` set, which
-   silently defeats sticky in every browser. Rather than track
-   that down page by page, this uses `position: fixed` instead —
-   it pins to the viewport no matter what any ancestor does.
-
-   To avoid reintroducing the earlier white-gap issue, the
-   compensating space is reserved with `body:has(.navbar)` rather
-   than a blanket `body` rule. That means: pages that render this
-   navbar get exactly the right top padding automatically, and
-   pages that don't render it are completely untouched — so this
-   file still can't collide with any other page's own spacing.
-   (`:has()` needs a modern browser — Chrome 105+, Safari 15.4+,
-   Firefox 121+ — which covers effectively all current usage.)
-   ============================================================ */
-
 :root {
   --sb-width-expanded: 100%;
   --sb-height: 78px;
-  --sb-bg: rgba(7, 10, 15, 0.88);
-  --sb-border: rgba(45, 212, 191, 0.16);
-  --sb-glow: rgba(45, 212, 191, 0.14);
-  --sb-text-active: #2dd4bf;
-  --sb-text-inactive: #7c8a9a;
-  --sb-text-primary: #e6edf3;
-  --sb-item-hover: rgba(45, 212, 191, 0.08);
-  --sb-item-active: rgba(45, 212, 191, 0.1);
+  --sb-bg: rgba(255, 255, 255, 0.88);
+  --sb-border: rgba(31, 138, 76, 0.16);
+  --sb-glow: rgba(31, 138, 76, 0.14);
+  --sb-text-active: #1f8a4c;
+  --sb-text-inactive: #64766d;
+  --sb-text-primary: #0f2419;
+  --sb-item-hover: rgba(31, 138, 76, 0.08);
+  --sb-item-active: rgba(31, 138, 76, 0.1);
   --sb-blur: 18px;
   --ease-mac: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Only applies on pages that actually render the navbar. */
 body:has(.navbar) {
   padding-top: var(--sb-height);
 }
@@ -59,7 +36,7 @@ body:has(.navbar) {
   padding: 0.85rem 1.25rem;
   user-select: none;
   transition: padding 0.25s ease, background-color 0.25s ease;
-  box-shadow: 0 18px 45px -28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  box-shadow: 0 18px 45px -28px rgba(15, 36, 25, 0.10), inset 0 1px 0 #ffffff;
 }
 
 .navbar-header {
@@ -81,7 +58,7 @@ body:has(.navbar) {
   min-width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: #0e2f2a;
+  background: #eaf6ee;
   border: 1px solid var(--sb-text-active);
   display: flex;
   align-items: center;
@@ -186,8 +163,8 @@ body:has(.navbar) {
 .navbar-link.active {
   color: var(--sb-text-active);
   background-color: var(--sb-item-active);
-  border-color: rgba(45, 212, 191, 0.22);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 12px var(--sb-glow);
+  border-color: rgba(31, 138, 76, 0.22);
+  box-shadow: inset 0 1px 0 rgba(15, 36, 25, 0.04), 0 0 12px var(--sb-glow);
 }
 
 .navbar-link.active .nav-icon {
@@ -208,8 +185,8 @@ body:has(.navbar) {
   gap: 0.7rem;
   padding: 0.45rem 0.7rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(45, 212, 191, 0.12);
+  background: #ffffff;
+  border: 1px solid rgba(31, 138, 76, 0.12);
   transition: padding 0.25s ease;
 }
 
@@ -218,7 +195,7 @@ body:has(.navbar) {
   height: 34px;
   min-width: 34px;
   border-radius: 50%;
-  background: #0e2f2a;
+  background: #eaf6ee;
   border: 1px solid var(--sb-text-active);
   color: var(--sb-text-active);
   display: flex;
@@ -226,7 +203,7 @@ body:has(.navbar) {
   justify-content: center;
   font-weight: 700;
   font-size: 0.9rem;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 2px rgba(15, 36, 25, 0.06);
 }
 
 .user-info {
@@ -255,14 +232,14 @@ body:has(.navbar) {
 }
 
 .navbar-logout {
-  background: rgba(251, 113, 133, 0.08);
-  border: 1px solid rgba(251, 113, 133, 0.2);
+  background: rgba(225, 29, 72, 0.08);
+  border: 1px solid rgba(225, 29, 72, 0.2);
   display: flex;
   align-items: center;
   gap: 0.65rem;
   padding: 0.65rem 0.85rem;
   border-radius: 999px;
-  color: #fb7185;
+  color: #e11d48;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
   font-weight: 600;
@@ -278,11 +255,11 @@ body:has(.navbar) {
   min-width: 20px;
   display: flex;
   justify-content: center;
-  color: #fb7185;
+  color: #e11d48;
 }
 
 .navbar-logout:hover {
-  background-color: rgba(251, 113, 133, 0.14);
+  background-color: rgba(225, 29, 72, 0.14);
 }
 
 .navbar-logout:active {

@@ -5,7 +5,7 @@
   max-width: 1300px;
   margin: 0 auto;
   font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   gap: 1.5rem;
 }
 
@@ -17,7 +17,7 @@
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   letter-spacing: -0.02em;
   margin: 0 0 0.35rem 0;
 }
@@ -27,7 +27,7 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   margin: 0;
 }
 
@@ -54,13 +54,13 @@
 }
 
 .dashboard-card {
-  background: rgba(13, 17, 23, 0.85);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 18px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 1.5rem;
-  box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 16px 40px -24px rgba(15, 36, 25, 0.10);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -71,7 +71,7 @@
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--vital, #2dd4bf);
+  color: var(--vital, #1f8a4c);
   margin: 0;
   letter-spacing: -0.01em;
 }
@@ -88,15 +88,15 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
 }
 
 .dashboard-input {
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 10px;
   padding: 0.65rem 0.85rem;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   font-size: 0.9rem;
   font-family: inherit;
   outline: none;
@@ -110,9 +110,9 @@ input[type="file"].dashboard-input {
   cursor: pointer;
 }
 input[type="file"].dashboard-input::-webkit-file-upload-button {
-  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
-  color: var(--vital, #2dd4bf);
+  background: var(--vital-dim, rgba(31, 138, 76, 0.14));
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
+  color: var(--vital, #1f8a4c);
   border-radius: 6px;
   padding: 0.35rem 0.75rem;
   margin-right: 0.75rem;
@@ -121,24 +121,19 @@ input[type="file"].dashboard-input::-webkit-file-upload-button {
   transition: background 0.2s;
 }
 input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
-  background: rgba(45, 212, 191, 0.24);
+  background: rgba(31, 138, 76, 0.24);
 }
 
 .dashboard-input option {
-  background-color: var(--panel-2, #121822);
-  color: var(--text, #e6f1ef);
+  background-color: var(--panel-2, #ffffff);
+  color: var(--text, #0f2419);
 }
 
 .dashboard-input:focus {
-  border-color: var(--vital, #2dd4bf);
-  box-shadow: 0 0 0 3px var(--vital-dim, rgba(45, 212, 191, 0.14));
+  border-color: var(--vital, #1f8a4c);
+  box-shadow: 0 0 0 3px var(--vital-dim, rgba(31, 138, 76, 0.14));
 }
 
-/* Custom dropdown — replaces the native <select> for the metric picker.
-   A native select's open popup is drawn by the OS and can't reliably be
-   restyled with CSS (background-color/color on <option> is ignored by
-   most browsers for that popup), so this is a plain, fully-themeable
-   listbox built from divs instead. */
 .themed-select {
   position: relative;
   width: 100%;
@@ -150,11 +145,11 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 10px;
   padding: 0.65rem 0.85rem;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   font-size: 0.9rem;
   font-family: inherit;
   cursor: pointer;
@@ -164,12 +159,12 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 .themed-select-trigger:focus,
 .themed-select-trigger:focus-visible {
   outline: none;
-  border-color: var(--vital, #2dd4bf);
-  box-shadow: 0 0 0 3px var(--vital-dim, rgba(45, 212, 191, 0.14));
+  border-color: var(--vital, #1f8a4c);
+  box-shadow: 0 0 0 3px var(--vital-dim, rgba(31, 138, 76, 0.14));
 }
 
 .themed-select-chevron {
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   flex-shrink: 0;
   margin-left: 0.75rem;
   transition: transform 0.2s ease;
@@ -177,7 +172,7 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 
 .themed-select-chevron.open {
   transform: rotate(180deg);
-  color: var(--vital, #2dd4bf);
+  color: var(--vital, #1f8a4c);
 }
 
 .themed-select-menu {
@@ -189,10 +184,10 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   margin: 0;
   padding: 0.35rem;
   list-style: none;
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 12px;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 16px 40px -12px rgba(15, 36, 25, 0.10);
   max-height: 260px;
   overflow-y: auto;
 }
@@ -201,32 +196,32 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   padding: 0.55rem 0.75rem;
   border-radius: 8px;
   font-size: 0.88rem;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
 
 .themed-select-option:hover {
-  background: rgba(45, 212, 191, 0.1);
+  background: rgba(31, 138, 76, 0.1);
 }
 
 .themed-select-option.selected {
-  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
-  color: var(--vital, #2dd4bf);
+  background: var(--vital-dim, rgba(31, 138, 76, 0.14));
+  color: var(--vital, #1f8a4c);
   font-weight: 600;
 }
 
 .dashboard-button {
-  background: linear-gradient(180deg, var(--vital, #2dd4bf) 0%, #0f8f80 100%);
-  color: #04120f;
-  border: 1px solid rgba(45, 212, 191, 0.3);
+  background: linear-gradient(180deg, var(--vital, #1f8a4c) 0%, #187a4f 100%);
+  color: #f5faf6;
+  border: 1px solid rgba(31, 138, 76, 0.3);
   font-weight: 600;
   font-size: 0.88rem;
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.2s ease;
-  box-shadow: 0 10px 24px -6px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 10px 24px -6px rgba(31, 138, 76, 0.35);
   align-self: flex-start;
   margin-top: 0.25rem;
 }
@@ -240,9 +235,9 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 }
 
 .dashboard-button:disabled {
-  background: rgba(230, 241, 239, 0.06);
+  background: rgba(15, 36, 25, 0.06);
   border-color: transparent;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -250,32 +245,32 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 .dashboard-message {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--vital, #2dd4bf);
+  color: var(--vital, #1f8a4c);
   margin: 0;
 }
 
 .dashboard-message.error {
-  color: var(--critical, #fb7185);
+  color: var(--critical, #e11d48);
 }
 
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: rgba(45, 212, 191, 0.08);
+  stroke: rgba(31, 138, 76, 0.08);
 }
 .recharts-text {
-  fill: var(--text-dim, #7f95a3) !important;
+  fill: var(--text-dim, #5b6b64) !important;
   font-family: var(--font-mono, "JetBrains Mono", monospace) !important;
   font-size: 0.72rem;
   font-weight: 500;
 }
 .recharts-default-tooltip {
-  background-color: var(--panel, #0d1117) !important;
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14)) !important;
+  background-color: var(--panel, #ffffff) !important;
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14)) !important;
   border-radius: 8px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 10px 25px rgba(15, 36, 25, 0.08) !important;
 }
 .recharts-tooltip-item {
-  color: var(--text, #e6f1ef) !important;
+  color: var(--text, #0f2419) !important;
 }
 
 .dashboard-report-list {
@@ -286,8 +281,8 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 }
 
 .dashboard-report-item {
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 14px;
   padding: 1.25rem;
   display: flex;
@@ -297,16 +292,16 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 }
 
 .dashboard-report-item:hover {
-  background: #161d29;
-  border-color: rgba(45, 212, 191, 0.3);
+  background: #ffffff;
+  border-color: rgba(31, 138, 76, 0.3);
   transform: translateY(-2px);
 }
 
 .report-header {
   font-family: var(--font-mono, "JetBrains Mono", monospace);
   font-size: 0.8rem;
-  color: var(--text, #e6f1ef);
-  border-bottom: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  color: var(--text, #0f2419);
+  border-bottom: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   padding-bottom: 0.5rem;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -320,18 +315,18 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 }
 
 .report-row span:nth-child(1) {
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
 }
 
 .report-row span:nth-child(2) {
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   font-weight: 500;
 }
 
 .report-detail-button {
-  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
-  border: 1px solid rgba(45, 212, 191, 0.3);
-  color: var(--vital, #2dd4bf);
+  background: var(--vital-dim, rgba(31, 138, 76, 0.14));
+  border: 1px solid rgba(31, 138, 76, 0.3);
+  color: var(--vital, #1f8a4c);
   font-size: 0.8rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
@@ -344,9 +339,9 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
 }
 
 .report-detail-button:hover {
-  background: rgba(45, 212, 191, 0.24);
-  border-color: rgba(45, 212, 191, 0.45);
-  color: #eafffb;
+  background: rgba(31, 138, 76, 0.24);
+  border-color: rgba(31, 138, 76, 0.45);
+  color: #eef8f1;
 }
 
 .report-detail-button:disabled {
@@ -358,16 +353,16 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: rgba(7, 10, 15, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   padding: 1.5rem;
   border-radius: 14px;
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
 }
 
 .report-analysis {
   margin-top: 0.75rem;
-  background: var(--panel-2, #121822);
-  border-left: 3px solid var(--vital, #2dd4bf);
+  background: var(--panel-2, #ffffff);
+  border-left: 3px solid var(--vital, #1f8a4c);
   padding: 1.25rem;
   border-radius: 0 12px 12px 0;
   display: flex;
@@ -379,11 +374,11 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
 }
 
 .report-analysis p strong {
-  color: var(--vital, #2dd4bf);
+  color: var(--vital, #1f8a4c);
 }
 
 @media (max-width: 576px) {

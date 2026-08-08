@@ -5,7 +5,7 @@
   max-width: 1200px;
   margin: 0 auto;
   font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   gap: 1.5rem;
 }
 
@@ -19,23 +19,23 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0 0 0.35rem 0;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
 }
 
 .rx-page-subtitle {
   font-size: 0.9rem;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   margin: 0;
 }
 
 .rx-glass-card {
-  background: rgba(13, 17, 23, 0.85);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 16px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 1.5rem;
-  box-shadow: 0 20px 45px -30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 45px -30px rgba(15, 36, 25, 0.10);
 }
 
 .rx-card-header {
@@ -46,14 +46,14 @@
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--vital, #2dd4bf);
+  color: var(--vital, #1f8a4c);
   margin: 0 0 0.25rem 0;
   letter-spacing: -0.01em;
 }
 
 .rx-section-desc {
   font-size: 0.82rem;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   margin: 0;
 }
 
@@ -68,7 +68,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
 }
 
 .rx-input-row {
@@ -80,11 +80,11 @@
 
 .rx-text-input {
   flex: 1;
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 10px;
   padding: 0.75rem 0.95rem;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   font-size: 0.92rem;
   font-family: inherit;
   outline: none;
@@ -92,26 +92,26 @@
 }
 
 .rx-text-input::placeholder {
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   opacity: 0.7;
 }
 
 .rx-text-input:focus {
-  border-color: var(--vital, #2dd4bf);
-  box-shadow: 0 0 0 3px var(--vital-dim, rgba(45, 212, 191, 0.14));
+  border-color: var(--vital, #1f8a4c);
+  box-shadow: 0 0 0 3px var(--vital-dim, rgba(31, 138, 76, 0.14));
 }
 
 .rx-button-split-group {
   display: flex;
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   padding: 0.25rem;
   border-radius: 10px;
 }
 
 .rx-toggle-btn {
   background: transparent;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   border: none;
   font-weight: 600;
   font-size: 0.85rem;
@@ -123,21 +123,21 @@
 }
 
 .rx-toggle-btn.active {
-  background: linear-gradient(135deg, var(--vital, #2dd4bf) 0%, var(--info, #38bdf8) 100%);
-  color: #04120f;
-  box-shadow: 0 4px 12px -2px rgba(45, 212, 191, 0.35);
+  background: linear-gradient(135deg, var(--vital, #1f8a4c) 0%, var(--info, #0ea5e9) 100%);
+  color: #f5faf6;
+  box-shadow: 0 4px 12px -2px rgba(31, 138, 76, 0.35);
 }
 
 .rx-toggle-btn.secondary.active {
-  background: linear-gradient(135deg, var(--info, #38bdf8) 0%, var(--vital, #2dd4bf) 100%);
-  color: #04120f;
-  box-shadow: 0 4px 12px -2px rgba(56, 189, 248, 0.3);
+  background: linear-gradient(135deg, var(--info, #0ea5e9) 0%, var(--vital, #1f8a4c) 100%);
+  color: #f5faf6;
+  box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.3);
 }
 
 .rx-segmented-wrapper {
   display: flex;
-  background: var(--panel-2, #121822);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel-2, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   padding: 0.3rem;
   border-radius: 12px;
   align-self: flex-start;
@@ -146,7 +146,7 @@
 .rx-segment-tab {
   background: transparent;
   border: none;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   padding: 0.6rem 1.5rem;
   font-size: 0.88rem;
   font-weight: 600;
@@ -156,8 +156,8 @@
 }
 
 .rx-segment-tab.active {
-  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
-  color: var(--text, #e6f1ef);
+  background: var(--vital-dim, rgba(31, 138, 76, 0.14));
+  color: var(--text, #0f2419);
   box-shadow: none;
 }
 
@@ -169,8 +169,8 @@
 }
 
 .rx-profile-card {
-  background: var(--panel, #0d1117);
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  background: var(--panel, #ffffff);
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
   border-radius: 14px;
   padding: 1.25rem;
   display: flex;
@@ -180,8 +180,8 @@
 }
 
 .rx-profile-card:hover {
-  background: var(--panel-2, #121822);
-  border-color: var(--vital, #2dd4bf);
+  background: var(--panel-2, #ffffff);
+  border-color: var(--vital, #1f8a4c);
 }
 
 .rx-card-top {
@@ -193,9 +193,9 @@
 .rx-med-icon-box {
   width: 40px;
   height: 40px;
-  background: var(--vital-dim, rgba(45, 212, 191, 0.14));
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
-  color: var(--vital, #2dd4bf);
+  background: var(--vital-dim, rgba(31, 138, 76, 0.14));
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
+  color: var(--vital, #1f8a4c);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -214,7 +214,7 @@
 .rx-medication-name {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   margin: 0;
 }
 
@@ -229,25 +229,25 @@
 }
 
 .rx-status-badge.active {
-  background: rgba(52, 211, 153, 0.1);
-  border: 1px solid rgba(52, 211, 153, 0.28);
-  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #10b981;
 }
 
 .rx-status-badge.inactive {
-  background: rgba(251, 113, 133, 0.1);
-  border: 1px solid rgba(251, 113, 133, 0.28);
-  color: var(--critical, #fb7185);
+  background: rgba(225, 29, 72, 0.1);
+  border: 1px solid rgba(225, 29, 72, 0.28);
+  color: var(--critical, #e11d48);
 }
 
 .rx-specs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
-  background: var(--panel-2, #121822);
+  background: var(--panel-2, #ffffff);
   padding: 0.85rem;
   border-radius: 10px;
-  border: 1px solid var(--border-soft, rgba(45, 212, 191, 0.14));
+  border: 1px solid var(--border-soft, rgba(31, 138, 76, 0.14));
 }
 
 .rx-spec-box {
@@ -262,7 +262,7 @@
 
 .rx-spec-box span {
   font-size: 0.72rem;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -270,7 +270,7 @@
 
 .rx-spec-box p {
   font-size: 0.85rem;
-  color: var(--text, #e6f1ef);
+  color: var(--text, #0f2419);
   margin: 0;
   font-weight: 500;
 }
@@ -279,9 +279,9 @@
   font-size: 0.82rem;
   font-weight: 500;
   margin: 1rem 0 0 0;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
 }
-.rx-status-feedback.error { color: var(--critical, #fb7185); }
+.rx-status-feedback.error { color: var(--critical, #e11d48); }
 
 .rx-state-alert {
   display: flex;
@@ -290,12 +290,12 @@
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   font-size: 0.9rem;
 }
 
 .rx-state-alert.error p {
-  color: var(--critical, #fb7185);
+  color: var(--critical, #e11d48);
 }
 
 .rx-empty-view {
@@ -303,7 +303,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  color: var(--text-dim, #7f95a3);
+  color: var(--text-dim, #5b6b64);
   text-align: center;
   font-size: 0.88rem;
   font-style: italic;
@@ -312,8 +312,8 @@
 .rx-loader-spin {
   width: 24px;
   height: 24px;
-  border: 2px solid var(--vital-dim, rgba(45, 212, 191, 0.14));
-  border-top-color: var(--vital, #2dd4bf);
+  border: 2px solid var(--vital-dim, rgba(31, 138, 76, 0.14));
+  border-top-color: var(--vital, #1f8a4c);
   border-radius: 50%;
   margin-bottom: 1rem;
   animation: rxSpinCircle 0.85s linear infinite;

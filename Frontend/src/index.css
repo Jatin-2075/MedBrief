@@ -1,29 +1,37 @@
 :root {
-  --bg-main: #070a0f;
-  --bg-surface: #0b0f16;
-  --bg-card: rgba(255, 255, 255, 0.02);
-  --bg-card-hover: rgba(255, 255, 255, 0.04);
+  --bg-main: #fafcfb;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: rgba(15, 36, 25, 0.04);
 
-  --color-accent-pure: #2dd4bf;
-  --color-accent-light: #5eead4;
-  --color-accent-glow: rgba(45, 212, 191, 0.14);
-  --color-accent-soft: rgba(45, 212, 191, 0.08);
+  --color-accent-pure: #1f8a4c;
+  --color-accent-light: #4ade80;
+  --color-accent-glow: rgba(31, 138, 76, 0.14);
+  --color-accent-soft: rgba(31, 138, 76, 0.08);
 
-  --color-info: #38bdf8;
-  --color-amber: #f2b84b;
-  --color-critical: #fb7185;
+  --color-info: #0ea5e9;
+  --color-amber: #d97706;
+  --color-critical: #e11d48;
 
-  --text-primary: #e6edf3;
-  --text-secondary: #9aa8b8;
-  --text-muted: #7c8a9a;
-  --text-dark: #c3ccd6;
+  --text-primary: #0f2419;
+  --text-secondary: #5b6b64;
+  --text-muted: #64766d;
+  --text-dark: #33473d;
 
-  --border-glow: 1px solid rgba(45, 212, 191, 0.16);
-  --border-soft: 1px solid rgba(255, 255, 255, 0.08);
+  --border-glow: 1px solid rgba(31, 138, 76, 0.16);
+  --border-soft: 1px solid rgba(15, 36, 25, 0.08);
 
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  --shadow-sm: 0 1px 2px rgba(15, 36, 25, 0.06);
+  --shadow-card: 0 10px 30px -18px rgba(15, 36, 25, 0.18);
+  --shadow-card-hover: 0 16px 40px -18px rgba(15, 36, 25, 0.22);
+  --radius-card: 16px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 *, *::before, *::after {
   margin: 0;
@@ -37,10 +45,10 @@ html {
 }
 
 html, body, #root {
-  background: linear-gradient(180deg, #070a0f 0%, #05070a 100%);
+  background: var(--bg-main);
   min-height: 100%;
   color: var(--text-primary);
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
 }
 
 body {
