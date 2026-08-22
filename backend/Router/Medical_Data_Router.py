@@ -22,10 +22,6 @@ MAX_PDF_SIZE_MB = 10
 # ── helpers ────────────────────────────────────────────────────────────────────
 
 def _verify_doctor_owns_patient(db: Session, doctor_user_id: UUID, report_user_id: UUID) -> None:
-    """
-    Raises HTTP 403 if the doctor is not assigned to the patient who owns this report.
-    Looks up: Doctor row by user_id → Profile row by user_id → checks profile.doctor_id.
-    """
     doctor = db.query(Doctor).filter(Doctor.user_id == doctor_user_id).first()
     if not doctor:
         raise HTTPException(
