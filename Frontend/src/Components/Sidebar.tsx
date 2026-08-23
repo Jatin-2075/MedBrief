@@ -138,16 +138,9 @@ export default function Sidebar() {
                     className={`navbar-user ${isCollapsed ? "collapsed" : ""
                         }`}
                 >
-                    <div className="user-avatar">
-                        {user?.username?.charAt(0).toUpperCase() ??
-                            "?"}
-                    </div>
 
                     {!isCollapsed && (
                         <div className="user-info">
-                            <span className="user-name">
-                                {user?.username ?? "User"}
-                            </span>
 
                             <span className="user-role">
                                 {user?.role ?? ""}
@@ -161,7 +154,6 @@ export default function Sidebar() {
                     className="navbar-logout"
                     onClick={handleLogout}
                 >
-                    <span className="nav-icon">🚪</span>
 
                     {!isCollapsed && (
                         <span className="nav-label">
