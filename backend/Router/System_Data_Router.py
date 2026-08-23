@@ -172,3 +172,87 @@ def delete_appointment(
     except Exception:
         db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to delete appointment.")
+
+
+        
+
+# ── chat ───────────────────────────────────────────────────────────────────────
+
+@router.post("/chat", response_model=ChatMessageRead)
+async def send_message(
+    payload: ChatMessageCreate,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    _check_chat_rate_limit(current_user.id)
+
+    user = current_user
+    session_id = payload.session_id or uuid4()
+    chat_mode = payload.chat_mode or "gemini"
+    chat_mode = chat_mode if chat_mode in {"gemini", "doctor"} else "gemini"
+
+    reports = (
+        db.query(HealthData)
+        .filter(HealthData.user_id == user.id)
+        .order_by(HealthData.created_at.desc())
+        .all()
+    )
+    latest_report = reports[0] if reports else None
+
+    session_history = []
+    if payload.session_id:
+        session_history = (
+            db.query(ChatMessage)
+            .filter(ChatMessage.session_id == session_id)
+            .all()
+        )
+
+    prompt = build_gemini_chat_prompt(
+        user_name=user.username,
+        user_query=payload.user_query,
+        latest_report=latest_report,
+        session_history=session_history,
+        chat_mode=chat_mode,
+    )
+
+    ai_response = await call_genai(prompt)
+    if not ai_response.strip():
+        ai_response = "Gemini could not generate a response. Please try again."
+
+    message = ChatMessage(
+        user_id=user.id,
+        user_query=payload.user_query,
+        ai_response=ai_response,
+        session_id=session_id,
+        chat_mode=chat_mode,
+    )
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    return message
+
+
+@router.get("/chat/session/{session_id}", response_model=ChatSessionResponse)
+def get_session(session_id: UUID, db: Session = Depends(get_db)):
+    messages = (
+        db.query(ChatMessage)
+        .filter(ChatMessage.session_id == session_id)
+        .all()
+    )
+    if not messages:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return ChatSessionResponse(session_id=session_id, messages=messages)
+
+
+@router.get("/chat/user/{user_id}", response_model=list[ChatMessageRead])
+def get_user_messages(user_id: UUID, db: Session = Depends(get_db)):
+    return db.query(ChatMessage).filter(ChatMessage.user_id == user_id).all()
+
+
+@router.delete("/chat/{message_id}", status_code=204)
+def delete_message(message_id: UUID, db: Session = Depends(get_db)):
+    message = db.get(ChatMessage, message_id)
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    db.delete(message)
+    db.commit()
