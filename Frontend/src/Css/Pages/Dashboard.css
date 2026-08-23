@@ -397,3 +397,230 @@ input[type="file"].dashboard-input:hover::-webkit-file-upload-button {
     padding: 1rem;
   }
 }
+
+/* ───────────── Report Details Modal ───────────── */
+
+.report-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(15, 36, 25, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.report-modal {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: var(--panel, #ffffff);
+  border: 1px solid var(
+    --border-soft,
+    rgba(31, 138, 76, 0.14)
+  );
+  border-radius: 20px;
+
+  padding: 2rem;
+
+  box-shadow:
+    0 30px 80px rgba(15, 36, 25, 0.18),
+    0 10px 30px rgba(15, 36, 25, 0.08);
+
+  animation: reportModalIn 0.2s ease-out;
+}
+
+@keyframes reportModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.report-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+
+  border-bottom: 1px solid var(
+    --border-soft,
+    rgba(31, 138, 76, 0.14)
+  );
+}
+
+.report-modal-title {
+  margin: 0;
+
+  font-family: var(
+    --font-display,
+    "Space Grotesk",
+    sans-serif
+  );
+
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  color: var(--text, #0f2419);
+}
+
+.report-modal-date {
+  margin: 0.3rem 0 0;
+
+  font-family: var(
+    --font-mono,
+    "JetBrains Mono",
+    monospace
+  );
+
+  font-size: 0.72rem;
+  color: var(--text-dim, #5b6b64);
+}
+
+.report-modal-close {
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(
+    --border-soft,
+    rgba(31, 138, 76, 0.14)
+  );
+
+  border-radius: 10px;
+
+  background: var(
+    --vital-dim,
+    rgba(31, 138, 76, 0.14)
+  );
+
+  color: var(--text, #0f2419);
+
+  font-size: 1.4rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.report-modal-close:hover {
+  background: rgba(31, 138, 76, 0.24);
+  transform: scale(1.05);
+}
+
+
+/* ───────────── Metric Sections ───────────── */
+
+.report-metric-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.report-metric-title {
+  margin: 0;
+
+  font-family: var(
+    --font-display,
+    "Space Grotesk",
+    sans-serif
+  );
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: var(--vital, #1f8a4c);
+}
+
+.report-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.report-metric {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.9rem 1rem;
+
+  background: var(--panel-2, #ffffff);
+
+  border: 1px solid var(
+    --border-soft,
+    rgba(31, 138, 76, 0.14)
+  );
+
+  border-radius: 10px;
+}
+
+.report-metric-label {
+  color: var(--text-dim, #5b6b64);
+  font-size: 0.82rem;
+}
+
+.report-metric-value {
+  color: var(--text, #0f2419);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+
+/* ───────────── Existing Analysis ───────────── */
+
+.report-modal .report-analysis {
+  margin-top: 0.5rem;
+}
+
+
+/* ───────────── Mobile ───────────── */
+
+@media (max-width: 576px) {
+  .report-modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .report-modal {
+    max-height: 94vh;
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .report-modal-title {
+    font-size: 1.2rem;
+  }
+
+  .report-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-metric {
+    padding: 0.8rem;
+  }
+}

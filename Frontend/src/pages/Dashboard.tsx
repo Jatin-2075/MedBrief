@@ -478,48 +478,168 @@ export default function Dashboard() {
             </section>
 
             {selectedReport && (
-                <section className="dashboard-card" ref={detailSectionRef}>
-                    <h2 className="dashboard-section-title">Deep Metric Struct Analysis</h2>
-                    {loadingDetails ? (
-                        <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
-                            Compiling clinical insight vectors…
-                        </p>
-                    ) : (
-                        <div className="report-detail">
-                            <div className="report-row">
-                                <span>Report Reference Node:</span>
-                                <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.85rem" }}>
-                                    {selectedReport.id}
-                                </span>
-                            </div>
-                            <div className="report-row">
-                                <span>Timeline Coordinate:</span>
-                                <span>{formatDate(selectedReport.created_at)}</span>
-                            </div>
-                            <div className="report-row">
-                                <span>Bad Cholesterol (LDL):</span>
-                                <span>{selectedReport.ldl_cholesterol ?? "N/A"} mg/dL</span>
-                            </div>
-                            <div className="report-row">
-                                <span>Good Cholesterol (HDL):</span>
-                                <span>{selectedReport.hdl_cholesterol ?? "N/A"} mg/dL</span>
-                            </div>
-                            <div className="report-row">
-                                <span>Serum Triglycerides:</span>
-                                <span>{selectedReport.triglycerides ?? "N/A"} mg/dL</span>
-                            </div>
-                            <div className="report-row">
-                                <span>Glycated Hemoglobin (HbA1c):</span>
-                                <span>{selectedReport.hba1c ?? "N/A"} %</span>
+                <div
+                    className="report-modal-overlay"
+                    onClick={() => setSelectedReport(null)}
+                >
+                    <div
+                        className="report-modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="report-modal-header">
+                            <div>
+                                <h2 className="report-modal-title">
+                                    Health Report
+                                </h2>
+
+                                <p className="report-modal-date">
+                                    {formatDate(selectedReport.created_at)}
+                                </p>
                             </div>
 
-                            <AnalysisBlock
-                                report={selectedReport}
-                                onRetrySuccess={handleRetrySuccess}
-                            />
+                            <button
+                                className="report-modal-close"
+                                onClick={() => setSelectedReport(null)}
+                                aria-label="Close report"
+                            >
+                                ×
+                            </button>
                         </div>
-                    )}
-                </section>
+
+                        {/* Lipid Profile */}
+                        <div className="report-metric-section">
+                            <h3 className="report-metric-title">
+                                Lipid Profile
+                            </h3>
+
+                            <div className="report-metric-grid">
+                                <div className="report-metric">
+                                    <span className="report-metric-label">LDL Cholesterol</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.ldl_cholesterol ?? "N/A"} mg/dL
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">HDL Cholesterol</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.hdl_cholesterol ?? "N/A"} mg/dL
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Triglycerides</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.triglycerides ?? "N/A"} mg/dL
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Blood Sugar */}
+                        <div className="report-metric-section">
+                            <h3 className="report-metric-title">
+                                Blood Sugar
+                            </h3>
+
+                            <div className="report-metric-grid">
+                                <div className="report-metric">
+                                    <span className="report-metric-label">HbA1c</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.hba1c ?? "N/A"} %
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Fasting Glucose</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.fasting_glucose ?? "N/A"} mg/dL
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Blood & Liver */}
+                        <div className="report-metric-section">
+                            <h3 className="report-metric-title">
+                                Blood & Liver
+                            </h3>
+
+                            <div className="report-metric-grid">
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Haemoglobin</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.haemoglobin ?? "N/A"} g/dL
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">WBC Count</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.wbc_count ?? "N/A"}
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Platelet Count</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.platelet_count ?? "N/A"}
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">ALT / AST</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.alt_ast ?? "N/A"}
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Kidney & Vitals */}
+                        <div className="report-metric-section">
+                            <h3 className="report-metric-title">
+                                Kidney & Vitals
+                            </h3>
+
+                            <div className="report-metric-grid">
+                                <div className="report-metric">
+                                    <span className="report-metric-label">eGFR</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.egfr ?? "N/A"}
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Blood Pressure</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.blood_pressure ?? "N/A"}
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">Heart Rate</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.resting_heart_rate ?? "N/A"} BPM
+                                    </strong>
+                                </div>
+
+                                <div className="report-metric">
+                                    <span className="report-metric-label">SpO₂</span>
+                                    <strong className="report-metric-value">
+                                        {selectedReport.spo2 ?? "N/A"} %
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* AI Analysis */}
+                        <AnalysisBlock
+                            report={selectedReport}
+                            onRetrySuccess={handleRetrySuccess}
+                        />
+                    </div>
+                </div>
             )}
         </div>
     );
