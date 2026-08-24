@@ -7,6 +7,8 @@ ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 class Settings(BaseSettings):
     DATABASE_URL: str
     SECRET_KEY: str
+    UPSTASH_REDIS_REST_URL: str
+    UPSTASH_REDIS_REST_TOKEN: str
     GEMINI_API_KEY: str
     GEMINI_MODEL: str = "gemini-3.0-flash"
     ALGORITHM: str = "HS256"

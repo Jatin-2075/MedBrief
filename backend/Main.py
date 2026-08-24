@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .DataBase.Database import engine, Base
+from .Services.Cache_Service import redis_client
 from .Router.Auth_Router import router as auth_router
 from .Router.Personal_Data_Router import router as personal_router
 from .Router.Medical_Data_Router import router as medical_router
@@ -33,6 +34,15 @@ app.include_router(system_router)
 app.include_router(messaging_router)
 
 Base.metadata.create_all(bind=engine)
+
+
+@app.on_event("startup")
+def _check_redis() -> None:
+    try:
+        redis_client.ping()
+        print("[Cache] Upstash Redis connected.")
+    except Exception as e:
+        print(f"[Cache] Upstash Redis unavailable at startup, running without cache: {e}")
 
 
 @app.get("/", tags=["Root"])

@@ -10,6 +10,7 @@ from ..Schemas.Medical_Data_Schema import HealthDataCreate, HealthDataRead
 from ..Services.PDF_Extractor import extract_text_from_pdf, parse_health_fields
 from ..Security.Dependencies import get_current_user
 from ..Services.Gemini.Analysis_Services import Analysis_And_Save
+from ..Services.Cache_Service import cache_get, cache_set, cache_delete, cache_delete_pattern, TTL_LONG
 
 UPLOAD_ROOT = Path(__file__).resolve().parents[1] / "uploads" / "reports"
 UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
@@ -124,6 +125,7 @@ async def upload_health_reports(
 
         db.commit()
         db.refresh(report)
+        cache_delete(f"reports:mine:{target_user_id}")
         return report
 
     finally:
@@ -160,11 +162,15 @@ async def retry_analysis(
         report.analysis_status = "completed"
         db.commit()
         db.refresh(report)
+        cache_delete_pattern(f"reports:{report_id}:by:*")
+        cache_delete(f"reports:mine:{report.user_id}")
         return report
     except Exception as e:
         print(f"[Analysis] Retry failed for report {report_id}: {e}")
         report.analysis_status = "failed"
         db.commit()
+        cache_delete_pattern(f"reports:{report_id}:by:*")
+        cache_delete(f"reports:mine:{report.user_id}")
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail="AI analysis service unavailable. Try again later."
@@ -176,13 +182,20 @@ async def get_my_all_reports(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    cache_key = f"reports:mine:{current_user.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
     reports = (
         db.query(HealthData)
         .filter(HealthData.user_id == current_user.id)
         .order_by(HealthData.created_at.desc())
         .all()
     )
-    return reports
+    result = [HealthDataRead.model_validate(r).model_dump(mode="json") for r in reports]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
 
 
 @router.get("/{report_id}", response_model=HealthDataRead)
@@ -191,6 +204,13 @@ async def get_report_by_id(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    # Access control depends on current_user, so the cache is scoped per
+    # requester rather than shared, to avoid leaking a report across users.
+    cache_key = f"reports:{report_id}:by:{current_user.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
     report = db.query(HealthData).filter(HealthData.id == report_id).first()
 
     if not report:
@@ -207,4 +227,6 @@ async def get_report_by_id(
             detail="You do not have permission to view this report."
         )
 
-    return report
+    result = HealthDataRead.model_validate(report).model_dump(mode="json")
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result

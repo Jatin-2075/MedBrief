@@ -16,6 +16,7 @@ from ..Core.Medicine_Data_Functions import (
     get_all_prescriptions,
     get_prescription_by_id,
 )
+from ..Services.Cache_Service import cache_get, cache_set, cache_delete, TTL_LONG
 
 router = APIRouter(prefix="/prescriptions", tags=["Prescriptions"])
 
@@ -72,6 +73,13 @@ def upload_prescription(
         medicines=[m.model_dump() for m in data.medicines]
     )
 
+    # Both "/active/{id}" and "/my-active" resolve to the same underlying
+    # data keyed by profile_id, so one pair of keys covers both routes.
+    cache_delete(
+        f"prescriptions:active:{data.profile_id}",
+        f"prescriptions:history:{data.profile_id}",
+    )
+
     return prescriptions
 
 
@@ -94,7 +102,15 @@ def active_prescriptions(
                 detail="You do not have permission to view these prescriptions."
             )
 
-    return get_active_prescription(db, profile_id)
+    cache_key = f"prescriptions:active:{profile_id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    prescriptions = get_active_prescription(db, profile_id)
+    result = [PrescriptionRead.model_validate(p).model_dump(mode="json") for p in prescriptions]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
 
 
 @router.get("/history/{profile_id}", response_model=list[PrescriptionRead])
@@ -116,7 +132,15 @@ def prescription_history(
                 detail="You do not have permission to view these prescriptions."
             )
 
-    return get_all_prescriptions(db, profile_id)
+    cache_key = f"prescriptions:history:{profile_id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    prescriptions = get_all_prescriptions(db, profile_id)
+    result = [PrescriptionRead.model_validate(p).model_dump(mode="json") for p in prescriptions]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
 
 
 @router.get("/my-active", response_model=list[PrescriptionRead])
@@ -125,7 +149,16 @@ def my_active_prescriptions(
     current_user=Depends(get_current_user),
 ):
     profile = get_profile_by_user_id(db, current_user.id)
-    return get_active_prescription(db, profile.id)
+
+    cache_key = f"prescriptions:active:{profile.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    prescriptions = get_active_prescription(db, profile.id)
+    result = [PrescriptionRead.model_validate(p).model_dump(mode="json") for p in prescriptions]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
 
 
 @router.get("/my-history", response_model=list[PrescriptionRead])
@@ -134,7 +167,16 @@ def my_history_prescriptions(
     current_user=Depends(get_current_user),
 ):
     profile = get_profile_by_user_id(db, current_user.id)
-    return get_all_prescriptions(db, profile.id)
+
+    cache_key = f"prescriptions:history:{profile.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    prescriptions = get_all_prescriptions(db, profile.id)
+    result = [PrescriptionRead.model_validate(p).model_dump(mode="json") for p in prescriptions]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
 
 
 @router.get("/{prescription_id}", response_model=PrescriptionRead)
@@ -143,6 +185,11 @@ def get_prescription(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    cache_key = f"prescriptions:item:{prescription_id}:by:{current_user.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
     prescription = get_prescription_by_id(db, prescription_id)
 
     if not prescription:
@@ -164,4 +211,6 @@ def get_prescription(
                 detail="You do not have permission to view this prescription."
             )
 
-    return prescription
+    result = PrescriptionRead.model_validate(prescription).model_dump(mode="json")
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
