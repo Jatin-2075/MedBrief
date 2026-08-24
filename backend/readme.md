@@ -168,7 +168,7 @@ Relationships:
 | Method | Endpoint | Auth | Purpose |
 |--------|----------|------|---------|
 | POST | `/upload` | ✓ | Upload PDF report |
-| GET | `/mydataall` | ✓ | List user's reports |
+| GET | `/mydetail` | ✓ | List user's reports |
 | GET | `/{report_id}` | ✓ | Get report details |
 
 ### Personal Data (`/personal`)

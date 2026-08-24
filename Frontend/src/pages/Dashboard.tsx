@@ -228,7 +228,7 @@ export default function Dashboard() {
     const loadReports = async () => {
         setLoadingReports(true);
         try {
-            const data = await API<HealthData[]>("GET", "/reports/mydataall");
+            const data = await API<HealthData[]>("GET", "/reports/mydetail");
             setReports(data);
         } catch {
             setMessage("Could not load your reports.");

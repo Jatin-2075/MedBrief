@@ -177,7 +177,7 @@ async def retry_analysis(
         )
 
 
-@router.get("/mydataall", response_model=list[HealthDataRead])
+@router.get("/mydetail", response_model=list[HealthDataRead])
 async def get_my_all_reports(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
