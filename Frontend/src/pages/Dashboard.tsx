@@ -17,11 +17,6 @@ const METRIC_OPTIONS = [
     { value: "triglycerides", label: "Blood Fat (Triglycerides)" },
 ];
 
-// Native <select> dropdown popups are rendered by the OS, not the page, so
-// CSS (background-color/color on <option>) can't reliably restyle them —
-// that's why the metric picker's open list was showing up plain white
-// regardless of theme. This is a small custom listbox instead, fully
-// themeable since it's just regular divs.
 function ThemedSelect({
     value,
     onChange,
@@ -121,7 +116,6 @@ function AnalysisBlock({
         );
     }
 
-    // Analysis failed
     if (report.analysis_status === "failed") {
         return (
             <div style={{
@@ -388,31 +382,33 @@ export default function Dashboard() {
                 {message && <p className={`dashboard-message${message.toLowerCase().includes("failed") || message.toLowerCase().includes("could not") ? " error" : ""}`}>{message}</p>}
             </section>
 
-            <section className="dashboard-card">
-                <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
-                <div className="dashboard-form-group">
-                    <label className="dashboard-label">Select Visual Metric Axis</label>
-                    <ThemedSelect value={metric} onChange={setMetric} options={METRIC_OPTIONS} />
-                </div>
-                <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
-                    <ResponsiveContainer>
-                        <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                            <XAxis dataKey="date" tickLine={false} />
-                            <YAxis tickLine={false} domain={["auto", "auto"]} />
-                            <Tooltip />
-                            <Line
-                                type="monotone"
-                                dataKey={metric}
-                                stroke="var(--vital, #2dd4bf)"
-                                strokeWidth={3}
-                                activeDot={{ r: 6, fill: "var(--vital, #2dd4bf)", stroke: "#04120f", strokeWidth: 2 }}
-                                dot={{ strokeWidth: 1, r: 3, fill: "var(--vital, #2dd4bf)", stroke: "var(--vital, #2dd4bf)" }}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
-            </section>
+            {role !== "doctor" && (
+                <section className="dashboard-card">
+                    <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
+                    <div className="dashboard-form-group">
+                        <label className="dashboard-label">Select Visual Metric Axis</label>
+                        <ThemedSelect value={metric} onChange={setMetric} options={METRIC_OPTIONS} />
+                    </div>
+                    <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
+                        <ResponsiveContainer>
+                            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                <XAxis dataKey="date" tickLine={false} />
+                                <YAxis tickLine={false} domain={["auto", "auto"]} />
+                                <Tooltip />
+                                <Line
+                                    type="monotone"
+                                    dataKey={metric}
+                                    stroke="var(--vital, #2dd4bf)"
+                                    strokeWidth={3}
+                                    activeDot={{ r: 6, fill: "var(--vital, #2dd4bf)", stroke: "#04120f", strokeWidth: 2 }}
+                                    dot={{ strokeWidth: 1, r: 3, fill: "var(--vital, #2dd4bf)", stroke: "var(--vital, #2dd4bf)" }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </section>
+            )}
 
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Chronological Medical Records</h2>
@@ -536,7 +532,6 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Blood Sugar */}
                         <div className="report-metric-section">
                             <h3 className="report-metric-title">
                                 Blood Sugar
@@ -559,7 +554,6 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Blood & Liver */}
                         <div className="report-metric-section">
                             <h3 className="report-metric-title">
                                 Blood & Liver
@@ -596,7 +590,6 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Kidney & Vitals */}
                         <div className="report-metric-section">
                             <h3 className="report-metric-title">
                                 Kidney & Vitals
@@ -633,7 +626,6 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        {/* AI Analysis */}
                         <AnalysisBlock
                             report={selectedReport}
                             onRetrySuccess={handleRetrySuccess}

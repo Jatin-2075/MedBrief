@@ -1,49 +1,29 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
+import {
+    LayoutDashboard,
+    User,
+    CalendarDays,
+    Stethoscope,
+    Hospital,
+    MessageCircle,
+    Mail,
+    Pill,
+    FileUp,
+    LogOut,
+} from "lucide-react";
 import "../Css/Sidebar.css";
 
 const navItems = [
-    {
-        to: "/dashboard",
-        label: "Dashboard",
-        icon: "📊",
-    },
-    {
-        to: "/profile",
-        label: "Profile",
-        icon: "👤",
-    },
-    {
-        to: "/appointments",
-        label: "Appointments",
-        icon: "📅",
-    },
-    {
-        to: "/doctors",
-        label: "Doctors",
-        icon: "🩺",
-    },
-    {
-        to: "/alldoctorlist",
-        label: "All Doctors",
-        icon: "🏥",
-    },
-    {
-        to: "/chat",
-        label: "AI Chat",
-        icon: "💬",
-    },
-    {
-        to: "/messages",
-        label: "Messages",
-        icon: "📨",
-    },
-    {
-        to: "/prescriptions",
-        label: "Prescriptions",
-        icon: "💊",
-    },
+    { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/profile", label: "Profile", icon: User },
+    { to: "/appointments", label: "Appointments", icon: CalendarDays },
+    { to: "/doctors", label: "Doctors", icon: Stethoscope },
+    { to: "/alldoctorlist", label: "All Doctors", icon: Hospital },
+    { to: "/chat", label: "AI Chat", icon: MessageCircle },
+    { to: "/messages", label: "Messages", icon: Mail },
+    { to: "/prescriptions", label: "Prescriptions", icon: Pill },
 ];
 
 export default function Sidebar() {
@@ -59,10 +39,7 @@ export default function Sidebar() {
     const { user, setUser, setrole } = authContext;
 
     useEffect(() => {
-        const rootContainer = document.querySelector(
-            ".appMainLayoutContainer"
-        );
-
+        const rootContainer = document.querySelector(".appMainLayoutContainer");
         if (!rootContainer) return;
 
         if (isCollapsed) {
@@ -75,91 +52,55 @@ export default function Sidebar() {
     const handleLogout = () => {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
-
         setUser(null);
         setrole(null);
-
         navigate("/login");
     };
 
+    const allItems = [
+        ...navItems,
+        ...(user?.role === "doctor"
+            ? [{ to: "/uploadprescription", label: "Upload Prescription", icon: FileUp }]
+            : []),
+    ];
 
     return (
-        <nav className={`navbar ${isCollapsed ? "collapsed" : ""}`}>
-            <div className="navbar-header">
-                <div className="navbar-brand">
-                    <div className="navbar-logo">MB</div>
-
-                    {!isCollapsed && (
-                        <span className="navbar-title">
-                            MedBrief
-                        </span>
-                    )}
-                </div>
-
-                
-            </div>
+        <nav className="navbar">
+            <div className="navbar-spacer" aria-hidden="true" />
 
             <div className="navbar-nav">
-                {[
-                    ...navItems,
-                    ...(user?.role === "doctor"
-                        ? [
-                            {
-                                to: "/uploadprescription",
-                                label: "Upload Prescription",
-                                icon: "📝",
-                            },
-                        ]
-                        : []),
-                ].map((item) => (
-                    <Link
-                        key={item.to}
-                        to={item.to}
-                        className={`navbar-link ${location.pathname === item.to
-                                ? "active"
-                                : ""
-                            }`}
-                    >
-                        <span className="nav-icon">
-                            {item.icon}
-                        </span>
-
-                        {!isCollapsed && (
-                            <span className="nav-label">
-                                {item.label}
+                {allItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                        <Link
+                            key={item.to}
+                            to={item.to}
+                            className={`navbar-link ${location.pathname === item.to ? "active" : ""
+                                }`}
+                        >
+                            <span className="nav-icon">
+                                <Icon size={18} strokeWidth={2} />
                             </span>
-                        )}
-                    </Link>
-                ))}
+                            <span className="nav-label">{item.label}</span>
+                        </Link>
+                    );
+                })}
             </div>
 
             <div className="navbar-footer">
-                <div
-                    className={`navbar-user ${isCollapsed ? "collapsed" : ""
-                        }`}
-                >
-
+                <div className={`navbar-user ${isCollapsed ? "collapsed" : ""}`}>
                     {!isCollapsed && (
                         <div className="user-info">
-
-                            <span className="user-role">
-                                {user?.role ?? ""}
-                            </span>
+                            <span className="user-role">{user?.role ?? ""}</span>
                         </div>
                     )}
                 </div>
 
-                <button
-                    type="button"
-                    className="navbar-logout"
-                    onClick={handleLogout}
-                >
-
-                    {!isCollapsed && (
-                        <span className="nav-label">
-                            Logout
-                        </span>
-                    )}
+                <button type="button" className="navbar-logout" onClick={handleLogout}>
+                    <span className="nav-icon">
+                        <LogOut size={16} strokeWidth={2} />
+                    </span>
+                    {!isCollapsed && <span className="nav-label">Logout</span>}
                 </button>
             </div>
         </nav>
