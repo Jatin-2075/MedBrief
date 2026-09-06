@@ -10,8 +10,8 @@ class Settings(BaseSettings):
     UPSTASH_REDIS_REST_URL: str
     UPSTASH_REDIS_REST_TOKEN: str
     GEMINI_API_KEY: str
-    GEMINI_MODEL: str = "gemini-3.0-flash"
-    ALGORITHM: str = "HS256"
+    GEMINI_MODEL: str
+    ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
     ALLOWED_HOSTS: str = "*"
