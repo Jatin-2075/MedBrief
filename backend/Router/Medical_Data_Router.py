@@ -73,6 +73,10 @@ async def upload_health_reports(
             detail="patient_id is required for doctor uploads."
         )
 
+    if current_user.role == "doctor" and patient_id:
+        # Doctors may only upload reports for patients assigned to them.
+        _verify_doctor_owns_patient(db, current_user.id, patient_id)
+
     pdf_filename = f"{uuid4()}.pdf"
     saved_pdf_path = UPLOAD_ROOT / pdf_filename
 
@@ -126,6 +130,7 @@ async def upload_health_reports(
         db.commit()
         db.refresh(report)
         cache_delete(f"reports:mine:{target_user_id}")
+        cache_delete_pattern(f"reports:patient:{target_user_id}:by:*")
         return report
 
     finally:
@@ -141,7 +146,6 @@ async def retry_analysis(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    """Bug #2 fix: let users re-trigger analysis on failed reports."""
     report = db.query(HealthData).filter(HealthData.id == report_id).first()
 
     if not report:
@@ -164,6 +168,7 @@ async def retry_analysis(
         db.refresh(report)
         cache_delete_pattern(f"reports:{report_id}:by:*")
         cache_delete(f"reports:mine:{report.user_id}")
+        cache_delete_pattern(f"reports:patient:{report.user_id}:by:*")
         return report
     except Exception as e:
         print(f"[Analysis] Retry failed for report {report_id}: {e}")
@@ -171,6 +176,7 @@ async def retry_analysis(
         db.commit()
         cache_delete_pattern(f"reports:{report_id}:by:*")
         cache_delete(f"reports:mine:{report.user_id}")
+        cache_delete_pattern(f"reports:patient:{report.user_id}:by:*")
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail="AI analysis service unavailable. Try again later."
@@ -198,14 +204,46 @@ async def get_my_all_reports(
     return result
 
 
+@router.get("/patient/{patient_id}", response_model=list[HealthDataRead])
+async def get_reports_for_patient(
+    patient_id: UUID,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    """
+    Doctor-only: fetch every report belonging to one of the doctor's assigned
+    patients. Used by the "view my patient's reports" screen.
+    """
+    if current_user.role != "doctor":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only doctors can view a patient's report history this way."
+        )
+
+    _verify_doctor_owns_patient(db, current_user.id, patient_id)
+
+    cache_key = f"reports:patient:{patient_id}:by:{current_user.id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    reports = (
+        db.query(HealthData)
+        .filter(HealthData.user_id == patient_id)
+        .order_by(HealthData.created_at.desc())
+        .all()
+    )
+    result = [HealthDataRead.model_validate(r).model_dump(mode="json") for r in reports]
+    cache_set(cache_key, result, ttl=TTL_LONG)
+    return result
+
+
 @router.get("/{report_id}", response_model=HealthDataRead)
 async def get_report_by_id(
     report_id: UUID,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    # Access control depends on current_user, so the cache is scoped per
-    # requester rather than shared, to avoid leaking a report across users.
     cache_key = f"reports:{report_id}:by:{current_user.id}"
     cached = cache_get(cache_key)
     if cached is not None:

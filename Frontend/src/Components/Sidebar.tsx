@@ -17,13 +17,13 @@ import "../Css/Sidebar.css";
 
 const navItems = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { to: "/profile", label: "Profile", icon: User },
     { to: "/appointments", label: "Appointments", icon: CalendarDays },
+    { to: "/chat", label: "AI Chat", icon: Mail },
+    { to: "/messages", label: "Messages", icon: MessageCircle },
+    { to: "/prescriptions", label: "Prescriptions", icon: Pill },
     { to: "/doctors", label: "Doctors", icon: Stethoscope },
     { to: "/alldoctorlist", label: "All Doctors", icon: Hospital },
-    { to: "/chat", label: "AI Chat", icon: MessageCircle },
-    { to: "/messages", label: "Messages", icon: Mail },
-    { to: "/prescriptions", label: "Prescriptions", icon: Pill },
+    { to: "/profile", label: "Profile", icon: User },
 ];
 
 export default function Sidebar() {
@@ -90,7 +90,9 @@ export default function Sidebar() {
             <div className="navbar-footer">
                 <div className={`navbar-user ${isCollapsed ? "collapsed" : ""}`}>
                     {!isCollapsed && (
+                        
                         <div className="user-info">
+                            <span className="user-role">{user?.username ?? ""}</span>
                             <span className="user-role">{user?.role ?? ""}</span>
                         </div>
                     )}

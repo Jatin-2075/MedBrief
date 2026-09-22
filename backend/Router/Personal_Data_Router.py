@@ -92,7 +92,6 @@ def read_doctor_patients(doctor_id: UUID, db: Session = Depends(get_db)):
     if cached is not None:
         return cached
 
-    # Verify doctor exists first
     doctor = get_doctor_by_id(db, doctor_id)
     if not doctor:
         raise HTTPException(status_code=404, detail="Doctor profile records not found.")

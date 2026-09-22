@@ -76,8 +76,6 @@ export default function Messages() {
             setConversations((prev) =>
                 prev.map((c) => (c.id === conversationId ? { ...c, unread_count: 0 } : c))
             );
-        } catch {
-            setError("Unable to load this conversation.");
         } finally {
             setLoadingMessages(false);
         }

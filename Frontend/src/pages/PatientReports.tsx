@@ -1,10 +1,11 @@
 import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API } from "../Config/Api";
 import { AuthContext } from "../Context/AuthContext";
-import type { HealthData, User } from "../Config/Types";
+import type { HealthData, Profile } from "../Config/Types";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import "../Css/Pages/Dashboard.css";
+import "../Css/Pages/Doctors.css";
 
 const METRIC_OPTIONS = [
     { value: "hba1c", label: "Blood Sugar (HbA1c)" },
@@ -183,13 +184,18 @@ function AnalysisBlock({
     );
 }
 
-export default function Dashboard() {
+export default function PatientReports() {
     const authContext = useContext(AuthContext);
     if (!authContext) throw new Error("AuthContext.Provider is required.");
 
-    const { user, setUser, setrole, role } = authContext;
+    const { user, role } = authContext;
+    const { userId } = useParams<{ userId: string }>();
+    const location = useLocation();
     const navigate = useNavigate();
 
+    const initialPatient = (location.state as { patient?: Profile } | null)?.patient ?? null;
+
+    const [patient, setPatient] = useState<Profile | null>(initialPatient);
     const [reports, setReports] = useState<HealthData[]>([]);
     const [selectedReport, setSelectedReport] = useState<HealthData | null>(null);
     const [file, setFile] = useState<File | null>(null);
@@ -200,35 +206,41 @@ export default function Dashboard() {
     const [metric, setMetric] = useState("hba1c");
     const detailSectionRef = useRef<HTMLElement | null>(null);
 
-    const handleLogout = () => {
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-        setUser(null);
-        setrole(null);
-        navigate("/login");
-    };
+    // Guard: only doctors may access this screen.
+    useEffect(() => {
+        if (role && role !== "doctor") {
+            navigate("/dashboard", { replace: true });
+        }
+    }, [role, navigate]);
 
-    const fetchCurrentUser = async () => {
+    const loadPatientProfile = async () => {
+        if (!userId) return;
         try {
-            const data = await API<User>("GET", "/auth/me");
-            setUser(data);
-            setrole(data.role);
+            const data = await API<Profile>("GET", `/personal/profiles/user/${userId}`);
+            setPatient(data);
         } catch {
-            handleLogout();
+            // Non-fatal — the header still works from route state if present.
         }
     };
 
     const loadReports = async () => {
+        if (!userId) return;
         setLoadingReports(true);
         try {
-            const data = await API<HealthData[]>("GET", "/reports/mydetail");
+            const data = await API<HealthData[]>("GET", `/reports/patient/${userId}`);
             setReports(data);
-        } catch {
-            setMessage("Could not load your reports.");
+        } catch (error) {
+            setMessage(error instanceof Error ? error.message : "Could not load this patient's reports.");
         } finally {
             setLoadingReports(false);
         }
     };
+
+    useEffect(() => {
+        if (!patient) loadPatientProfile();
+        loadReports();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const loadReportDetails = async (reportId: string) => {
         setMessage(null);
@@ -260,21 +272,6 @@ export default function Dashboard() {
         );
     };
 
-    useEffect(() => {
-        const access = localStorage.getItem("access");
-        if (!access) {
-            navigate("/login");
-            return;
-        }
-        if (!user) {
-            fetchCurrentUser();
-        }
-    }, [navigate, user]);
-
-    useEffect(() => {
-        if (user && role !== "doctor") loadReports();
-    }, [user, role]);
-
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0] ?? null;
         setFile(selectedFile);
@@ -286,13 +283,18 @@ export default function Dashboard() {
             setMessage("Please select a PDF file first.");
             return;
         }
+        if (!userId) return;
 
         const form = new FormData();
         form.append("file", file);
 
         setLoading(true);
         try {
-            const newReport = await API<HealthData>("POST", "/reports/upload", form);
+            const newReport = await API<HealthData>(
+                "POST",
+                `/reports/upload?patient_id=${userId}`,
+                form
+            );
             setReports((prev) => [newReport, ...prev]);
 
             if (newReport.analysis_status === "failed") {
@@ -300,7 +302,6 @@ export default function Dashboard() {
             } else {
                 setMessage("Report uploaded successfully.");
             }
-
             setFile(null);
         } catch (error) {
             setMessage(error instanceof Error ? error.message : "Upload failed.");
@@ -329,81 +330,81 @@ export default function Dashboard() {
         }))
         .reverse();
 
+    if (!user || role !== "doctor") {
+        return null;
+    }
+
     return (
         <div className="dashboard-page">
             <header className="dashboard-header">
                 <div>
-                    <h1 className="dashboard-title">Clinical Dashboard</h1>
+                    <button
+                        type="button"
+                        className="doctors-action-button"
+                        style={{ marginBottom: "1rem" }}
+                        onClick={() => navigate("/doctors")}
+                    >
+                        ← Back to Patients
+                    </button>
+                    <h1 className="dashboard-title">
+                        {patient?.name ?? "Patient"} — Report History
+                    </h1>
                     <p className="dashboard-welcome">
-                        Welcome back, {user?.username ?? "Guest"} {role ? `(${role})` : ""}
+                        {patient
+                            ? `Age ${patient.age ?? "N/A"} · ${patient.weight ? `${patient.weight} kg` : "N/A"} · ${patient.height ? `${patient.height} cm` : "N/A"}`
+                            : "Assigned patient record"}
                     </p>
                 </div>
             </header>
 
-            {role === "doctor" ? (
-                <section className="dashboard-card">
-                    <h2 className="dashboard-section-title">Upload a Patient's Health Report</h2>
-                    <p style={{ color: "var(--text-dim)", fontSize: "0.9rem", margin: "0 0 1rem" }}>
-                        Uploads are tied to a specific assigned patient. Open a patient's record to upload
-                        a report for them.
-                    </p>
-                    <Link to="/doctors" className="dashboard-button" style={{ display: "inline-block", textDecoration: "none", textAlign: "center" }}>
-                        Go to My Patients
-                    </Link>
-                </section>
-            ) : (
-                <section className="dashboard-card">
-                    <h2 className="dashboard-section-title">Upload Health Report</h2>
-                    <div className="dashboard-form-group">
-                        <label className="dashboard-label">Select Medical Report PDF</label>
-                        <input
-                            className="dashboard-input"
-                            type="file"
-                            accept="application/pdf"
-                            onChange={handleFileChange}
-                        />
-                    </div>
-                    <button
-                        className="dashboard-button"
-                        type="button"
-                        onClick={handleUpload}
-                        disabled={loading}
-                    >
-                        {loading ? "Parsing Secure Records…" : "Upload & Analyze"}
-                    </button>
-                    {message && <p className={`dashboard-message${message.toLowerCase().includes("failed") || message.toLowerCase().includes("could not") ? " error" : ""}`}>{message}</p>}
-                </section>
-            )}
+            <section className="dashboard-card">
+                <h2 className="dashboard-section-title">Upload Health Report For This Patient</h2>
+                <div className="dashboard-form-group">
+                    <label className="dashboard-label">Select Medical Report PDF</label>
+                    <input
+                        className="dashboard-input"
+                        type="file"
+                        accept="application/pdf"
+                        onChange={handleFileChange}
+                    />
+                </div>
+                <button
+                    className="dashboard-button"
+                    type="button"
+                    onClick={handleUpload}
+                    disabled={loading}
+                >
+                    {loading ? "Parsing Secure Records…" : "Upload & Analyze"}
+                </button>
+                {message && <p className={`dashboard-message${message.toLowerCase().includes("failed") || message.toLowerCase().includes("could not") ? " error" : ""}`}>{message}</p>}
+            </section>
 
-            {role !== "doctor" && (
-                <section className="dashboard-card">
-                    <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
-                    <div className="dashboard-form-group">
-                        <label className="dashboard-label">Select Visual Metric Axis</label>
-                        <ThemedSelect value={metric} onChange={setMetric} options={METRIC_OPTIONS} />
-                    </div>
-                    <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
-                        <ResponsiveContainer>
-                            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                <XAxis dataKey="date" tickLine={false} />
-                                <YAxis tickLine={false} domain={["auto", "auto"]} />
-                                <Tooltip />
-                                <Line
-                                    type="monotone"
-                                    dataKey={metric}
-                                    stroke="var(--vital, #2dd4bf)"
-                                    strokeWidth={3}
-                                    activeDot={{ r: 6, fill: "var(--vital, #2dd4bf)", stroke: "#04120f", strokeWidth: 2 }}
-                                    dot={{ strokeWidth: 1, r: 3, fill: "var(--vital, #2dd4bf)", stroke: "var(--vital, #2dd4bf)" }}
-                                />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </section>
-            )}
+            <section className="dashboard-card">
+                <h2 className="dashboard-section-title">Analytical Vitals & Trends</h2>
+                <div className="dashboard-form-group">
+                    <label className="dashboard-label">Select Visual Metric Axis</label>
+                    <ThemedSelect value={metric} onChange={setMetric} options={METRIC_OPTIONS} />
+                </div>
+                <div style={{ width: "100%", height: 280, marginTop: "0.5rem" }}>
+                    <ResponsiveContainer>
+                        <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="date" tickLine={false} />
+                            <YAxis tickLine={false} domain={["auto", "auto"]} />
+                            <Tooltip />
+                            <Line
+                                type="monotone"
+                                dataKey={metric}
+                                stroke="var(--vital, #2dd4bf)"
+                                strokeWidth={3}
+                                activeDot={{ r: 6, fill: "var(--vital, #2dd4bf)", stroke: "#04120f", strokeWidth: 2 }}
+                                dot={{ strokeWidth: 1, r: 3, fill: "var(--vital, #2dd4bf)", stroke: "var(--vital, #2dd4bf)" }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </section>
 
-            {role !== "doctor" && (
             <section className="dashboard-card">
                 <h2 className="dashboard-section-title">Chronological Medical Records</h2>
                 {loadingReports ? (
@@ -412,7 +413,7 @@ export default function Dashboard() {
                     </p>
                 ) : reports.length === 0 ? (
                     <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
-                        No reports cataloged for this identity profile map.
+                        No reports cataloged for this patient yet.
                     </p>
                 ) : (
                     <div className="dashboard-report-list">
@@ -466,7 +467,6 @@ export default function Dashboard() {
                     </div>
                 )}
             </section>
-            )}
 
             {selectedReport && (
                 <div

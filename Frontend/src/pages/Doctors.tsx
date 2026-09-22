@@ -1,22 +1,34 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../Config/Api";
-import type { Doctor } from "../Config/Types";
+import type { Doctor, Profile } from "../Config/Types";
 import { AuthContext } from "../Context/AuthContext";
 import "../Css/Pages/Doctors.css";
 
 export default function Doctors() {
     const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
 
     if (!authContext) return null;
     const { user } = authContext;
 
     const [doctor, setDoctor] = useState<Doctor | null>(null);
-    const [patients, setPatients] = useState<any[]>([]);
+    const [patients, setPatients] = useState<Profile[]>([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const [profileId, setProfileId] = useState("");
     const [assignMessage, setAssignMessage] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const [search, setSearch] = useState("");
+
+    const filteredPatients = useMemo(() => {
+        const query = search.trim().toLowerCase();
+        if (!query) return patients;
+        return patients.filter((patient) =>
+            (patient.name ?? "").toLowerCase().includes(query) ||
+            (patient.id ?? "").toLowerCase().includes(query)
+        );
+    }, [patients, search]);
 
     useEffect(() => {
         const loadDoctors = async () => {
@@ -24,7 +36,7 @@ export default function Doctors() {
             setMessage(null);
             try {
                 if (user?.role === "doctor") {
-                    const data = await API<any[]>("GET", "/personal/my-patients");
+                    const data = await API<Profile[]>("GET", "/personal/my-patients");
                     setPatients(data);
                 } else {
                     const data = await API<Doctor>("GET", "/personal/my-doctor");
@@ -53,7 +65,7 @@ export default function Doctors() {
             setIsSuccess(true);
             setProfileId("");
 
-            const data = await API<any[]>("GET", "/personal/my-patients");
+            const data = await API<Profile[]>("GET", "/personal/my-patients");
             setPatients(data);
         } catch {
             setAssignMessage("Failed to coordinate patient identification assignment.");
@@ -113,13 +125,31 @@ export default function Doctors() {
 
                     <section className="doctors-glass-card patients-list-panel">
                         <h2 className="doctors-section-title">My Assigned Active Cases</h2>
+
+                        {patients.length > 0 && (
+                            <div className="doctors-form-group" style={{ marginBottom: "1.25rem" }}>
+                                <label className="doctors-label-text">Search Patients</label>
+                                <input
+                                    className="doctors-text-input"
+                                    type="text"
+                                    placeholder="Search by patient name or ID..."
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </div>
+                        )}
+
                         {patients.length === 0 ? (
                             <div className="doctors-empty-view">
                                 <p>No case profiles currently mapped to your clinician profile identifier token.</p>
                             </div>
+                        ) : filteredPatients.length === 0 ? (
+                            <div className="doctors-empty-view">
+                                <p>No patients match "{search}".</p>
+                            </div>
                         ) : (
                             <div className="patients-grid-deck">
-                                {patients.map((patient) => (
+                                {filteredPatients.map((patient) => (
                                     <div key={patient.id} className="patient-profile-card">
                                         <div className="patient-card-header">
                                             <div className="patient-avatar-placeholder">
@@ -148,6 +178,18 @@ export default function Doctors() {
                                                 <span>{patient.weight ? `${patient.weight} kg` : "N/A"}</span>
                                             </div>
                                         </div>
+                                        <button
+                                            type="button"
+                                            className="doctors-action-button"
+                                            style={{ width: "100%" }}
+                                            onClick={() =>
+                                                navigate(`/patients/${patient.user_id}`, {
+                                                    state: { patient },
+                                                })
+                                            }
+                                        >
+                                            View Reports
+                                        </button>
                                     </div>
                                 ))}
                             </div>
