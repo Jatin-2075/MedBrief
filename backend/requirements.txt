@@ -38,6 +38,9 @@ google-generativeai==0.8.6
 google-api-python-client==2.196.0
 google-auth==2.53.0
 
+# RAG (pgvector client for Postgres)
+pgvector>=0.3.6
+
 # HTTP & Networking
 httpx==0.28.1
 requests==2.34.2

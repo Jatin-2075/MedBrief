@@ -83,7 +83,7 @@ export default function Doctors() {
                     <p className="doctors-page-subtitle">
                         {user?.role === "doctor"
                             ? "Manage assigned case files and establish node connections."
-                            : "Your assigned primary healthcare clinical director profile parameters."}
+                            : "Your assigned primary healthcare clinical director profile."}
                     </p>
                 </div>
             </header>

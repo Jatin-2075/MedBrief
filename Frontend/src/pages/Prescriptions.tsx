@@ -102,7 +102,7 @@ export default function Prescriptions() {
                     <p className="rx-page-subtitle">
                         {user.role === "doctor"
                             ? "Review and monitor treatment protocol distribution plans."
-                            : "Track real-time pharmaceutical prescriptions and tracking arrays."}
+                            : "Track real-time pharmaceutical prescriptions and trackin."}
                     </p>
                 </div>
             </header>
